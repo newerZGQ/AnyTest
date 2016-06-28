@@ -1,0 +1,126 @@
+package com.zgq.wokao.ui;
+
+import android.graphics.drawable.Drawable;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
+import com.zgq.wokao.R;
+import com.zgq.wokao.data.NormalExamPaper;
+
+import java.util.ArrayList;
+
+import io.realm.Realm;;
+import io.realm.RealmResults;
+
+public class QuestionsListActivity extends AppCompatActivity {
+    private RecyclerView examListView;
+    private QuestionTypeAdapter adapter;
+    private ArrayList<String> typeNames = new ArrayList<>();
+    private ArrayList<Integer> typeImages = new ArrayList<>();
+    private ArrayList<Integer> questionCount = new ArrayList<>();
+
+    private NormalExamPaper normalExamPaper;
+
+    private Realm realm = Realm.getDefaultInstance();
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        initData();
+        setContentView(R.layout.activity_questions_list);
+        setTitle(normalExamPaper.getPaperInfo().getTitle());
+        examListView = (RecyclerView) findViewById(R.id.question_list);
+        examListView.addItemDecoration(
+                new HorizontalDividerItemDecoration.Builder(this)
+                        .color(getResources().getColor(R.color.colorRecyclerViewDivider))
+                        .size(getResources().getDimensionPixelSize(R.dimen.paper_recyclerview_divider))
+                        .build());
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getApplicationContext());
+        examListView.setLayoutManager(layoutManager);
+        adapter = new QuestionTypeAdapter();
+        examListView.setAdapter(adapter);
+    }
+
+    private void initData() {
+        String title = getIntent().getStringExtra("paperTitle");
+        String author = getIntent().getStringExtra("paperAuthor");
+        RealmResults<NormalExamPaper> papers = realm.where(NormalExamPaper.class).findAll();
+        for (NormalExamPaper paper : papers) {
+            if (title.equals(paper.getPaperInfo().getTitle()) || author.equals(paper.getPaperInfo().getAuthor())) {
+                normalExamPaper = paper;
+            }
+        }
+        questionCount.add(normalExamPaper.getFillInQuestions().size());
+        questionCount.add(normalExamPaper.getTfQuestions().size());
+        questionCount.add(normalExamPaper.getSglChoQuestions().size());
+        questionCount.add(normalExamPaper.getMultChoQuestions().size());
+        questionCount.add(normalExamPaper.getDiscussQuestions().size());
+        questionCount.add(normalExamPaper.getQuestionsCount());
+
+        typeNames.add("填空题");
+        typeNames.add("判断题");
+        typeNames.add("单选题");
+        typeNames.add("多选题");
+        typeNames.add("简答题");
+        typeNames.add("顺序学习");
+
+        typeImages.add(R.drawable.circle_background);
+        typeImages.add(R.drawable.circle_background);
+        typeImages.add(R.drawable.circle_background);
+        typeImages.add(R.drawable.circle_background);
+        typeImages.add(R.drawable.circle_background);
+        typeImages.add(R.drawable.circle_background);
+    }
+
+    public class QuestionTypeAdapter extends RecyclerView.Adapter {
+
+        @Override
+        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+            QuestionViewHolder holder1 = (QuestionViewHolder) holder;
+            holder1.typeName.setText(typeNames.get(holder1.getAdapterPosition()));
+            holder1.typeImage.setImageResource(typeImages.get(holder1.getAdapterPosition()));
+            holder1.questionCount.setText("共" + questionCount.get(holder1.getAdapterPosition()) + "题");
+            holder1.item.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+        }
+
+        @Override
+        public int getItemCount() {
+            return typeNames.size();
+        }
+
+        @Override
+        public QuestionViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_question_list_recyclerview_item, parent, false);
+            return new QuestionViewHolder(view);
+        }
+
+        public class QuestionViewHolder extends RecyclerView.ViewHolder {
+            public TextView typeName;
+            public ImageView typeImage;
+            public TextView questionCount;
+            public LinearLayout item;
+
+            public QuestionViewHolder(View itemView) {
+                super(itemView);
+                item = (LinearLayout) itemView.findViewById(R.id.question_type_item);
+                typeImage = (ImageView) itemView.findViewById(R.id.type_image);
+                typeName = (TextView) itemView.findViewById(R.id.type_name);
+                questionCount = (TextView) itemView.findViewById(R.id.question_count);
+            }
+        }
+    }
+}
