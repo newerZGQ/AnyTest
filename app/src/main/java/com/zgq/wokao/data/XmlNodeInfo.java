@@ -22,6 +22,6 @@ public class XmlNodeInfo {
     public static final String idNode = "id";
     public static final String typeNode = "typeNode";
     public static final String bodyNode = "body";
-    public static final String answerNode = "answer";
+    public static final String answerNode = "questionAnswer";
     public static final String optionNode = "option";
 }

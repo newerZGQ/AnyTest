@@ -110,7 +110,7 @@ public class DataXml2ObjParser {
                         continue;
                     case XmlNodeInfo.answerNode:
 //                        String ssss = pullParser.nextText();
-//                        Log.d("-------answer",ssss);
+//                        Log.d("-------questionAnswer",ssss);
                         fillInQuestion.setAnswer(pullParser.nextText());
                 }
             }

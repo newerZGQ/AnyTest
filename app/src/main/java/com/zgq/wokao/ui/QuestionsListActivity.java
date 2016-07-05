@@ -1,5 +1,6 @@
 package com.zgq.wokao.ui;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -50,6 +51,12 @@ public class QuestionsListActivity extends AppCompatActivity {
         examListView.setAdapter(adapter);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        realm.close();
+    }
+
     private void initData() {
         String title = getIntent().getStringExtra("paperTitle");
         String author = getIntent().getStringExtra("paperAuthor");
@@ -92,7 +99,11 @@ public class QuestionsListActivity extends AppCompatActivity {
             holder1.item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    Intent intent = new Intent(QuestionsListActivity.this,AnswerStudyActivity.class);
+//                    intent.putExtra("paperTitle",normalExamPaper.getPaperInfo().getTitle());
+//                    intent.putExtra("paperAuthor",normalExamPaper.getPaperInfo().getAuthor());
+//                    intent.
+                    startActivity(intent);
                 }
             });
         }

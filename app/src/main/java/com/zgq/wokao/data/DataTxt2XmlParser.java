@@ -26,7 +26,7 @@ public class DataTxt2XmlParser {
     private String idNode = "id";
     private String typeNode = "typeNode";
     private String bodyNode = "body";
-    private String answerNode = "answer";
+    private String answerNode = "questionAnswer";
     private String optionNode = "option";
 
 
