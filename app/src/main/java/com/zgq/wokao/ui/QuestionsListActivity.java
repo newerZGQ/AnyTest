@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,13 @@ import io.realm.Realm;;
 import io.realm.RealmResults;
 
 public class QuestionsListActivity extends AppCompatActivity {
+
+    private static final int FILLINQUESTIONLABEL  = 1;
+    private static final int TFQUESTIONLABEL      = 2;
+    private static final int SGLCHOQUESTIONLABEL  = 3;
+    private static final int MULTCHOQUESTIONLABEL = 4;
+    private static final int DISCUSSQUESTIONLABEL = 5;
+
     private RecyclerView examListView;
     private QuestionTypeAdapter adapter;
     private ArrayList<String> typeNames = new ArrayList<>();
@@ -88,10 +96,32 @@ public class QuestionsListActivity extends AppCompatActivity {
         typeImages.add(R.drawable.circle_background);
     }
 
+    private boolean isEmptyQuestionList(int position){
+        if (normalExamPaper == null) return true;
+        switch (position){
+            case FILLINQUESTIONLABEL:
+                if (normalExamPaper.getFillInQuestions().size() == 0 ) return true;
+                break;
+            case TFQUESTIONLABEL:
+                if (normalExamPaper.getTfQuestions().size() == 0) return true;
+                break;
+            case SGLCHOQUESTIONLABEL:
+                if (normalExamPaper.getSglChoQuestions().size() == 0) return true;
+                break;
+            case MULTCHOQUESTIONLABEL:
+                if (normalExamPaper.getMultChoQuestions().size() == 0) return true;
+                break;
+            case DISCUSSQUESTIONLABEL:
+                if (normalExamPaper.getDiscussQuestions().size() == 0) return true;
+                break;
+        }
+        return false;
+    }
+
     public class QuestionTypeAdapter extends RecyclerView.Adapter {
 
         @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
             QuestionViewHolder holder1 = (QuestionViewHolder) holder;
             holder1.typeName.setText(typeNames.get(holder1.getAdapterPosition()));
             holder1.typeImage.setImageResource(typeImages.get(holder1.getAdapterPosition()));
@@ -99,10 +129,13 @@ public class QuestionsListActivity extends AppCompatActivity {
             holder1.item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (isEmptyQuestionList(position+1)){
+                        //tanchutishi
+                        Log.d("------------->","in");
+                        return;
+                    }
                     Intent intent = new Intent(QuestionsListActivity.this,AnswerStudyActivity.class);
-//                    intent.putExtra("paperTitle",normalExamPaper.getPaperInfo().getTitle());
-//                    intent.putExtra("paperAuthor",normalExamPaper.getPaperInfo().getAuthor());
-//                    intent.
+                    intent.putExtra("QuestionLabel",position+1);
                     startActivity(intent);
                 }
             });

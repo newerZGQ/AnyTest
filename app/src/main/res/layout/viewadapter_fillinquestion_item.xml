@@ -9,7 +9,10 @@
     <TextView
         android:id="@+id/fillinQuestion_answer"
         android:layout_width="match_parent"
-        android:text="111111111111"
+        android:layout_height="wrap_content" />
+    <Button
+        android:text="2223333333333333"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
 </LinearLayout>

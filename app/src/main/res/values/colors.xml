@@ -6,4 +6,5 @@
 
     <color name="colorRecyclerViewDivider">#B4B4B4</color>
     <color name="colorWhite">#FFFFFF</color>
+    <color name="colorAlphaBackground">#64000000</color>
 </resources>

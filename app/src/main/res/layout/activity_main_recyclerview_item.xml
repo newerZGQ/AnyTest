@@ -1,53 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
     <TextView
         android:id="@+id/label"
-        android:text="保"
-        android:background="@drawable/circle_background"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:gravity="center_horizontal|center_vertical"
-        android:textSize="17sp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/circle_background"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="保"
+        android:textSize="17sp" />
+
     <RelativeLayout
         android:id="@+id/list_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
         android:layout_marginBottom="10dp"
-        android:layout_toRightOf="@+id/label"
-        android:layout_toEndOf="@+id/label">
-    <TextView
-        android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
-        android:id="@+id/paper_name"
-        android:textSize="20sp"
-        android:text="fdsffsdafsaf"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/auther"
-        android:text="zhangguoqaing"
-        android:layout_marginTop="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/paper_name"
-        android:layout_alignLeft="@+id/paper_name"
-        android:layout_alignStart="@+id/paper_name" />
-    <TextView
-        android:id="@+id/last_time"
-        android:text="2016.6.35"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/paper_name"
-        android:layout_alignEnd="@+id/paper_name"
-        android:layout_below="@+id/paper_name" />
+        android:layout_toEndOf="@+id/label"
+        android:layout_toRightOf="@+id/label"
+        android:background="?android:attr/selectableItemBackground">
+
+        <TextView
+            android:id="@+id/paper_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="fdsffsdafsaf"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/auther"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/paper_name"
+            android:layout_alignStart="@+id/paper_name"
+            android:layout_below="@+id/paper_name"
+            android:layout_marginTop="10dp"
+            android:text="zhangguoqaing" />
+
+        <TextView
+            android:id="@+id/last_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/paper_name"
+            android:layout_alignRight="@+id/paper_name"
+            android:layout_below="@+id/paper_name"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:text="2016.6.35" />
     </RelativeLayout>
 
 </RelativeLayout>

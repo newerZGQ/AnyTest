@@ -1,144 +1,124 @@
 package com.zgq.wokao.ui;
 
-import android.content.Context;
-import android.graphics.Color;
+import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zgq.wokao.R;
+import com.zgq.wokao.adapter.BaseStudySystemAdapter;
+import com.zgq.wokao.adapter.FillInQuestionAdapter;
 import com.zgq.wokao.data.FillInQuestion;
 import com.zgq.wokao.data.NormalExamPaper;
 
-import java.util.LinkedList;
-import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmResults;
 
-public class AnswerStudyActivity extends AppCompatActivity {
+public class AnswerStudyActivity extends AppCompatActivity implements View.OnClickListener{
+
+    private int currentQuestionLabel = FILLINQUESTIONLABEL;
+
+    private static final int FILLINQUESTIONLABEL  = 1;
+    private static final int TFQUESTIONLABEL      = 2;
+    private static final int SGLCHOQUESTIONLABEL  = 3;
+    private static final int MULTCHOQUESTIONLABEL = 4;
+    private static final int DISCUSSQUESTIONLABEL = 5;
+
 
     private ViewPager viewPager;
+    private PagerAdapter adapter;
+
     private Realm realm = Realm.getDefaultInstance();
     private NormalExamPaper normalExamPaper;
     private RealmList<FillInQuestion> fillInQuestions = new RealmList<>();
 
     private TextView showAnswerButton;
+    private TextView setStared;
+    private TextView test;
+
+    private RelativeLayout bottomMenu;
+    private LinearLayout background;
+
+    private FrameLayout rootView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initData();
-        setContentView(R.layout.activity_answer_study);
         initView();
     }
     private void initData(){
+        Intent intent = getIntent();
+        currentQuestionLabel = intent.getIntExtra("QuestionLabel",FILLINQUESTIONLABEL);
         RealmResults<NormalExamPaper> papers = realm.where(NormalExamPaper.class).findAll();
         normalExamPaper = papers.get(0);
         fillInQuestions = normalExamPaper.getFillInQuestions();
     }
     private void initView(){
-        viewPager = (ViewPager) findViewById(R.id.answer);
-        viewPager.setAdapter(new MyViewPagerAdapter(fillInQuestions,this));
-        showAnswerButton = (TextView) findViewById(R.id.show_answer);
-        showAnswerButton.setOnClickListener(new View.OnClickListener() {
+        setContentView(R.layout.activity_answer_study);
+        //底部menu
+        bottomMenu = (RelativeLayout) findViewById(R.id.activity_study_bottom_menu);
+        //根View,//初始时将底部View放在屏幕底部，使用post是因为在onCreat中View没有绘制完全，getHeight返回0
+        rootView = (FrameLayout) findViewById(R.id.root_view);
+        rootView.post(new Runnable() {
             @Override
-            public void onClick(View v) {
-//                viewPager.getCurrentItem()
-                View view = ((MyViewPagerAdapter)viewPager.getAdapter()).getCurrentView();
-                ((MyViewPagerAdapter.FillInQuestionViewHolder)view.getTag()).questionAnswer.setText("333333");
-
+            public void run() {
+                ObjectAnimator.ofFloat(bottomMenu,"translationY",rootView.getHeight()-showAnswerButton.getHeight()).setDuration(0).start();
             }
         });
+        //ViewPager
+        viewPager = (ViewPager) findViewById(R.id.answer);
+        viewPager.setAdapter(getCurrentAdapter());
+        //弹出底部menu时用于遮挡ViewPager
+        background = (LinearLayout) findViewById(R.id.background);
+        background.setVisibility(View.GONE);
+        background.setOnClickListener(this);
+        //显示答案按钮
+        showAnswerButton = (TextView) findViewById(R.id.show_answer);
+        showAnswerButton.setOnClickListener(this);
+        //收藏按钮
+        setStared = (TextView)findViewById(R.id.set_star);
+        setStared.setOnClickListener(this);
     }
-    public class MyViewPagerAdapter extends PagerAdapter {
-        //显示的数据
-        private List<FillInQuestion> datas = null;
-        private LinkedList<View> mViewCache = null;
-        private Context mContext ;
-        private LayoutInflater mLayoutInflater = null;
+    private void showQuestionList(){
+        background.setVisibility(View.VISIBLE);
+        ObjectAnimator.ofFloat(bottomMenu,"translationY",rootView.getHeight()-bottomMenu.getHeight()).setDuration(500).start();
+    }
+    private void hideQuestionList(){
+        background.setVisibility(View.GONE);
+        ObjectAnimator.ofFloat(bottomMenu,"translationY",rootView.getHeight()-200).setDuration(500).start();
+    }
+    private PagerAdapter getCurrentAdapter(){
+        switch (currentQuestionLabel){
+            case FILLINQUESTIONLABEL:
+                return new FillInQuestionAdapter(fillInQuestions,this);
+        }
+        return null;
+    }
 
-//        private ViewGroup viewGroup = null;
-//        private int position = 0;
-        private FillInQuestionViewHolder holder;
-
-        public MyViewPagerAdapter(List<FillInQuestion> datas, Context context) {
-            super();
-            this.datas = datas;
-            this.mContext = context ;
-            this.mLayoutInflater = LayoutInflater.from(mContext) ;
-            this.mViewCache = new LinkedList<>(); }
-        @Override public int getCount() {
-            Log.e("test","getCount ");
-            return this.datas.size();
-        }
-        @Override public int getItemPosition(Object object) {
-            Log.e("test","getItemPosition ");
-            return super.getItemPosition(object);
-        }
-        @Override public Object instantiateItem(ViewGroup container, int position) {
-            Log.e("test","instantiateItem " + position);
-            return getFillInQuestionView(container,position,false);
-        }
-        @Override public void destroyItem(ViewGroup container, int position, Object object) {
-            Log.e("test","destroyItem " + position);
-            View contentView = (View) object;
-            container.removeView(contentView);
-            this.mViewCache.add(contentView);
-        }
-        @Override public boolean isViewFromObject(View view, Object o) {
-            Log.e("test","isViewFromObject ");
-            return view == o;
-        }
-
-        public View getFillInQuestionView(ViewGroup container, int position,boolean showAnswer){
-//            viewGroup = container;
-//            this.position = position;
-            FillInQuestionViewHolder fillInQuestionViewHolder = null;
-            View convertView = null;
-            if(mViewCache.size() == 0){
-                convertView = this.mLayoutInflater.inflate(R.layout.viewadapter_fillinquestion_item , null ,false);
-                TextView questionBody   = (TextView) convertView.findViewById(R.id.fillinquestion_body);
-                TextView questionAnswer = (TextView) convertView.findViewById(R.id.fillinQuestion_answer);
-                fillInQuestionViewHolder = new FillInQuestionViewHolder();
-                fillInQuestionViewHolder.questionBody = questionBody;
-                fillInQuestionViewHolder.questionAnswer = questionAnswer;
-                convertView.setTag(fillInQuestionViewHolder);
-            }else {
-                convertView = mViewCache.removeFirst();
-                fillInQuestionViewHolder = (FillInQuestionViewHolder)convertView.getTag();
-            }
-            holder = fillInQuestionViewHolder;
-            fillInQuestionViewHolder.questionBody.setText(datas.get(position).getBody());
-            fillInQuestionViewHolder.questionAnswer.setText(datas.get(position).getBody());
-            container.addView(convertView ,ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT );
-            return convertView;
-        }
-
-        @Override
-        public void setPrimaryItem(ViewGroup container, int position, Object object) {
-            currentView = (View) object;
-            super.setPrimaryItem(container, position, object);
-        }
-        public View currentView = null;
-        public View getCurrentView(){
-            return currentView;
-        }
-
-        public void showFillInQuestionAnswer(){
-            Log.d("------------->>","fffff");
-            holder.questionAnswer.setText(datas.get(0).getAnswer());
-        }
-        public final class FillInQuestionViewHolder {
-            public TextView questionBody;
-            public TextView questionAnswer;
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.background:
+                hideQuestionList();
+                break;
+            case R.id.show_answer:
+                ((BaseStudySystemAdapter)viewPager.getAdapter()).showCurrentAnswer();
+                break;
+            case R.id.set_star:
+                showQuestionList();
+                break;
         }
     }
 }
