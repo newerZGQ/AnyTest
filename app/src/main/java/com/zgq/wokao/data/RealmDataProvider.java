@@ -11,6 +11,7 @@ import com.zgq.wokao.Util.FileUtil;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -40,10 +41,10 @@ public class RealmDataProvider {
         return null;
     }
 
-    public static RealmList<ExamPaperInfo> getAllExamPaperInfo(Realm realm){
+    public static ArrayList<ExamPaperInfo> getAllExamPaperInfo(Realm realm){
         if (realm == null) return null;
         RealmResults<NormalExamPaper> results = realm.where(NormalExamPaper.class).findAll();
-        RealmList<ExamPaperInfo> list = new RealmList<>();
+        ArrayList<ExamPaperInfo> list = new ArrayList<>();
         for (int i = 0; i < results.size();i++){
             list.add(results.get(i).getPaperInfo());
         }
@@ -54,7 +55,7 @@ public class RealmDataProvider {
             return false;
         }
 
-        RealmList<ExamPaperInfo> infos = getAllExamPaperInfo(realm);
+        ArrayList<ExamPaperInfo> infos = getAllExamPaperInfo(realm);
         String thisInfo = paper.getPaperInfo().getTitle() + paper.getPaperInfo().getAuthor();
         for (int i = 0; i<infos.size();i++){
             if (thisInfo.equals(infos.get(i).getTitle()+infos.get(i).getAuthor())) return true;

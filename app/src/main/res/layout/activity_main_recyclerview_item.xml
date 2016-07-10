@@ -1,59 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/list_item"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="72dp">
+
 
     <TextView
-        android:id="@+id/label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/circle_background"
-        android:gravity="center_horizontal|center_vertical"
-        android:text="保"
-        android:textSize="17sp" />
-
-    <RelativeLayout
-        android:id="@+id/list_item"
+        android:id="@+id/paper_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_toEndOf="@+id/label"
-        android:layout_toRightOf="@+id/label"
-        android:background="?android:attr/selectableItemBackground">
+        android:layout_marginTop="16dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="72dp"
+        android:paddingRight="72dp"
+        android:text="fdsffsdafsaf"
+        android:textColor="@color/colorFirstLevelText"
+        android:textSize="16sp" />
+    <TextView
+        android:id="@+id/activity_main_paper_author_label"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="16dp"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="72dp"
+        android:background="@drawable/person"
+        android:textColor="@color/colorSecondLevelText"
+        android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/paper_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:text="fdsffsdafsaf"
-            android:textSize="20sp" />
+    <TextView
+        android:id="@+id/auther_and_date"
+        android:layout_width="wrap_content"
+        android:layout_height="16dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="16dp"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="88dp"
+        android:text="zhangguoqaing"
+        android:textColor="@color/colorSecondLevelText"
+        android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/auther"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/paper_name"
-            android:layout_alignStart="@+id/paper_name"
-            android:layout_below="@+id/paper_name"
-            android:layout_marginTop="10dp"
-            android:text="zhangguoqaing" />
 
-        <TextView
-            android:id="@+id/last_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/paper_name"
-            android:layout_alignRight="@+id/paper_name"
-            android:layout_below="@+id/paper_name"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp"
-            android:text="2016.6.35" />
-    </RelativeLayout>
+    <com.zgq.wokao.view.RotateTextView
+        android:id="@+id/label"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp"
+        android:background="@drawable/circle_background_upside_orange"
+        android:gravity="center_horizontal|center_vertical"
+        android:shadowColor="@color/colorAlphaBackground"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="10"
+        android:textColor="@color/colorWhite"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/activity_main_paper_star_tv"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/inactive_star"
+        android:clickable="true" />
 
 </RelativeLayout>

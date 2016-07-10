@@ -1,7 +1,6 @@
 package com.zgq.wokao.ui;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,9 +16,12 @@ import android.widget.TextView;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 import com.zgq.wokao.R;
 import com.zgq.wokao.data.NormalExamPaper;
+import com.zgq.wokao.view.RotateTextView;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.realm.Realm;;
 import io.realm.RealmResults;
 
@@ -33,6 +35,10 @@ public class QuestionsListActivity extends AppCompatActivity {
 
     private RecyclerView examListView;
     private QuestionTypeAdapter adapter;
+
+    @BindView(R.id.test1)
+    RotateTextView textView;
+
     private ArrayList<String> typeNames = new ArrayList<>();
     private ArrayList<Integer> typeImages = new ArrayList<>();
     private ArrayList<Integer> questionCount = new ArrayList<>();
@@ -46,17 +52,37 @@ public class QuestionsListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         initData();
         setContentView(R.layout.activity_questions_list);
+        ButterKnife.bind(this);
         setTitle(normalExamPaper.getPaperInfo().getTitle());
         examListView = (RecyclerView) findViewById(R.id.question_list);
         examListView.addItemDecoration(
                 new HorizontalDividerItemDecoration.Builder(this)
                         .color(getResources().getColor(R.color.colorRecyclerViewDivider))
-                        .size(getResources().getDimensionPixelSize(R.dimen.paper_recyclerview_divider))
+                        .size(getResources().getDimensionPixelSize(R.dimen.paper_recyclerview_divider_height))
                         .build());
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getApplicationContext());
         examListView.setLayoutManager(layoutManager);
         adapter = new QuestionTypeAdapter();
         examListView.setAdapter(adapter);
+        textView.setClickable(true);
+        textView.setSidesStyle(new RotateTextView.UpAndDownSideStyle() {
+            @Override
+            public void setUpSide() {
+                textView.setText("U");
+                textView.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            }
+            @Override
+            public void setDownSide() {
+                textView.setText("D");
+                textView.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+            }
+        });
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                textView.changeSide();
+            }
+        });
     }
 
     @Override
@@ -67,7 +93,7 @@ public class QuestionsListActivity extends AppCompatActivity {
 
     private void initData() {
         String title = getIntent().getStringExtra("paperTitle");
-        String author = getIntent().getStringExtra("paperAuthor");
+        String author = getIntent().getStringExtra("paperAuthorAndDate");
         RealmResults<NormalExamPaper> papers = realm.where(NormalExamPaper.class).findAll();
         for (NormalExamPaper paper : papers) {
             if (title.equals(paper.getPaperInfo().getTitle()) || author.equals(paper.getPaperInfo().getAuthor())) {
@@ -88,12 +114,12 @@ public class QuestionsListActivity extends AppCompatActivity {
         typeNames.add("简答题");
         typeNames.add("顺序学习");
 
-        typeImages.add(R.drawable.circle_background);
-        typeImages.add(R.drawable.circle_background);
-        typeImages.add(R.drawable.circle_background);
-        typeImages.add(R.drawable.circle_background);
-        typeImages.add(R.drawable.circle_background);
-        typeImages.add(R.drawable.circle_background);
+        typeImages.add(R.drawable.circle_background_downside);
+        typeImages.add(R.drawable.circle_background_downside);
+        typeImages.add(R.drawable.circle_background_downside);
+        typeImages.add(R.drawable.circle_background_downside);
+        typeImages.add(R.drawable.circle_background_downside);
+        typeImages.add(R.drawable.circle_background_downside);
     }
 
     private boolean isEmptyQuestionList(int position){

@@ -2,7 +2,7 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="oval"
     android:useLevel="false">
-    <solid android:color="@color/colorRotateTextViewDownSide"/>
+    <solid android:color="@color/colorOrange"/>
 
     <size android:width="40dp"
         android:height="40dp"/>

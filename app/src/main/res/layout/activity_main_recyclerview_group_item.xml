@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/colorRecyclerViewItemSelectedBackGround"
+    android:layout_height="25dp">
+    <TextView
+        android:id="@+id/recyclerview_group_title"
+        android:layout_marginLeft="16dp"
+        android:layout_gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="25dp" />
+
+</LinearLayout>

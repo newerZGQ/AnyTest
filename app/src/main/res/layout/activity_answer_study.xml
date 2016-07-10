@@ -7,7 +7,7 @@
     tools:context="com.zgq.wokao.ui.AnswerStudyActivity">
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/answer"
+        android:id="@+id/answer_study_pager"
         android:layout_marginBottom="50dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
