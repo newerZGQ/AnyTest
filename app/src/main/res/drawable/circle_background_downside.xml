@@ -3,7 +3,6 @@
     android:shape="oval"
     android:useLevel="false">
     <solid android:color="@color/colorRotateTextViewDownSide"/>
-
     <size android:width="40dp"
         android:height="40dp"/>
 </shape>

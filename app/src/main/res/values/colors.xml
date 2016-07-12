@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#e7790d</color>
+    <color name="colorPrimaryDark">#d06d0c</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBlack">#000000</color>
@@ -19,5 +19,7 @@
     <color name="colorAlphaBackground">#64000000</color>
 
     <color name="colorRotateTextViewUpSide">#23af3b</color>
-    <color name="colorRotateTextViewDownSide">#5e5e5e</color>
+    <color name="colorRotateTextViewDownSide">#888888</color>
+
+    <color name="colorActionModeBackground">#757575</color>
 </resources>

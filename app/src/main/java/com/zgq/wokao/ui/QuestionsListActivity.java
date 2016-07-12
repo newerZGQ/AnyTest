@@ -67,12 +67,12 @@ public class QuestionsListActivity extends AppCompatActivity {
         textView.setClickable(true);
         textView.setSidesStyle(new RotateTextView.UpAndDownSideStyle() {
             @Override
-            public void setUpSide() {
+            public void setUpSideStyle() {
                 textView.setText("U");
                 textView.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
             }
             @Override
-            public void setDownSide() {
+            public void setDownSideStyle() {
                 textView.setText("D");
                 textView.setBackgroundColor(getResources().getColor(R.color.colorAccent));
             }

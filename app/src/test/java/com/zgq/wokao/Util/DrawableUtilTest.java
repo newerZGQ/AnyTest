@@ -18,7 +18,7 @@ public class DrawableUtilTest {
     @Test
     public void testGetColor() throws Exception {
         for (int i = 0;i<10;i++) {
-            Log.d("getDrawable", "" + DrawableUtil.getDrawable());
+            Log.d("getCircleDrawable", "" + DrawableUtil.getCircleDrawable());
         }
     }
 }

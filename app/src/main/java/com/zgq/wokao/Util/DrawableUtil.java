@@ -23,16 +23,24 @@ public class DrawableUtil {
         colorSet.add(colorYellow);
     }
 
-    public static int getDrawable(){
+    public static int getCircleDrawable(){
         int position = (int)(Math.random()*4);
         Log.d("getColorPo",""+position);
         int colorCurrent = colorSet.get(position);
         Log.d("getColor",""+colorCurrent);
         if (colorPrivious == colorCurrent){
-            return getDrawable();
+            return getCircleDrawable();
         }else {
             colorPrivious = colorCurrent;
             return colorCurrent;
         }
+    }
+
+    public static ArrayList<Integer> getCircleDrawableSet(int capcity){
+        ArrayList<Integer> arrayList = new ArrayList<>();
+        for (int i = 0;i<capcity;i++){
+            arrayList.add(getCircleDrawable());
+        }
+        return arrayList;
     }
 }

@@ -6,14 +6,12 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-import com.zgq.wokao.R;
-
 /**
  * Created by zgq on 16-7-8.
  */
 public class RotateTextView extends TextView implements ObjectAnimator.AnimatorListener{
-    private static final int UPSIDE   = 1;
-    private static final int DOWNSIDE = 2;
+    public static final int UPSIDE   = 1;
+    public static final int DOWNSIDE = 2;
     private int currentSide = UPSIDE;
     private Context context;
 
@@ -22,36 +20,61 @@ public class RotateTextView extends TextView implements ObjectAnimator.AnimatorL
     public RotateTextView(Context context) {
         super(context);
         this.context = context;
-        init();
     }
 
     public RotateTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
-        init();
     }
 
     public RotateTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.context = context;
-        init();
     }
     private void init(){
-        setUpside();
     }
     public void setSidesStyle(UpAndDownSideStyle sidesStyle){
         this.sidesStyle = sidesStyle;
     }
-    private void setUpside(){
-        this.setText("U");
-        this.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+    public void setUpside(){
+        sidesStyle.setUpSideStyle();
 
     }
-    private void setDownside(){
+    public void setDownside(){
+        sidesStyle.setDownSideStyle();
+    }
 
+    public int getCurrentSide(){
+        return currentSide;
+    }
+    public void setCurrentSide(int currentSide){
+        this.currentSide = currentSide;
     }
 
     public void changeSide(){
+        switch (currentSide){
+            case UPSIDE:
+                currentSide = DOWNSIDE;
+                break;
+            case DOWNSIDE:
+                currentSide = UPSIDE;
+                break;
+        }
+        ObjectAnimator up2downFirstStep = new ObjectAnimator().ofFloat(this,"rotationY",0,90f).setDuration(100);
+        up2downFirstStep.addListener(this);
+        up2downFirstStep.start();
+    }
+    public void setToUpside(){
+        currentSide = UPSIDE;
+        startAnimation();
+    }
+
+    public void setToDownside(){
+        currentSide = DOWNSIDE;
+        startAnimation();
+    }
+
+    public void startAnimation(){
         ObjectAnimator up2downFirstStep = new ObjectAnimator().ofFloat(this,"rotationY",0,90f).setDuration(100);
         up2downFirstStep.addListener(this);
         up2downFirstStep.start();
@@ -65,13 +88,11 @@ public class RotateTextView extends TextView implements ObjectAnimator.AnimatorL
     @Override
     public void onAnimationEnd(Animator animation) {
         switch (currentSide){
-            case UPSIDE:
-                sidesStyle.setDownSide();
-                currentSide = DOWNSIDE;
-                break;
             case DOWNSIDE:
-                sidesStyle.setUpSide();
-                currentSide = UPSIDE;
+                sidesStyle.setDownSideStyle();
+                break;
+            case UPSIDE:
+                sidesStyle.setUpSideStyle();
                 break;
         }
         ObjectAnimator.ofFloat(this,"rotationY",270f,360f).setDuration(100).start();
@@ -87,7 +108,7 @@ public class RotateTextView extends TextView implements ObjectAnimator.AnimatorL
 
     }
     public interface UpAndDownSideStyle{
-        public void setUpSide();
-        public void setDownSide();
+        public void setUpSideStyle();
+        public void setDownSideStyle();
     }
 }

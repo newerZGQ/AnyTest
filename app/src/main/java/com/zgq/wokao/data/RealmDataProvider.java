@@ -40,6 +40,15 @@ public class RealmDataProvider {
     public static RealmResults getAllExamPapers(){
         return null;
     }
+    public static ArrayList<NormalExamPaper> getAllExamPaper(Realm realm){
+        if (realm == null) return null;
+        RealmResults<NormalExamPaper> results = realm.where(NormalExamPaper.class).findAll();
+        ArrayList<NormalExamPaper> list = new ArrayList<>();
+        for (int i = 0; i < results.size();i++){
+            list.add(results.get(i));
+        }
+        return list;
+    }
 
     public static ArrayList<ExamPaperInfo> getAllExamPaperInfo(Realm realm){
         if (realm == null) return null;
