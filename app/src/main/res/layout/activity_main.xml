@@ -3,12 +3,127 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorWhite"
     tools:context=".ui.MainActivity">
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recy_exam_paper"
         android:background="@color/colorWhite"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar_layout">
     </android.support.v7.widget.RecyclerView>
+    <LinearLayout
+        android:id="@+id/toolbar_layout"
+        android:elevation="4dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/colorPrimary">
+        <View
+            android:background="@color/colorStatusBar"
+            android:layout_width="match_parent"
+            android:layout_height="24dp"/>
+        <RelativeLayout
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="56dp">
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_marginLeft="16dp"
+                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="我考"
+                android:textSize="20sp"
+                android:textColor="@color/colorWhite"/>
+            <TextView
+                android:id="@+id/toolbar_back"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:visibility="gone"
+                android:background="@drawable/toolbar_back_background"/>
+            <Button
+                android:id="@+id/toolbar_add"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="56dp"
+                android:background="@drawable/toolbar_add_background"
+                android:layout_width="56dp"
+                android:layout_height="56dp" />
+            <TextView
+                android:id="@+id/toolbar_more"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/toolbar_more_background"
+                android:layout_width="56dp"
+                android:layout_height="56dp" />
+            <TextView
+                android:id="@+id/toolbar_delete"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/toolbar_delete_background"
+                android:layout_marginRight="75dp"
+                android:visibility="gone"
+                android:layout_width="56dp"
+                android:layout_height="56dp" />
+            <TextView
+                android:id="@+id/toolbar_setstar"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="16dp"
+                android:text="加注星标"
+                android:textColor="@color/colorWhite"
+                android:gravity="center_vertical"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="56dp" />
+
+        </RelativeLayout>
+    </LinearLayout>
+    <View
+        android:id="@+id/toolbar_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+    <LinearLayout
+        android:id="@+id/toolbar_overflow"
+        android:orientation="vertical"
+        android:layout_marginTop="28dp"
+        android:layout_marginRight="5dp"
+        android:elevation="16dp"
+        android:layout_alignParentRight="true"
+        android:visibility="gone"
+        android:background="@color/colorWhite"
+        android:transformPivotX="150dp"
+        android:transformPivotY="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/toolbar_share"
+            android:text="分享"
+            android:textSize="14sp"
+            android:textColor="@color/colorBlack"
+            android:layout_marginLeft="16dp"
+            android:gravity="center_vertical"
+            android:layout_width="150dp"
+            android:layout_height="56dp" />
+        <TextView
+            android:id="@+id/toolbar_setting"
+            android:text="设置"
+            android:textColor="@color/colorBlack"
+            android:textSize="14sp"
+            android:layout_marginLeft="16dp"
+            android:gravity="center_vertical"
+            android:layout_width="150dp"
+            android:layout_height="56dp" />
+        <TextView
+            android:id="@+id/toolbar_starapp"
+            android:text="去评分"
+            android:textSize="14sp"
+            android:textColor="@color/colorBlack"
+            android:layout_marginLeft="16dp"
+            android:gravity="center_vertical"
+            android:layout_width="150dp"
+            android:layout_height="56dp" />
+    </LinearLayout>
+
+
 </RelativeLayout>

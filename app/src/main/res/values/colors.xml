@@ -10,6 +10,14 @@
     <color name="colorBlue">#7baaf7</color>
     <color name="colorYellow">#fdd835</color>
 
+    //状态栏
+    <color name="colorStatusBar">#01a19c9c</color>
+    <color name="colorTransparent">#00000000</color>
+
+    //acrivity_questionlist
+    <color name="colorTransparentText">#75ffffff</color>
+    <color name="colorBottomBackground">#63000000</color>
+
     <color name="colorFirstLevelText">#DE000000</color>
     <color name="colorSecondLevelText">#8a000000</color>
 
@@ -21,5 +29,6 @@
     <color name="colorRotateTextViewUpSide">#23af3b</color>
     <color name="colorRotateTextViewDownSide">#888888</color>
 
-    <color name="colorActionModeBackground">#757575</color>
+    <color name="colorActionModeActionBarBackground">#757575</color>
+    <color name="colorActionModeStatusBarBackground">#616161</color>
 </resources>

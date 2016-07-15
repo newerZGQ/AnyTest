@@ -1,21 +1,22 @@
 package com.zgq.wokao.ui;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.ActionMode;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v7.widget.RecyclerView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,13 +40,38 @@ import cn.qqtheme.framework.picker.FilePicker;
 import cn.qqtheme.framework.util.StorageUtils;
 import io.realm.Realm;
 import jp.wasabeef.recyclerview.animators.FadeInAnimator;
-import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     //paper信息列表
     @BindView(R.id.recy_exam_paper)
     RecyclerView examListView;
     PaperInfoAdapter adapter;
+    @BindView(R.id.toolbar_layout)
+    LinearLayout toolbarLayout;
+    @BindView(R.id.toolbar_add)
+    TextView toolbarAdd;
+    @BindView(R.id.toolbar_more)
+    TextView toolbarMore;
+    @BindView(R.id.toolbar_delete)
+    TextView toolbarDelete;
+    @BindView(R.id.toolbar_setstar)
+    TextView toolbarSetStar;
+    @BindView(R.id.toolbar_back)
+    TextView toolbarBack;
+    @BindView(R.id.toolbar_title)
+    TextView toolbarTitle;
+    @BindView(R.id.toolbar_background)
+    View toolbarBackground;
+    @BindView(R.id.toolbar_starapp)
+    TextView toolbarStarApp;
+    @BindView(R.id.toolbar_share)
+    TextView toolbarShare;
+    @BindView(R.id.toolbar_setting)
+    TextView toolbarSetting;
+    @BindView(R.id.toolbar_overflow)
+    LinearLayout toolbarOverFlow;
+//    @BindView(R.id.main_activity_toolbar)
+//    Toolbar toolbar;
 
     private Realm realm = Realm.getDefaultInstance();
     private ArrayList<ExamPaperInfo> paperInfos = new ArrayList<>();
@@ -85,80 +111,65 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void initView() {
+        toolbarSetStar.setOnClickListener(this);
+        toolbarDelete.setOnClickListener(this);
+        toolbarMore.setOnClickListener(this);
+        toolbarAdd.setOnClickListener(this);
+        toolbarBack.setOnClickListener(this);
+        toolbarTitle.setOnClickListener(this);
+        toolbarBackground.setOnClickListener(this);
+        toolbarStarApp.setOnClickListener(this);
+        toolbarSetting.setOnClickListener(this);
+        toolbarShare.setOnClickListener(this);
         examListView.addItemDecoration(
                 new HorizontalDividerItemDecoration.Builder(this)
                         .color(getResources().getColor(R.color.colorRecyclerViewDivider))
                         .size(getResources().getDimensionPixelSize(R.dimen.paper_recyclerview_divider_height))
-                        .margin(getResources().getDimensionPixelSize(R.dimen.paper_recyclerview_divider_margin), getResources().getDimensionPixelSize(R.dimen.paper_recyclerview_divider_margin))
+                        .margin(getResources().getDimensionPixelSize(R.dimen.paper_recyclerview_divider_margin), 0)
                         .build());
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getApplicationContext());
         examListView.setLayoutManager(layoutManager);
         examListView.setItemAnimator(new FadeInAnimator());
         adapter = new PaperInfoAdapter(paperInfos);
         examListView.setAdapter(adapter);
-
-        callback = new ActionMode.Callback() {
-            @Override
-            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-                MenuInflater inflater = mode.getMenuInflater();
-                inflater.inflate(R.menu.activity_main_actionmode, menu);
-                return true;
-            }
-
-            @Override
-            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-                return false;
-            }
-
-            @Override
-            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.delete_menu:
-                        realm.executeTransaction(new Realm.Transaction() {
-                            @Override
-                            public void execute(Realm realm) {
-                                for (int i = 0; i<adapter.isItemSelectedList.size(); i++){
-                                    if (adapter.isItemSelectedList.get(i)){
-//                                        adapter.removeSpecificPosition(i);
-                                        papers.get(i).deleteFromRealm();
-                                    }
-                                }
-                            }
-                        });
-                        updatePaperInfos();
-                        Toast.makeText(MainActivity.this,"delete",Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.set_star_menu:
-                        realm.executeTransaction(new Realm.Transaction() {
-                            @Override
-                            public void execute(Realm realm) {
-                                for (int i = 0; i<adapter.isItemSelectedList.size(); i++){
-                                    if (adapter.isItemSelectedList.get(i) && !paperInfos.get(i).isStared()){
-                                        paperInfos.get(i).setStared(true);
-                                    }
-                                }
-                            }
-                        });
-                        updatePaperInfos();
-                        break;
-                }
-                return false;
-            }
-
-            @Override
-            public void onDestroyActionMode(ActionMode mode) {
-                adapter.releaseSelectedView();
-                cancelMyActionMode();
-            }
-        };
     }
 
+
     private void startMyActionMode() {
-        startActionMode(callback);
+        toolbarLayout.setBackgroundColor(getResources().getColor(R.color.colorActionModeActionBarBackground));
+        AnimatorSet set = new AnimatorSet();
+        toolbarAdd.setVisibility(View.GONE);
+        toolbarMore.setVisibility(View.GONE);
+        toolbarTitle.setVisibility(View.GONE);
+        set.playTogether(
+//                ObjectAnimator.ofFloat(toolbarDelete,"scaleX",0,1),
+                ObjectAnimator.ofFloat(toolbarDelete,"scaleY",0,1),
+                ObjectAnimator.ofFloat(toolbarSetStar,"scaleY",0,1),
+                ObjectAnimator.ofFloat(toolbarBack,"scaleY",0,1)
+        );
+        set.setDuration(100).start();
+        toolbarDelete.setVisibility(View.VISIBLE);
+        toolbarSetStar.setVisibility(View.VISIBLE);
+        toolbarBack.setVisibility(View.VISIBLE);
         actionModeIsActive = true;
     }
 
     private void cancelMyActionMode() {
+        toolbarLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        toolbarDelete.setVisibility(View.GONE);
+        toolbarSetStar.setVisibility(View.GONE);
+        toolbarBack.setVisibility(View.GONE);
+        AnimatorSet set = new AnimatorSet();
+        set.playTogether(
+                ObjectAnimator.ofFloat(toolbarAdd,"scaleY",0,1),
+                ObjectAnimator.ofFloat(toolbarMore,"scaleY",0,1),
+                ObjectAnimator.ofFloat(toolbarTitle,"scaleY",0,1)
+        );
+        set.setDuration(100).start();
+        toolbarAdd.setVisibility(View.VISIBLE);
+        toolbarMore.setVisibility(View.VISIBLE);
+        toolbarTitle.setVisibility(View.VISIBLE);
+        adapter.releaseSelectedView();
         actionModeIsActive = false;
     }
 
@@ -166,22 +177,13 @@ public class MainActivity extends AppCompatActivity {
         return actionModeIsActive;
     }
 
-    public void updatePaperInfos() {
-        getRecyclerViewData();
-        adapter.initData();
-        adapter.notifyDataSetChanged();
-    }
-
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_activity_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.add_paper_menu:
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.toolbar_back:
+                cancelMyActionMode();
+                break;
+            case R.id.toolbar_add:
                 FilePicker picker = new FilePicker(MainActivity.this, FilePicker.FILE);
                 picker.setShowHideDir(false);
                 picker.setRootPath(StorageUtils.getRootPath(MainActivity.this) + "Download/");
@@ -193,18 +195,84 @@ public class MainActivity extends AppCompatActivity {
                 });
                 picker.show();
                 break;
-            case R.id.share_app_menu:
+            case R.id.toolbar_more:
+                if (getOverFlowStatus()) hideOverFlow();
+                else showOverFlow();
                 break;
-            case R.id.setting_app_menu:
+            case R.id.toolbar_setting:
+                break;
+            case R.id.toolbar_starapp:
+                break;
+            case R.id.toolbar_background:
+                hideOverFlow();
+                break;
+            case R.id.toolbar_delete:
+                realm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        for (int i = 0; i<adapter.isItemSelectedList.size(); i++){
+                            if (adapter.isItemSelectedList.get(i)){
+//                                        adapter.removeSpecificPosition(i);
+                                papers.get(i).deleteFromRealm();
+                            }
+                        }
+                    }
+                });
+                updatePaperInfos();
+                Toast.makeText(MainActivity.this,"delete",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.toolbar_setstar:
+                realm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        for (int i = 0; i<adapter.isItemSelectedList.size(); i++){
+                            if (adapter.isItemSelectedList.get(i) && !paperInfos.get(i).isStared()){
+                                paperInfos.get(i).setStared(true);
+                            }
+                        }
+                    }
+                });
+                updatePaperInfos();
                 break;
         }
-        return true;
+    }
+
+    private boolean overFlowStatus = false;
+
+    private boolean getOverFlowStatus(){
+        return overFlowStatus;
+    }
+
+    private void hideOverFlow(){
+        overFlowStatus = false;
+        toolbarOverFlow.setVisibility(View.GONE);
+        toolbarBackground.setVisibility(View.GONE);
+    }
+
+    private void showOverFlow(){
+        overFlowStatus = true;
+//        toolbarOverFlow.setPivotX(1);
+//        toolbarOverFlow.setPivotY(1);
+//        toolbarOverFlow.invalidate();
+        AnimatorSet set = new AnimatorSet();
+        set.playTogether(ObjectAnimator.ofFloat(toolbarOverFlow,"scaleX",0,1),
+                ObjectAnimator.ofFloat(toolbarOverFlow,"scaleY",0,1));
+        set.setDuration(100).start();
+        toolbarOverFlow.setVisibility(View.VISIBLE);
+        toolbarBackground.setVisibility(View.VISIBLE);
+    }
+
+    public void updatePaperInfos() {
+        getRecyclerViewData();
+        adapter.initData();
+        adapter.notifyDataSetChanged();
     }
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-
+        if (keyCode == KeyEvent.KEYCODE_BACK && actionModeIsActive) {
+            cancelMyActionMode();
+            return true;
         }
         return super.onKeyDown(keyCode, event);
     }
@@ -276,7 +344,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void setDownSideStyle() {
                     holder1.paperLabel.setText("");
-                    holder1.paperLabel.setBackground(getResources().getDrawable(R.drawable.dowm));
+                    holder1.paperLabel.setBackground(getResources().getDrawable(R.drawable.circle_background_downside_right_icon));
                     holder1.item.setBackgroundColor(getResources().getColor(R.color.colorRecyclerViewItemSelectedBackGround));
                 }
             });

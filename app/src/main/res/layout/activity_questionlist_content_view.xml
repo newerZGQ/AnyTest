@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="题型"
+        android:layout_marginLeft="16dp"
+        android:gravity="bottom"
+        android:textSize="14sp"/>
+    <include
+        android:id="@+id/fiqstType"
+        layout="@layout/activity_questionlist_qsttype_group"/>
+    <include
+        android:id="@+id/tfqstType"
+        layout="@layout/activity_questionlist_qsttype_group"/>
+    <include
+        android:id="@+id/scqstType"
+        layout="@layout/activity_questionlist_qsttype_group"/>
+    <include
+        android:id="@+id/mcqstType"
+        layout="@layout/activity_questionlist_qsttype_group"/>
+    <include
+        android:id="@+id/dsqstType"
+        layout="@layout/activity_questionlist_qsttype_group"/>
 
 </LinearLayout>
