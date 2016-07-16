@@ -1,30 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:elevation="6dp"
-    android:background="@color/colorRecyclerViewDivider"
+    android:elevation="8dp"
+    android:background="@color/colorWhite"
     android:layout_width="match_parent"
     android:layout_height="200dp">
-    <TextView
-        android:text="收藏"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:id="@+id/set_star"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-    <TextView
-        android:id="@+id/show_answer"
-        android:text="答案"
-        android:clickable="true"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:id="@+id/linearLayout2">
+        <LinearLayout
+            android:id="@+id/set_star"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="horizontal"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/star_label"
+                android:background="@drawable/active_star"
+                android:layout_width="16dp"
+                android:layout_height="16dp" />
+            <TextView
+                android:text="收藏"
+                android:layout_marginLeft="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/show_answer"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal|center_vertical"
+            android:layout_width="0dp"
+            android:layout_weight="1.5"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/answer_label"
+                android:background="@drawable/inactive_light"
+                android:layout_width="16dp"
+                android:layout_height="16dp" />
+            <TextView
+                android:text="答案"
+                android:layout_marginLeft="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/question_list"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal|center_vertical"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/list_label"
+                android:background="@drawable/list_label"
+                android:layout_width="16dp"
+                android:layout_height="16dp" />
+            <TextView
+                android:layout_marginLeft="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="列表"/>
+        </LinearLayout>
+    </LinearLayout>
+
     <GridView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_below="@+id/set_star"
+        android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/linearLayout2">
     </GridView>
 </RelativeLayout>

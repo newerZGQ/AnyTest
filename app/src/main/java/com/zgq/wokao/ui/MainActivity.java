@@ -11,8 +11,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.ActionMode;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v7.widget.RecyclerView;
@@ -89,6 +87,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initView();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        updatePaperInfos();
     }
 
     @Override
@@ -418,7 +422,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Intent intent = new Intent();
                     intent.setClass(MainActivity.this, QuestionsListActivity.class);
                     intent.putExtra("paperTitle", info.getTitle());
-                    intent.putExtra("paperAuthorAndDate", info.getAuthor());
+                    intent.putExtra("paperAuthor", info.getAuthor());
                     startActivity(intent);
                 }
             });
@@ -513,9 +517,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 super(itemView);
                 item = (RelativeLayout) itemView.findViewById(R.id.list_item);
                 paperName = (TextView) itemView.findViewById(R.id.paper_name);
-                paperLabel = (RotateTextView) itemView.findViewById(R.id.label);
+                paperLabel = (RotateTextView) itemView.findViewById(R.id.question_label);
                 paperLabel.setClickable(true);
-                paperAuthorAndDate = (TextView) itemView.findViewById(R.id.auther_and_date);
+                paperAuthorAndDate = (TextView) itemView.findViewById(R.id.auther);
                 paperStar = (TextView) itemView.findViewById(R.id.activity_main_paper_star_tv);
                 groupTitle = (TextView) itemView.findViewById(R.id.group_title);
             }

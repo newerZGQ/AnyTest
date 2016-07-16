@@ -10,4 +10,6 @@ public interface QuestionInfo {
     public String getType();
     public void setId(int id);
     public int getId();
+    public boolean isStared();
+    public void setStared(boolean stared);
 }

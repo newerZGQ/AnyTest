@@ -9,6 +9,10 @@
     <color name="colorGreen">#aed581</color>
     <color name="colorBlue">#7baaf7</color>
     <color name="colorYellow">#fdd835</color>
+    <color name="colorTeal">#009688</color>
+    <color name="colorCyan">#00bcd4</color>
+    <color name="colorLime">#cddc39</color>
+    <color name="colorIndigo">#3f51b5</color>
 
     //状态栏
     <color name="colorStatusBar">#01a19c9c</color>
@@ -24,7 +28,7 @@
     <color name="colorRecyclerViewDivider">#32504f4f</color>
     <color name="colorRecyclerViewItemSelectedBackGround">#14000000</color>
 
-    <color name="colorAlphaBackground">#64000000</color>
+    <color name="colorAlphaBackground">#33000000</color>
 
     <color name="colorRotateTextViewUpSide">#23af3b</color>
     <color name="colorRotateTextViewDownSide">#888888</color>

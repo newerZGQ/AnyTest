@@ -10,6 +10,7 @@ public class DiscussQuestion extends RealmObject implements Question  {
     private String answer;
     private int id;
     private String type;
+    private boolean isStared;
 
     public DiscussQuestion() {
     }
@@ -60,6 +61,15 @@ public class DiscussQuestion extends RealmObject implements Question  {
     @Override
     public String getAnswer() {
         return (hasAnswer())?answer:null;
+    }
+
+    @Override
+    public boolean isStared() {
+        return isStared;
+    }
+    @Override
+    public void setStared(boolean stared) {
+        this.isStared = stared;
     }
     @Override
     public String toString() {

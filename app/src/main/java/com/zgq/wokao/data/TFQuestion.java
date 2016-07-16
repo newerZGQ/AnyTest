@@ -10,6 +10,7 @@ public class TFQuestion extends RealmObject implements Question {
     private String answer;
     private int id;
     private String type;
+    private boolean isStared;
 
     public TFQuestion() {
     }
@@ -65,5 +66,13 @@ public class TFQuestion extends RealmObject implements Question {
     @Override
     public String toString() {
         return id+" "+type+" "+body+" "+answer;
+    }
+    @Override
+    public boolean isStared() {
+        return isStared;
+    }
+    @Override
+    public void setStared(boolean stared) {
+        this.isStared = stared;
     }
 }

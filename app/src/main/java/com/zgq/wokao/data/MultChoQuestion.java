@@ -13,6 +13,7 @@ public class MultChoQuestion extends RealmObject implements Question, QuestionOp
     private String type;
     private String body;
     private String answer;
+    private boolean isStared;
     private RealmList<Option> options = new RealmList<>();
 
     public MultChoQuestion() {
@@ -96,6 +97,15 @@ public class MultChoQuestion extends RealmObject implements Question, QuestionOp
         if (option == null) return false;
         options.add(option);
         return true;
+    }
+
+    @Override
+    public boolean isStared() {
+        return isStared;
+    }
+    @Override
+    public void setStared(boolean stared) {
+        this.isStared = stared;
     }
 
     @Override

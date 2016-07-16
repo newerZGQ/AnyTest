@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.zgq.wokao.ui.AnswerStudyActivity">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/view" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/answer_study_pager"
-        android:layout_marginBottom="50dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/view"
+        android:layout_below="@+id/toolbar_layout">
     </android.support.v4.view.ViewPager>
     <LinearLayout
         android:id="@+id/background"
@@ -22,5 +29,58 @@
     </LinearLayout>
     <include
         layout="@layout/activity_answer_study_bottom_menu"
-        android:id="@+id/activity_study_bottom_menu"/>
-</FrameLayout>
+        android:id="@+id/activity_study_bottom_menu"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_alignParentBottom="true"/>
+    <LinearLayout
+        android:id="@+id/toolbar_layout"
+        android:elevation="4dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/colorTeal">
+        <View
+            android:background="@color/colorStatusBar"
+            android:layout_width="match_parent"
+            android:layout_height="24dp"/>
+        <RelativeLayout
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:gravity="center_vertical">
+            <TextView
+                android:id="@+id/toolbar_back"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="@drawable/toolbar_back_background"/>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="130dp"
+                android:layout_height="28dp"
+                android:layout_marginTop="14dp"
+                android:gravity="center_vertical|center_horizontal"
+                android:background="@drawable/activity_answer_study_rect_circle"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true">
+                <TextView
+                    android:id="@+id/study_mode"
+                    android:text="全部"
+                    android:textSize="16sp"
+                    android:textColor="@color/colorTeal"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:layout_width="65dp"
+                    android:layout_height="28dp"/>
+                <TextView
+                    android:id="@+id/remeb_mode"
+                    android:text="收藏"
+                    android:textSize="16sp"
+                    android:layout_width="65dp"
+                    android:layout_height="28dp"
+                    android:background="@drawable/activity_asstd_right_teal_halfrect_circle"
+                    android:textColor="@color/colorWhite"
+                    android:gravity="center_vertical|center_horizontal"/>
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>

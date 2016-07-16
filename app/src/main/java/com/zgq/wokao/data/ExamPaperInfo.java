@@ -14,6 +14,7 @@ public class ExamPaperInfo extends RealmObject implements Serializable{
     private String lastStudyDate;
     private boolean stared = false;
     private boolean parseRight;
+    private int studyCount;
 
     public ExamPaperInfo() {
     }
@@ -71,6 +72,14 @@ public class ExamPaperInfo extends RealmObject implements Serializable{
 
     public void setParseRight(boolean parseRight) {
         this.parseRight = parseRight;
+    }
+
+    public int getStudyCount() {
+        return studyCount;
+    }
+
+    public void setStudyCount(int studyCount) {
+        this.studyCount = studyCount;
     }
 
     @Override
