@@ -9,4 +9,5 @@ public interface BaseStudySystemAdapter {
     public abstract View getCurrentView();
     public abstract int getCurrentPosition();
     public abstract void showCurrentAnswer();
+    public abstract void hideCurrentAnswer();
 }

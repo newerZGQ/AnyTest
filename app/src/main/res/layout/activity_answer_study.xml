@@ -31,7 +31,7 @@
         layout="@layout/activity_answer_study_bottom_menu"
         android:id="@+id/activity_study_bottom_menu"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="300dp"
         android:layout_alignParentBottom="true"/>
     <LinearLayout
         android:id="@+id/toolbar_layout"

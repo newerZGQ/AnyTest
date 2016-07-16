@@ -112,6 +112,10 @@ public class TFQuestionAdapter extends PagerAdapter implements BaseStudySystemAd
         ((TFQuestionViewHolder)(currentView.getTag())).optionTrue.setText(datas.get(currentPosition).getAnswer());
         hasShowAnswer.set(currentPosition,true);
     }
+    @Override
+    public void hideCurrentAnswer() {
+
+    }
     public final class TFQuestionViewHolder {
         public TextView questionBody;
         public TextView optionTrue;

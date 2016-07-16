@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/question_position"
+    android:layout_width="40dp"
+    android:layout_height="40dp"
+    android:background="@drawable/circle_background_upside_indigo"
+    android:textColor="@color/colorBlack"
+    android:gravity="center_horizontal|center_vertical" />

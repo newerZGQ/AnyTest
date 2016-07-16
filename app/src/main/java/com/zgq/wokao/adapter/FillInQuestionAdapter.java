@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.zgq.wokao.R;
 import com.zgq.wokao.data.FillInQuestion;
+import com.zgq.wokao.data.Question;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -17,11 +18,11 @@ import java.util.List;
 
 public class FillInQuestionAdapter extends PagerAdapter implements BaseStudySystemAdapter{
     //显示的数据
-    private List<FillInQuestion> datas = null;
+    private ArrayList<Question> datas = null;
     private LinkedList<View> mViewCache = null;
     private Context mContext ;
     private LayoutInflater mLayoutInflater = null;
-    private ArrayList<Boolean> hasShowAnswer = null;
+    private ArrayList<Boolean> hasShowAnswer = new ArrayList<>();
 
     private View currentView = null;
     private int currentPosition = 0;
@@ -29,20 +30,21 @@ public class FillInQuestionAdapter extends PagerAdapter implements BaseStudySyst
 
     private FillInQuestionViewHolder holder;
 
-    public FillInQuestionAdapter(List<FillInQuestion> datas, Context context) {
+    public FillInQuestionAdapter(ArrayList<Question> datas, ArrayList<Boolean> hasShowAnswer,Context context) {
         super();
         this.datas = datas;
         this.mContext = context ;
         this.mLayoutInflater = LayoutInflater.from(mContext) ;
         this.mViewCache = new LinkedList<>();
-        initData();
+        this.hasShowAnswer = hasShowAnswer;
+//        initData();
     }
-    private void initData(){
-        hasShowAnswer = new ArrayList<>();
-        for (int i = 0;i<datas.size();i++){
-            hasShowAnswer.add(false);
-        }
-    }
+//    private void initData(){
+//        hasShowAnswer = new ArrayList<>();
+//        for (int i = 0;i<datas.size();i++){
+//            hasShowAnswer.add(false);
+//        }
+//    }
     @Override public int getCount() {
         Log.e("test","getCount ");
         return this.datas.size();
@@ -85,6 +87,8 @@ public class FillInQuestionAdapter extends PagerAdapter implements BaseStudySyst
         fillInQuestionViewHolder.questionBody.setText(datas.get(position).getBody());
         if (hasShowAnswer.get(position)) {
             fillInQuestionViewHolder.questionAnswer.setText(datas.get(position).getAnswer());
+        }else {
+            fillInQuestionViewHolder.questionAnswer.setText("");
         }
         container.addView(convertView ,ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT );
         return convertView;
@@ -96,6 +100,7 @@ public class FillInQuestionAdapter extends PagerAdapter implements BaseStudySyst
         currentPosition = position;
         super.setPrimaryItem(container, position, object);
     }
+
     @Override
     public View getCurrentView(){
         return currentView;
@@ -104,12 +109,18 @@ public class FillInQuestionAdapter extends PagerAdapter implements BaseStudySyst
     public int getCurrentPosition(){
         return currentPosition;
     }
-
+    @Override
     public void showCurrentAnswer(){
         if (hasShowAnswer.get(currentPosition)) return;
         ((FillInQuestionViewHolder)(currentView.getTag())).questionAnswer.setText(datas.get(currentPosition).getAnswer());
         hasShowAnswer.set(currentPosition,true);
     }
+
+    @Override
+    public void hideCurrentAnswer() {
+
+    }
+
     public final class FillInQuestionViewHolder {
         public TextView questionBody;
         public TextView questionAnswer;

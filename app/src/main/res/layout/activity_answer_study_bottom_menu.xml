@@ -3,7 +3,7 @@
     android:elevation="8dp"
     android:background="@color/colorWhite"
     android:layout_width="match_parent"
-    android:layout_height="200dp">
+    android:layout_height="300dp">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
@@ -17,7 +17,7 @@
             android:layout_height="match_parent">
             <TextView
                 android:id="@+id/star_label"
-                android:background="@drawable/active_star"
+                android:background="@drawable/inactive_star"
                 android:layout_width="16dp"
                 android:layout_height="16dp" />
             <TextView
@@ -63,12 +63,20 @@
                 android:text="列表"/>
         </LinearLayout>
     </LinearLayout>
+    <View
+        android:background="@color/colorRecyclerViewDivider"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/linearLayout2"
+        android:layout_height="1dp"/>
 
     <GridView
+        android:id="@+id/question_num_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:numColumns="5"
         android:layout_below="@+id/linearLayout2">
     </GridView>
 </RelativeLayout>
