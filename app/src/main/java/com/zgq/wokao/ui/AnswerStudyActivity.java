@@ -3,6 +3,7 @@ package com.zgq.wokao.ui;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
+import android.provider.SyncStateContract;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -21,12 +22,16 @@ import com.zgq.wokao.R;
 import com.zgq.wokao.adapter.BaseStudySystemAdapter;
 import com.zgq.wokao.adapter.DiscussQuestionAdapter;
 import com.zgq.wokao.adapter.FillInQuestionAdapter;
+import com.zgq.wokao.adapter.SglChoQuestionAdapter;
+import com.zgq.wokao.adapter.TFQuestionAdapter;
 import com.zgq.wokao.data.Constant;
 import com.zgq.wokao.data.DiscussQuestion;
 import com.zgq.wokao.data.FillInQuestion;
 import com.zgq.wokao.data.MultChoQuestion;
+import com.zgq.wokao.data.MyQuestionAnswer;
 import com.zgq.wokao.data.NormalExamPaper;
 import com.zgq.wokao.data.Question;
+import com.zgq.wokao.data.QuestionAnswer;
 import com.zgq.wokao.data.SglChoQuestion;
 import com.zgq.wokao.data.TFQuestion;
 
@@ -94,10 +99,12 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
     private ArrayList<Question> currentAllQuestions = new ArrayList<>();
     private ArrayList<Boolean>  allAnsweredList = new ArrayList<>();
     private PagerAdapter        currentAllQstAdapter;
+    private ArrayList<QuestionAnswer> currentAllMyAnswer = new ArrayList<>();
 
     private ArrayList<Question> currentStarQuestions = new ArrayList<>();
     private ArrayList<Boolean>  starAnsweredList = new ArrayList<>();
     private PagerAdapter        currentStarQstAdapter;
+    private ArrayList<QuestionAnswer> currentStarMyAnswer = new ArrayList<>();
 
     private final int ALLQUESTIONMODE = 1;
     private final int STARQUESTIONMODE = 2;
@@ -121,6 +128,10 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
         initStarAnsweredList();
         initCurrentAllQstAdapter();
         initCurrentStarQstAdapter();
+        if (isNeedAnswer()) {
+            initCurrentMyAllAnswer();
+            initCurrentMyStarAnswer();
+        }
     }
 
     private void initPaperData(){
@@ -197,6 +208,30 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
                 starAnsweredList.add(allAnsweredList.get(i));
         }
     }
+    private void initCurrentMyAllAnswer(){
+        MyQuestionAnswer answer = new MyQuestionAnswer();
+        currentAllMyAnswer.clear();
+        for (int i = 0; i< currentAllQuestions.size(); i++){
+            currentAllMyAnswer.add(answer);
+        }
+    }
+
+    private void initCurrentMyStarAnswer(){
+        currentStarMyAnswer.clear();
+        for (Question question: currentAllQuestions){
+            int i = currentAllQuestions.indexOf(question);
+            if (question.isStared())
+                currentStarMyAnswer.add(currentAllMyAnswer.get(i));
+        }
+    }
+
+    private boolean isNeedAnswer(){
+        if (currentQuestionType == Constant.TFQUESTIONTYPE || currentQuestionType == Constant.SGLCHOQUESTIONTYPE ||
+                currentQuestionType == Constant.MULTCHOQUESTIONTYPE) {
+            return true;
+        }
+        return false;
+    }
 
 
     private void initView() {
@@ -205,6 +240,9 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
         background.setVisibility(View.GONE);
         background.setOnClickListener(this);
         showAnswerButton.setOnClickListener(this);
+        if (currentQuestionType == Constant.TFQUESTIONTYPE){
+            showAnswerButton.setVisibility(View.GONE);
+        }
         setStared.setOnClickListener(this);
         questionListTv.setOnClickListener(this);
         initQstPstGridView();
@@ -372,6 +410,12 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
             case Constant.DISCUSSQUESTIONTYPE:
                 currentAllQstAdapter = new DiscussQuestionAdapter(currentAllQuestions, allAnsweredList,this);
                 return currentAllQstAdapter;
+            case Constant.TFQUESTIONTYPE:
+                currentAllQstAdapter = new TFQuestionAdapter(currentAllQuestions,allAnsweredList,currentAllMyAnswer,this);
+                return currentAllQstAdapter;
+            case Constant.SGLCHOQUESTIONTYPE:
+                currentAllQstAdapter = new SglChoQuestionAdapter(currentAllQuestions,allAnsweredList,currentAllMyAnswer,this);
+                return currentAllQstAdapter;
         }
         return null;
     }
@@ -383,6 +427,12 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
                 return currentStarQstAdapter;
             case Constant.DISCUSSQUESTIONTYPE:
                 currentStarQstAdapter = new DiscussQuestionAdapter(currentStarQuestions, starAnsweredList,this);
+                return currentStarQstAdapter;
+            case Constant.TFQUESTIONTYPE:
+                currentStarQstAdapter = new TFQuestionAdapter(currentStarQuestions,starAnsweredList,currentStarMyAnswer,this);
+                return currentStarQstAdapter;
+            case Constant.SGLCHOQUESTIONTYPE:
+                currentStarQstAdapter = new SglChoQuestionAdapter(currentStarQuestions,starAnsweredList,currentStarMyAnswer,this);
                 return currentStarQstAdapter;
         }
         return null;
@@ -419,6 +469,7 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
                 setCurrentMode(ALLQUESTIONMODE);
                 viewPager.setAdapter(currentAllQstAdapter);
                 currentAllQstAdapter.notifyDataSetChanged();
+                upDateBottomMenu(getCurrentQstAdapter().getCurrentPosition());
                 break;
             case R.id.stared_question:
                 remebMode.setBackground(getResources().getDrawable(R.drawable.activity_asstd_right_white_halfrect_circle));
@@ -426,13 +477,16 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
                 studyMode.setBackground(getResources().getDrawable(R.drawable.activity_asstd_left_teal_halfrect_circle));
                 studyMode.setTextColor(getResources().getColor(R.color.colorWhite));
 
-
                 initCurrentStaredQuestion();
                 initStarAnsweredList();
+                if (isNeedAnswer())  initCurrentMyStarAnswer();
                 initCurrentStarQstAdapter();
+
                 setCurrentMode(STARQUESTIONMODE);
+
                 viewPager.setAdapter(currentStarQstAdapter);
                 currentStarQstAdapter.notifyDataSetChanged();
+                upDateBottomMenu(getCurrentQstAdapter().getCurrentPosition());
                 break;
         }
     }

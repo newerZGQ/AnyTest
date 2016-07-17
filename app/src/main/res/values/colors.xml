@@ -14,6 +14,8 @@
     <color name="colorLime">#cddc39</color>
     <color name="colorIndigo">#3f51b5</color>
 
+    <color name="colorRed">#ab960000</color>
+
     //状态栏
     <color name="colorStatusBar">#01a19c9c</color>
     <color name="colorTransparent">#00000000</color>

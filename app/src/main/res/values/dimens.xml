@@ -6,4 +6,6 @@
     <dimen name="paper_recyclerview_divider_margin">72dp</dimen>
 
     <dimen name="two_lines_recyclerview_lable_dimen">40dp</dimen>
+
+    <dimen name="dimen_option_label_height_width">32dp</dimen>
 </resources>
