@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zgq.wokao.R;
@@ -24,6 +25,7 @@ public class TFQuestionAdapter extends PagerAdapter implements BaseStudySystemAd
     private Context mContext ;
     private LayoutInflater mLayoutInflater = null;
     private ArrayList<Boolean> hasShowAnswer = null;
+    private ArrayList<Boolean> myAnswer = new ArrayList<>();
 
     private View currentView = null;
     private int currentPosition = 0;
@@ -39,7 +41,7 @@ public class TFQuestionAdapter extends PagerAdapter implements BaseStudySystemAd
         this.mViewCache = new LinkedList<>();
         initData();
     }
-    private void initData(){
+    public void initData(){
         hasShowAnswer = new ArrayList<>();
         for (int i = 0;i<datas.size();i++){
             hasShowAnswer.add(false);
@@ -72,12 +74,13 @@ public class TFQuestionAdapter extends PagerAdapter implements BaseStudySystemAd
         View convertView = null;
         if(mViewCache.size() == 0){
             convertView = this.mLayoutInflater.inflate(R.layout.viewadapter_tfquestion_item , null ,false);
-            TextView questionBody   = (TextView) convertView.findViewById(R.id.tfquestion_body);
-            TextView questionAnswer = (TextView) convertView.findViewById(R.id.tfquestion_answer);
-            TextView optionTrue     = (TextView) convertView.findViewById(R.id.tfquestion_option_true);
+            TextView questionBody       = (TextView) convertView.findViewById(R.id.tfquestion_body);
+            LinearLayout optionTrue     = (LinearLayout) convertView.findViewById(R.id.tfqst_option_true);
+            LinearLayout optionFalse    = (LinearLayout) convertView.findViewById(R.id.tfqst_option_false);
             tfQuestionViewHolder = new TFQuestionViewHolder();
-            tfQuestionViewHolder.questionBody = questionBody;
-            tfQuestionViewHolder.optionTrue = questionAnswer;
+            tfQuestionViewHolder.questionBody   = questionBody;
+            tfQuestionViewHolder.optionTrue     = optionTrue;
+            tfQuestionViewHolder.optionFalse    = optionFalse;
             convertView.setTag(tfQuestionViewHolder);
         }else {
             convertView = mViewCache.removeFirst();
@@ -86,7 +89,7 @@ public class TFQuestionAdapter extends PagerAdapter implements BaseStudySystemAd
         holder = tfQuestionViewHolder;
         tfQuestionViewHolder.questionBody.setText(datas.get(position).getBody());
         if (hasShowAnswer.get(position)) {
-            tfQuestionViewHolder.optionTrue.setText(datas.get(position).getAnswer());
+//            tfQuestionViewHolder.optionTrue.setText(datas.get(position).getAnswer());
         }
         container.addView(convertView ,ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT );
         return convertView;
@@ -109,7 +112,7 @@ public class TFQuestionAdapter extends PagerAdapter implements BaseStudySystemAd
 
     public void showCurrentAnswer(){
         if (hasShowAnswer.get(currentPosition)) return;
-        ((TFQuestionViewHolder)(currentView.getTag())).optionTrue.setText(datas.get(currentPosition).getAnswer());
+//        ((TFQuestionViewHolder)(currentView.getTag())).optionTrue.setText(datas.get(currentPosition).getAnswer());
         hasShowAnswer.set(currentPosition,true);
     }
     @Override
@@ -118,9 +121,7 @@ public class TFQuestionAdapter extends PagerAdapter implements BaseStudySystemAd
     }
     public final class TFQuestionViewHolder {
         public TextView questionBody;
-        public TextView optionTrue;
-        public TextView optionFalse;
-        public TextView questionAnswer;
-
+        public LinearLayout optionTrue;
+        public LinearLayout optionFalse;
     }
 }

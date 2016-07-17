@@ -64,7 +64,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true">
                 <TextView
-                    android:id="@+id/study_mode"
+                    android:id="@+id/all_question"
                     android:text="全部"
                     android:textSize="16sp"
                     android:textColor="@color/colorTeal"
@@ -72,7 +72,7 @@
                     android:layout_width="65dp"
                     android:layout_height="28dp"/>
                 <TextView
-                    android:id="@+id/remeb_mode"
+                    android:id="@+id/stared_question"
                     android:text="收藏"
                     android:textSize="16sp"
                     android:layout_width="65dp"

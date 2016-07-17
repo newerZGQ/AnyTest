@@ -74,8 +74,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:horizontalSpacing="16dp"
+        android:verticalSpacing="16dp"
+        android:scrollbars="none"
         android:numColumns="5"
         android:layout_below="@+id/linearLayout2">
     </GridView>

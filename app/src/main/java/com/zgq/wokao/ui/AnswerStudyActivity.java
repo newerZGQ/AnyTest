@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.zgq.wokao.R;
 import com.zgq.wokao.adapter.BaseStudySystemAdapter;
+import com.zgq.wokao.adapter.DiscussQuestionAdapter;
 import com.zgq.wokao.adapter.FillInQuestionAdapter;
 import com.zgq.wokao.data.Constant;
 import com.zgq.wokao.data.DiscussQuestion;
@@ -31,7 +32,6 @@ import com.zgq.wokao.data.TFQuestion;
 
 
 import java.util.ArrayList;
-import java.util.zip.Inflater;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,15 +45,14 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
     TextView toolbarBack;
 
     //切换模式
-    @BindView(R.id.study_mode)
+    @BindView(R.id.all_question)
     TextView studyMode;
-    @BindView(R.id.remeb_mode)
+    @BindView(R.id.stared_question)
     TextView remebMode;
 
     //ViewPager
     @BindView(R.id.answer_study_pager)
     ViewPager viewPager;
-    private PagerAdapter adapter;
 
     //显示答案按钮
     @BindView(R.id.show_answer)
@@ -89,9 +88,21 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
 
     private Realm realm = Realm.getDefaultInstance();
     private NormalExamPaper normalExamPaper;
+
     private int currentQuestionType = Constant.FILLINQUESTIONTYPE;
-    private ArrayList<Question> currentQuestions = new ArrayList<>();
-    private ArrayList<Boolean>  answeredList = new ArrayList<>();
+
+    private ArrayList<Question> currentAllQuestions = new ArrayList<>();
+    private ArrayList<Boolean>  allAnsweredList = new ArrayList<>();
+    private PagerAdapter        currentAllQstAdapter;
+
+    private ArrayList<Question> currentStarQuestions = new ArrayList<>();
+    private ArrayList<Boolean>  starAnsweredList = new ArrayList<>();
+    private PagerAdapter        currentStarQstAdapter;
+
+    private final int ALLQUESTIONMODE = 1;
+    private final int STARQUESTIONMODE = 2;
+
+    private  int currentMode = ALLQUESTIONMODE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +114,16 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void initData() {
+        initPaperData();
+        initCurrentQuestionList();
+        initAnsweredList();
+        initCurrentStaredQuestion();
+        initStarAnsweredList();
+        initCurrentAllQstAdapter();
+        initCurrentStarQstAdapter();
+    }
+
+    private void initPaperData(){
         Intent intent = getIntent();
         String title = intent.getStringExtra("paperTitle");
         String author = intent.getStringExtra("paperAuthor");
@@ -117,15 +138,70 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
             public void execute(Realm realm) {
                 int count = normalExamPaper.getPaperInfo().getStudyCount();
                 normalExamPaper.getPaperInfo().setStudyCount(count+1);
-//                normalExamPaper.getPaperInfo().setLastStudyDate();
             }
         });
-        initQuestionList();
     }
+
+    //初始化当前的问题
+    private void initCurrentQuestionList(){
+        currentAllQuestions.clear();
+        switch (currentQuestionType){
+            case Constant.FILLINQUESTIONTYPE:
+                for (FillInQuestion question: normalExamPaper.getFillInQuestions()){
+                    currentAllQuestions.add(question);
+                }
+                break;
+            case Constant.TFQUESTIONTYPE:
+                for (TFQuestion question: normalExamPaper.getTfQuestions()){
+                    currentAllQuestions.add(question);
+                }
+                break;
+            case Constant.SGLCHOQUESTIONTYPE:
+                for (SglChoQuestion question: normalExamPaper.getSglChoQuestions()){
+                    currentAllQuestions.add(question);
+                }
+                break;
+            case Constant.MULTCHOQUESTIONTYPE:
+                for (MultChoQuestion question: normalExamPaper.getMultChoQuestions()){
+                    currentAllQuestions.add(question);
+                }
+                break;
+            case Constant.DISCUSSQUESTIONTYPE:
+                for (DiscussQuestion question: normalExamPaper.getDiscussQuestions()){
+                    currentAllQuestions.add(question);
+                }
+                break;
+        }
+    }
+
+    //初始化是否回答过的记录链表
+    private void initAnsweredList(){
+        allAnsweredList.clear();
+        for (int i = 0; i< currentAllQuestions.size(); i++){
+            allAnsweredList.add(false);
+        }
+    }
+    //初始化当前的已经加星的问题链表
+    private void initCurrentStaredQuestion(){
+        currentStarQuestions.clear();
+        for (Question question: currentAllQuestions){
+            if (question.isStared()) currentStarQuestions.add(question);
+        }
+    }
+
+    private void initStarAnsweredList(){
+        starAnsweredList.clear();
+        for (Question question: currentAllQuestions){
+            int i = currentAllQuestions.indexOf(question);
+            if (question.isStared())
+                starAnsweredList.add(allAnsweredList.get(i));
+        }
+    }
+
 
     private void initView() {
         initToolbar();
-        viewPager.setAdapter(initCurrentAdapter());
+        viewPager.setAdapter(currentAllQstAdapter);
         background.setVisibility(View.GONE);
         background.setOnClickListener(this);
         showAnswerButton.setOnClickListener(this);
@@ -155,10 +231,11 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
 
             }
         });
+        upDateBottomMenu(getCurrentQstAdapter().getCurrentPosition());
     }
 
     private void initQstPstGridView(){
-        questionListGv.setAdapter(new QuestionPositionAdapter(answeredList,this.getApplicationContext()));
+        questionListGv.setAdapter(new QuestionPositionAdapter(allAnsweredList,this.getApplicationContext()));
         questionListGv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -174,85 +251,107 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
         toolbarBack.setOnClickListener(this);
     }
 
-    private void initQuestionList(){
-        currentQuestions.clear();
-        answeredList.clear();
-        switch (currentQuestionType){
-            case Constant.FILLINQUESTIONTYPE:
-                for (FillInQuestion question: normalExamPaper.getFillInQuestions()){
-                    currentQuestions.add(question);
-                    answeredList.add(false);
-                }
-                break;
-            case Constant.TFQUESTIONTYPE:
-                for (TFQuestion question: normalExamPaper.getTfQuestions()){
-                    currentQuestions.add(question);
-                    answeredList.add(false);
-                }
-                break;
-            case Constant.SGLCHOQUESTIONTYPE:
-                for (SglChoQuestion question: normalExamPaper.getSglChoQuestions()){
-                    currentQuestions.add(question);
-                    answeredList.add(false);
-                }
-                break;
-            case Constant.MULTCHOQUESTIONTYPE:
-                for (MultChoQuestion question: normalExamPaper.getMultChoQuestions()){
-                    currentQuestions.add(question);
-                    answeredList.add(false);
-                }
-                break;
-            case Constant.DISCUSSQUESTIONTYPE:
-                for (DiscussQuestion question: normalExamPaper.getDiscussQuestions()){
-                    currentQuestions.add(question);
-                    answeredList.add(false);
-                }
-                break;
-        }
-    }
+
 
     private void upDateBottomMenu(int position){
-        if (currentQuestions.get(position).isStared()){
-            starLabel.setBackground(getResources().getDrawable(R.drawable.active_star));
-        }else{
-            starLabel.setBackground(getResources().getDrawable(R.drawable.inactive_star));
+        switch (getCurrentMode()){
+            case ALLQUESTIONMODE:
+                if (currentAllQuestions.get(position).isStared()){
+                    starLabel.setBackground(getResources().getDrawable(R.drawable.active_star));
+                }else{
+                    starLabel.setBackground(getResources().getDrawable(R.drawable.inactive_star));
+                }
+                if (allAnsweredList.get(position)){
+                    answerLabel.setBackground(getResources().getDrawable(R.drawable.active_light));
+                }else {
+                    answerLabel.setBackground(getResources().getDrawable(R.drawable.inactive_light));
+                }
+                break;
+            case STARQUESTIONMODE:
+                if (currentStarQuestions.get(position).isStared()){
+                    starLabel.setBackground(getResources().getDrawable(R.drawable.active_star));
+                }else{
+                    starLabel.setBackground(getResources().getDrawable(R.drawable.inactive_star));
+                }
+                if (starAnsweredList.get(position)){
+                    answerLabel.setBackground(getResources().getDrawable(R.drawable.active_light));
+                }else {
+                    answerLabel.setBackground(getResources().getDrawable(R.drawable.inactive_light));
+                }
+                break;
         }
-        if (answeredList.get(position)){
-            answerLabel.setBackground(getResources().getDrawable(R.drawable.active_light));
-        }else {
-            answerLabel.setBackground(getResources().getDrawable(R.drawable.inactive_light));
-        }
+
     }
 
-    private BaseStudySystemAdapter getAdapter(){
+    public int getCurrentMode() {
+        return currentMode;
+    }
+
+    public void setCurrentMode(int mode){
+        currentMode = mode;
+    }
+
+    private BaseStudySystemAdapter getCurrentQstAdapter(){
         return ((BaseStudySystemAdapter) viewPager.getAdapter());
     }
 
     private void setStar(){
-        final int position = getAdapter().getCurrentPosition();
-        if (currentQuestions.get(position).isStared()){
-            realm.executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
-                    currentQuestions.get(position).setStared(false);
+        final int position = getCurrentQstAdapter().getCurrentPosition();
+        switch(getCurrentMode()){
+            case ALLQUESTIONMODE:
+                if (currentAllQuestions.get(position).isStared()){
+                    realm.executeTransaction(new Realm.Transaction() {
+                        @Override
+                        public void execute(Realm realm) {
+                            currentAllQuestions.get(position).setStared(false);
+                        }
+                    });
+                    starLabel.setBackground(getResources().getDrawable(R.drawable.inactive_star));
+                }else{
+                    realm.executeTransaction(new Realm.Transaction() {
+                        @Override
+                        public void execute(Realm realm) {
+                            currentAllQuestions.get(position).setStared(true);
+                        }
+                    });
+                    starLabel.setBackground(getResources().getDrawable(R.drawable.active_star));
                 }
-            });
-            starLabel.setBackground(getResources().getDrawable(R.drawable.inactive_star));
-        }else{
-            realm.executeTransaction(new Realm.Transaction() {
-                @Override
-                public void execute(Realm realm) {
-                    currentQuestions.get(position).setStared(true);
+                break;
+            case STARQUESTIONMODE:
+                if (currentStarQuestions.get(position).isStared()){
+                    realm.executeTransaction(new Realm.Transaction() {
+                        @Override
+                        public void execute(Realm realm) {
+                            currentStarQuestions.get(position).setStared(false);
+                        }
+                    });
+                    starLabel.setBackground(getResources().getDrawable(R.drawable.inactive_star));
+                }else{
+                    realm.executeTransaction(new Realm.Transaction() {
+                        @Override
+                        public void execute(Realm realm) {
+                            currentStarQuestions.get(position).setStared(true);
+                        }
+                    });
+                    starLabel.setBackground(getResources().getDrawable(R.drawable.active_star));
                 }
-            });
-            starLabel.setBackground(getResources().getDrawable(R.drawable.active_star));
+                break;
         }
     }
 
     private void showCurrentAnswer(){
-        getAdapter().showCurrentAnswer();
-        answeredList.set(getAdapter().getCurrentPosition(),true);
-        answerLabel.setBackground(getResources().getDrawable(R.drawable.active_light));
+        switch (getCurrentMode()){
+            case ALLQUESTIONMODE:
+                getCurrentQstAdapter().showCurrentAnswer();
+                allAnsweredList.set(getCurrentQstAdapter().getCurrentPosition(),true);
+                answerLabel.setBackground(getResources().getDrawable(R.drawable.active_light));
+                break;
+            case STARQUESTIONMODE:
+                getCurrentQstAdapter().showCurrentAnswer();
+                starAnsweredList.set(getCurrentQstAdapter().getCurrentPosition(),true);
+                answerLabel.setBackground(getResources().getDrawable(R.drawable.active_light));
+        }
+
     }
 
     private void showQuestionList() {
@@ -265,10 +364,26 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
         ObjectAnimator.ofFloat(bottomMenu, "translationY", bottomMenu.getHeight() - setStared.getHeight()).setDuration(300).start();
     }
 
-    private PagerAdapter initCurrentAdapter() {
+    private PagerAdapter initCurrentAllQstAdapter() {
         switch (currentQuestionType) {
             case Constant.FILLINQUESTIONTYPE:
-                return new FillInQuestionAdapter(currentQuestions, answeredList,this);
+                currentAllQstAdapter = new FillInQuestionAdapter(currentAllQuestions, allAnsweredList,this);
+                return currentAllQstAdapter;
+            case Constant.DISCUSSQUESTIONTYPE:
+                currentAllQstAdapter = new DiscussQuestionAdapter(currentAllQuestions, allAnsweredList,this);
+                return currentAllQstAdapter;
+        }
+        return null;
+    }
+
+    private PagerAdapter initCurrentStarQstAdapter(){
+        switch (currentQuestionType) {
+            case Constant.FILLINQUESTIONTYPE:
+                currentStarQstAdapter = new FillInQuestionAdapter(currentStarQuestions, starAnsweredList,this);
+                return currentStarQstAdapter;
+            case Constant.DISCUSSQUESTIONTYPE:
+                currentStarQstAdapter = new DiscussQuestionAdapter(currentStarQuestions, starAnsweredList,this);
+                return currentStarQstAdapter;
         }
         return null;
     }
@@ -280,28 +395,44 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
                 hideQuestionList();
                 break;
             case R.id.show_answer:
+
                 showCurrentAnswer();
                 break;
             case R.id.set_star:
                 setStar();
                 break;
             case R.id.question_list:
+                ((QuestionPositionAdapter)(questionListGv.getAdapter())).notifyDataSetChanged();
                 showQuestionList();
                 break;
             case R.id.toolbar_back:
                 finish();
                 break;
-            case R.id.study_mode:
+            case R.id.all_question:
                 studyMode.setBackground(getResources().getDrawable(R.drawable.activity_asstd_left_white_halfrect_circle));
                 studyMode.setTextColor(getResources().getColor(R.color.colorTeal));
                 remebMode.setBackground(getResources().getDrawable(R.drawable.activity_asstd_right_teal_halfrect_circle));
                 remebMode.setTextColor(getResources().getColor(R.color.colorWhite));
+
+                initCurrentQuestionList();
+                initCurrentAllQstAdapter();
+                setCurrentMode(ALLQUESTIONMODE);
+                viewPager.setAdapter(currentAllQstAdapter);
+                currentAllQstAdapter.notifyDataSetChanged();
                 break;
-            case R.id.remeb_mode:
+            case R.id.stared_question:
                 remebMode.setBackground(getResources().getDrawable(R.drawable.activity_asstd_right_white_halfrect_circle));
                 remebMode.setTextColor(getResources().getColor(R.color.colorTeal));
                 studyMode.setBackground(getResources().getDrawable(R.drawable.activity_asstd_left_teal_halfrect_circle));
                 studyMode.setTextColor(getResources().getColor(R.color.colorWhite));
+
+
+                initCurrentStaredQuestion();
+                initStarAnsweredList();
+                initCurrentStarQstAdapter();
+                setCurrentMode(STARQUESTIONMODE);
+                viewPager.setAdapter(currentStarQstAdapter);
+                currentStarQstAdapter.notifyDataSetChanged();
                 break;
         }
     }
@@ -326,9 +457,10 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
             if (convertView == null){
                 convertView = LayoutInflater.from(context).inflate(R.layout.activity_answer_study_gridview_item,null);
             }
-            ((TextView)convertView).setText(""+(position+1));
+            ((TextView)convertView.findViewById(R.id.question_position)).setText(""+(position+1));
             if (answeredList.get(position)){
-                ((TextView)convertView).setBackground(context.getResources().getDrawable(R.drawable.circle_background_upside_blue));
+                ((TextView)convertView.findViewById(R.id.question_position)).
+                        setBackground(context.getResources().getDrawable(R.drawable.circle_background_upside_lime));
             }
             return convertView;
         }
