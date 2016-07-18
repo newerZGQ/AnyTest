@@ -22,6 +22,7 @@ import com.zgq.wokao.R;
 import com.zgq.wokao.adapter.BaseStudySystemAdapter;
 import com.zgq.wokao.adapter.DiscussQuestionAdapter;
 import com.zgq.wokao.adapter.FillInQuestionAdapter;
+import com.zgq.wokao.adapter.MultChoQuestionAdapter;
 import com.zgq.wokao.adapter.SglChoQuestionAdapter;
 import com.zgq.wokao.adapter.TFQuestionAdapter;
 import com.zgq.wokao.data.Constant;
@@ -240,7 +241,7 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
         background.setVisibility(View.GONE);
         background.setOnClickListener(this);
         showAnswerButton.setOnClickListener(this);
-        if (currentQuestionType == Constant.TFQUESTIONTYPE){
+        if (currentQuestionType == Constant.TFQUESTIONTYPE || currentQuestionType == Constant.SGLCHOQUESTIONTYPE){
             showAnswerButton.setVisibility(View.GONE);
         }
         setStared.setOnClickListener(this);
@@ -306,6 +307,7 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
                 }
                 break;
             case STARQUESTIONMODE:
+                if (currentStarQuestions.size() == 0) return;
                 if (currentStarQuestions.get(position).isStared()){
                     starLabel.setBackground(getResources().getDrawable(R.drawable.active_star));
                 }else{
@@ -416,6 +418,9 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
             case Constant.SGLCHOQUESTIONTYPE:
                 currentAllQstAdapter = new SglChoQuestionAdapter(currentAllQuestions,allAnsweredList,currentAllMyAnswer,this);
                 return currentAllQstAdapter;
+            case Constant.MULTCHOQUESTIONTYPE:
+                currentAllQstAdapter = new MultChoQuestionAdapter(currentAllQuestions,allAnsweredList,currentAllMyAnswer,this);
+                return currentAllQstAdapter;
         }
         return null;
     }
@@ -433,6 +438,9 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
                 return currentStarQstAdapter;
             case Constant.SGLCHOQUESTIONTYPE:
                 currentStarQstAdapter = new SglChoQuestionAdapter(currentStarQuestions,starAnsweredList,currentStarMyAnswer,this);
+                return currentStarQstAdapter;
+            case Constant.MULTCHOQUESTIONTYPE:
+                currentStarQstAdapter = new MultChoQuestionAdapter(currentStarQuestions,starAnsweredList,currentStarMyAnswer,this);
                 return currentStarQstAdapter;
         }
         return null;
