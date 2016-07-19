@@ -12,4 +12,6 @@ public interface QuestionInfo {
     public int getId();
     public boolean isStared();
     public void setStared(boolean stared);
+    public boolean isStudied();
+    public void setStudied(boolean studied);
 }

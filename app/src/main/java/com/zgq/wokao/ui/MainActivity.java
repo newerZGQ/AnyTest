@@ -30,6 +30,7 @@ import com.zgq.wokao.Util.DateUtil;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -107,6 +108,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         for (NormalExamPaper paper : papers) {
             paperInfos.add(paper.getPaperInfo());
         }
+    }
+
+    private void sortPapers(ArrayList<NormalExamPaper> papers) throws ParseException{
+        for (int i = 0;i<papers.size();i++)
+            for (int j = i +1;j<papers.size();j++){
+                String si = papers.get(i).getPaperInfo().getLastStudyDate();
+                String sj = papers.get(j).getPaperInfo().getLastStudyDate();
+                if (DateUtil.getMSDate(si)<DateUtil.getMSDate(sj)){
+                    NormalExamPaper tmp = papers.get(i);
+                    papers.set(i,papers.get(j));
+                    papers.set(j,tmp);
+                }
+            }
     }
 
     public void initData() {
@@ -499,7 +513,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (lastDate == null || lastDate.equals("")) {
                 lastDate = "未学习";
             } else {
-                lastDate = DateUtil.getSimpleDate(lastDate);
             }
             return author;
         }

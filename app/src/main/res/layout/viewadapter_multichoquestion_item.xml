@@ -57,5 +57,35 @@
             android:layout_height="wrap_content">
 
         </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
+            android:gravity="center_horizontal|center_vertical">
+
+            <TextView
+                android:id="@+id/view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/activity_answer_study_aswlabel_stroke"
+                android:text="我的答案"
+                android:textColor="@color/colorWhite"
+                android:textSize="10sp" />
+            <TextView
+                android:layout_marginLeft="16dp"
+                android:id="@+id/my_multichoquestion_answer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/view"
+                android:textSize="18sp" />
+        </RelativeLayout>
     </LinearLayout>
 </ScrollView>

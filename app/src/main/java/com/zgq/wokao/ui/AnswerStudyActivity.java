@@ -8,6 +8,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zgq.wokao.R;
+import com.zgq.wokao.Util.DateUtil;
 import com.zgq.wokao.adapter.BaseStudySystemAdapter;
 import com.zgq.wokao.adapter.DiscussQuestionAdapter;
 import com.zgq.wokao.adapter.FillInQuestionAdapter;
@@ -133,6 +135,14 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
             initCurrentMyAllAnswer();
             initCurrentMyStarAnswer();
         }
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                currentAllQuestions.get(0).setStudied(true);
+                normalExamPaper.getPaperInfo().setLastStudyDate(DateUtil.getCurrentDate());
+                Log.d("----->>last",DateUtil.getCurrentDate());
+            }
+        });
     }
 
     private void initPaperData(){
@@ -145,13 +155,13 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
                 equalTo("paperInfo.author", author).
                 findAll();
         normalExamPaper = papers.get(0);
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                int count = normalExamPaper.getPaperInfo().getStudyCount();
-                normalExamPaper.getPaperInfo().setStudyCount(count+1);
-            }
-        });
+//        realm.executeTransaction(new Realm.Transaction() {
+//            @Override
+//            public void execute(Realm realm) {
+//                int count = normalExamPaper.getPaperInfo().getStudyCount();
+//                normalExamPaper.getPaperInfo().setStudyCount(count+1);
+//            }
+//        });
     }
 
     //初始化当前的问题
@@ -210,9 +220,9 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
         }
     }
     private void initCurrentMyAllAnswer(){
-        MyQuestionAnswer answer = new MyQuestionAnswer();
         currentAllMyAnswer.clear();
         for (int i = 0; i< currentAllQuestions.size(); i++){
+            MyQuestionAnswer answer = new MyQuestionAnswer();
             currentAllMyAnswer.add(answer);
         }
     }
@@ -262,7 +272,30 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
 
             @Override
             public void onPageSelected(int position) {
+                final int p = position;
                 upDateBottomMenu(position);
+                //设置已经学习过了这个问题 //重置该位置的myAnswer
+                if (currentMode == ALLQUESTIONMODE){
+                    if (isNeedAnswer()) {
+                        currentAllMyAnswer.get(position).setAnswer("");
+                    }
+                    realm.executeTransaction(new Realm.Transaction() {
+                        @Override
+                        public void execute(Realm realm) {
+                            currentAllQuestions.get(p).setStudied(true);
+                        }
+                    });
+                }else{
+                    if (isNeedAnswer()) {
+                        currentStarMyAnswer.get(position).setAnswer("");
+                    }
+                    realm.executeTransaction(new Realm.Transaction() {
+                        @Override
+                        public void execute(Realm realm) {
+                            currentStarQuestions.get(p).setStudied(true);
+                        }
+                    });
+                }
             }
 
             @Override

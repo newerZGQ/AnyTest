@@ -15,12 +15,15 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.zgq.wokao.R;
+import com.zgq.wokao.Util.DateUtil;
 import com.zgq.wokao.data.Constant;
 import com.zgq.wokao.data.DiscussQuestion;
 import com.zgq.wokao.data.ExamPaperInfo;
 import com.zgq.wokao.data.FillInQuestion;
 import com.zgq.wokao.data.MultChoQuestion;
 import com.zgq.wokao.data.NormalExamPaper;
+import com.zgq.wokao.data.Question;
+import com.zgq.wokao.data.QuestionInfo;
 import com.zgq.wokao.data.SglChoQuestion;
 import com.zgq.wokao.data.TFQuestion;
 import com.zgq.wokao.view.ObservableScrollView;
@@ -87,7 +90,7 @@ public class QuestionsListActivity extends AppCompatActivity implements View.OnC
             @Override
             public void run() {
                 zoomViewHeight = headZoomView.getHeight();
-                slidingDistance = zoomViewHeight-toolbarLayoutHeight;
+                slidingDistance = zoomViewHeight - toolbarLayoutHeight;
             }
         });
     }
@@ -114,22 +117,28 @@ public class QuestionsListActivity extends AppCompatActivity implements View.OnC
         String title = getIntent().getStringExtra("paperTitle");
         String author = getIntent().getStringExtra("paperAuthor");
         RealmResults<NormalExamPaper> papers = realm.where(NormalExamPaper.class).
-                equalTo("paperInfo.title",title).
-                equalTo("paperInfo.author",author).
+                equalTo("paperInfo.title", title).
+                equalTo("paperInfo.author", author).
                 findAll();
 
         normalExamPaper = papers.get(0);
         info = normalExamPaper.getPaperInfo();
         paperTitle = info.getTitle();
         paperAuthor = info.getAuthor();
-        lastStudyDate = info.getLastStudyDate();
+        if (info.getLastStudyDate() == null || info.getLastStudyDate().equals("")){
+            lastStudyDate = "未学习";
+        }else {
+            lastStudyDate = DateUtil.formatDisplayTime(info.getLastStudyDate(), null);
+        }
+        Log.d("------>>laststudy",lastStudyDate);
         isPaperStar = info.isStared();
-        paperStudyCount = info.getStudyCount();
+        paperStudyCount = getStudiedCount(normalExamPaper);
+        Log.d("---->>", "" + paperStudyCount);
     }
 
     private void initView() {
         headZoomView = (ImageView) obsscrollView.getPullRootView().findViewById(R.id.iv_zoom);
-        Glide.with(this).load(R.drawable.back).into(headZoomView);
+        Glide.with(this).load(R.drawable.image_night_star).into(headZoomView);
         RealmList<FillInQuestion> fiQstList = normalExamPaper.getFillInQuestions();
         RealmList<TFQuestion> tfQstList = normalExamPaper.getTfQuestions();
         RealmList<SglChoQuestion> scQstList = normalExamPaper.getSglChoQuestions();
@@ -187,8 +196,12 @@ public class QuestionsListActivity extends AppCompatActivity implements View.OnC
             for (FillInQuestion fillInQuestion : fiQstList) {
                 if (fillInQuestion.isStared()) count++;
             }
-            setQuestionTypeInfo(fiQstTypeInfo,R.drawable.circle_background_upside_cyan,"填","填空题","共" + fiQstList.size() + "题, " + "收藏" + count + "题");
+            setQuestionTypeInfo(fiQstTypeInfo, R.drawable.circle_background_upside_cyan, "填", "填空题", "共" + fiQstList.size() + "题, " + "收藏" + count + "题");
+        } else {
+            fiQstTypeInfo = (RelativeLayout) obsscrollView.getPullRootView().findViewById(R.id.fiqstType);
+            fiQstTypeInfo.setVisibility(View.GONE);
         }
+
         if (tfQstList.size() != 0) {
             tfQstTypeInfo = (RelativeLayout) obsscrollView.getPullRootView().findViewById(R.id.tfqstType);
             tfQstTypeInfo.setVisibility(View.VISIBLE);
@@ -196,8 +209,12 @@ public class QuestionsListActivity extends AppCompatActivity implements View.OnC
             for (TFQuestion tfQuestion : tfQstList) {
                 if (tfQuestion.isStared()) count++;
             }
-            setQuestionTypeInfo(tfQstTypeInfo,R.drawable.circle_background_upside_orange,"判","判断题","共" + tfQstList.size() + "题, " + "收藏" + count + "题");
+            setQuestionTypeInfo(tfQstTypeInfo, R.drawable.circle_background_upside_orange, "判", "判断题", "共" + tfQstList.size() + "题, " + "收藏" + count + "题");
+        } else {
+            tfQstTypeInfo = (RelativeLayout) obsscrollView.getPullRootView().findViewById(R.id.tfqstType);
+            tfQstTypeInfo.setVisibility(View.GONE);
         }
+
         if (scQstList.size() != 0) {
             scQstTypeInfo = (RelativeLayout) obsscrollView.getPullRootView().findViewById(R.id.scqstType);
             scQstTypeInfo.setVisibility(View.VISIBLE);
@@ -205,8 +222,12 @@ public class QuestionsListActivity extends AppCompatActivity implements View.OnC
             for (SglChoQuestion sglChoQuestion : scQstList) {
                 if (sglChoQuestion.isStared()) count++;
             }
-            setQuestionTypeInfo(scQstTypeInfo,R.drawable.circle_background_upside_lime,"单","单项选择题","共" + scQstList.size() + "题, " + "收藏" + count + "题");
+            setQuestionTypeInfo(scQstTypeInfo, R.drawable.circle_background_upside_lime, "单", "单项选择题", "共" + scQstList.size() + "题, " + "收藏" + count + "题");
+        } else {
+            scQstTypeInfo = (RelativeLayout) obsscrollView.getPullRootView().findViewById(R.id.scqstType);
+            scQstTypeInfo.setVisibility(View.GONE);
         }
+
         if (mcQstList.size() != 0) {
             mcQstTypeInfo = (RelativeLayout) obsscrollView.getPullRootView().findViewById(R.id.mcqstType);
             mcQstTypeInfo.setVisibility(View.VISIBLE);
@@ -214,8 +235,12 @@ public class QuestionsListActivity extends AppCompatActivity implements View.OnC
             for (MultChoQuestion multChoQuestion : mcQstList) {
                 if (multChoQuestion.isStared()) count++;
             }
-            setQuestionTypeInfo(mcQstTypeInfo,R.drawable.circle_background_upside_teal,"多","多项选择题","共" + mcQstList.size() + "题, " + "收藏" + count + "题");
+            setQuestionTypeInfo(mcQstTypeInfo, R.drawable.circle_background_upside_teal, "多", "多项选择题", "共" + mcQstList.size() + "题, " + "收藏" + count + "题");
+        } else {
+            mcQstTypeInfo = (RelativeLayout) obsscrollView.getPullRootView().findViewById(R.id.mcqstType);
+            mcQstTypeInfo.setVisibility(View.GONE);
         }
+
         if (dsQstList.size() != 0) {
             dsQstTypeInfo = (RelativeLayout) obsscrollView.getPullRootView().findViewById(R.id.dsqstType);
             dsQstTypeInfo.setVisibility(View.VISIBLE);
@@ -223,20 +248,23 @@ public class QuestionsListActivity extends AppCompatActivity implements View.OnC
             for (DiscussQuestion discussQuestion : dsQstList) {
                 if (discussQuestion.isStared()) count++;
             }
-            setQuestionTypeInfo(dsQstTypeInfo,R.drawable.circle_background_upside_green,"简","简答题","共" + dsQstList.size() + "题, " + "收藏" + count + "题");
+            setQuestionTypeInfo(dsQstTypeInfo, R.drawable.circle_background_upside_green, "简", "简答题", "共" + dsQstList.size() + "题, " + "收藏" + count + "题");
+        } else {
+            dsQstTypeInfo = (RelativeLayout) obsscrollView.getPullRootView().findViewById(R.id.dsqstType);
+            dsQstTypeInfo.setVisibility(View.GONE);
         }
     }
 
-    private void startSduty(String paperTitle,String paperAuthor,int qstType){
+    private void startSduty(String paperTitle, String paperAuthor, int qstType) {
         Intent intent = new Intent();
-        intent.putExtra("paperTitle",paperTitle);
-        intent.putExtra("paperAuthor",paperAuthor);
-        intent.putExtra("qstType",qstType);
-        intent.setClass(this,AnswerStudyActivity.class);
+        intent.putExtra("paperTitle", paperTitle);
+        intent.putExtra("paperAuthor", paperAuthor);
+        intent.putExtra("qstType", qstType);
+        intent.setClass(this, AnswerStudyActivity.class);
         startActivity(intent);
     }
 
-    private void setQuestionTypeInfo(RelativeLayout layout,int label,String labelText,String qstType,String qstInfo){
+    private void setQuestionTypeInfo(RelativeLayout layout, int label, String labelText, String qstType, String qstInfo) {
         ((TextView) layout.findViewById(R.id.question_label)).setBackground(getResources().getDrawable(label));
         ((TextView) layout.findViewById(R.id.question_label)).setText(labelText);
         ((TextView) layout.findViewById(R.id.question_type)).setText(qstType);
@@ -269,20 +297,103 @@ public class QuestionsListActivity extends AppCompatActivity implements View.OnC
                 finish();
                 break;
             case R.id.fiqstType:
-                startSduty(paperTitle,paperAuthor, Constant.FILLINQUESTIONTYPE);
+                startSduty(paperTitle, paperAuthor, Constant.FILLINQUESTIONTYPE);
                 break;
             case R.id.tfqstType:
-                startSduty(paperTitle,paperAuthor, Constant.TFQUESTIONTYPE);
+                startSduty(paperTitle, paperAuthor, Constant.TFQUESTIONTYPE);
                 break;
             case R.id.scqstType:
-                startSduty(paperTitle,paperAuthor, Constant.SGLCHOQUESTIONTYPE);
+                startSduty(paperTitle, paperAuthor, Constant.SGLCHOQUESTIONTYPE);
                 break;
             case R.id.mcqstType:
-                startSduty(paperTitle,paperAuthor, Constant.MULTCHOQUESTIONTYPE);
+                startSduty(paperTitle, paperAuthor, Constant.MULTCHOQUESTIONTYPE);
                 break;
             case R.id.dsqstType:
-                startSduty(paperTitle,paperAuthor, Constant.DISCUSSQUESTIONTYPE);
+                startSduty(paperTitle, paperAuthor, Constant.DISCUSSQUESTIONTYPE);
                 break;
         }
+    }
+
+    public int getStudiedCount(final NormalExamPaper normalExamPaper) {
+        RealmList<FillInQuestion> fillInQuestions = normalExamPaper.getFillInQuestions();
+        RealmList<TFQuestion> tfQuestions = normalExamPaper.getTfQuestions();
+        RealmList<SglChoQuestion> sglChoQuestions = normalExamPaper.getSglChoQuestions();
+        RealmList<MultChoQuestion> multChoQuestions = normalExamPaper.getMultChoQuestions();
+        RealmList<DiscussQuestion> discussQuestions = normalExamPaper.getDiscussQuestions();
+        for (int i = 0; i < fillInQuestions.size(); i++) {
+            Log.d("----->>", "fi" +i+ fillInQuestions.get(i).isStudied());
+            if (!fillInQuestions.get(i).isStudied())
+                return normalExamPaper.getPaperInfo().getStudyCount();
+        }
+        for (int i = 0; i < tfQuestions.size(); i++) {
+            Log.d("----->>", "tf" +i+ tfQuestions.get(i).isStudied());
+            if (!tfQuestions.get(i).isStudied())
+                return normalExamPaper.getPaperInfo().getStudyCount();
+        }
+        for (int i = 0; i < sglChoQuestions.size(); i++) {
+            Log.d("----->>", "sg" +i+ sglChoQuestions.get(i).isStudied());
+            if (!sglChoQuestions.get(i).isStudied())
+                return normalExamPaper.getPaperInfo().getStudyCount();
+        }
+        for (int i = 0; i < multChoQuestions.size(); i++) {
+            Log.d("----->>", "mu" +i+ multChoQuestions.get(i).isStudied());
+            if (!multChoQuestions.get(i).isStudied())
+                return normalExamPaper.getPaperInfo().getStudyCount();
+        }
+        for (int i = 0; i < discussQuestions.size(); i++) {
+            Log.d("----->>", "di" +i+ discussQuestions.get(i).isStudied());
+            if (!discussQuestions.get(i).isStudied())
+                return normalExamPaper.getPaperInfo().getStudyCount();
+        }
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                int count = normalExamPaper.getPaperInfo().getStudyCount();
+                normalExamPaper.getPaperInfo().setStudyCount(count + 1);
+            }
+        });
+        setAllQuestionUnstudied(normalExamPaper);
+        return normalExamPaper.getPaperInfo().getStudyCount();
+    }
+
+    private void setAllQuestionUnstudied(NormalExamPaper normalExamPaper) {
+        final RealmList<FillInQuestion> fillInQuestions = normalExamPaper.getFillInQuestions();
+        final RealmList<TFQuestion> tfQuestions = normalExamPaper.getTfQuestions();
+        final RealmList<SglChoQuestion> sglChoQuestions = normalExamPaper.getSglChoQuestions();
+        final RealmList<MultChoQuestion> multChoQuestions = normalExamPaper.getMultChoQuestions();
+        final RealmList<DiscussQuestion> discussQuestions = normalExamPaper.getDiscussQuestions();
+
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                for (int i = 0; i < fillInQuestions.size(); i++) {
+                    fillInQuestions.get(i).setStudied(false);
+                }
+                for (int i = 0; i < tfQuestions.size(); i++) {
+                    tfQuestions.get(i).setStudied(false);
+                }
+                for (int i = 0; i < sglChoQuestions.size(); i++) {
+                    sglChoQuestions.get(i).setStudied(false);
+                }
+                for (int i = 0; i < multChoQuestions.size(); i++) {
+                    multChoQuestions.get(i).setStudied(false);
+                }
+                for (int i = 0; i < discussQuestions.size(); i++) {
+                    discussQuestions.get(i).setStudied(false);
+                }
+            }
+        });
+//        for (int i = 0; i < tfQuestions.size(); i++) {
+//            tfQuestions.get(i).setStudied(false);
+//        }
+//        for (int i = 0; i < sglChoQuestions.size(); i++) {
+//            sglChoQuestions.get(i).setStudied(false);
+//        }
+//        for (int i = 0; i < multChoQuestions.size(); i++) {
+//            multChoQuestions.get(i).setStudied(false);
+//        }
+//        for (int i = 0; i < discussQuestions.size(); i++) {
+//            discussQuestions.get(i).setStudied(false);
+//        }
     }
 }

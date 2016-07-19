@@ -11,7 +11,7 @@ public class ExamPaperInfo extends RealmObject implements Serializable{
     private String title;
     private String author;
     private String createDate;
-    private String lastStudyDate;
+    private String lastStudyDate = "1990-10-03 11:11:00";
     private boolean stared = false;
     private boolean parseRight;
     private int studyCount;

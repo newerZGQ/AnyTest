@@ -15,6 +15,7 @@ public class FillInQuestion extends RealmObject implements Question{
     private int id;
     private String type;
     private boolean isStared;
+    private boolean isStudied;
 
     public FillInQuestion() {
     }
@@ -74,6 +75,16 @@ public class FillInQuestion extends RealmObject implements Question{
     @Override
     public void setStared(boolean stared) {
         this.isStared = stared;
+    }
+
+    @Override
+    public boolean isStudied() {
+        return isStudied;
+    }
+
+    @Override
+    public void setStudied(boolean studied) {
+        this.isStudied = studied;
     }
 
     @Override
