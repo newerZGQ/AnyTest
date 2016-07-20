@@ -84,9 +84,16 @@ public class RealmDataProvider {
         try {
             paper = (NormalExamPaper) future.get();
         }catch (Exception e){
-
+            Message message = Message.obtain();
+            message.what = 0X1113;
+            handler.sendMessage(message);
         }
-        if (paper == null || paper.getPaperInfo().getTitle() ==null ||paper.getPaperInfo().getTitle().equals("")) return;
+        if (paper == null || paper.getPaperInfo().getTitle() ==null ||paper.getPaperInfo().getTitle().equals("")){
+            Message message = Message.obtain();
+            message.what = 0X1112;
+            handler.sendMessage(message);
+            return;
+        }
         if (saveExampaperToRealm(paper,realm)){
             Message message = Message.obtain();
             message.what = 0X1111;
@@ -115,7 +122,7 @@ public class RealmDataProvider {
                     xmlFile.createNewFile();
                 }
                 dataTxt2XmlParser.parse(txtFile,xmlFile);
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             try{

@@ -8,6 +8,7 @@ import org.xmlpull.v1.XmlPullParser;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import io.realm.RealmList;
@@ -29,7 +30,7 @@ public class DataXml2ObjParser {
         return dataXml2ObjParser;
     }
 
-    public NormalExamPaper parse(File xmlFile) throws Exception {
+    public NormalExamPaper parse(File xmlFile) throws Exception,ParseException {
 
         if (!xmlFile.exists() || xmlFile == null) return null;
 

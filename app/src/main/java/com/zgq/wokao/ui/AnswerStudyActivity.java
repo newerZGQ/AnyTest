@@ -276,9 +276,9 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
                 upDateBottomMenu(position);
                 //设置已经学习过了这个问题 //重置该位置的myAnswer
                 if (currentMode == ALLQUESTIONMODE){
-                    if (isNeedAnswer()) {
-                        currentAllMyAnswer.get(position).setAnswer("");
-                    }
+//                    if (isNeedAnswer()) {
+//                        currentAllMyAnswer.get(position).setAnswer("");
+//                    }
                     realm.executeTransaction(new Realm.Transaction() {
                         @Override
                         public void execute(Realm realm) {
@@ -286,9 +286,9 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
                         }
                     });
                 }else{
-                    if (isNeedAnswer()) {
-                        currentStarMyAnswer.get(position).setAnswer("");
-                    }
+//                    if (isNeedAnswer()) {
+//                        currentStarMyAnswer.get(position).setAnswer("");
+//                    }
                     realm.executeTransaction(new Realm.Transaction() {
                         @Override
                         public void execute(Realm realm) {
@@ -369,6 +369,7 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void setStar(){
+        if (currentMode == STARQUESTIONMODE && currentStarQuestions.size() == 0) return;
         final int position = getCurrentQstAdapter().getCurrentPosition();
         switch(getCurrentMode()){
             case ALLQUESTIONMODE:
@@ -413,6 +414,7 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void showCurrentAnswer(){
+        if (currentMode == STARQUESTIONMODE && currentStarQuestions.size() == 0) return;
         switch (getCurrentMode()){
             case ALLQUESTIONMODE:
                 getCurrentQstAdapter().showCurrentAnswer();

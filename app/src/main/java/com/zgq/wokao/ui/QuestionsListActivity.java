@@ -64,6 +64,8 @@ public class QuestionsListActivity extends AppCompatActivity implements View.OnC
     private String lastStudyDate;
     private boolean isPaperStar;
 
+    private int[] background = new int[3];
+
     private NormalExamPaper normalExamPaper;
     private ExamPaperInfo info;
 
@@ -114,6 +116,10 @@ public class QuestionsListActivity extends AppCompatActivity implements View.OnC
     }
 
     private void initData() {
+        background[0] = R.drawable.image_concept;
+        background[1] = R.drawable.image_grassland;
+        background[2] = R.drawable.image_night_star;
+
         String title = getIntent().getStringExtra("paperTitle");
         String author = getIntent().getStringExtra("paperAuthor");
         RealmResults<NormalExamPaper> papers = realm.where(NormalExamPaper.class).
@@ -138,7 +144,7 @@ public class QuestionsListActivity extends AppCompatActivity implements View.OnC
 
     private void initView() {
         headZoomView = (ImageView) obsscrollView.getPullRootView().findViewById(R.id.iv_zoom);
-        Glide.with(this).load(R.drawable.image_night_star).into(headZoomView);
+        Glide.with(this).load(background[(int)(Math.random()*3)]).into(headZoomView);
         RealmList<FillInQuestion> fiQstList = normalExamPaper.getFillInQuestions();
         RealmList<TFQuestion> tfQstList = normalExamPaper.getTfQuestions();
         RealmList<SglChoQuestion> scQstList = normalExamPaper.getSglChoQuestions();

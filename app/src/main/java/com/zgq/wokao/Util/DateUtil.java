@@ -31,6 +31,8 @@ public class DateUtil {
 
         pattern = "yyyy-MM-dd HH:mm:ss";
 
+        if (time.equals("1990-10-03 11:11:00")) return "未学习";
+
         if (time != null) {
             try {
                 Date tDate = new SimpleDateFormat(pattern).parse(time);

@@ -8,7 +8,6 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.ActionMode;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,19 +18,21 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nbsp.materialfilepicker.MaterialFilePicker;
+import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 import com.zgq.wokao.R;
 import com.zgq.wokao.Util.DrawableUtil;
+import com.zgq.wokao.Util.NormalExamPaperUtil;
 import com.zgq.wokao.data.ExamPaperInfo;
 import com.zgq.wokao.data.NormalExamPaper;
 import com.zgq.wokao.data.RealmDataProvider;
 import com.zgq.wokao.view.RotateTextView;
-import com.zgq.wokao.Util.DateUtil;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
-import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,22 +62,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView toolbarTitle;
     @BindView(R.id.toolbar_background)
     View toolbarBackground;
-    @BindView(R.id.toolbar_starapp)
-    TextView toolbarStarApp;
     @BindView(R.id.toolbar_share)
     TextView toolbarShare;
-    @BindView(R.id.toolbar_setting)
+    @BindView(R.id.toolbar_teach)
     TextView toolbarSetting;
     @BindView(R.id.toolbar_overflow)
     LinearLayout toolbarOverFlow;
-//    @BindView(R.id.main_activity_toolbar)
-//    Toolbar toolbar;
 
     private Realm realm = Realm.getDefaultInstance();
     private ArrayList<ExamPaperInfo> paperInfos = new ArrayList<>();
     private ArrayList<NormalExamPaper> papers = new ArrayList<>();
 
-    private ActionMode.Callback callback;
     private boolean actionModeIsActive = false;
 
     private MyHandler myHandler;
@@ -104,24 +100,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void getRecyclerViewData() {
         papers = RealmDataProvider.getAllExamPaper(realm);
+        NormalExamPaperUtil.sortPapers(papers);
         paperInfos.clear();
         for (NormalExamPaper paper : papers) {
             paperInfos.add(paper.getPaperInfo());
         }
     }
 
-    private void sortPapers(ArrayList<NormalExamPaper> papers) throws ParseException{
-        for (int i = 0;i<papers.size();i++)
-            for (int j = i +1;j<papers.size();j++){
-                String si = papers.get(i).getPaperInfo().getLastStudyDate();
-                String sj = papers.get(j).getPaperInfo().getLastStudyDate();
-                if (DateUtil.getMSDate(si)<DateUtil.getMSDate(sj)){
-                    NormalExamPaper tmp = papers.get(i);
-                    papers.set(i,papers.get(j));
-                    papers.set(j,tmp);
-                }
-            }
-    }
 
     public void initData() {
         getRecyclerViewData();
@@ -136,7 +121,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         toolbarBack.setOnClickListener(this);
         toolbarTitle.setOnClickListener(this);
         toolbarBackground.setOnClickListener(this);
-        toolbarStarApp.setOnClickListener(this);
         toolbarSetting.setOnClickListener(this);
         toolbarShare.setOnClickListener(this);
         examListView.addItemDecoration(
@@ -160,7 +144,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         toolbarMore.setVisibility(View.GONE);
         toolbarTitle.setVisibility(View.GONE);
         set.playTogether(
-//                ObjectAnimator.ofFloat(toolbarDelete,"scaleX",0,1),
                 ObjectAnimator.ofFloat(toolbarDelete,"scaleY",0,1),
                 ObjectAnimator.ofFloat(toolbarSetStar,"scaleY",0,1),
                 ObjectAnimator.ofFloat(toolbarBack,"scaleY",0,1)
@@ -202,24 +185,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 cancelMyActionMode();
                 break;
             case R.id.toolbar_add:
-                FilePicker picker = new FilePicker(MainActivity.this, FilePicker.FILE);
-                picker.setShowHideDir(false);
-                picker.setRootPath(StorageUtils.getRootPath(MainActivity.this) + "Download/");
-                picker.setOnFilePickListener(new FilePicker.OnFilePickListener() {
-                    @Override
-                    public void onFilePicked(String currentPath) {
-                        RealmDataProvider.parseTxt2Realm(new File(currentPath), new File(StorageUtils.getRootPath(MainActivity.this) + "wokao/tmp.xml"), realm, myHandler);
-                    }
-                });
-                picker.show();
+                new MaterialFilePicker()
+                        .withActivity(this)
+                        .withRequestCode(1)
+                        .start();
+//                FilePicker picker = new FilePicker(MainActivity.this, FilePicker.FILE);
+//                picker.setShowHideDir(false);
+//                picker.setRootPath(StorageUtils.getRootPath(MainActivity.this) + "Download/");
+//                picker.setOnFilePickListener(new FilePicker.OnFilePickListener() {
+//                    @Override
+//                    public void onFilePicked(String currentPath) {
+//                        RealmDataProvider.parseTxt2Realm(new File(currentPath), new File(StorageUtils.getRootPath(MainActivity.this) + "wokao/tmp.xml"), realm, myHandler);
+//                    }
+//                });
+//                picker.show();
                 break;
             case R.id.toolbar_more:
                 if (getOverFlowStatus()) hideOverFlow();
                 else showOverFlow();
                 break;
-            case R.id.toolbar_setting:
-                break;
-            case R.id.toolbar_starapp:
+            case R.id.toolbar_teach:
+                hideOverFlow();
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this,TutotialActivity.class);
+                startActivity(intent);
                 break;
             case R.id.toolbar_background:
                 hideOverFlow();
@@ -269,9 +258,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void showOverFlow(){
         overFlowStatus = true;
-//        toolbarOverFlow.setPivotX(1);
-//        toolbarOverFlow.setPivotY(1);
-//        toolbarOverFlow.invalidate();
         AnimatorSet set = new AnimatorSet();
         set.playTogether(ObjectAnimator.ofFloat(toolbarOverFlow,"scaleX",0,1),
                 ObjectAnimator.ofFloat(toolbarOverFlow,"scaleY",0,1));
@@ -306,9 +292,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 0X1111:
+                    Toast.makeText(mWeakActivity.get(),"解析成功",Toast.LENGTH_SHORT).show();
                     mWeakActivity.get().updatePaperInfos();
+                    break;
+                case 0X1112:
+                    Toast.makeText(mWeakActivity.get(),"解析错误，请检查文档标题和作者",Toast.LENGTH_SHORT).show();
+                    break;
+                case 0X1113:
+                    Toast.makeText(mWeakActivity.get(),"解析错误，请检查文档格式",Toast.LENGTH_SHORT).show();
+                    break;
             }
             super.handleMessage(msg);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            String filePath = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
+            // Do anything with file
+            RealmDataProvider.parseTxt2Realm(new File(filePath), new File(StorageUtils.getRootPath(MainActivity.this) + "wokao/tmp.xml"), realm, myHandler);
         }
     }
 
