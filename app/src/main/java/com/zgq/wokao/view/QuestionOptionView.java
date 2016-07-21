@@ -36,7 +36,9 @@ public class QuestionOptionView extends LinearLayout {
         init();
     }
     private void init(){
-        this.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,DensityUtil.dip2px(context,48f)));
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,DensityUtil.dip2px(context,48f));
+        layoutParams.setMargins(0,DensityUtil.dip2px(context,8),0,0);
+        this.setLayoutParams(layoutParams);
         this.setOrientation(HORIZONTAL);
 
         int dimen = DensityUtil.dip2px(context,32f);

@@ -119,6 +119,11 @@ public class MultChoQuestionAdapter extends PagerAdapter implements BaseStudySys
             for (int j = 0; j < correctAnswer.length; j++) {
                 optionViews.get(correctAnswer[j]).setToCorrect();
             }
+        }else{
+            multiChoQuestionViewHolder.myAnswerTv.setText("");
+            for (int i =0 ;i<optionViews.size();i++){
+                optionViews.get(i).setUnselected();
+            }
         }
         container.addView(convertView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         return convertView;

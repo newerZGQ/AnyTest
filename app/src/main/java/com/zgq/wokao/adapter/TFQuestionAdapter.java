@@ -82,7 +82,7 @@ public class TFQuestionAdapter extends PagerAdapter implements BaseStudySystemAd
             tfQuestionViewHolder = (TFQuestionViewHolder)convertView.getTag();
         }
         holder = tfQuestionViewHolder;
-        tfQuestionViewHolder.questionBody.setText(datas.get(position).getBody());
+        tfQuestionViewHolder.questionBody.setText(""+(position+1)+". "+datas.get(position).getBody());
         tfQuestionViewHolder.optionFalse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,6 +127,13 @@ public class TFQuestionAdapter extends PagerAdapter implements BaseStudySystemAd
                         trueLabel.setText("");
                 }
             }
+        }else{
+            TextView trueLabel = (TextView) holder.optionTrue.findViewById(R.id.tfqst_option_true_label);
+            trueLabel.setText("A");
+            trueLabel.setBackground(mContext.getResources().getDrawable(R.drawable.activity_answer_study_option_circle_base));
+            TextView falseLabel = (TextView) holder.optionFalse.findViewById(R.id.tfqst_option_false_label);
+            falseLabel.setText("B");
+            falseLabel.setBackground(mContext.getResources().getDrawable(R.drawable.activity_answer_study_option_circle_base));
         }
         container.addView(convertView ,ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT );
         return convertView;

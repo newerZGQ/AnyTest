@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
 import com.zgq.wokao.R;
 import com.zgq.wokao.Util.DateUtil;
 import com.zgq.wokao.adapter.BaseStudySystemAdapter;
@@ -121,6 +122,15 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
         ButterKnife.bind(this);
         initData();
         initView();
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
     private void initData() {

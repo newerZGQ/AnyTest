@@ -23,6 +23,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
+                    android:textColor="@color/colorBlack"
                     android:text="标识符号" />
 
                 <TextView
@@ -47,6 +48,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
+                    android:textColor="@color/colorBlack"
                     android:text="示例1：标题与作者" />
 
                 <TextView
@@ -71,6 +73,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
+                    android:textColor="@color/colorBlack"
                     android:text="示例2：填空题" />
 
                 <TextView
@@ -95,6 +98,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
+                    android:textColor="@color/colorBlack"
                     android:text="示例3：判断题" />
 
                 <TextView
@@ -119,6 +123,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
+                    android:textColor="@color/colorBlack"
                     android:text="示例4：单项选择题" />
 
                 <TextView
@@ -143,6 +148,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
+                    android:textColor="@color/colorBlack"
                     android:text="示例5：多项选择题" />
 
                 <TextView
@@ -166,6 +172,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/colorBlack"
                     android:textSize="20sp"
                     android:text="示例6：简答题" />
 
@@ -176,6 +183,23 @@
                 <TextView
                     style="@style/ActivityTeachTextView"
                     android:text="**简答题\n##谈谈你对天气的看法\n天气很好\n##唐朝何时被灭国\n公元907年" />
+
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="6dp"
+                android:background="@color/colorRecyclerViewDivider" />
+
+            <LinearLayout
+                style="@style/ActivityTeachItemLayoutStyle">
+
+                <TextView
+                    style="@style/ActivityTeachTextView"
+                    android:text="开发者信息" />
+
+                <TextView
+                    style="@style/ActivityTeachTextView"
+                    android:text="亥姆霍兹\nBug请反馈至379020727@qq.com\nQQ群：519142680" />
 
             </LinearLayout>
         </LinearLayout>

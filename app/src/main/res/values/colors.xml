@@ -17,7 +17,7 @@
     <color name="colorRed">#ab960000</color>
 
     //状态栏
-    <color name="colorStatusBar">#01a19c9c</color>
+    <color name="colorStatusBar">#01cac4c4</color>
     <color name="colorTransparent">#00000000</color>
 
     //acrivity_questionlist

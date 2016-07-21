@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">试卷工厂</string>
+
+    <string name="tips1">  打造你的专属试题库</string>
+    <string name="tips2">  在地铁上拿着书复习好麻烦</string>
+    <string name="tips3">  虽然第一次制作有点麻烦，但是做好受用无穷呦</string>
+    <string name="tips4">  我要把我的试卷分享给朋友</string>
+    <string name="tips5">  为了考试打印好多张纸，用完就扔了，好浪费</string>
 </resources>

@@ -14,6 +14,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.umeng.analytics.MobclickAgent;
 import com.zgq.wokao.R;
 import com.zgq.wokao.Util.DateUtil;
 import com.zgq.wokao.data.Constant;
@@ -108,6 +109,15 @@ public class QuestionsListActivity extends AppCompatActivity implements View.OnC
     protected void onStart() {
         super.onStart();
         slidingDistance = headZoomView.getHeight() - toolbarLayout.getHeight();
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
 
