@@ -77,7 +77,6 @@ public class MultChoQuestion extends RealmObject implements Question, QuestionOp
     public RealmList<Option> getOptions() {
         return options;
     }
-
     @Override
     public boolean hasOptions() {
         if (options == null || options.size() == 0){
