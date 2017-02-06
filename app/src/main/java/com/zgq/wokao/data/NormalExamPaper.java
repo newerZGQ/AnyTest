@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by zgq on 16-6-18.

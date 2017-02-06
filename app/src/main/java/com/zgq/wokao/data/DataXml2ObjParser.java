@@ -1,7 +1,5 @@
 package com.zgq.wokao.data;
 
-import android.support.annotation.Nullable;
-import android.util.Log;
 import android.util.Xml;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -9,7 +7,6 @@ import org.xmlpull.v1.XmlPullParser;
 import java.io.File;
 import java.io.FileInputStream;
 import java.text.ParseException;
-import java.util.ArrayList;
 
 import io.realm.RealmList;
 

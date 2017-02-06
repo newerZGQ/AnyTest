@@ -1,10 +1,6 @@
 package com.zgq.wokao.data;
 
-import java.lang.annotation.Annotation;
-
 import io.realm.RealmObject;
-import io.realm.annotations.RealmClass;
-import io.realm.annotations.RealmModule;
 
 /**
  * Created by zgq on 16-6-18.
