@@ -3,16 +3,16 @@ package com.zgq.wokao.ui;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v7.widget.RecyclerView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -30,14 +30,14 @@ import com.zgq.wokao.data.NormalExamPaper;
 import com.zgq.wokao.data.RealmDataProvider;
 import com.zgq.wokao.view.RotateTextView;
 
+import org.w3c.dom.Text;
+
 import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qqtheme.framework.picker.FilePicker;
 import cn.qqtheme.framework.util.StorageUtils;
 import io.realm.Realm;
 import jp.wasabeef.recyclerview.animators.FadeInAnimator;
@@ -67,8 +67,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView toolbarShare;
     @BindView(R.id.toolbar_teach)
     TextView toolbarSetting;
+    @BindView(R.id.toolbar_cloud)
+    TextView toolbarCloud;
     @BindView(R.id.toolbar_overflow)
     LinearLayout toolbarOverFlow;
+
+
 
     private Realm realm = Realm.getDefaultInstance();
     private ArrayList<ExamPaperInfo> paperInfos = new ArrayList<>();
@@ -131,6 +135,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         toolbarTitle.setOnClickListener(this);
         toolbarBackground.setOnClickListener(this);
         toolbarSetting.setOnClickListener(this);
+        toolbarCloud.setOnClickListener(this);
         toolbarShare.setOnClickListener(this);
         examListView.addItemDecoration(
                 new HorizontalDividerItemDecoration.Builder(this)
@@ -218,6 +223,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent intent = new Intent();
                 intent.setClass(MainActivity.this,TutotialActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.toolbar_cloud:
                 break;
             case R.id.toolbar_background:
                 hideOverFlow();

@@ -106,6 +106,15 @@
             android:layout_width="150dp"
             android:layout_height="56dp" />
         <TextView
+            android:id="@+id/toolbar_cloud"
+            android:text="云端资料"
+            android:textSize="14sp"
+            android:textColor="@color/colorBlack"
+            android:layout_marginLeft="16dp"
+            android:gravity="center_vertical"
+            android:layout_width="150dp"
+            android:layout_height="56dp" />
+        <TextView
             android:id="@+id/toolbar_teach"
             android:text="教程"
             android:textColor="@color/colorBlack"
