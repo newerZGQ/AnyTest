@@ -9,6 +9,7 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,9 +29,8 @@ import com.zgq.wokao.Util.NormalExamPaperUtil;
 import com.zgq.wokao.data.ExamPaperInfo;
 import com.zgq.wokao.data.NormalExamPaper;
 import com.zgq.wokao.data.RealmDataProvider;
+import com.zgq.wokao.setting.MarketChecker;
 import com.zgq.wokao.view.RotateTextView;
-
-import org.w3c.dom.Text;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
@@ -96,10 +96,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onStart();
         updatePaperInfos();
     }
+
+    @Override
     public void onResume() {
         super.onResume();
+        checkMarket();
         MobclickAgent.onResume(this);
     }
+
+    @Override
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);
@@ -295,6 +300,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    private void checkMarket(){
+        if (MarketChecker.checkMarket(this)){
+            Log.d("------>>needcheckmarket"," need");
+        }
     }
 
     static class MyHandler extends Handler {

@@ -3,6 +3,7 @@ package com.zgq.wokao;
 import android.app.Application;
 
 import com.zgq.wokao.Util.FileUtil;
+import com.zgq.wokao.data.sp.SharedPreferencesHelper;
 
 import java.io.File;
 
@@ -27,5 +28,7 @@ public class MyApplication extends Application {
                 file.mkdir();
             }
         }
+
+        SharedPreferencesHelper.init(this);
     }
 }

@@ -1,17 +1,12 @@
 package com.zgq.wokao.ui;
 
-import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
-import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,17 +14,14 @@ import com.umeng.analytics.MobclickAgent;
 import com.zgq.wokao.R;
 
 import com.zgq.wokao.data.RealmDataProvider;
+import com.zgq.wokao.setting.MarketChecker;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.ref.WeakReference;
-import java.lang.reflect.Method;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -78,6 +70,7 @@ public class ActivityWelcome extends AppCompatActivity {
 
     public void onResume() {
         super.onResume();
+        incWorkingCount();
         MobclickAgent.onResume(this);
     }
     public void onPause() {
@@ -130,6 +123,13 @@ public class ActivityWelcome extends AppCompatActivity {
             //Logging exception
         }
         return null;
+    }
+
+    /**
+     * 打开次数增加
+     */
+    private void incWorkingCount(){
+        MarketChecker.WoringCounter.increase(this);
     }
 
 
