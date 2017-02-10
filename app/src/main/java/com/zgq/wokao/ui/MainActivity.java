@@ -26,10 +26,12 @@ import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 import com.zgq.wokao.R;
 import com.zgq.wokao.Util.DrawableUtil;
 import com.zgq.wokao.Util.NormalExamPaperUtil;
+import com.zgq.wokao.Util.StringUtil;
 import com.zgq.wokao.data.ExamPaperInfo;
 import com.zgq.wokao.data.NormalExamPaper;
 import com.zgq.wokao.data.RealmDataProvider;
 import com.zgq.wokao.setting.MarketChecker;
+import com.zgq.wokao.ui.util.DialogUtil;
 import com.zgq.wokao.view.RotateTextView;
 
 import java.io.File;
@@ -81,6 +83,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private boolean actionModeIsActive = false;
 
     private MyHandler myHandler;
+
+    private DialogUtil.Listener marketListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -302,9 +306,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return super.onKeyDown(keyCode, event);
     }
 
+
     private void checkMarket(){
         if (MarketChecker.checkMarket(this)){
-            Log.d("------>>needcheckmarket"," need");
+            marketListener = new DialogUtil.Listener(){
+                @Override
+                public void posOnClick() {
+                    //TODO 测试需要，未设置状态未true
+//                    MarketChecker.setState(MainActivity.this,true);
+                    MarketChecker.openMarketApp(MainActivity.this);
+                }
+
+                @Override
+                public void negOnClick() {
+
+                }
+            };
+            DialogUtil.show(this, StringUtil.getResString(this,R.string.market_dialog_title),
+                    StringUtil.getResString(this,R.string.market_dialog_message),
+                    StringUtil.getResString(this,R.string.market_dialog_positive_button),
+                    StringUtil.getResString(this,R.string.market_dialog_negative_button),
+                    marketListener);
         }
     }
 
