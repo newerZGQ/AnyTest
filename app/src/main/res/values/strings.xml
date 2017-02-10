@@ -6,4 +6,10 @@
     <string name="tips3">  虽然第一次制作有点麻烦，但是做好受用无穷呦</string>
     <string name="tips4">  我要把我的试卷分享给朋友</string>
     <string name="tips5">  为了考试打印好多张纸，用完就扔了，好浪费</string>
+
+    <!--用于MainActivity 显示启动应用市场去打分的dialog-->
+    <string name="market_dialog_title">:)</string>
+    <string name="market_dialog_message">开发不易，赏脸给个好评可否？</string>
+    <string name="market_dialog_positive_button">确定</string>
+    <string name="market_dialog_negative_button">取消</string>
 </resources>
