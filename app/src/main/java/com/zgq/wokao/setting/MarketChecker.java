@@ -1,7 +1,10 @@
 package com.zgq.wokao.setting;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.zgq.wokao.data.sp.SPConstant;
 import com.zgq.wokao.data.sp.SharedPreferencesHelper;
@@ -12,7 +15,7 @@ import com.zgq.wokao.data.sp.SharedPreferencesHelper;
 
 public class MarketChecker extends BaseSetting {
 
-    private static final int BOUNDRARY = 2;
+    private static final int BOUNDRARY = 3;
 
     /**
      * 检查是否需要打开应用商店打分
@@ -33,7 +36,7 @@ public class MarketChecker extends BaseSetting {
     /**
      * 设置是否已经打过分的状态
      * @param context
-     * @param state
+     * @param state true表示已经打过分
      */
     public static void setState(Context context, boolean state){
         checkKey(context);
@@ -62,6 +65,20 @@ public class MarketChecker extends BaseSetting {
     private static void checkKey(Context context){
         if (!SharedPreferencesHelper.contains(SPConstant.GRADE_STATE)){
             SharedPreferencesHelper.put(SPConstant.GRADE_STATE,false);
+        }
+    }
+
+    /**
+     * 打开应用市场
+     */
+    public static void openMarketApp(Context context){
+        try {
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse("market://details?id="+context.getPackageName()));
+            context.startActivity(i);
+        } catch (Exception e) {
+            Toast.makeText(context, "您的手机上没有安装Android应用市场", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
         }
     }
     public static class WoringCounter {
