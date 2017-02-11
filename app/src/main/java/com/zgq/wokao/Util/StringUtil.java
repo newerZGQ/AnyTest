@@ -7,7 +7,18 @@ import android.content.Context;
  */
 
 public class StringUtil {
-    public static String getResString(Context context,int id){
+    private static Context context;
+    public static void init(Context _context){
+        context = _context;
+    }
+    public static String getResString(int id){
+        if (!checkParams()) return null;
         return context.getResources().getString(id);
+    }
+    public static boolean checkParams(){
+        if (context == null){
+            return false;
+        }
+        return true;
     }
 }
