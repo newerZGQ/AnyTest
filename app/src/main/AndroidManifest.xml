@@ -33,6 +33,7 @@
         <activity android:name=".ui.AnswerStudyActivity" />
         <activity android:name=".ui.QuestionsListActivity" />
         <activity android:name=".ui.TutotialActivity" />
+        <activity android:name=".ui.SearchActivity"/>
         <activity android:name=".ui.ActivityWelcome">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

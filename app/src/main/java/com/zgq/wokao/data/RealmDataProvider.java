@@ -1,33 +1,30 @@
 package com.zgq.wokao.data;
 
-import android.content.Context;
-import android.content.pm.PackageInfo;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.zgq.wokao.Util.FileUtil;
+import com.zgq.wokao.model.ExamPaperInfo;
+import com.zgq.wokao.model.NormalExamPaper;
+import com.zgq.wokao.parser.DataTxt2XmlParser;
+import com.zgq.wokao.parser.DataXml2ObjParser;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import cn.qqtheme.framework.util.StorageUtils;
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
-import io.realm.RealmList;
 import io.realm.RealmResults;
 
 /**
  * Created by zgq on 16-6-20.
  */
 public class RealmDataProvider {
-    public static boolean saveExampaperToRealm(NormalExamPaper examPaper,Realm realm){
+    public static boolean saveExampaperToRealm(NormalExamPaper examPaper, Realm realm){
         if (realm == null) return false;
         if (examPaperIsExist(examPaper,realm)) {
             return false;

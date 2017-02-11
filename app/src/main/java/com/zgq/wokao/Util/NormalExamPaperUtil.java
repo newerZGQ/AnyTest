@@ -1,6 +1,6 @@
 package com.zgq.wokao.Util;
 
-import com.zgq.wokao.data.NormalExamPaper;
+import com.zgq.wokao.model.NormalExamPaper;
 
 import java.util.ArrayList;
 import java.util.Collections;

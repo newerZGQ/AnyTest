@@ -51,4 +51,16 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="SearchView">
+        <!--<item name="floatingSearch_backgroundColor">@color/colorWhite</item>-->
+        <!--<item name="floatingSearch_viewTextColor"></item>-->
+        <!--<item name="floatingSearch_hintTextColor">@color/colorWhite</item>-->
+        <!--<item name="floatingSearch_dividerColor">@color/colorPrimary</item>-->
+        <!--<item name="floatingSearch_clearBtnColor"></item>-->
+        <!--<item name="floatingSearch_leftActionColor">@color/colorWhite</item>-->
+        <!--<item name="floatingSearch_menuItemIconColor">@color/colorWhite</item>-->
+        <!--<item name="floatingSearch_suggestionRightIconColor"></item>-->
+        <!--<item name="floatingSearch_actionMenuOverflowColor">@color/colorWhite</item>-->
+    </style>
 </resources>

@@ -15,7 +15,7 @@ import com.zgq.wokao.data.sp.SharedPreferencesHelper;
 
 public class MarketChecker extends BaseSetting {
 
-    private static final int BOUNDRARY = 3;
+    private static final int BOUNDRARY = 5;
 
     /**
      * 检查是否需要打开应用商店打分
@@ -24,7 +24,7 @@ public class MarketChecker extends BaseSetting {
      */
     public static boolean checkMarket(Context context){
         checkKey(context);
-        boolean gradeState = (Boolean) SharedPreferencesHelper.get(SPConstant.GRADE_STATE,false);
+        boolean gradeState = getState(context);
         if (gradeState == true) return false;
         int workingCount = WoringCounter.getCount(context);
         if (workingCount >= BOUNDRARY){

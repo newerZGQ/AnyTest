@@ -20,6 +20,8 @@ import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.zgq.wokao.R;
 import com.zgq.wokao.adapter.SearchResultListAdapter;
 
+import java.util.List;
+
 
 /**
  * Created by zgq on 2017/2/11.
@@ -96,7 +98,19 @@ public class SearchFragment extends BaseFragment {
 
             @Override
             public void onSearchTextChanged(String oldQuery, final String newQuery) {
+                if (!oldQuery.equals("") && newQuery.equals("")) {
+                    mSearchView.clearSuggestions();
+                } else {
 
+                    //this shows the top left circular progress
+                    //you can call it where ever you want, but
+                    //it makes sense to do it when loading something in
+                    //the background.
+                    mSearchView.showProgress();
+
+                    //simulates a query call to a data source
+                    //with a new query.
+                }
 
                 Log.d(TAG, "onSearchTextChanged()");
             }
@@ -148,26 +162,26 @@ public class SearchFragment extends BaseFragment {
             @Override
             public void onActionMenuItemSelected(MenuItem item) {
 
-                if (item.getItemId() == R.id.action_change_colors) {
-
-                    mIsDarkSearchTheme = true;
-
-                    //demonstrate setting colors for items
-                    mSearchView.setBackgroundColor(Color.parseColor("#787878"));
-                    mSearchView.setViewTextColor(Color.parseColor("#e9e9e9"));
-                    mSearchView.setHintTextColor(Color.parseColor("#e9e9e9"));
-                    mSearchView.setActionMenuOverflowColor(Color.parseColor("#e9e9e9"));
-                    mSearchView.setMenuItemIconColor(Color.parseColor("#e9e9e9"));
-                    mSearchView.setLeftActionIconColor(Color.parseColor("#e9e9e9"));
-                    mSearchView.setClearBtnColor(Color.parseColor("#e9e9e9"));
-                    mSearchView.setDividerColor(Color.parseColor("#BEBEBE"));
-                    mSearchView.setLeftActionIconColor(Color.parseColor("#e9e9e9"));
-                } else {
-
-                    //just print action
-                    Toast.makeText(getActivity().getApplicationContext(), item.getTitle(),
-                            Toast.LENGTH_SHORT).show();
-                }
+//                if (item.getItemId() == R.id.action_change_colors) {
+//
+//                    mIsDarkSearchTheme = true;
+//
+//                    //demonstrate setting colors for items
+//                    mSearchView.setBackgroundColor(Color.parseColor("#787878"));
+//                    mSearchView.setViewTextColor(Color.parseColor("#e9e9e9"));
+//                    mSearchView.setHintTextColor(Color.parseColor("#e9e9e9"));
+//                    mSearchView.setActionMenuOverflowColor(Color.parseColor("#e9e9e9"));
+//                    mSearchView.setMenuItemIconColor(Color.parseColor("#e9e9e9"));
+//                    mSearchView.setLeftActionIconColor(Color.parseColor("#e9e9e9"));
+//                    mSearchView.setClearBtnColor(Color.parseColor("#e9e9e9"));
+//                    mSearchView.setDividerColor(Color.parseColor("#BEBEBE"));
+//                    mSearchView.setLeftActionIconColor(Color.parseColor("#e9e9e9"));
+//                } else {
+//
+//                    //just print action
+//                    Toast.makeText(getActivity().getApplicationContext(), item.getTitle(),
+//                            Toast.LENGTH_SHORT).show();
+//                }
 
             }
         });

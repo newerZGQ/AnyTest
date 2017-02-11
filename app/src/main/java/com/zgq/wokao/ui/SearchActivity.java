@@ -28,6 +28,7 @@ public class SearchActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         //按下返回键时，对activity和fragment进行操作
+        super.onBackPressed();
     }
 
     private void showFragment(Fragment fragment) {
