@@ -1,6 +1,14 @@
-package com.zgq.wokao.data;
+package com.zgq.wokao.parser;
 
 import android.util.Xml;
+
+import com.zgq.wokao.model.DiscussQuestion;
+import com.zgq.wokao.model.FillInQuestion;
+import com.zgq.wokao.model.MultChoQuestion;
+import com.zgq.wokao.model.NormalExamPaper;
+import com.zgq.wokao.model.Option;
+import com.zgq.wokao.model.SglChoQuestion;
+import com.zgq.wokao.model.TFQuestion;
 
 import org.xmlpull.v1.XmlPullParser;
 

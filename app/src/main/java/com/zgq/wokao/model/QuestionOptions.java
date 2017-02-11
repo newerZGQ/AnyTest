@@ -1,6 +1,4 @@
-package com.zgq.wokao.data;
-
-import java.util.ArrayList;
+package com.zgq.wokao.model;
 
 import io.realm.RealmList;
 

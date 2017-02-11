@@ -1,11 +1,11 @@
-package com.zgq.wokao.data;
+package com.zgq.wokao.model;
 
 import io.realm.RealmObject;
 
 /**
  * Created by zgq on 16-6-18.
  */
-public class TFQuestion extends RealmObject implements Question {
+public class DiscussQuestion extends RealmObject implements Question  {
     private String body;
     private String answer;
     private int id;
@@ -13,10 +13,10 @@ public class TFQuestion extends RealmObject implements Question {
     private boolean isStared;
     private boolean isStudied;
 
-    public TFQuestion() {
+    public DiscussQuestion() {
     }
 
-    public TFQuestion(int id, String type,String body, String answer) {
+    public DiscussQuestion(int id, String type,String body, String answer) {
         this.body = body;
         this.id = id;
         this.type = type;
@@ -25,7 +25,6 @@ public class TFQuestion extends RealmObject implements Question {
 
     @Override
     public int getId() {
-
         return id;
     }
     @Override
@@ -64,10 +63,7 @@ public class TFQuestion extends RealmObject implements Question {
     public String getAnswer() {
         return (hasAnswer())?answer:null;
     }
-    @Override
-    public String toString() {
-        return id+" "+type+" "+body+" "+answer;
-    }
+
     @Override
     public boolean isStared() {
         return isStared;
@@ -84,5 +80,9 @@ public class TFQuestion extends RealmObject implements Question {
     @Override
     public void setStudied(boolean studied) {
         this.isStudied = studied;
+    }
+    @Override
+    public String toString() {
+        return id+" "+type+" "+body+" "+answer;
     }
 }

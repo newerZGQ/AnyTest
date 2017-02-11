@@ -1,4 +1,4 @@
-package com.zgq.wokao.data;
+package com.zgq.wokao.parser;
 
 /**
  * Created by zgq on 16-6-19.

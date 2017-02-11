@@ -1,4 +1,4 @@
-package com.zgq.wokao.data;
+package com.zgq.wokao.model;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
@@ -6,7 +6,8 @@ import io.realm.RealmObject;
 /**
  * Created by zgq on 16-6-18.
  */
-public class MultChoQuestion extends RealmObject implements Question, QuestionOptions{
+public class SglChoQuestion extends RealmObject implements Question , QuestionOptions {
+
     private int id;
     private String type;
     private String body;
@@ -15,10 +16,10 @@ public class MultChoQuestion extends RealmObject implements Question, QuestionOp
     private boolean isStudied;
     private RealmList<Option> options = new RealmList<>();
 
-    public MultChoQuestion() {
+    public SglChoQuestion() {
     }
 
-    public MultChoQuestion(int id, String type,String body, String answer,RealmList<Option> options) {
+    public SglChoQuestion(int id, String type,String body, String answer,RealmList<Option> options) {
         this.body = body;
         this.id = id;
         this.type = type;
@@ -77,6 +78,7 @@ public class MultChoQuestion extends RealmObject implements Question, QuestionOp
     public RealmList<Option> getOptions() {
         return options;
     }
+
     @Override
     public boolean hasOptions() {
         if (options == null || options.size() == 0){

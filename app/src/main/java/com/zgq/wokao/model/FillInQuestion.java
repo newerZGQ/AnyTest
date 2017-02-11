@@ -1,4 +1,4 @@
-package com.zgq.wokao.data;
+package com.zgq.wokao.model;
 
 import io.realm.RealmObject;
 

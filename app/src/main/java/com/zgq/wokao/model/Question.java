@@ -1,6 +1,4 @@
-package com.zgq.wokao.data;
-
-import io.realm.RealmObject;
+package com.zgq.wokao.model;
 
 /**
  * Created by zgq on 16-6-18.
