@@ -1,30 +1,26 @@
-package com.zgq.wokao.model;
+package com.zgq.wokao.model.paper;
 
-import io.realm.RealmList;
 import io.realm.RealmObject;
 
 /**
  * Created by zgq on 16-6-18.
  */
-public class SglChoQuestion extends RealmObject implements Question , QuestionOptions {
-
-    private int id;
-    private String type;
+public class DiscussQuestion extends RealmObject implements Question  {
     private String body;
     private String answer;
+    private int id;
+    private String type;
     private boolean isStared;
     private boolean isStudied;
-    private RealmList<Option> options = new RealmList<>();
 
-    public SglChoQuestion() {
+    public DiscussQuestion() {
     }
 
-    public SglChoQuestion(int id, String type,String body, String answer,RealmList<Option> options) {
+    public DiscussQuestion(int id, String type,String body, String answer) {
         this.body = body;
         this.id = id;
         this.type = type;
         this.answer = answer;
-        this.options = options;
     }
 
     @Override
@@ -69,37 +65,6 @@ public class SglChoQuestion extends RealmObject implements Question , QuestionOp
     }
 
     @Override
-    public int getOptionsCount() {
-        if (options == null) return 0;
-        return options.size();
-    }
-
-    @Override
-    public RealmList<Option> getOptions() {
-        return options;
-    }
-
-    @Override
-    public boolean hasOptions() {
-        if (options == null || options.size() == 0){
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public void setOptions(RealmList<Option> options) {
-        this.options = options;
-    }
-
-    @Override
-    public boolean addOption(Option option) {
-        if (option == null) return false;
-        options.add(option);
-        return true;
-    }
-
-    @Override
     public boolean isStared() {
         return isStared;
     }
@@ -116,7 +81,6 @@ public class SglChoQuestion extends RealmObject implements Question , QuestionOp
     public void setStudied(boolean studied) {
         this.isStudied = studied;
     }
-
     @Override
     public String toString() {
         return id+" "+type+" "+body+" "+answer;

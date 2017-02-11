@@ -9,10 +9,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zgq.wokao.R;
-import com.zgq.wokao.model.MyQuestionAnswer;
-import com.zgq.wokao.model.Question;
-import com.zgq.wokao.model.QuestionAnswer;
-import com.zgq.wokao.model.SglChoQuestion;
+import com.zgq.wokao.model.paper.MyQuestionAnswer;
+import com.zgq.wokao.model.paper.Question;
+import com.zgq.wokao.model.paper.QuestionAnswer;
+import com.zgq.wokao.model.paper.SglChoQuestion;
 import com.zgq.wokao.view.QuestionOptionView;
 
 import java.util.ArrayList;

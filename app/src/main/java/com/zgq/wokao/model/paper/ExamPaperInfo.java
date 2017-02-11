@@ -1,4 +1,6 @@
-package com.zgq.wokao.model;
+package com.zgq.wokao.model.paper;
+
+import com.zgq.wokao.model.search.Searchable;
 
 import java.io.Serializable;
 
@@ -7,7 +9,8 @@ import io.realm.RealmObject;
 /**
  * Created by zgq on 16-6-20.
  */
-public class ExamPaperInfo extends RealmObject implements Serializable{
+public class ExamPaperInfo extends RealmObject implements Serializable ,Searchable {
+    private String id;
     private String title;
     private String author;
     private String createDate;
@@ -19,11 +22,20 @@ public class ExamPaperInfo extends RealmObject implements Serializable{
     public ExamPaperInfo() {
     }
 
-    public ExamPaperInfo(String title, String author, String createDate, String lastStudyDate) {
+    public ExamPaperInfo(String id, String title, String author, String createDate, String lastStudyDate) {
+        this.id = id;
         this.title = title;
         this.author = author;
         this.createDate = createDate;
         this.lastStudyDate = lastStudyDate;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTitle() {

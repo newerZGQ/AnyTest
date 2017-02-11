@@ -1,33 +1,31 @@
-package com.zgq.wokao.model;
+package com.zgq.wokao.model.paper;
 
-import io.realm.RealmList;
 import io.realm.RealmObject;
 
 /**
  * Created by zgq on 16-6-18.
  */
-public class MultChoQuestion extends RealmObject implements Question, QuestionOptions{
-    private int id;
-    private String type;
+public class TFQuestion extends RealmObject implements Question {
     private String body;
     private String answer;
+    private int id;
+    private String type;
     private boolean isStared;
     private boolean isStudied;
-    private RealmList<Option> options = new RealmList<>();
 
-    public MultChoQuestion() {
+    public TFQuestion() {
     }
 
-    public MultChoQuestion(int id, String type,String body, String answer,RealmList<Option> options) {
+    public TFQuestion(int id, String type,String body, String answer) {
         this.body = body;
         this.id = id;
         this.type = type;
         this.answer = answer;
-        this.options = options;
     }
 
     @Override
     public int getId() {
+
         return id;
     }
     @Override
@@ -66,37 +64,10 @@ public class MultChoQuestion extends RealmObject implements Question, QuestionOp
     public String getAnswer() {
         return (hasAnswer())?answer:null;
     }
-
     @Override
-    public int getOptionsCount() {
-        if (options == null) return 0;
-        return options.size();
+    public String toString() {
+        return id+" "+type+" "+body+" "+answer;
     }
-
-    @Override
-    public RealmList<Option> getOptions() {
-        return options;
-    }
-    @Override
-    public boolean hasOptions() {
-        if (options == null || options.size() == 0){
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public void setOptions(RealmList<Option> options) {
-        this.options = options;
-    }
-
-    @Override
-    public boolean addOption(Option option) {
-        if (option == null) return false;
-        options.add(option);
-        return true;
-    }
-
     @Override
     public boolean isStared() {
         return isStared;
@@ -113,10 +84,5 @@ public class MultChoQuestion extends RealmObject implements Question, QuestionOp
     @Override
     public void setStudied(boolean studied) {
         this.isStudied = studied;
-    }
-
-    @Override
-    public String toString() {
-        return id+" "+type+" "+body+" "+answer;
     }
 }

@@ -1,26 +1,30 @@
-package com.zgq.wokao.model;
+package com.zgq.wokao.model.paper;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
 
 /**
  * Created by zgq on 16-6-18.
  */
-public class FillInQuestion extends RealmObject implements Question{
-    private String body;
-    private String answer;
+public class SglChoQuestion extends RealmObject implements Question , QuestionOptions {
+
     private int id;
     private String type;
+    private String body;
+    private String answer;
     private boolean isStared;
     private boolean isStudied;
+    private RealmList<Option> options = new RealmList<>();
 
-    public FillInQuestion() {
+    public SglChoQuestion() {
     }
 
-    public FillInQuestion(int id, String type,String body, String answer) {
+    public SglChoQuestion(int id, String type,String body, String answer,RealmList<Option> options) {
         this.body = body;
         this.id = id;
         this.type = type;
         this.answer = answer;
+        this.options = options;
     }
 
     @Override
@@ -63,16 +67,46 @@ public class FillInQuestion extends RealmObject implements Question{
     public String getAnswer() {
         return (hasAnswer())?answer:null;
     }
+
+    @Override
+    public int getOptionsCount() {
+        if (options == null) return 0;
+        return options.size();
+    }
+
+    @Override
+    public RealmList<Option> getOptions() {
+        return options;
+    }
+
+    @Override
+    public boolean hasOptions() {
+        if (options == null || options.size() == 0){
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public void setOptions(RealmList<Option> options) {
+        this.options = options;
+    }
+
+    @Override
+    public boolean addOption(Option option) {
+        if (option == null) return false;
+        options.add(option);
+        return true;
+    }
+
     @Override
     public boolean isStared() {
         return isStared;
     }
-
     @Override
     public void setStared(boolean stared) {
         this.isStared = stared;
     }
-
     @Override
     public boolean isStudied() {
         return isStudied;
@@ -87,5 +121,4 @@ public class FillInQuestion extends RealmObject implements Question{
     public String toString() {
         return id+" "+type+" "+body+" "+answer;
     }
-
 }

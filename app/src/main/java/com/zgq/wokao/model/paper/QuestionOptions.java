@@ -1,4 +1,4 @@
-package com.zgq.wokao.model;
+package com.zgq.wokao.model.paper;
 
 import io.realm.RealmList;
 

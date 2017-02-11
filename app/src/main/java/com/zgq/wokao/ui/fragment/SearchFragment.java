@@ -1,7 +1,6 @@
 package com.zgq.wokao.ui.fragment;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -10,15 +9,18 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.arlib.floatingsearchview.suggestions.SearchSuggestionsAdapter;
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.zgq.wokao.R;
 import com.zgq.wokao.adapter.SearchResultListAdapter;
+import com.zgq.wokao.data.realm.Paper.PaperDataProvider;
+import com.zgq.wokao.model.search.SearchQstItem;
+import com.zgq.wokao.model.search.Searchable;
 
 import java.util.List;
 
@@ -42,6 +44,9 @@ public class SearchFragment extends BaseFragment {
     private String mLastQuery = "";
 
     private SearchFragmentCallbacks mCallbacks;
+
+    private Button testBtn;
+    private TextView testTv;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -83,10 +88,24 @@ public class SearchFragment extends BaseFragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mSearchView = (FloatingSearchView) view.findViewById(R.id.floating_search_view);
         mSearchResultsList = (RecyclerView) view.findViewById(R.id.search_results_list);
+
+        testBtn = (Button) view.findViewById(R.id.test_btn);
+        testTv = (TextView) view.findViewById(R.id.test_tv);
+        testBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PaperDataProvider provider = PaperDataProvider.getInstance();
+                List<SearchQstItem> list1 = PaperDataProvider.getInstance().searchQstFromPaper("的",provider.getAllPaper().get(0));
+                List<Searchable> list = PaperDataProvider.getInstance().search("的");
+                for (SearchQstItem tmp : list1){
+                    Log.d("-------->>",tmp.getQst().getBody());
+                }
+            }
+        });
 
         setupFloatingSearch();
         setupResultsList();

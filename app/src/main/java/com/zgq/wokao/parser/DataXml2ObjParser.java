@@ -2,13 +2,14 @@ package com.zgq.wokao.parser;
 
 import android.util.Xml;
 
-import com.zgq.wokao.model.DiscussQuestion;
-import com.zgq.wokao.model.FillInQuestion;
-import com.zgq.wokao.model.MultChoQuestion;
-import com.zgq.wokao.model.NormalExamPaper;
-import com.zgq.wokao.model.Option;
-import com.zgq.wokao.model.SglChoQuestion;
-import com.zgq.wokao.model.TFQuestion;
+import com.zgq.wokao.Util.UUIDUtil;
+import com.zgq.wokao.model.paper.DiscussQuestion;
+import com.zgq.wokao.model.paper.FillInQuestion;
+import com.zgq.wokao.model.paper.MultChoQuestion;
+import com.zgq.wokao.model.paper.NormalExamPaper;
+import com.zgq.wokao.model.paper.Option;
+import com.zgq.wokao.model.paper.SglChoQuestion;
+import com.zgq.wokao.model.paper.TFQuestion;
 
 import org.xmlpull.v1.XmlPullParser;
 
@@ -84,6 +85,7 @@ public class DataXml2ObjParser {
         normalExamPaper.setMultChoQuestions(multChoQuestions);
         normalExamPaper.setDiscussQuestions(discussQuestions);
 
+        normalExamPaper.getPaperInfo().setId(UUIDUtil.getID());
         return normalExamPaper;
     }
 

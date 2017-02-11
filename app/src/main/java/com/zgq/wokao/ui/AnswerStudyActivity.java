@@ -27,16 +27,16 @@ import com.zgq.wokao.adapter.FillInQuestionAdapter;
 import com.zgq.wokao.adapter.MultChoQuestionAdapter;
 import com.zgq.wokao.adapter.SglChoQuestionAdapter;
 import com.zgq.wokao.adapter.TFQuestionAdapter;
-import com.zgq.wokao.model.Constant;
-import com.zgq.wokao.model.DiscussQuestion;
-import com.zgq.wokao.model.FillInQuestion;
-import com.zgq.wokao.model.MultChoQuestion;
-import com.zgq.wokao.model.MyQuestionAnswer;
-import com.zgq.wokao.model.NormalExamPaper;
-import com.zgq.wokao.model.Question;
-import com.zgq.wokao.model.QuestionAnswer;
-import com.zgq.wokao.model.SglChoQuestion;
-import com.zgq.wokao.model.TFQuestion;
+import com.zgq.wokao.model.paper.Constant;
+import com.zgq.wokao.model.paper.DiscussQuestion;
+import com.zgq.wokao.model.paper.FillInQuestion;
+import com.zgq.wokao.model.paper.MultChoQuestion;
+import com.zgq.wokao.model.paper.MyQuestionAnswer;
+import com.zgq.wokao.model.paper.NormalExamPaper;
+import com.zgq.wokao.model.paper.Question;
+import com.zgq.wokao.model.paper.QuestionAnswer;
+import com.zgq.wokao.model.paper.SglChoQuestion;
+import com.zgq.wokao.model.paper.TFQuestion;
 
 
 import java.util.ArrayList;
@@ -149,7 +149,7 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
             public void execute(Realm realm) {
                 currentAllQuestions.get(0).setStudied(true);
                 normalExamPaper.getPaperInfo().setLastStudyDate(DateUtil.getCurrentDate());
-                Log.d("----->>last",DateUtil.getCurrentDate());
+//                Log.d("----->>last",DateUtil.getCurrentDate());
             }
         });
     }

@@ -1,4 +1,4 @@
-package com.zgq.wokao.model;
+package com.zgq.wokao.model.paper;
 
 /**
  * Created by zgq on 16-6-18.
