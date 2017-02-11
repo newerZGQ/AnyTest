@@ -35,7 +35,7 @@
                 android:gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="试卷工厂"
+                android:text="@string/toolbar_title"
                 android:textSize="20sp"
                 android:textColor="@color/colorWhite"/>
             <TextView
@@ -45,7 +45,7 @@
                 android:visibility="gone"
                 android:background="@drawable/toolbar_back_background"/>
             <Button
-                android:id="@+id/toolbar_add"
+                android:id="@+id/toolbar_search"
                 android:layout_alignParentRight="true"
                 android:layout_marginEnd="56dp"
                 android:background="@drawable/toolbar_add_background"
@@ -69,7 +69,7 @@
                 android:id="@+id/toolbar_setstar"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="16dp"
-                android:text="加注星标"
+                android:text="@string/toolbar_star"
                 android:textColor="@color/colorWhite"
                 android:gravity="center_vertical"
                 android:visibility="gone"
@@ -86,7 +86,7 @@
     <LinearLayout
         android:id="@+id/toolbar_overflow"
         android:orientation="vertical"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="35dp"
         android:layout_marginRight="5dp"
         android:elevation="16dp"
         android:layout_alignParentRight="true"
@@ -97,8 +97,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <TextView
+            android:id="@+id/toolbar_add"
+            android:text="@string/toolbar_add"
+            android:textSize="14sp"
+            android:textColor="@color/colorBlack"
+            android:layout_marginLeft="16dp"
+            android:gravity="center_vertical"
+            android:layout_width="150dp"
+            android:layout_height="56dp" />
+        <TextView
             android:id="@+id/toolbar_share"
-            android:text="分享"
+            android:text="@string/toolbar_share"
             android:textSize="14sp"
             android:textColor="@color/colorBlack"
             android:layout_marginLeft="16dp"
@@ -107,7 +116,7 @@
             android:layout_height="56dp" />
         <TextView
             android:id="@+id/toolbar_cloud"
-            android:text="云端资料"
+            android:text="@string/toolbar_cloud"
             android:textSize="14sp"
             android:textColor="@color/colorBlack"
             android:layout_marginLeft="16dp"
@@ -116,7 +125,16 @@
             android:layout_height="56dp" />
         <TextView
             android:id="@+id/toolbar_teach"
-            android:text="教程"
+            android:text="@string/toolbar_tech"
+            android:textColor="@color/colorBlack"
+            android:textSize="14sp"
+            android:layout_marginLeft="16dp"
+            android:gravity="center_vertical"
+            android:layout_width="150dp"
+            android:layout_height="56dp" />
+        <TextView
+            android:id="@+id/toolbar_settings"
+            android:text="@string/toolbar_settings"
             android:textColor="@color/colorBlack"
             android:textSize="14sp"
             android:layout_marginLeft="16dp"
