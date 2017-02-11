@@ -10,9 +10,10 @@ import static org.junit.Assert.*;
  * Created by zgq on 2017/2/11.
  */
 public class PDFFormaterTest {
+    PDFFormater formater = new PDFFormater();
     @Before
     public void setUp() throws Exception {
-
+        formater.params("/Users/zgq/AndroidStudioProjects/wokao_test_files/1.pdf");
     }
 
     @After
@@ -27,7 +28,7 @@ public class PDFFormaterTest {
 
     @Test
     public void getContent() throws Exception {
-
+        String content = formater.getContent();
     }
 
     @Test
