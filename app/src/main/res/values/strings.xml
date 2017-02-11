@@ -12,4 +12,5 @@
     <string name="market_dialog_message">开发不易，赏脸给个好评可否？</string>
     <string name="market_dialog_positive_button">确定</string>
     <string name="market_dialog_negative_button">取消</string>
+    <string name="title_activity_main2">Main2Activity</string>
 </resources>

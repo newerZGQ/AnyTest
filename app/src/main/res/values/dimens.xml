@@ -8,4 +8,5 @@
     <dimen name="two_lines_recyclerview_lable_dimen">40dp</dimen>
 
     <dimen name="dimen_option_label_height_width">32dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>
