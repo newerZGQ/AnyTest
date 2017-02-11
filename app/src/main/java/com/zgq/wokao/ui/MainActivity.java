@@ -322,10 +322,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 }
             };
-            DialogUtil.show(this, StringUtil.getResString(this,R.string.market_dialog_title),
-                    StringUtil.getResString(this,R.string.market_dialog_message),
-                    StringUtil.getResString(this,R.string.market_dialog_positive_button),
-                    StringUtil.getResString(this,R.string.market_dialog_negative_button),
+            DialogUtil.show(this, StringUtil.getResString(R.string.market_dialog_title),
+                    StringUtil.getResString(R.string.market_dialog_message),
+                    StringUtil.getResString(R.string.market_dialog_positive_button),
+                    StringUtil.getResString(R.string.market_dialog_negative_button),
                     marketListener);
         }
     }

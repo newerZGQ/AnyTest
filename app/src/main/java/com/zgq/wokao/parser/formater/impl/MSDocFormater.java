@@ -22,7 +22,6 @@ public class MSDocFormater extends BaseFormater implements IMSDocFormater{
     public void params(Object... args) {
         if (args[0] instanceof String){
             doc = args[0].toString();
-            System.out.println("----->>"+doc);
         }
     }
 

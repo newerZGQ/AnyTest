@@ -13,7 +13,7 @@ public class MSDocFormaterTest {
     MSDocFormater formater = new MSDocFormater();
     @Before
     public void setUp() throws Exception {
-        formater.params("/Users/zgq/Desktop/1.docx");
+        formater.params("/Users/zgq/AndroidStudioProjects/wokao_test_files/1.docx");
     }
 
     @After
