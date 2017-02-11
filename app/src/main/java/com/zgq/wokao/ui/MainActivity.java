@@ -28,7 +28,7 @@ import com.zgq.wokao.Util.NormalExamPaperUtil;
 import com.zgq.wokao.Util.StringUtil;
 import com.zgq.wokao.model.ExamPaperInfo;
 import com.zgq.wokao.model.NormalExamPaper;
-import com.zgq.wokao.data.RealmDataProvider;
+import com.zgq.wokao.data.realm.Paper.PaperDataProvider;
 import com.zgq.wokao.setting.MarketChecker;
 import com.zgq.wokao.ui.util.DialogUtil;
 import com.zgq.wokao.view.RotateTextView;
@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void getRecyclerViewData() {
-        papers = RealmDataProvider.getAllExamPaper(realm);
+        papers = (ArrayList<NormalExamPaper>) PaperDataProvider.getInstance().getAllPaper();
         NormalExamPaperUtil.sortPapers(papers);
         paperInfos.clear();
         for (NormalExamPaper paper : papers) {
@@ -362,7 +362,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (requestCode == 1 && resultCode == RESULT_OK) {
             String filePath = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
             // Do anything with file
-            RealmDataProvider.parseTxt2Realm(new File(filePath), new File(StorageUtils.getRootPath(MainActivity.this) + "wokao/tmp.xml"), realm, myHandler);
+            PaperDataProvider.getInstance().parseTxt2Realm(new File(filePath), new File(StorageUtils.getRootPath(MainActivity.this) + "wokao/tmp.xml"), realm, myHandler);
         }
     }
 

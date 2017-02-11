@@ -1,4 +1,4 @@
-package com.zgq.wokao.data.widget;
+package com.zgq.wokao.view.widget;
 
 /**
  * Created by zgq on 16-6-25.
@@ -12,8 +12,6 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.State;
-import android.util.Log;
 import android.view.View;
 
 
