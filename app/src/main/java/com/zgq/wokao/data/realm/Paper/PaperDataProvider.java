@@ -52,7 +52,7 @@ public class PaperDataProvider extends BaseRealmProvider<NormalExamPaper> implem
 
 
     private static class ProviderHolder {
-        public static PaperDataProvider instance = new PaperDataProvider();
+        private static PaperDataProvider instance = new PaperDataProvider();
     }
 
     /**

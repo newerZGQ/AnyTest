@@ -16,7 +16,18 @@ import java.io.IOException;
 
 public class PDFFormater extends BaseFormater implements IPDFFormater{
 
+    public static final String TAG = "PDFFormater";
     private String pdf;
+
+    private PDFFormater(){}
+
+    private static class InstanceHolder{
+        private static PDFFormater formater = new PDFFormater();
+    }
+
+    public static PDFFormater getInstance(){
+        return InstanceHolder.formater;
+    }
 
     @Override
     public void params(Object... args) {

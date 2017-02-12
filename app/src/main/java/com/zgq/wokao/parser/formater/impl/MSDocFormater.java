@@ -15,7 +15,18 @@ import java.io.FileNotFoundException;
 
 public class MSDocFormater extends BaseFormater implements IMSDocFormater{
 
+    public static final String TAG = "MSDocFormater";
     private String doc;
+
+    private MSDocFormater(){}
+
+    private static class InstanceHolder{
+        private static MSDocFormater msDocFormater = new MSDocFormater();
+    }
+
+    public static MSDocFormater getInstance(){
+        return InstanceHolder.msDocFormater;
+    }
 
 
     @Override

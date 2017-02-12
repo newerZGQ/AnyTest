@@ -1,5 +1,8 @@
 package com.zgq.wokao.parser.formater.impl;
 
+import com.zgq.wokao.Util.FileUtil;
+import com.zgq.wokao.parser.formater.IImageFormater;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -7,13 +10,12 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Created by zgq on 2017/2/11.
+ * Created by zhangguoqiang on 2017/2/12.
  */
-public class PDFFormaterTest {
-    PDFFormater formater = PDFFormater.getInstance();
+public class ImageFormaterTest {
     @Before
     public void setUp() throws Exception {
-        formater.params("/Users/zgq/AndroidStudioProjects/wokao_test_files/1.pdf");
+
     }
 
     @After
@@ -28,17 +30,6 @@ public class PDFFormaterTest {
 
     @Test
     public void getContent() throws Exception {
-        String content = formater.getContent();
-    }
-
-    @Test
-    public void fileAvailable() throws Exception {
 
     }
-
-    @Test
-    public void getContent1() throws Exception {
-
-    }
-
 }

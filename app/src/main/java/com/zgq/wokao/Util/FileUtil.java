@@ -1,8 +1,19 @@
 package com.zgq.wokao.Util;
 
+import android.content.Context;
+import android.content.res.AssetManager;
 import android.os.Environment;
 
+import com.zgq.wokao.ui.ActivityWelcome;
+
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+import cn.qqtheme.framework.util.ConvertUtils;
+import cn.qqtheme.framework.util.StorageUtils;
 
 /**
  * Created by zgq on 16-6-18.
@@ -32,4 +43,53 @@ public class FileUtil {
             return false;
         }
     }
+
+    private static String getSdRootPath(){
+        String root = Environment.getExternalStorageDirectory().toString();
+        return root;
+    }
+
+    public static String getOrInitAppStoragePath(){
+        if (!SdcardMountedRight()){
+            return null;
+        }
+        String root = getSdRootPath();
+        String appPath = root + "/wokao";
+        File file = new File(appPath);
+        if (!file.exists()){
+            file.mkdir();
+        }
+        return appPath;
+    }
+
+    public static void transAssets2SD(String assetsFilePath, String sdFilePath){
+        AssetManager am = ContextUtil.getContext().getAssets();
+        try {
+            InputStream inputStream = am.open(assetsFilePath);
+            createFileFromInputStream(sdFilePath,inputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static File createFileFromInputStream(String filePath,InputStream inputStream) {
+
+        try {
+            File f = new File(filePath);
+            OutputStream outputStream = new FileOutputStream(f);
+            byte buffer[] = new byte[1024];
+            int length = 0;
+
+            while ((length = inputStream.read(buffer)) > 0) {
+                outputStream.write(buffer, 0, length);
+            }
+            outputStream.close();
+            inputStream.close();
+            return f;
+        } catch (IOException e) {
+            //Logging exception
+        }
+        return null;
+    }
+
 }

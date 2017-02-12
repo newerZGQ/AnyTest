@@ -17,11 +17,14 @@ import com.arlib.floatingsearchview.FloatingSearchView;
 import com.arlib.floatingsearchview.suggestions.SearchSuggestionsAdapter;
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.zgq.wokao.R;
+import com.zgq.wokao.Util.FileUtil;
 import com.zgq.wokao.adapter.SearchResultListAdapter;
 import com.zgq.wokao.data.realm.Paper.PaperDataProvider;
 import com.zgq.wokao.model.search.SearchQstItem;
 import com.zgq.wokao.model.search.Searchable;
+import com.zgq.wokao.parser.formater.impl.ImageFormater;
 
+import java.io.File;
 import java.util.List;
 
 
@@ -98,6 +101,9 @@ public class SearchFragment extends BaseFragment {
         testBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ImageFormater imageFormater = ImageFormater.getInstance();
+                imageFormater.params(FileUtil.getOrInitAppStoragePath()+"/1.jpg");
+                imageFormater.getContent();
                 PaperDataProvider provider = PaperDataProvider.getInstance();
                 List<SearchQstItem> list1 = PaperDataProvider.getInstance().searchQstFromPaper("的",provider.getAllPaper().get(0));
                 List<Searchable> list = PaperDataProvider.getInstance().search("的");

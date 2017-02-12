@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
  * Created by zgq on 2017/2/10.
  */
 public class MSDocFormaterTest {
-    MSDocFormater formater = new MSDocFormater();
+    MSDocFormater formater = MSDocFormater.getInstance();
     @Before
     public void setUp() throws Exception {
         formater.params("/Users/zgq/AndroidStudioProjects/wokao_test_files/1.docx");

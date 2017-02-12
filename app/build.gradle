@@ -82,4 +82,6 @@ dependencies {
     compile files('libs/fontbox-2.0.4.jar')
     //查询view
     compile 'com.github.arimorty:floatingsearchview:2.0.3'
+    //图片转文字
+    compile 'com.rmtheis:tess-two:5.4.1'
 }
