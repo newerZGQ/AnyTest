@@ -2,7 +2,6 @@ package com.zgq.wokao.adapter;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +9,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zgq.wokao.R;
-import com.zgq.wokao.data.MyQuestionAnswer;
-import com.zgq.wokao.data.Question;
-import com.zgq.wokao.data.QuestionAnswer;
-import com.zgq.wokao.data.SglChoQuestion;
+import com.zgq.wokao.model.paper.MyQuestionAnswer;
+import com.zgq.wokao.model.paper.Question;
+import com.zgq.wokao.model.paper.QuestionAnswer;
+import com.zgq.wokao.model.paper.SglChoQuestion;
 import com.zgq.wokao.view.QuestionOptionView;
 
 import java.util.ArrayList;

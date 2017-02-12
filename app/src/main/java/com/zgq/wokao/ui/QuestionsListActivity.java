@@ -17,16 +17,14 @@ import com.bumptech.glide.Glide;
 import com.umeng.analytics.MobclickAgent;
 import com.zgq.wokao.R;
 import com.zgq.wokao.Util.DateUtil;
-import com.zgq.wokao.data.Constant;
-import com.zgq.wokao.data.DiscussQuestion;
-import com.zgq.wokao.data.ExamPaperInfo;
-import com.zgq.wokao.data.FillInQuestion;
-import com.zgq.wokao.data.MultChoQuestion;
-import com.zgq.wokao.data.NormalExamPaper;
-import com.zgq.wokao.data.Question;
-import com.zgq.wokao.data.QuestionInfo;
-import com.zgq.wokao.data.SglChoQuestion;
-import com.zgq.wokao.data.TFQuestion;
+import com.zgq.wokao.model.paper.Constant;
+import com.zgq.wokao.model.paper.DiscussQuestion;
+import com.zgq.wokao.model.paper.ExamPaperInfo;
+import com.zgq.wokao.model.paper.FillInQuestion;
+import com.zgq.wokao.model.paper.MultChoQuestion;
+import com.zgq.wokao.model.paper.NormalExamPaper;
+import com.zgq.wokao.model.paper.SglChoQuestion;
+import com.zgq.wokao.model.paper.TFQuestion;
 import com.zgq.wokao.view.ObservableScrollView;
 
 import butterknife.BindView;
@@ -146,10 +144,10 @@ public class QuestionsListActivity extends AppCompatActivity implements View.OnC
         }else {
             lastStudyDate = DateUtil.formatDisplayTime(info.getLastStudyDate(), null);
         }
-        Log.d("------>>laststudy",lastStudyDate);
+//        Log.d("------>>laststudy",lastStudyDate);
         isPaperStar = info.isStared();
         paperStudyCount = getStudiedCount(normalExamPaper);
-        Log.d("---->>", "" + paperStudyCount);
+//        Log.d("---->>", "" + paperStudyCount);
     }
 
     private void initView() {
@@ -337,27 +335,27 @@ public class QuestionsListActivity extends AppCompatActivity implements View.OnC
         RealmList<MultChoQuestion> multChoQuestions = normalExamPaper.getMultChoQuestions();
         RealmList<DiscussQuestion> discussQuestions = normalExamPaper.getDiscussQuestions();
         for (int i = 0; i < fillInQuestions.size(); i++) {
-            Log.d("----->>", "fi" +i+ fillInQuestions.get(i).isStudied());
+//            Log.d("----->>", "fi" +i+ fillInQuestions.get(i).isStudied());
             if (!fillInQuestions.get(i).isStudied())
                 return normalExamPaper.getPaperInfo().getStudyCount();
         }
         for (int i = 0; i < tfQuestions.size(); i++) {
-            Log.d("----->>", "tf" +i+ tfQuestions.get(i).isStudied());
+//            Log.d("----->>", "tf" +i+ tfQuestions.get(i).isStudied());
             if (!tfQuestions.get(i).isStudied())
                 return normalExamPaper.getPaperInfo().getStudyCount();
         }
         for (int i = 0; i < sglChoQuestions.size(); i++) {
-            Log.d("----->>", "sg" +i+ sglChoQuestions.get(i).isStudied());
+//            Log.d("----->>", "sg" +i+ sglChoQuestions.get(i).isStudied());
             if (!sglChoQuestions.get(i).isStudied())
                 return normalExamPaper.getPaperInfo().getStudyCount();
         }
         for (int i = 0; i < multChoQuestions.size(); i++) {
-            Log.d("----->>", "mu" +i+ multChoQuestions.get(i).isStudied());
+//            Log.d("----->>", "mu" +i+ multChoQuestions.get(i).isStudied());
             if (!multChoQuestions.get(i).isStudied())
                 return normalExamPaper.getPaperInfo().getStudyCount();
         }
         for (int i = 0; i < discussQuestions.size(); i++) {
-            Log.d("----->>", "di" +i+ discussQuestions.get(i).isStudied());
+//            Log.d("----->>", "di" +i+ discussQuestions.get(i).isStudied());
             if (!discussQuestions.get(i).isStudied())
                 return normalExamPaper.getPaperInfo().getStudyCount();
         }

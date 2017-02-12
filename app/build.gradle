@@ -29,7 +29,17 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
 }
+
+
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -67,4 +77,9 @@ dependencies {
     compile files('libs/ShareSDK-Wechat-Favorite-2.8.0.jar')
     compile files('libs/ShareSDK-Wechat-Moments-2.8.0.jar')
     compile files('libs/tm-extractors-0.4.jar')
+    compile files('libs/pdfbox-2.0.4.jar')
+    compile files('libs/commons-logging-1.2.jar')
+    compile files('libs/fontbox-2.0.4.jar')
+    //查询view
+    compile 'com.github.arimorty:floatingsearchview:2.0.3'
 }

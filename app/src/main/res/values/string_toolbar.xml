@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="toolbar_add">从本地文档解析</string>
+    <string name="toolbar_tech">教程</string>
+    <string name="toolbar_cloud">云端资料</string>
+    <string name="toolbar_settings">设置</string>
+    <string name="toolbar_share">分享</string>
+    <string name="toolbar_star">收藏</string>
+    <string name="toolbar_title">试卷工厂</string>
+</resources>

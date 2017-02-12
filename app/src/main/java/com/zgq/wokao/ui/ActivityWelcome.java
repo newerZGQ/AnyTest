@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.umeng.analytics.MobclickAgent;
 import com.zgq.wokao.R;
 
-import com.zgq.wokao.data.RealmDataProvider;
+import com.zgq.wokao.data.realm.Paper.PaperDataProvider;
 import com.zgq.wokao.setting.MarketChecker;
 
 import java.io.File;
@@ -100,7 +100,7 @@ public class ActivityWelcome extends AppCompatActivity {
         AssetManager am = getAssets();
         InputStream inputStream = am.open("default.txt");
         File txt = createFileFromInputStream(inputStream);
-        RealmDataProvider.parseTxt2Realm(txt, new File(StorageUtils.getRootPath(ActivityWelcome.this) + "wokao/tmp.xml"), realm, myHandler);
+        PaperDataProvider.getInstance().parseTxt2Realm(txt, new File(StorageUtils.getRootPath(ActivityWelcome.this) + "wokao/tmp.xml"), realm, myHandler);
     }
 
     private File createFileFromInputStream(InputStream inputStream) {

@@ -9,7 +9,6 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,9 +26,9 @@ import com.zgq.wokao.R;
 import com.zgq.wokao.Util.DrawableUtil;
 import com.zgq.wokao.Util.NormalExamPaperUtil;
 import com.zgq.wokao.Util.StringUtil;
-import com.zgq.wokao.data.ExamPaperInfo;
-import com.zgq.wokao.data.NormalExamPaper;
-import com.zgq.wokao.data.RealmDataProvider;
+import com.zgq.wokao.model.paper.ExamPaperInfo;
+import com.zgq.wokao.model.paper.NormalExamPaper;
+import com.zgq.wokao.data.realm.Paper.PaperDataProvider;
 import com.zgq.wokao.setting.MarketChecker;
 import com.zgq.wokao.ui.util.DialogUtil;
 import com.zgq.wokao.view.RotateTextView;
@@ -55,6 +54,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView toolbarAdd;
     @BindView(R.id.toolbar_more)
     TextView toolbarMore;
+    @BindView(R.id.toolbar_search)
+    TextView toolbarSearch;
     @BindView(R.id.toolbar_delete)
     TextView toolbarDelete;
     @BindView(R.id.toolbar_setstar)
@@ -121,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void getRecyclerViewData() {
-        papers = RealmDataProvider.getAllExamPaper(realm);
+        papers = (ArrayList<NormalExamPaper>) PaperDataProvider.getInstance().getAllPaper();
         NormalExamPaperUtil.sortPapers(papers);
         paperInfos.clear();
         for (NormalExamPaper paper : papers) {
@@ -139,6 +140,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         toolbarSetStar.setOnClickListener(this);
         toolbarDelete.setOnClickListener(this);
         toolbarMore.setOnClickListener(this);
+        toolbarSearch.setOnClickListener(this);
         toolbarAdd.setOnClickListener(this);
         toolbarBack.setOnClickListener(this);
         toolbarTitle.setOnClickListener(this);
@@ -204,6 +206,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.toolbar_search:
+                searchPaper();
+                break;
             case R.id.toolbar_back:
                 cancelMyActionMode();
                 break;
@@ -212,16 +217,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         .withActivity(this)
                         .withRequestCode(1)
                         .start();
-//                FilePicker picker = new FilePicker(MainActivity.this, FilePicker.FILE);
-//                picker.setShowHideDir(false);
-//                picker.setRootPath(StorageUtils.getRootPath(MainActivity.this) + "Download/");
-//                picker.setOnFilePickListener(new FilePicker.OnFilePickListener() {
-//                    @Override
-//                    public void onFilePicked(String currentPath) {
-//                        RealmDataProvider.parseTxt2Realm(new File(currentPath), new File(StorageUtils.getRootPath(MainActivity.this) + "wokao/tmp.xml"), realm, myHandler);
-//                    }
-//                });
-//                picker.show();
                 break;
             case R.id.toolbar_more:
                 if (getOverFlowStatus()) hideOverFlow();
@@ -312,8 +307,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             marketListener = new DialogUtil.Listener(){
                 @Override
                 public void posOnClick() {
-                    //TODO 测试需要，未设置状态未true
-//                    MarketChecker.setState(MainActivity.this,true);
+                    MarketChecker.setState(MainActivity.this,true);
                     MarketChecker.openMarketApp(MainActivity.this);
                 }
 
@@ -322,12 +316,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 }
             };
-            DialogUtil.show(this, StringUtil.getResString(this,R.string.market_dialog_title),
-                    StringUtil.getResString(this,R.string.market_dialog_message),
-                    StringUtil.getResString(this,R.string.market_dialog_positive_button),
-                    StringUtil.getResString(this,R.string.market_dialog_negative_button),
+            DialogUtil.show(this, StringUtil.getResString(R.string.market_dialog_title),
+                    StringUtil.getResString(R.string.market_dialog_message),
+                    StringUtil.getResString(R.string.market_dialog_positive_button),
+                    StringUtil.getResString(R.string.market_dialog_negative_button),
                     marketListener);
         }
+    }
+
+    private void searchPaper(){
+        Intent intent = new Intent();
+        intent.setClass(this,SearchActivity.class);
+        startActivity(intent);
     }
 
     static class MyHandler extends Handler {
@@ -362,7 +362,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (requestCode == 1 && resultCode == RESULT_OK) {
             String filePath = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
             // Do anything with file
-            RealmDataProvider.parseTxt2Realm(new File(filePath), new File(StorageUtils.getRootPath(MainActivity.this) + "wokao/tmp.xml"), realm, myHandler);
+            PaperDataProvider.getInstance().parseTxt2Realm(new File(filePath), new File(StorageUtils.getRootPath(MainActivity.this) + "wokao/tmp.xml"), realm, myHandler);
         }
     }
 

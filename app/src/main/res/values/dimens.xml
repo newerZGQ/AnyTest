@@ -8,4 +8,8 @@
     <dimen name="two_lines_recyclerview_lable_dimen">40dp</dimen>
 
     <dimen name="dimen_option_label_height_width">32dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="search_view_inset">5dp</dimen>
+    <dimen name="sliding_search_view_header_height">250dp</dimen>
 </resources>

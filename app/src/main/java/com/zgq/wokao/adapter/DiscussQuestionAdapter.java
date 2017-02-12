@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.zgq.wokao.R;
-import com.zgq.wokao.data.Question;
+import com.zgq.wokao.model.paper.Question;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
