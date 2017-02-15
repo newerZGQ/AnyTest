@@ -1,9 +1,8 @@
-package com.zgq.wokao.setting;
+package com.zgq.wokao.service.setting;
 
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.zgq.wokao.data.sp.SPConstant;

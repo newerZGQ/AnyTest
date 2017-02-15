@@ -14,7 +14,7 @@ import com.umeng.analytics.MobclickAgent;
 import com.zgq.wokao.R;
 
 import com.zgq.wokao.data.realm.Paper.PaperDataProvider;
-import com.zgq.wokao.setting.MarketChecker;
+import com.zgq.wokao.service.setting.MarketChecker;
 
 import java.io.File;
 import java.io.FileOutputStream;

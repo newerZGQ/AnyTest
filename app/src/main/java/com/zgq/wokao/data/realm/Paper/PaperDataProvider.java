@@ -15,6 +15,7 @@ import com.zgq.wokao.model.paper.MultChoQuestion;
 import com.zgq.wokao.model.paper.NormalExamPaper;
 import com.zgq.wokao.model.paper.Question;
 import com.zgq.wokao.model.paper.QuestionType;
+import com.zgq.wokao.model.search.SearchInfoItem;
 import com.zgq.wokao.model.search.SearchQstItem;
 import com.zgq.wokao.model.search.Searchable;
 import com.zgq.wokao.model.paper.SglChoQuestion;
@@ -105,50 +106,49 @@ public class PaperDataProvider extends BaseRealmProvider<NormalExamPaper> implem
         if (query == null || query.equals("")){
             return null;
         }
-        List<ExamPaperInfo> infos = searchPaperInfo(query);
-        List<FillInQuestion> fillInQst = searchQuestion(query,FillInQuestion.class);
-        List<TFQuestion> tfQst = searchQuestion(query,TFQuestion.class);
-        List<SglChoQuestion> sglQst = searchQuestion(query,SglChoQuestion.class);
-        List<MultChoQuestion> mlcQst = searchQuestion(query,MultChoQuestion.class);
-        List<DiscussQuestion> disQst = searchQuestion(query,DiscussQuestion.class);
-        return ListUtil.assem(cast2Searchable(infos),
-                cast2Searchable(fillInQst),
-                cast2Searchable(tfQst),
-                cast2Searchable(sglQst),
-                cast2Searchable(mlcQst),
-                cast2Searchable(disQst));
-    }
-
-    /**
-     * 搜索满足条件的paperinfo
-     * @param query
-     * @return
-     */
-    private List<ExamPaperInfo> searchPaperInfo(String query){
-        if (query == null || query.equals("")) return null;
-        RealmQuery<ExamPaperInfo> infoQuery = realm.where(ExamPaperInfo.class);
-        infoQuery.contains("title",query);
-        infoQuery.or().contains("author",query);
-        List<ExamPaperInfo> paperInfos = infoQuery.findAll();
-        return paperInfos;
-    }
-
-    /**
-     * 搜索满足条件的Question
-     * @param query
-     * @param question
-     * @param <T>
-     * @return
-     */
-    private <T extends RealmObject> List<T> searchQuestion(String query,Class question){
-        if (query == null || query.equals("")) return null;
-        RealmQuery<T> queryQuestion = realm.where(question);
-        queryQuestion.contains("body",query);
-        List<T> results = queryQuestion.findAll();
+        List<SearchInfoItem> infos = searchInfoItem(query);
+        List<SearchQstItem> qstItems = searchQstItemList(query);
+        List<Searchable> results = ListUtil.assem(cast2Searchable(infos),cast2Searchable(qstItems));
         return results;
     }
 
-    public List<SearchQstItem> searchQstFromPaper(String query,NormalExamPaper paper){
+    /**
+     * 搜索满足条件的SearchInfoItem,仅匹配试卷标题
+     * @param query
+     * @return
+     */
+    public List<SearchInfoItem> searchInfoItem(String query){
+        if (query == null || query.equals("")) return null;
+        RealmQuery<ExamPaperInfo> infoQuery = realm.where(ExamPaperInfo.class);
+        infoQuery.contains("title",query);
+//        infoQuery.or().contains("author",query);
+        List<ExamPaperInfo> paperInfos = infoQuery.findAll();
+        List<SearchInfoItem> results = new ArrayList<>();
+        for (ExamPaperInfo info : paperInfos){
+            SearchInfoItem item = new SearchInfoItem();
+            item.setInfo(info);
+            results.add(item);
+        }
+        return results;
+    }
+
+
+    /**
+     * 从所有题目中匹配，仅匹配题干
+     * @param query
+     * @return
+     */
+    public List<SearchQstItem> searchQstItemList(String query){
+        List<SearchQstItem> results = new ArrayList<>();
+        List<NormalExamPaper> papers = getAllPaper();
+        for (NormalExamPaper tmp : papers){
+            results = ListUtil.assem(results,searchQstFromPaper(query,tmp));
+        }
+//        Log.d("---->>searchQstItemList",""+results.size());
+        return results;
+    }
+
+    private List<SearchQstItem> searchQstFromPaper(String query,NormalExamPaper paper){
         List<SearchQstItem> results = new ArrayList<>();
         results = ListUtil.assem(
                 searchQstFromList(
@@ -176,6 +176,7 @@ public class PaperDataProvider extends BaseRealmProvider<NormalExamPaper> implem
                         paper.getPaperInfo(),
                         QuestionType.disc.getIndex())
                 );
+//        Log.d("---->>searchQstFromPape",""+results.size());
         return results;
     }
 
@@ -184,6 +185,7 @@ public class PaperDataProvider extends BaseRealmProvider<NormalExamPaper> implem
         List<SearchQstItem> results = new ArrayList<>();
         for (Question tmp : list){
             if (tmp.getBody().contains(query)){
+//                Log.d("---->>searchQstFromList",tmp.getBody());
                 SearchQstItem item = new SearchQstItem();
                 item.setInfo(info);
                 item.setQstType(qstType);
@@ -192,6 +194,7 @@ public class PaperDataProvider extends BaseRealmProvider<NormalExamPaper> implem
                 results.add(item);
             }
         }
+//        Log.d("---->>searchQstFromList",""+results.size());
         return results;
     }
 

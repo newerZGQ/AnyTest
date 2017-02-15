@@ -3,6 +3,7 @@ package com.zgq.wokao.ui.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,13 +19,14 @@ import com.arlib.floatingsearchview.suggestions.SearchSuggestionsAdapter;
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.zgq.wokao.R;
 import com.zgq.wokao.Util.FileUtil;
-import com.zgq.wokao.adapter.SearchResultListAdapter;
+import com.zgq.wokao.adapter.SearchResultsListAdapter;
 import com.zgq.wokao.data.realm.Paper.PaperDataProvider;
+import com.zgq.wokao.model.search.HistorySuggestion;
 import com.zgq.wokao.model.search.SearchQstItem;
 import com.zgq.wokao.model.search.Searchable;
 import com.zgq.wokao.parser.formater.impl.ImageFormater;
+import com.zgq.wokao.service.search.SearchHelper;
 
-import java.io.File;
 import java.util.List;
 
 
@@ -40,7 +42,7 @@ public class SearchFragment extends BaseFragment {
     private FloatingSearchView mSearchView;
 
     private RecyclerView mSearchResultsList;
-    private SearchResultListAdapter mSearchResultsAdapter;
+    private SearchResultsListAdapter mSearchResultsAdapter;
 
     private boolean mIsDarkSearchTheme = false;
 
@@ -101,15 +103,15 @@ public class SearchFragment extends BaseFragment {
         testBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ImageFormater imageFormater = ImageFormater.getInstance();
-                imageFormater.params(FileUtil.getOrInitAppStoragePath()+"/1.jpg");
-                imageFormater.getContent();
-                PaperDataProvider provider = PaperDataProvider.getInstance();
-                List<SearchQstItem> list1 = PaperDataProvider.getInstance().searchQstFromPaper("的",provider.getAllPaper().get(0));
-                List<Searchable> list = PaperDataProvider.getInstance().search("的");
-                for (SearchQstItem tmp : list1){
-                    Log.d("-------->>",tmp.getQst().getBody());
-                }
+//                ImageFormater imageFormater = ImageFormater.getInstance();
+//                imageFormater.params(FileUtil.getOrInitAppStoragePath()+"/1.jpg");
+//                imageFormater.getContent();
+//                PaperDataProvider provider = PaperDataProvider.getInstance();
+//                List<SearchQstItem> list1 = PaperDataProvider.getInstance().searchQstFromPaper("的",provider.getAllPaper().get(0));
+//                List<Searchable> list = PaperDataProvider.getInstance().search("的");
+//                for (SearchQstItem tmp : list1){
+//                    Log.d("-------->>",tmp.getQst().getBody());
+//                }
             }
         });
 
@@ -135,8 +137,14 @@ public class SearchFragment extends BaseFragment {
 
                     //simulates a query call to a data source
                     //with a new query.
+                    SearchHelper.findSuggesions(newQuery, 10, new SearchHelper.OnFindSuggestionsListener() {
+                        @Override
+                        public void onResults(List<HistorySuggestion> results) {
+                            mSearchView.swapSuggestions(results);
+                            mSearchView.hideProgress();
+                        }
+                    });
                 }
-
                 Log.d(TAG, "onSearchTextChanged()");
             }
         });
@@ -144,16 +152,26 @@ public class SearchFragment extends BaseFragment {
         mSearchView.setOnSearchListener(new FloatingSearchView.OnSearchListener() {
             @Override
             public void onSuggestionClicked(final SearchSuggestion searchSuggestion) {
-
+                HistorySuggestion suggestion = (HistorySuggestion)searchSuggestion;
+                mLastQuery = suggestion.getBody();
+                SearchHelper.findPaperAndQst(mLastQuery, null, new SearchHelper.OnFindPaperAndQstListener() {
+                    @Override
+                    public void onResults(List<Searchable> results) {
+                        mSearchResultsAdapter.swapData(results);
+                    }
+                });
                 Log.d(TAG, "onSuggestionClicked()");
-
-                mLastQuery = searchSuggestion.getBody();
             }
 
             @Override
             public void onSearchAction(String query) {
                 mLastQuery = query;
-
+                SearchHelper.findPaperAndQst(mLastQuery, null, new SearchHelper.OnFindPaperAndQstListener() {
+                    @Override
+                    public void onResults(List<Searchable> results) {
+                        mSearchResultsAdapter.swapData(results);
+                    }
+                });
                 Log.d(TAG, "onSearchAction()");
             }
         });
@@ -251,7 +269,9 @@ public class SearchFragment extends BaseFragment {
     }
 
     private void setupResultsList() {
-
+        mSearchResultsAdapter = new SearchResultsListAdapter();
+        mSearchResultsList.setAdapter(mSearchResultsAdapter);
+        mSearchResultsList.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
     @Override
