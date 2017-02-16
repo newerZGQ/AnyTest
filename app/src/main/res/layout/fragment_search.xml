@@ -18,9 +18,19 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="65dp"
             android:background="@color/colorPrimary"
             android:id="@+id/view3" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/search_results_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:paddingTop="5dp"
+            android:clipToPadding="false"
+            android:layout_below="@+id/view3" />
 
         <com.arlib.floatingsearchview.FloatingSearchView
             android:id="@+id/floating_search_view"
@@ -35,19 +45,11 @@
             app:floatingSearch_searchHint="Search..."
             app:floatingSearch_showSearchKey="true"
             app:floatingSearch_suggestionsListAnimDuration="250"
-            app:floatingSearch_dimBackground="false"
+            app:floatingSearch_dimBackground="true"
             app:floatingSearch_close_search_on_keyboard_dismiss="false">
         </com.arlib.floatingsearchview.FloatingSearchView>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/search_results_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:paddingTop="5dp"
-            android:clipToPadding="false"
-            android:layout_below="@+id/view3" />
+
 
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

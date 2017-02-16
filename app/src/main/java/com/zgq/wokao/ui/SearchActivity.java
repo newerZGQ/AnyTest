@@ -22,13 +22,16 @@ public class SearchActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        showFragment(new SearchFragment());
+        Fragment searchFragment = new SearchFragment();
+        showFragment(searchFragment);
     }
 
     @Override
     public void onBackPressed() {
-        //按下返回键时，对activity和fragment进行操作
-        super.onBackPressed();
+        Fragment fragment = getFragmentManager().findFragmentById(R.id.fragment_container);
+        if (!(((SearchFragment)fragment).onActivityBackPress())) {
+            super.onBackPressed();
+        }
     }
 
     private void showFragment(Fragment fragment) {
