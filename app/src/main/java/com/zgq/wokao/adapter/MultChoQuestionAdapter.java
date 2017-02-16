@@ -167,16 +167,16 @@ public class MultChoQuestionAdapter extends PagerAdapter implements BaseStudySys
 
     @Override
     public void onClick(View v) {
-        for (int i = 0;i<myAnswer.size();i++){
-            Log.d("--------->>>",""+myAnswer.get(i).getAnswer());
-        }
+//        for (int i = 0;i<myAnswer.size();i++){
+//            Log.d("--------->>>",""+myAnswer.get(i).getAnswer());
+//        }
         int currentPosition = getCurrentPosition();
         if (hasShowAnswer.get(currentPosition)) return;
-        Log.d("------position",""+currentPosition);
+//        Log.d("------position",""+currentPosition);
         MyQuestionAnswer answer = (MyQuestionAnswer) myAnswer.get(currentPosition);
 
         String answerContent = answer.getAnswer();
-        Log.d("------content",""+answerContent);
+//        Log.d("------content",""+answerContent);
 
         QuestionOptionView view = (QuestionOptionView) v;
         int optionPostion = (int) view.getTag();
@@ -193,9 +193,9 @@ public class MultChoQuestionAdapter extends PagerAdapter implements BaseStudySys
         }
         answer.setAnswer(getRealAnswer(answerContent));
         myAnswer.set(currentPosition,answer);
-        for (int i = 0;i<myAnswer.size();i++){
-            Log.d("--------->>>",""+myAnswer.get(i).getAnswer());
-        }
+//        for (int i = 0;i<myAnswer.size();i++){
+//            Log.d("--------->>>",""+myAnswer.get(i).getAnswer());
+//        }
     }
 
     private String getLabelFromPosition(int optionPosition) {
@@ -212,7 +212,7 @@ public class MultChoQuestionAdapter extends PagerAdapter implements BaseStudySys
         int[] result = new int[chars.length];
         for (int i = 0; i < chars.length; i++) {
             result[i] = chars[i] - 65;
-            Log.d("------answerposition>",""+result[i]);
+//            Log.d("------answerposition>",""+result[i]);
         }
         return result;
     }
@@ -226,7 +226,7 @@ public class MultChoQuestionAdapter extends PagerAdapter implements BaseStudySys
             if (c >= 65 && c <= 90)
                 result = result + String.valueOf(c);
         }
-        Log.d("--------->>",result);
+//        Log.d("--------->>",result);
         return result;
     }
 

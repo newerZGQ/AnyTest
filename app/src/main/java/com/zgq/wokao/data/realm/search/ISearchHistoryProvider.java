@@ -10,4 +10,5 @@ import java.util.List;
 
 public interface ISearchHistoryProvider {
     public List<SearchHistory> findRelative(String query, Integer limit);
+    public List<SearchHistory> findLastest(Integer limit);
 }

@@ -38,25 +38,25 @@ public class FillInQuestionAdapter extends PagerAdapter implements BaseStudySyst
     }
 
     @Override public int getCount() {
-        Log.e("test","getCount ");
+//        Log.e("test","getCount ");
         return this.datas.size();
     }
     @Override public int getItemPosition(Object object) {
-        Log.e("test","getItemPosition ");
+//        Log.e("test","getItemPosition ");
         return super.getItemPosition(object);
     }
     @Override public Object instantiateItem(ViewGroup container, int position) {
-        Log.e("test","instantiateItem " + position);
+//        Log.e("test","instantiateItem " + position);
         return getFillInQuestionView(container,position);
     }
     @Override public void destroyItem(ViewGroup container, int position, Object object) {
-        Log.e("test","destroyItem " + position);
+//        Log.e("test","destroyItem " + position);
         View contentView = (View) object;
         container.removeView(contentView);
         this.mViewCache.add(contentView);
     }
     @Override public boolean isViewFromObject(View view, Object o) {
-        Log.e("test","isViewFromObject ");
+//        Log.e("test","isViewFromObject ");
         return view == o;
     }
 

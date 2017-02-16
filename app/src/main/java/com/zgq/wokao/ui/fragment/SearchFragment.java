@@ -18,10 +18,13 @@ import com.arlib.floatingsearchview.FloatingSearchView;
 import com.arlib.floatingsearchview.suggestions.SearchSuggestionsAdapter;
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.zgq.wokao.R;
+import com.zgq.wokao.Util.DateUtil;
 import com.zgq.wokao.Util.FileUtil;
 import com.zgq.wokao.adapter.SearchResultsListAdapter;
 import com.zgq.wokao.data.realm.Paper.PaperDataProvider;
+import com.zgq.wokao.data.realm.search.SearchHistoryProvider;
 import com.zgq.wokao.model.search.HistorySuggestion;
+import com.zgq.wokao.model.search.SearchHistory;
 import com.zgq.wokao.model.search.SearchQstItem;
 import com.zgq.wokao.model.search.Searchable;
 import com.zgq.wokao.parser.formater.impl.ImageFormater;
@@ -98,23 +101,6 @@ public class SearchFragment extends BaseFragment {
         mSearchView = (FloatingSearchView) view.findViewById(R.id.floating_search_view);
         mSearchResultsList = (RecyclerView) view.findViewById(R.id.search_results_list);
 
-        testBtn = (Button) view.findViewById(R.id.test_btn);
-        testTv = (TextView) view.findViewById(R.id.test_tv);
-        testBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                ImageFormater imageFormater = ImageFormater.getInstance();
-//                imageFormater.params(FileUtil.getOrInitAppStoragePath()+"/1.jpg");
-//                imageFormater.getContent();
-//                PaperDataProvider provider = PaperDataProvider.getInstance();
-//                List<SearchQstItem> list1 = PaperDataProvider.getInstance().searchQstFromPaper("的",provider.getAllPaper().get(0));
-//                List<Searchable> list = PaperDataProvider.getInstance().search("的");
-//                for (SearchQstItem tmp : list1){
-//                    Log.d("-------->>",tmp.getQst().getBody());
-//                }
-            }
-        });
-
         setupFloatingSearch();
         setupResultsList();
         setupDrawer();
@@ -128,39 +114,34 @@ public class SearchFragment extends BaseFragment {
                 if (!oldQuery.equals("") && newQuery.equals("")) {
                     mSearchView.clearSuggestions();
                 } else {
-
-                    //this shows the top left circular progress
-                    //you can call it where ever you want, but
-                    //it makes sense to do it when loading something in
-                    //the background.
                     mSearchView.showProgress();
-
-                    //simulates a query call to a data source
-                    //with a new query.
                     SearchHelper.findSuggesions(newQuery, 10, new SearchHelper.OnFindSuggestionsListener() {
                         @Override
                         public void onResults(List<HistorySuggestion> results) {
                             mSearchView.swapSuggestions(results);
+
                             mSearchView.hideProgress();
                         }
                     });
                 }
-                Log.d(TAG, "onSearchTextChanged()");
+//                Log.d(TAG, "onSearchTextChanged()");
             }
         });
 
         mSearchView.setOnSearchListener(new FloatingSearchView.OnSearchListener() {
             @Override
             public void onSuggestionClicked(final SearchSuggestion searchSuggestion) {
-                HistorySuggestion suggestion = (HistorySuggestion)searchSuggestion;
+                final HistorySuggestion suggestion = (HistorySuggestion)searchSuggestion;
                 mLastQuery = suggestion.getBody();
                 SearchHelper.findPaperAndQst(mLastQuery, null, new SearchHelper.OnFindPaperAndQstListener() {
                     @Override
                     public void onResults(List<Searchable> results) {
                         mSearchResultsAdapter.swapData(results);
+                        SearchHelper.clickSuggestion(suggestion);
+//                        Log.d("----->>de",SearchHistoryProvider.getInstance().query("的").getDate());
                     }
                 });
-                Log.d(TAG, "onSuggestionClicked()");
+//                Log.d(TAG, "onSuggestionClicked()");
             }
 
             @Override
@@ -170,9 +151,11 @@ public class SearchFragment extends BaseFragment {
                     @Override
                     public void onResults(List<Searchable> results) {
                         mSearchResultsAdapter.swapData(results);
+                        HistorySuggestion suggestion = new HistorySuggestion(mLastQuery);
+                        SearchHelper.addSuggestion(suggestion);
                     }
                 });
-                Log.d(TAG, "onSearchAction()");
+//                Log.d(TAG, "onSearchAction()");
             }
         });
 
@@ -181,8 +164,13 @@ public class SearchFragment extends BaseFragment {
             public void onFocus() {
 
                 //show suggestions when search bar gains focus (typically history suggestions)
-
-                Log.d(TAG, "onFocus()");
+                SearchHelper.getDefaultSuggestions(5, new SearchHelper.OnFindSuggestionsListener() {
+                    @Override
+                    public void onResults(List<HistorySuggestion> results) {
+                        mSearchView.swapSuggestions(results);
+                    }
+                });
+//                Log.d(TAG, "onFocus()");
             }
 
             @Override

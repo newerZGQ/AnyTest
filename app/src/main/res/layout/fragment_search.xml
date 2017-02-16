@@ -29,7 +29,6 @@
             style="@style/SearchView"
             app:floatingSearch_dismissOnOutsideTouch="true"
             app:floatingSearch_leftActionMode="showSearch"
-            app:floatingSearch_menu="@menu/menu_search_view"
             app:floatingSearch_searchBarMarginLeft="@dimen/search_view_inset"
             app:floatingSearch_searchBarMarginRight="@dimen/search_view_inset"
             app:floatingSearch_searchBarMarginTop="@dimen/search_view_inset"
@@ -49,15 +48,6 @@
             android:paddingTop="5dp"
             android:clipToPadding="false"
             android:layout_below="@+id/view3" />
-        <Button
-            android:layout_marginTop="80dp"
-            android:id="@+id/test_btn"
-            android:layout_width="match_parent"
-            android:layout_height="50dp" />
-        <TextView
-            android:id="@+id/test_tv"
-            android:layout_width="match_parent"
-            android:layout_height="200dp" />
 
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

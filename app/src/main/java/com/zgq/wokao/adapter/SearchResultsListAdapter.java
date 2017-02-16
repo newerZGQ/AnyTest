@@ -70,7 +70,7 @@ public class SearchResultsListAdapter extends RecyclerView.Adapter<SearchResults
 
         Searchable tmp = mDataSet.get(position);
         if (tmp instanceof SearchInfoItem){
-            Log.d(TAG,"SearchInfoItem");
+//            Log.d(TAG,"SearchInfoItem");
             SearchInfoItem infoItem = (SearchInfoItem)tmp;
             holder.mColorName.setText(infoItem.getInfo().getAuthor());
         }
@@ -79,7 +79,7 @@ public class SearchResultsListAdapter extends RecyclerView.Adapter<SearchResults
             SearchQstItem qstItem = (SearchQstItem)tmp;
             holder.mColorName.setText(qstItem.getQst().getBody());
         }
-        Log.d(TAG,"bindview");
+//        Log.d(TAG,"bindview");
 
 //        holder.mColorName.setText(colorSuggestion.getName());
 //        holder.mColorValue.setText(colorSuggestion.getHex());
