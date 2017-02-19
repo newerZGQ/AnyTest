@@ -2,11 +2,9 @@ package com.zgq.wokao.parser.adapter.impl;
 
 import com.zgq.wokao.Util.ListUtil;
 import com.zgq.wokao.Util.StringUtil;
-import com.zgq.wokao.model.paper.DiscussQuestion;
 import com.zgq.wokao.model.paper.MultChoQuestion;
 import com.zgq.wokao.model.paper.Option;
 import com.zgq.wokao.model.paper.QuestionType;
-import com.zgq.wokao.model.paper.SglChoQuestion;
 import com.zgq.wokao.parser.adapter.BaseAdapter;
 import com.zgq.wokao.parser.adapter.IMultChoAdapter;
 import com.zgq.wokao.parser.context.QuestionContext;
