@@ -20,8 +20,8 @@ public class QuestionParser extends BaseParser implements IQuestionParser{
 
     private QuestionType type;
     private IAdapter adapter;
-    private String resource;
     private ArrayList<Question> results = new ArrayList<>();
+
 
     @Override
     public void setAdapter(QuestionType type) {

@@ -52,23 +52,23 @@ public class PaperParser extends BaseParser implements IPaperParser{
 
         boolean hasTitle = true;
         boolean hasAuthor = true;
-        int topicType = 0;
+        QuestionType topicType = QuestionType.fillin;
         StringBuilder ctBuilder = new StringBuilder();
 //        int count = 0;
         while((line = br.readLine()) != null){
 //            System.out.println("----->>"+count++);
             if (line.equals("")) continue;
-            if (hasTitle && getTopicType(line) == QuestionType.notQst.getIndex()){
+            if (hasTitle && getTopicType(line) == QuestionType.notQst){
                 parseTitle(line);
                 context.inContext(PaperItemType.title);
                 continue;
             }
-            if (hasAuthor && getTopicType(line) == QuestionType.notQst.getIndex()){
+            if (hasAuthor && getTopicType(line) == QuestionType.notQst){
                 parseAuthor(line);
                 context.inContext(PaperItemType.author);
                 continue;
             }
-            if (getTopicType(line) != QuestionType.notQst.getIndex()){
+            if (getTopicType(line) != QuestionType.notQst){
 
                 hasTitle = false;
                 hasAuthor = false;
@@ -102,25 +102,25 @@ public class PaperParser extends BaseParser implements IPaperParser{
         return null;
     }
 
-    private int getTopicType(String line){
+    private QuestionType getTopicType(String line){
         if (line.contains("填空") &&
                 isTopicNumber(line))
-            return QuestionType.fillin.getIndex();
+            return QuestionType.fillin;
         if (line.contains("判断") &&
                 isTopicNumber(line))
-            return QuestionType.tf.getIndex();
+            return QuestionType.tf;
         if (line.contains("单")
                 && line.contains("选")
                 && isTopicNumber(line))
-            return QuestionType.sglc.getIndex();
+            return QuestionType.sglc;
         if (line.contains("多")
                 && line.contains("选")
                 && isTopicNumber(line))
-            return QuestionType.mtlc.getIndex();
+            return QuestionType.mtlc;
         if ((line.contains("简答") || line.contains("问答"))
                 && isTopicNumber(line))
-            return QuestionType.disc.getIndex();
-        return QuestionType.notQst.getIndex();
+            return QuestionType.disc;
+        return QuestionType.notQst;
     }
 
     private boolean isStartWithNumber(String s){
@@ -151,14 +151,14 @@ public class PaperParser extends BaseParser implements IPaperParser{
     }
 
     private void parseTitle(String s){
-        if (getTopicType(s) == QuestionType.notQst.getIndex() &&
+        if (getTopicType(s) == QuestionType.notQst &&
                 !s.startsWith("作者")){
             info.setTitle(s);
         }
     }
 
     private void parseAuthor(String s){
-        if (getTopicType(s) == QuestionType.notQst.getIndex() &&
+        if (getTopicType(s) == QuestionType.notQst &&
                 s.startsWith("作者")) {
             info.setAuthor(s);
         }
@@ -180,19 +180,19 @@ public class PaperParser extends BaseParser implements IPaperParser{
 
 
     public static class Topic{
-        private int type;
+        private QuestionType type;
         private String content;
 
-        public Topic(int type, String content) {
+        public Topic(QuestionType type, String content) {
             this.type = type;
             this.content = content;
         }
 
-        public int getType() {
+        public QuestionType getType() {
             return type;
         }
 
-        public void setType(int type) {
+        public void setType(QuestionType type) {
             this.type = type;
         }
 

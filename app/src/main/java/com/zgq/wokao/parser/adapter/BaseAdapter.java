@@ -27,6 +27,9 @@ public abstract class BaseAdapter implements IAdapter{
     protected String trimNum(String s){
         s = s.trim();
         char[] chars = s.toCharArray();
+        if (chars.length == 0){
+            return s;
+        }
         if (chars[0]>=48 && chars[0]<=57 ) {
             int index = 0;
             for (char tmp : chars) {
