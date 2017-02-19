@@ -35,6 +35,11 @@ public abstract class BaseContext implements Context {
         itemQueue.poll();
     }
 
+    @Override
+    public ParserItem tail(int distance) {
+        return (ParserItem) ((LinkedList)itemQueue).get(itemQueue.size()-1-distance);
+    }
+
     private void adjustQueue(){
         if (itemQueue.size() <= queueCapacity-1){
             return;

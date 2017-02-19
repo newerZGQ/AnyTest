@@ -21,4 +21,10 @@ public class StringUtil {
         }
         return true;
     }
+
+    public static String char2String(char c){
+        char[] chars = new char[1];
+        chars[0] = c;
+        return new String(chars);
+    }
 }

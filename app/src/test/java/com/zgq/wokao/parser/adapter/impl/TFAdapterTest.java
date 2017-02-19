@@ -33,7 +33,7 @@ public class TFAdapterTest {
 
     @Test
     public void parse() throws Exception {
-        String test = "1. 及时（）\n答案：对\n(2) haha()\n答案：错";
+        String test = "1. 及时（）\niderhang\n答案：对\n(2) haha()\n答案：错";
 //        System.out.println("---->>"+test);
         ArrayList<TFQuestion> results = adapter.parse(test);
         System.out.println("--->>size"+results.size());

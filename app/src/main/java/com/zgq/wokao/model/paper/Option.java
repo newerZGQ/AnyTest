@@ -7,10 +7,12 @@ import io.realm.RealmObject;
  */
 public class Option extends RealmObject{
     private String option;
+    private String tag;
     public Option(){}
 
-    public Option(String option) {
+    public Option(String option,String tag) {
         this.option = option;
+        this.tag = tag;
     }
 
     public String getOption() {
@@ -19,6 +21,14 @@ public class Option extends RealmObject{
 
     public void setOption(String option) {
         this.option = option;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 
     @Override

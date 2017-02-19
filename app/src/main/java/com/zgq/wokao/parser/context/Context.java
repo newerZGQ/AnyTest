@@ -10,4 +10,5 @@ public interface Context <T extends ParserItem>{
     public void init(int length);
     public void inContext(T t);
     public void deContext();
+    public T tail(int distance);
 }

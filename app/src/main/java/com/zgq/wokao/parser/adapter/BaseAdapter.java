@@ -85,4 +85,20 @@ public abstract class BaseAdapter implements IAdapter{
         }
         return false;
     }
+
+    protected boolean startWithWord(String s){
+        char[] chars = s.trim().toCharArray();
+        int letterCount = 0;
+        for (char tmp: chars){
+            if ((tmp>=65 && tmp<=90) || (tmp>=97 &&tmp<=122)){
+                letterCount++;
+            }else{
+                break;
+            }
+        }
+        if (letterCount > 1){
+            return true;
+        }
+        return false;
+    }
 }

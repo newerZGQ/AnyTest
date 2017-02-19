@@ -186,7 +186,7 @@ public class DataXml2ObjParser {
                         sglChoQuestion.setAnswer(pullParser.nextText());
                         continue;
                     case XmlNodeInfo.optionNode:
-                        sglChoQuestion.addOption(new Option(pullParser.nextText()));
+                        sglChoQuestion.addOption(new Option(pullParser.nextText(),""));
                 }
             }
         }
@@ -218,7 +218,7 @@ public class DataXml2ObjParser {
                         multChoQuestion.setAnswer(pullParser.nextText());
                         continue;
                     case XmlNodeInfo.optionNode:
-                        multChoQuestion.addOption(new Option(pullParser.nextText()));
+                        multChoQuestion.addOption(new Option(pullParser.nextText(),""));
                 }
             }
         }

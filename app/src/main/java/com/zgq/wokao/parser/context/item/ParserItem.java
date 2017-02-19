@@ -5,4 +5,5 @@ package com.zgq.wokao.parser.context.item;
  */
 
 public interface ParserItem {
+    public <T> T getType();
 }
