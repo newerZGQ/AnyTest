@@ -19,4 +19,12 @@ public class ListUtil {
         }
         return results;
     }
+
+    public static <T> List<T> array2list(T[] array){
+        ArrayList<T> list = new ArrayList<>();
+        for (T t: array){
+            list.add(t);
+        }
+        return list;
+    }
 }

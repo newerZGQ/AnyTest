@@ -6,17 +6,17 @@ package com.zgq.wokao.parser.context.item;
 
 public class PaperItem implements ParserItem {
 
-    private int type;
+    private PaperItemType type;
 
-    public PaperItem(int type){
+    public PaperItem(PaperItemType type){
         this.type = type;
     }
 
-    public int getType() {
+    public PaperItemType getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(PaperItemType type) {
         this.type = type;
     }
 

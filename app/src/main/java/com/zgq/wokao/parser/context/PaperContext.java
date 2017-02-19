@@ -11,11 +11,10 @@ public class PaperContext extends BaseContext implements IPaperContext {
     @Override
     public void deContext() {
         super.deContext();
-
     }
 
     public void inContext(PaperItemType type) {
-        PaperItem item = new PaperItem(type.getType());
+        PaperItem item = new PaperItem(type);
         super.inContext(item);
     }
 
