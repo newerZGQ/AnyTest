@@ -1,6 +1,7 @@
 package com.zgq.wokao.parser.adapter;
 
 import com.zgq.wokao.model.paper.Question;
+import com.zgq.wokao.model.paper.QuestionType;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
  * Created by zgq on 2017/2/19.
  */
 
-public interface IAdapter {
-    public ArrayList<Question> parse(String resource);
+public interface IAdapter <T>{
+    public QuestionType getType();
+    public ArrayList<T> parse(String resource);
 }
