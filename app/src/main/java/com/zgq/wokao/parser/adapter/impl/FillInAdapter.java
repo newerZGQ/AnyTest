@@ -1,7 +1,6 @@
 package com.zgq.wokao.parser.adapter.impl;
 
 import com.zgq.wokao.Util.ListUtil;
-import com.zgq.wokao.model.paper.DiscussQuestion;
 import com.zgq.wokao.model.paper.FillInQuestion;
 import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.parser.adapter.BaseAdapter;
