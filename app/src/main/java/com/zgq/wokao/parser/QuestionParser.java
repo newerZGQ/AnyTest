@@ -46,8 +46,8 @@ public class QuestionParser extends BaseParser implements IQuestionParser{
     }
 
     @Override
-    public ArrayList<Question> parse(String resource) {
-        results =  adapter.parse(resource);
+    public ArrayList<Question> parse(PaperParser.Topic resource) {
+        results =  adapter.parse(resource.getContent());
         return  results;
     }
 }

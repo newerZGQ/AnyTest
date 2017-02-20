@@ -8,7 +8,6 @@ import com.zgq.wokao.model.paper.Question;
 import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.paper.SglChoQuestion;
 import com.zgq.wokao.model.paper.TFQuestion;
-import com.zgq.wokao.parser.adapter.IAdapter;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -51,19 +50,19 @@ public class ParserHelper {
         for (PaperParser.Topic tmp : topics){
             switch (tmp.getType()){
                 case fillin:
-                    paper.setFillInQuestions(parseFillin(tmp.getContent()));
+                    paper.setFillInQuestions(parseFillin(tmp));
                     break;
                 case tf:
-                    paper.setTfQuestions(parseTF(tmp.getContent()));
+                    paper.setTfQuestions(parseTF(tmp));
                     break;
                 case sglc:
-                    paper.setSglChoQuestions(parseSgl(tmp.getContent()));
+                    paper.setSglChoQuestions(parseSgl(tmp));
                     break;
                 case mtlc:
-                    paper.setMultChoQuestions(parseMult(tmp.getContent()));
+                    paper.setMultChoQuestions(parseMult(tmp));
                     break;
                 case disc:
-                    paper.setDiscussQuestions(parseDis(tmp.getContent()));
+                    paper.setDiscussQuestions(parseDis(tmp));
                     break;
                 case notQst:
                     break;
@@ -72,14 +71,14 @@ public class ParserHelper {
         return paper;
     }
 
-    private <T extends Question> ArrayList<T> parseQuestion(QuestionType type,String resource){
+    private <T extends Question> ArrayList<T> parseQuestion(QuestionType type,PaperParser.Topic resource){
         QuestionParser parser = new QuestionParser();
         parser.setAdapter(type);
         ArrayList<T> list = (ArrayList<T>) parser.parse(resource);
         return list;
     }
 
-    private RealmList<FillInQuestion> parseFillin(String resource){
+    private RealmList<FillInQuestion> parseFillin(PaperParser.Topic resource){
         QuestionParser parser = new QuestionParser();
         parser.setAdapter(QuestionType.fillin);
         ArrayList<Question> list = parser.parse(resource);
@@ -89,7 +88,7 @@ public class ParserHelper {
         }
         return results;
     }
-    private RealmList<TFQuestion> parseTF(String resource){
+    private RealmList<TFQuestion> parseTF(PaperParser.Topic resource){
         QuestionParser parser = new QuestionParser();
         parser.setAdapter(QuestionType.tf);
         ArrayList<Question> list = parser.parse(resource);
@@ -99,7 +98,7 @@ public class ParserHelper {
         }
         return results;
     }
-    private RealmList<SglChoQuestion> parseSgl(String resource){
+    private RealmList<SglChoQuestion> parseSgl(PaperParser.Topic resource){
         QuestionParser parser = new QuestionParser();
         parser.setAdapter(QuestionType.sglc);
         ArrayList<Question> list = parser.parse(resource);
@@ -109,7 +108,7 @@ public class ParserHelper {
         }
         return results;
     }
-    private RealmList<MultChoQuestion> parseMult(String resource){
+    private RealmList<MultChoQuestion> parseMult(PaperParser.Topic resource){
         QuestionParser parser = new QuestionParser();
         parser.setAdapter(QuestionType.mtlc);
         ArrayList<Question> list = parser.parse(resource);
@@ -119,7 +118,7 @@ public class ParserHelper {
         }
         return results;
     }
-    private RealmList<DiscussQuestion> parseDis(String resource){
+    private RealmList<DiscussQuestion> parseDis(PaperParser.Topic resource){
         QuestionParser parser = new QuestionParser();
         parser.setAdapter(QuestionType.disc);
         ArrayList<Question> list = parser.parse(resource);

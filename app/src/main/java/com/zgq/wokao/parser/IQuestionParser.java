@@ -13,6 +13,6 @@ import java.util.ArrayList;
 public interface IQuestionParser {
 
     public void setAdapter(QuestionType type);
-    public ArrayList<Question> parse(String resource);
+    public ArrayList<Question> parse(PaperParser.Topic resource);
 
 }
