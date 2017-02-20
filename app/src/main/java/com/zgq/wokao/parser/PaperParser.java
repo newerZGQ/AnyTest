@@ -1,11 +1,17 @@
 package com.zgq.wokao.parser;
 
-import com.zgq.wokao.model.paper.ExamPaper;
-import com.zgq.wokao.model.paper.NormalExamPaper;
+import com.zgq.wokao.exception.ParseException;
+import com.zgq.wokao.model.paper.ExamPaperInfo;
+import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.parser.context.PaperContext;
+import com.zgq.wokao.parser.context.item.PaperItemType;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+
 
 /**
  * Created by zgq on 2017/2/18.
@@ -14,25 +20,160 @@ import java.util.ArrayList;
 public class PaperParser extends BaseParser implements IPaperParser{
 
     private InputStream is;
-    private PaperContext context;
-    private ArrayList<TopicList> topicLists = new ArrayList<>();
-    private NormalExamPaper examPaper = new NormalExamPaper();
+    private PaperContext context = new PaperContext();
+    private ArrayList<Topic> topicLists = new ArrayList<>();
+    private ExamPaperInfo info;
 
-    private ExamPaper parse(){
-        return examPaper;
+    public PaperParser(){
+        initParam();
+    }
+
+    private PaperParser initParam(){
+        context.init(5);
+        return this;
+    }
+
+    private ArrayList<Topic> parse() throws ParseException, IOException {
+        if (is == null){
+            throw new ParseException("输入流为空");
+        }
+        StringBuilder builder = new StringBuilder();
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+
+        boolean hasTitle = true;
+        boolean hasAuthor = true;
+        int topicType = 0;
+        StringBuilder ctBuilder = new StringBuilder();
+        while((builder.append(br.readLine())) != null){
+            String tmp = builder.toString();
+            if (tmp.equals("")) continue;
+            if (hasTitle && getTopicType(tmp) != QuestionType.notQst.getIndex()){
+                parseTitle(tmp);
+                context.inContext(PaperItemType.title);
+                continue;
+            }
+            if (hasAuthor && getTopicType(tmp) != QuestionType.notQst.getIndex()){
+                parseAuthor(tmp);
+                context.inContext(PaperItemType.author);
+                continue;
+            }
+            if (getTopicType(tmp) != QuestionType.notQst.getIndex()){
+
+                hasTitle = false;
+                hasAuthor = false;
+                //存储上个循环的结果
+                Topic topic = new Topic(topicType,ctBuilder.toString());
+                topicLists.add(topic);
+                //刷新数据
+                topicType = getTopicType(tmp);
+                ctBuilder.delete(0,ctBuilder.length());
+                context.inContext(PaperItemType.topic);
+            }else{
+                context.inContext(PaperItemType.other);
+                ctBuilder.append(tmp);
+            }
+        }
+        return topicLists;
     }
 
     @Override
-    public ExamPaper parse(InputStream is) {
+    public ArrayList<Topic> parse(InputStream is) {
         this.is = is;
-        return parse();
+        try {
+            return parse();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
-    
+    private int getTopicType(String line){
+        if (line.contains("填空") &&
+                isTopicNumber(line))
+            return QuestionType.fillin.getIndex();
+        if (line.contains("判断") &&
+                isTopicNumber(line))
+            return QuestionType.tf.getIndex();
+        if (line.contains("单")
+                && line.contains("选")
+                && isTopicNumber(line))
+            return QuestionType.sglc.getIndex();
+        if (line.contains("多")
+                && line.contains("选")
+                && isTopicNumber(line))
+            return QuestionType.mtlc.getIndex();
+        if ((line.contains("简答") || line.contains("问答"))
+                && isTopicNumber(line))
+            return QuestionType.disc.getIndex();
+        return QuestionType.notQst.getIndex();
+    }
 
-    class TopicList{
+    private boolean isStartWithNumber(String s){
+        if (s.startsWith("一") ||
+                s.startsWith("二") ||
+                s.startsWith("三") ||
+                s.startsWith("四") ||
+                s.startsWith("五") ||
+                s.startsWith("六") ||
+                s.startsWith("七") ||
+                s.startsWith("八") ||
+                s.startsWith("九") ||
+                s.startsWith("十") ||
+                s.startsWith("1") ||
+                s.startsWith("2") ||
+                s.startsWith("3") ||
+                s.startsWith("4") ||
+                s.startsWith("5") ||
+                s.startsWith("6") ||
+                s.startsWith("7") ||
+                s.startsWith("8") ||
+                s.startsWith("9") ||
+                s.startsWith("10")
+                ){
+            return true;
+        }
+        return false;
+    }
+
+    private void parseTitle(String s){
+        if (getTopicType(s) == QuestionType.notQst.getIndex() &&
+                !s.startsWith("作者")){
+            info.setTitle(s);
+        }
+    }
+
+    private void parseAuthor(String s){
+        if (getTopicType(s) == QuestionType.notQst.getIndex() &&
+                s.startsWith("作者")) {
+            info.setAuthor(s);
+        }
+    }
+
+    private boolean isTopicNumber(String s){
+        if (isStartWithNumber(s)){
+            return true;
+        }
+        if (s.startsWith("(") ||
+                s.startsWith("（") ){
+            s = s.substring(1);
+            if (isStartWithNumber(s)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    public static class Topic{
         private int type;
         private String content;
+
+        public Topic(int type, String content) {
+            this.type = type;
+            this.content = content;
+        }
 
         public int getType() {
             return type;
@@ -50,5 +191,4 @@ public class PaperParser extends BaseParser implements IPaperParser{
             this.content = content;
         }
     }
-
 }

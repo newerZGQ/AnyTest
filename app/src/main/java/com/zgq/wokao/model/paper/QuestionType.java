@@ -5,7 +5,7 @@ package com.zgq.wokao.model.paper;
  */
 
 public enum QuestionType {
-    fillin("填空",1),tf("判断",2),sglc("单选",3),mtlc("多选",4),disc("简答",5);
+    notQst("无法识别",0),fillin("填空",1),tf("判断",2),sglc("单选",3),mtlc("多选",4),disc("简答",5);
     private int index;
     private String title;
     private QuestionType(String title,int index){
