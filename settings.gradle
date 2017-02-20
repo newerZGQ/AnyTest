@@ -1,1 +1,1 @@
-include ':app', ':PullToMenu'
+include ':app', ':PullToMenu', ':samples'
