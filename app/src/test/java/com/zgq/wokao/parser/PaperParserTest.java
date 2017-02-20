@@ -4,12 +4,18 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.ArrayList;
+
 import static org.junit.Assert.*;
 
 /**
  * Created by zgq on 2017/2/20.
  */
 public class PaperParserTest {
+    PaperParser paperParser = new PaperParser();
     @Before
     public void setUp() throws Exception {
 
@@ -22,8 +28,13 @@ public class PaperParserTest {
 
     @Test
     public void parse() throws Exception {
-        char tmp = '二';
-        System.out.print("--->>"+(int)tmp);
+        InputStream is = new FileInputStream(new File("/Users/zgq/AndroidStudioProjects/wokao_test_files/test.txt"));
+        paperParser.initParam().parse(is);
+        ArrayList<PaperParser.Topic> list = paperParser.getTopicLists();
+        for (PaperParser.Topic topic : list){
+            System.out.println("--->>"+topic.getType());
+            System.out.println("--->>"+topic.getContent());
+        }
     }
 
 }

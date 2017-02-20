@@ -22,42 +22,53 @@ public class PaperParser extends BaseParser implements IPaperParser{
     private InputStream is;
     private PaperContext context = new PaperContext();
     private ArrayList<Topic> topicLists = new ArrayList<>();
-    private ExamPaperInfo info;
+    private ExamPaperInfo info = new ExamPaperInfo();
+
+    private int contextLength = 5;
 
     public PaperParser(){
         initParam();
     }
 
-    private PaperParser initParam(){
-        context.init(5);
+    public PaperParser initParam(){
+        context.init(contextLength);
         return this;
+    }
+
+    public ArrayList<Topic> getTopicLists() {
+        return topicLists;
+    }
+
+    public ExamPaperInfo getInfo() {
+        return info;
     }
 
     private ArrayList<Topic> parse() throws ParseException, IOException {
         if (is == null){
             throw new ParseException("输入流为空");
         }
-        StringBuilder builder = new StringBuilder();
+        String line = "";
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
         boolean hasTitle = true;
         boolean hasAuthor = true;
         int topicType = 0;
         StringBuilder ctBuilder = new StringBuilder();
-        while((builder.append(br.readLine())) != null){
-            String tmp = builder.toString();
-            if (tmp.equals("")) continue;
-            if (hasTitle && getTopicType(tmp) != QuestionType.notQst.getIndex()){
-                parseTitle(tmp);
+//        int count = 0;
+        while((line = br.readLine()) != null){
+//            System.out.println("----->>"+count++);
+            if (line.equals("")) continue;
+            if (hasTitle && getTopicType(line) == QuestionType.notQst.getIndex()){
+                parseTitle(line);
                 context.inContext(PaperItemType.title);
                 continue;
             }
-            if (hasAuthor && getTopicType(tmp) != QuestionType.notQst.getIndex()){
-                parseAuthor(tmp);
+            if (hasAuthor && getTopicType(line) == QuestionType.notQst.getIndex()){
+                parseAuthor(line);
                 context.inContext(PaperItemType.author);
                 continue;
             }
-            if (getTopicType(tmp) != QuestionType.notQst.getIndex()){
+            if (getTopicType(line) != QuestionType.notQst.getIndex()){
 
                 hasTitle = false;
                 hasAuthor = false;
@@ -65,14 +76,16 @@ public class PaperParser extends BaseParser implements IPaperParser{
                 Topic topic = new Topic(topicType,ctBuilder.toString());
                 topicLists.add(topic);
                 //刷新数据
-                topicType = getTopicType(tmp);
+                topicType = getTopicType(line);
                 ctBuilder.delete(0,ctBuilder.length());
                 context.inContext(PaperItemType.topic);
             }else{
                 context.inContext(PaperItemType.other);
-                ctBuilder.append(tmp);
+                ctBuilder.append("\n"+line);
             }
         }
+        Topic topic = new Topic(topicType,ctBuilder.toString());
+        topicLists.add(topic);
         return topicLists;
     }
 
