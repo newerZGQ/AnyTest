@@ -18,16 +18,9 @@ import com.arlib.floatingsearchview.FloatingSearchView;
 import com.arlib.floatingsearchview.suggestions.SearchSuggestionsAdapter;
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.zgq.wokao.R;
-import com.zgq.wokao.Util.DateUtil;
-import com.zgq.wokao.Util.FileUtil;
 import com.zgq.wokao.adapter.SearchResultsListAdapter;
-import com.zgq.wokao.data.realm.Paper.PaperDataProvider;
-import com.zgq.wokao.data.realm.search.SearchHistoryProvider;
 import com.zgq.wokao.model.search.HistorySuggestion;
-import com.zgq.wokao.model.search.SearchHistory;
-import com.zgq.wokao.model.search.SearchQstItem;
 import com.zgq.wokao.model.search.Searchable;
-import com.zgq.wokao.parser.formater.impl.ImageFormater;
 import com.zgq.wokao.service.search.SearchHelper;
 
 import java.util.List;
