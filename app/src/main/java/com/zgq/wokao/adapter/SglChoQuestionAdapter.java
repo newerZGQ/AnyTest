@@ -13,7 +13,7 @@ import com.zgq.wokao.model.paper.MyQuestionAnswer;
 import com.zgq.wokao.model.paper.Question;
 import com.zgq.wokao.model.paper.QuestionAnswer;
 import com.zgq.wokao.model.paper.SglChoQuestion;
-import com.zgq.wokao.view.QuestionOptionView;
+import com.zgq.wokao.ui.view.QuestionOptionView;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

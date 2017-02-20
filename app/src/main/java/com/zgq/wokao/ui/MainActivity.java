@@ -31,7 +31,7 @@ import com.zgq.wokao.model.paper.NormalExamPaper;
 import com.zgq.wokao.data.realm.Paper.PaperDataProvider;
 import com.zgq.wokao.service.setting.MarketChecker;
 import com.zgq.wokao.ui.util.DialogUtil;
-import com.zgq.wokao.view.RotateTextView;
+import com.zgq.wokao.ui.view.RotateTextView;
 
 import java.io.File;
 import java.lang.ref.WeakReference;

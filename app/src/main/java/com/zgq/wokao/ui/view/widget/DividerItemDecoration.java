@@ -1,4 +1,4 @@
-package com.zgq.wokao.view.widget;
+package com.zgq.wokao.ui.view.widget;
 
 /**
  * Created by zgq on 16-6-25.

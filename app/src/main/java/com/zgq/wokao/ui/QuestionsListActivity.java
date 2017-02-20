@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -25,7 +24,7 @@ import com.zgq.wokao.model.paper.MultChoQuestion;
 import com.zgq.wokao.model.paper.NormalExamPaper;
 import com.zgq.wokao.model.paper.SglChoQuestion;
 import com.zgq.wokao.model.paper.TFQuestion;
-import com.zgq.wokao.view.ObservableScrollView;
+import com.zgq.wokao.ui.view.ObservableScrollView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
