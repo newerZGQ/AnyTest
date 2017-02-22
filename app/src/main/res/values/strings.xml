@@ -13,4 +13,11 @@
     <string name="market_dialog_positive_button">确定</string>
     <string name="market_dialog_negative_button">取消</string>
     <string name="title_activity_main2">Main2Activity</string>
+
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -37,4 +37,6 @@
 
     <color name="colorActionModeActionBarBackground">#757575</color>
     <color name="colorActionModeStatusBarBackground">#616161</color>
+
+    <color name="black_overlay">#66000000</color>
 </resources>

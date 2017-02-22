@@ -43,6 +43,7 @@ public class ActivityWelcome extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activity_welcome);
+//        realm = Realm.getDefaultInstance();
         ButterKnife.bind(this);
         initData();
         int i = (int) (Math.random() * 5);
@@ -59,7 +60,7 @@ public class ActivityWelcome extends AppCompatActivity {
         TimerTask task = new TimerTask() {
             public void run() {
                 Intent intent = new Intent();
-                intent.setClass(ActivityWelcome.this, MainActivity.class);
+                intent.setClass(ActivityWelcome.this, HomeActivity.class);
                 startActivity(intent);
                 finish();
             }
