@@ -14,4 +14,5 @@ public interface IPaperDataProvider {
     public List<NormalExamPaper> getAllPaper();
     public List<ExamPaperInfo> getAllPaperInfo();
     public List<Searchable> search(String query);
+    public List<ExamPaperInfo> getSchedulePapers();
 }

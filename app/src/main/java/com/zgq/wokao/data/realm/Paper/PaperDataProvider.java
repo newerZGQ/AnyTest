@@ -32,6 +32,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import io.realm.Realm;
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
@@ -112,6 +113,15 @@ public class PaperDataProvider extends BaseRealmProvider<NormalExamPaper> implem
         return results;
     }
 
+    @Override
+    public List<ExamPaperInfo> getSchedulePapers() {
+        RealmResults<ExamPaperInfo> results = realm
+                .where(ExamPaperInfo.class)
+                .equalTo("isInSchedule",true)
+                .findAll();
+        return changeRealmListToArray(results);
+    }
+
     /**
      * 搜索满足条件的SearchInfoItem,仅匹配试卷标题
      * @param query
@@ -148,6 +158,8 @@ public class PaperDataProvider extends BaseRealmProvider<NormalExamPaper> implem
         return results;
     }
 
+
+
     private List<SearchQstItem> searchQstFromPaper(String query,NormalExamPaper paper){
         List<SearchQstItem> results = new ArrayList<>();
         results = ListUtil.assem(
@@ -177,6 +189,14 @@ public class PaperDataProvider extends BaseRealmProvider<NormalExamPaper> implem
                         QuestionType.disc.getIndex())
                 );
 //        Log.d("---->>searchQstFromPape",""+results.size());
+        return results;
+    }
+
+    private <T extends RealmObject> ArrayList<T> changeRealmListToArray(RealmResults<T> list){
+        ArrayList<T> results = new ArrayList<>();
+        for (T t : list){
+            results.add(t);
+        }
         return results;
     }
 
