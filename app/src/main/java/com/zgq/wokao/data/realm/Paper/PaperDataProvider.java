@@ -7,19 +7,13 @@ import android.util.Log;
 import com.zgq.wokao.Util.FileUtil;
 import com.zgq.wokao.Util.ListUtil;
 import com.zgq.wokao.data.realm.BaseRealmProvider;
-import com.zgq.wokao.model.paper.DiscussQuestion;
-import com.zgq.wokao.model.paper.ExamPaper;
 import com.zgq.wokao.model.paper.ExamPaperInfo;
-import com.zgq.wokao.model.paper.FillInQuestion;
-import com.zgq.wokao.model.paper.MultChoQuestion;
 import com.zgq.wokao.model.paper.NormalExamPaper;
 import com.zgq.wokao.model.paper.Question;
 import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.search.SearchInfoItem;
 import com.zgq.wokao.model.search.SearchQstItem;
 import com.zgq.wokao.model.search.Searchable;
-import com.zgq.wokao.model.paper.SglChoQuestion;
-import com.zgq.wokao.model.paper.TFQuestion;
 import com.zgq.wokao.parser.DataTxt2XmlParser;
 import com.zgq.wokao.parser.DataXml2ObjParser;
 
@@ -32,7 +26,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import io.realm.Realm;
-import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
@@ -76,11 +69,7 @@ public class PaperDataProvider extends BaseRealmProvider<NormalExamPaper> implem
     @Override
     public List<NormalExamPaper> getAllPaper() {
         RealmResults<NormalExamPaper> results = realm.where(NormalExamPaper.class).findAll();
-        ArrayList<NormalExamPaper> list = new ArrayList<>();
-        for (int i = 0; i < results.size(); i++) {
-            list.add(results.get(i));
-        }
-        return list;
+        return changeRealmListToList(results);
     }
 
     /**
@@ -89,12 +78,8 @@ public class PaperDataProvider extends BaseRealmProvider<NormalExamPaper> implem
      */
     @Override
     public List<ExamPaperInfo> getAllPaperInfo() {
-        RealmResults<NormalExamPaper> results = realm.where(NormalExamPaper.class).findAll();
-        ArrayList<ExamPaperInfo> list = new ArrayList<>();
-        for (int i = 0; i < results.size(); i++) {
-            list.add(results.get(i).getPaperInfo());
-        }
-        return list;
+        RealmResults<ExamPaperInfo> results = realm.where(ExamPaperInfo.class).findAll();
+        return changeRealmListToList(results);
     }
 
     /**
@@ -119,7 +104,7 @@ public class PaperDataProvider extends BaseRealmProvider<NormalExamPaper> implem
                 .where(ExamPaperInfo.class)
                 .equalTo("isInSchedule",true)
                 .findAll();
-        return changeRealmListToArray(results);
+        return changeRealmListToList(results);
     }
 
     /**
@@ -192,8 +177,8 @@ public class PaperDataProvider extends BaseRealmProvider<NormalExamPaper> implem
         return results;
     }
 
-    private <T extends RealmObject> ArrayList<T> changeRealmListToArray(RealmResults<T> list){
-        ArrayList<T> results = new ArrayList<>();
+    private <T extends RealmObject> List<T> changeRealmListToList(RealmResults<T> list){
+        List<T> results = new ArrayList<>();
         for (T t : list){
             results.add(t);
         }
