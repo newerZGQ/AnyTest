@@ -1,15 +1,11 @@
-package com.zgq.wokao.service.search;
+package com.zgq.wokao.action.search;
 
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.zgq.wokao.Util.DateUtil;
 import com.zgq.wokao.data.realm.Paper.PaperDataProvider;
 import com.zgq.wokao.data.realm.search.SearchHistoryProvider;
-import com.zgq.wokao.model.paper.ExamPaperInfo;
-import com.zgq.wokao.model.paper.Question;
 import com.zgq.wokao.model.search.HistorySuggestion;
 import com.zgq.wokao.model.search.SearchHistory;
-import com.zgq.wokao.model.search.SearchInfoItem;
-import com.zgq.wokao.model.search.SearchQstItem;
 import com.zgq.wokao.model.search.Searchable;
 
 import java.util.ArrayList;

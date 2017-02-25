@@ -1,4 +1,4 @@
-package com.zgq.wokao.adapter;
+package com.zgq.wokao.ui.adapter;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;

@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.zgq.wokao.ui.fragment.HomeFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.zgq.wokao.ui.fragment.impl.HomeFragment">
 
     <RelativeLayout
         android:id="@+id/menu_layout"
@@ -27,7 +28,7 @@
         <LinearLayout
             android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
             android:elevation="4dp"
             android:orientation="vertical">
@@ -66,16 +67,30 @@
                     android:layout_marginEnd="0dp"
                     android:background="@drawable/toolbar_delete_background" />
             </LinearLayout>
+            <com.gigamole.navigationtabstrip.NavigationTabStrip
+                android:id="@+id/home_tab"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_below="@+id/toolbar_layout"
+                app:nts_color="#000"
+                app:nts_size="15sp"
+                app:nts_weight="3dp"
+                app:nts_factor="2.5"
+                app:nts_type="point"
+                app:nts_gravity="top"
+                app:nts_typeface="fonts/typeface.otf"
+                app:nts_corners_radius="1.5dp"
+                app:nts_animation_duration="300"
+                app:nts_active_color="#000"
+                app:nts_inactive_color="#c4c4c4"/>
         </LinearLayout>
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recy_exam_paper"
-            android:layout_width="match_parent"
+        <android.support.v4.view.ViewPager
+            android:id="@+id/home_pager"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_below="@+id/toolbar_layout"
-            android:background="@color/colorWhite">
+            android:layout_below="@id/toolbar_layout">
 
-        </android.support.v7.widget.RecyclerView>
+        </android.support.v4.view.ViewPager>
 
     </RelativeLayout>
 

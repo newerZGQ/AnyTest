@@ -29,7 +29,7 @@ import com.zgq.wokao.Util.StringUtil;
 import com.zgq.wokao.model.paper.ExamPaperInfo;
 import com.zgq.wokao.model.paper.NormalExamPaper;
 import com.zgq.wokao.data.realm.Paper.PaperDataProvider;
-import com.zgq.wokao.service.setting.MarketChecker;
+import com.zgq.wokao.action.setting.MarketChecker;
 import com.zgq.wokao.ui.util.DialogUtil;
 import com.zgq.wokao.ui.view.RotateTextView;
 

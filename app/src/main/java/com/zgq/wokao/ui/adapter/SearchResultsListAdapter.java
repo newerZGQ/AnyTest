@@ -1,4 +1,4 @@
-package com.zgq.wokao.adapter;
+package com.zgq.wokao.ui.adapter;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;

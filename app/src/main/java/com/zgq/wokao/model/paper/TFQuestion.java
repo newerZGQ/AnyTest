@@ -12,6 +12,8 @@ public class TFQuestion extends RealmObject implements Question {
     private String type;
     private boolean isStared;
     private boolean isStudied;
+    private int studiedCount;
+    private int correctCount;
 
     public TFQuestion() {
     }
@@ -80,6 +82,27 @@ public class TFQuestion extends RealmObject implements Question {
     public boolean isStudied() {
         return isStudied;
     }
+
+    @Override
+    public int getStudiedCount() {
+        return studiedCount;
+    }
+
+    @Override
+    public void setStudiedCount(int studiedCount) {
+        this.studiedCount = studiedCount;
+    }
+
+    @Override
+    public int getCorrecCount() {
+        return correctCount;
+    }
+
+    @Override
+    public void setCorrectCount(int correctCount) {
+        this.correctCount = correctCount;
+    }
+
 
     @Override
     public void setStudied(boolean studied) {

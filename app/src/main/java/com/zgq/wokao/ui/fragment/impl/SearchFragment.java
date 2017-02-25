@@ -1,4 +1,4 @@
-package com.zgq.wokao.ui.fragment;
+package com.zgq.wokao.ui.fragment.impl;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -18,10 +18,11 @@ import com.arlib.floatingsearchview.FloatingSearchView;
 import com.arlib.floatingsearchview.suggestions.SearchSuggestionsAdapter;
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.zgq.wokao.R;
-import com.zgq.wokao.adapter.SearchResultsListAdapter;
+import com.zgq.wokao.ui.adapter.SearchResultsListAdapter;
 import com.zgq.wokao.model.search.HistorySuggestion;
 import com.zgq.wokao.model.search.Searchable;
-import com.zgq.wokao.service.search.SearchHelper;
+import com.zgq.wokao.action.search.SearchHelper;
+import com.zgq.wokao.ui.fragment.BaseFragment;
 
 import java.util.List;
 

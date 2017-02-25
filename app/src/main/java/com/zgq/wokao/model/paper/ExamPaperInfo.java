@@ -1,5 +1,6 @@
 package com.zgq.wokao.model.paper;
 
+import com.zgq.wokao.model.schedule.Schedule;
 import com.zgq.wokao.model.search.Searchable;
 
 import java.io.Serializable;
@@ -19,15 +20,24 @@ public class ExamPaperInfo extends RealmObject implements Serializable ,Searchab
     private boolean parseRight;
     private int studyCount;
 
-    public ExamPaperInfo() {
+    //是否加入日程学习
+    private boolean isInSchedule;
+    private Schedule schedule;
+
+
+
+    public void setSchedule(Schedule schedule) {
+        this.schedule = schedule;
     }
 
-    public ExamPaperInfo(String id, String title, String author, String createDate, String lastStudyDate) {
+    public ExamPaperInfo(String id, String title, String author, String createDate, String lastStudyDate, Schedule schedule) {
         this.id = id;
         this.title = title;
         this.author = author;
         this.createDate = createDate;
         this.lastStudyDate = lastStudyDate;
+        this.schedule = schedule;
+
     }
 
     public String getId() {
@@ -92,6 +102,21 @@ public class ExamPaperInfo extends RealmObject implements Serializable ,Searchab
 
     public void setStudyCount(int studyCount) {
         this.studyCount = studyCount;
+    }
+
+    public boolean isInSchedule() {
+        return isInSchedule;
+    }
+
+    public void setInSchedule(boolean inSchedule) {
+        isInSchedule = inSchedule;
+    }
+
+    public ExamPaperInfo() {
+    }
+
+    public Schedule getSchedule() {
+        return schedule;
     }
 
     @Override

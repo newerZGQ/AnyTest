@@ -12,4 +12,9 @@ public interface QuestionInfo {
     public void setStared(boolean stared);
     public boolean isStudied();
     public void setStudied(boolean studied);
+    public int getStudiedCount();
+    public void setStudiedCount(int studiedCount);
+    public int getCorrecCount();
+    public void setCorrectCount(int correctCount);
+
 }

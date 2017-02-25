@@ -1,4 +1,4 @@
-package com.zgq.wokao.service.setting;
+package com.zgq.wokao.action.setting;
 
 import android.content.Context;
 import android.content.Intent;

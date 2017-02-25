@@ -1,19 +1,13 @@
 package com.zgq.wokao.ui;
 
-import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.net.Uri;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.MotionEvent;
-import android.view.View;
 
 import com.zgq.wokao.R;
-import com.zgq.wokao.ui.fragment.HomeFragment;
+import com.zgq.wokao.ui.fragment.impl.HomeFragment;
 
-public class HomeActivity extends BaseActivity implements HomeFragment.OnFragmentInteractionListener{
+public class HomeActivity extends BaseActivity implements HomeFragment.OnHomeFragmentListener {
 
     public static final String TAG = "HomeActivity";
 

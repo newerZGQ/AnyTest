@@ -1,4 +1,4 @@
-package com.zgq.wokao.adapter;
+package com.zgq.wokao.ui.adapter;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
@@ -14,7 +14,7 @@ import com.zgq.wokao.model.paper.Question;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class FillInQuestionAdapter extends PagerAdapter implements BaseStudySystemAdapter{
+public class DiscussQuestionAdapter extends PagerAdapter implements BaseStudySystemAdapter{
     //显示的数据
     private ArrayList<Question> datas = null;
     private LinkedList<View> mViewCache = null;
@@ -26,9 +26,9 @@ public class FillInQuestionAdapter extends PagerAdapter implements BaseStudySyst
     private int currentPosition = 0;
 
 
-    private FillInQuestionViewHolder holder;
+    private DiscussQuestionViewHolder holder;
 
-    public FillInQuestionAdapter(ArrayList<Question> datas, ArrayList<Boolean> hasShowAnswer,Context context) {
+    public DiscussQuestionAdapter(ArrayList<Question> datas, ArrayList<Boolean> hasShowAnswer,Context context) {
         super();
         this.datas = datas;
         this.mContext = context ;
@@ -38,49 +38,49 @@ public class FillInQuestionAdapter extends PagerAdapter implements BaseStudySyst
     }
 
     @Override public int getCount() {
-//        Log.e("test","getCount ");
+        Log.e("test","getCount ");
         return this.datas.size();
     }
     @Override public int getItemPosition(Object object) {
-//        Log.e("test","getItemPosition ");
+        Log.e("test","getItemPosition ");
         return super.getItemPosition(object);
     }
     @Override public Object instantiateItem(ViewGroup container, int position) {
-//        Log.e("test","instantiateItem " + position);
-        return getFillInQuestionView(container,position);
+        Log.e("test","instantiateItem " + position);
+        return getDiscussQuestionView(container,position);
     }
     @Override public void destroyItem(ViewGroup container, int position, Object object) {
-//        Log.e("test","destroyItem " + position);
+        Log.e("test","destroyItem " + position);
         View contentView = (View) object;
         container.removeView(contentView);
         this.mViewCache.add(contentView);
     }
     @Override public boolean isViewFromObject(View view, Object o) {
-//        Log.e("test","isViewFromObject ");
+        Log.e("test","isViewFromObject ");
         return view == o;
     }
 
-    public View getFillInQuestionView(ViewGroup container, int position){
-        FillInQuestionViewHolder fillInQuestionViewHolder = null;
+    public View getDiscussQuestionView(ViewGroup container, int position){
+        DiscussQuestionViewHolder discussQuestionViewHolder = null;
         View convertView = null;
         if(mViewCache.size() == 0){
-            convertView = this.mLayoutInflater.inflate(R.layout.viewadapter_fillinquestion_item , null ,false);
-            TextView questionBody   = (TextView) convertView.findViewById(R.id.fillinquestion_body);
-            TextView questionAnswer = (TextView) convertView.findViewById(R.id.fillinquestion_answer);
-            fillInQuestionViewHolder = new FillInQuestionViewHolder();
-            fillInQuestionViewHolder.questionBody = questionBody;
-            fillInQuestionViewHolder.questionAnswer = questionAnswer;
-            convertView.setTag(fillInQuestionViewHolder);
+            convertView = this.mLayoutInflater.inflate(R.layout.viewadapter_discussquestion_item , null ,false);
+            TextView questionBody   = (TextView) convertView.findViewById(R.id.discussquestion_body);
+            TextView questionAnswer = (TextView) convertView.findViewById(R.id.discussquestion_answer);
+            discussQuestionViewHolder = new DiscussQuestionViewHolder();
+            discussQuestionViewHolder.questionBody = questionBody;
+            discussQuestionViewHolder.questionAnswer = questionAnswer;
+            convertView.setTag(discussQuestionViewHolder);
         }else {
             convertView = mViewCache.removeFirst();
-            fillInQuestionViewHolder = (FillInQuestionViewHolder)convertView.getTag();
+            discussQuestionViewHolder = (DiscussQuestionViewHolder)convertView.getTag();
         }
-        holder = fillInQuestionViewHolder;
-        fillInQuestionViewHolder.questionBody.setText(""+(position+1)+". "+datas.get(position).getBody());
+        holder = discussQuestionViewHolder;
+        discussQuestionViewHolder.questionBody.setText(datas.get(position).getBody());
         if (hasShowAnswer.get(position)) {
-            fillInQuestionViewHolder.questionAnswer.setText(datas.get(position).getAnswer());
+            discussQuestionViewHolder.questionAnswer.setText(datas.get(position).getAnswer());
         }else {
-            fillInQuestionViewHolder.questionAnswer.setText("");
+            discussQuestionViewHolder.questionAnswer.setText("");
         }
         container.addView(convertView ,ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT );
         return convertView;
@@ -104,7 +104,7 @@ public class FillInQuestionAdapter extends PagerAdapter implements BaseStudySyst
     @Override
     public void showCurrentAnswer(){
         if (hasShowAnswer.get(currentPosition)) return;
-        ((FillInQuestionViewHolder)(currentView.getTag())).questionAnswer.setText(datas.get(currentPosition).getAnswer());
+        ((DiscussQuestionViewHolder)(currentView.getTag())).questionAnswer.setText(datas.get(currentPosition).getAnswer());
         hasShowAnswer.set(currentPosition,true);
     }
 
@@ -113,8 +113,9 @@ public class FillInQuestionAdapter extends PagerAdapter implements BaseStudySyst
 
     }
 
-    public final class FillInQuestionViewHolder {
+    public final class DiscussQuestionViewHolder {
         public TextView questionBody;
         public TextView questionAnswer;
     }
 }
+

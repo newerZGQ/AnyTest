@@ -2,14 +2,9 @@ package com.zgq.wokao.ui;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
-import android.view.MenuItem;
 
-import com.arlib.floatingsearchview.FloatingSearchView;
 import com.zgq.wokao.R;
-import com.zgq.wokao.ui.fragment.SearchFragment;
-
-import java.util.List;
+import com.zgq.wokao.ui.fragment.impl.SearchFragment;
 
 /**
  * Created by zgq on 2017/2/11.

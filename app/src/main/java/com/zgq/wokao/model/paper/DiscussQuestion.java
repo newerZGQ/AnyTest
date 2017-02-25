@@ -13,6 +13,9 @@ public class DiscussQuestion extends RealmObject implements Question  {
     private boolean isStared;
     private boolean isStudied;
 
+    private int studiedCount;
+    private int correctCount;
+
     public DiscussQuestion() {
     }
 
@@ -80,6 +83,26 @@ public class DiscussQuestion extends RealmObject implements Question  {
     @Override
     public void setStudied(boolean studied) {
         this.isStudied = studied;
+    }
+
+    @Override
+    public int getStudiedCount() {
+        return studiedCount;
+    }
+
+    @Override
+    public void setStudiedCount(int studiedCount) {
+        this.studiedCount = studiedCount;
+    }
+
+    @Override
+    public int getCorrecCount() {
+        return correctCount;
+    }
+
+    @Override
+    public void setCorrectCount(int correctCount) {
+        this.correctCount = correctCount;
     }
     @Override
     public String toString() {
