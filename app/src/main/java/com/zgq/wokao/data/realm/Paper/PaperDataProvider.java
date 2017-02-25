@@ -300,7 +300,7 @@ public class PaperDataProvider extends BaseRealmProvider<NormalExamPaper> implem
                 normalExamPaper = dataXml2ObjParser.parse(xmlFile);
                 normalExamPaper.getPaperInfo().setId(UUIDUtil.getID());
             } catch (Exception e) {
-                Log.d("----normal", "exception");
+//                Log.d("----normal", "exception");
             }
             return normalExamPaper;
         }

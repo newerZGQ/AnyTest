@@ -29,6 +29,21 @@ public class SglChoQuestion extends RealmObject implements IQuestion {
         this.info = builder.info;
         this.record = builder.record;
         this.options = builder.options;
+        if (this.body == null){
+            this.body = new QuestionBody();
+        }
+        if (this.answer == null){
+            this.answer = new Answer();
+        }
+        if (this.info == null){
+            this.info = new QuestionInfo();
+        }
+        if (this.record == null){
+            this.record = new QuestionRecord();
+        }
+        if (options == null){
+            this.options = new Options();
+        }
     }
 
     public QuestionBody getBody() {

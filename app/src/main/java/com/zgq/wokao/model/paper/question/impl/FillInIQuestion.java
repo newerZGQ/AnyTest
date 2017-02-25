@@ -26,6 +26,19 @@ public class FillInIQuestion extends RealmObject implements IQuestion {
         this.answer = builder.answer;
         this.info = builder.info;
         this.record = builder.record;
+        if (this.body == null){
+            this.body = new QuestionBody();
+        }
+        if (this.answer == null){
+            this.answer = new Answer();
+        }
+        if (this.info == null){
+            this.info = new QuestionInfo();
+        }
+        if (this.record == null){
+            this.record = new QuestionRecord();
+        }
+
     }
     @Override
     public Options getOptions() {

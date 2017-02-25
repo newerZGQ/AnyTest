@@ -48,6 +48,7 @@ public class ParserService extends Service {
             @Override
             public void onCompleted(NormalExamPaper paper) {
                 PaperDataProvider.getInstance().save(paper);
+                Log.d("---->>papersize",""+PaperDataProvider.getInstance().getAllPaperInfo().size());
             }
         });
         thread.start();

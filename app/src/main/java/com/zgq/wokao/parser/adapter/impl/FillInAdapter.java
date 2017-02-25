@@ -1,5 +1,7 @@
 package com.zgq.wokao.parser.adapter.impl;
 
+import android.util.Log;
+
 import com.zgq.wokao.Util.ListUtil;
 import com.zgq.wokao.model.paper.question.impl.FillInIQuestion;
 import com.zgq.wokao.model.paper.QuestionType;
@@ -47,7 +49,6 @@ public class FillInAdapter extends BaseAdapter implements IFillInAdapter {
         int number = 1;
         String bodyString = "";
         StringBuilder builder = new StringBuilder();
-        System.out.println("---->>content"+content.size());
         for (int i = 0; i < content.size(); i++) {
             String tmp = content.get(i);
             //如果这一行为空，则继续，不做任何操作
@@ -56,7 +57,7 @@ public class FillInAdapter extends BaseAdapter implements IFillInAdapter {
             }
             //如果这一行是题目开始的地方
             if (isQstNumber(tmp)) {
-                System.out.println("---->>is number"+tmp);
+//                System.out.println("---->>is number"+tmp);
                 //把上一次循环的题干和答案提取出来
                 bodyString = builder.toString();
                 if (bodyString.equals("")){
@@ -74,7 +75,6 @@ public class FillInAdapter extends BaseAdapter implements IFillInAdapter {
                 String contentTmp = trimNum(tmp);
                 builder.append(contentTmp);
             } else {
-                System.out.println("---->>not number"+tmp);
                 builder.append("\n" + tmp);
             }
         }
@@ -87,8 +87,13 @@ public class FillInAdapter extends BaseAdapter implements IFillInAdapter {
     }
 
     private FillInIQuestion parseSingle(int number, String questionRes) {
-        System.out.println("---->>single" + questionRes);
         FillInIQuestion question = new FillInIQuestion.Builder().build();
+        if (question == null){
+            Log.d("---->>","question null");
+        }
+        if (question.getInfo() == null){
+            Log.d("---->>","questioninfo null");
+        }
         question.getInfo().setId(number);
         inContext(QuestionItemType.number);
         String[] resArray = trimNum(questionRes).split("\n");
