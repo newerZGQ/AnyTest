@@ -2,6 +2,7 @@ package com.zgq.wokao.model.schedule;
 
 import java.util.ArrayList;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
 
 /**
@@ -12,7 +13,7 @@ public class Schedule extends RealmObject implements ISchedule{
     //是否开启学习计划
     private int isOpened;
     private int dailyCount;
-    private ArrayList<Record> records = new ArrayList<>();
+    private RealmList<Record> records = new RealmList<>();
 
     @Override
     public int getDailyCount() {
@@ -37,11 +38,11 @@ public class Schedule extends RealmObject implements ISchedule{
         this.isOpened = isOpened;
     }
 
-    public ArrayList<Record> getRecords() {
+    public RealmList<Record> getRecords() {
         return records;
     }
 
-    public void setRecords(ArrayList<Record> records) {
+    public void setRecords(RealmList<Record> records) {
         this.records = records;
     }
 }
