@@ -11,6 +11,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,11 +24,13 @@ import android.widget.Toast;
 import com.gigamole.navigationtabstrip.NavigationTabStrip;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 import com.zgq.wokao.R;
+import com.zgq.wokao.Util.ContextUtil;
 import com.zgq.wokao.Util.NormalExamPaperUtil;
 import com.zgq.wokao.data.realm.Paper.PaperDataProvider;
 import com.zgq.wokao.model.paper.ExamPaperInfo;
 import com.zgq.wokao.model.paper.NormalExamPaper;
 import com.zgq.wokao.ui.adapter.HomePaperAdapter;
+import com.zgq.wokao.ui.adapter.HomeScheduleAdapter;
 import com.zgq.wokao.ui.fragment.BaseFragment;
 import com.zgq.wokao.ui.util.DialogUtil;
 import com.zgq.wokao.ui.view.SlideUp;
@@ -60,10 +63,9 @@ public class HomeFragment extends BaseFragment {
     private String mParam2;
 
     private Realm realm = Realm.getDefaultInstance();
-    private ArrayList<ExamPaperInfo> paperInfos = new ArrayList<>();
-    private ArrayList<NormalExamPaper> papers = new ArrayList<>();
+    private ArrayList<ExamPaperInfo> allPaperInfos = new ArrayList<>();
+    private ArrayList<ExamPaperInfo> schedPaperInfos = new ArrayList<>();
 
-//    private PaperInfoAdapter adapter;
 
     private MyHandler myHandler;
 
@@ -115,13 +117,9 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void getRecyclerViewData() {
-        papers = (ArrayList<NormalExamPaper>) PaperDataProvider.getInstance().getAllPaper();
-
-        NormalExamPaperUtil.sortPapers(papers);
-        paperInfos.clear();
-        for (NormalExamPaper paper : papers) {
-            paperInfos.add(paper.getPaperInfo());
-        }
+        allPaperInfos = (ArrayList<ExamPaperInfo>) PaperDataProvider.getInstance().getAllPaperInfo();
+        schedPaperInfos = (ArrayList<ExamPaperInfo>) PaperDataProvider.getInstance().getSchedulePapers();
+        Log.d("---->>paapers",""+allPaperInfos.size());
     }
 
     private View initView(LayoutInflater inflater, ViewGroup container,
@@ -196,13 +194,44 @@ public class HomeFragment extends BaseFragment {
                         .size(getResources().getDimensionPixelSize(R.dimen.paper_recyclerview_divider_height))
                         .margin(getResources().getDimensionPixelSize(R.dimen.paper_recyclerview_divider_margin), 0)
                         .build());
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
-        paperList.setLayoutManager(layoutManager);
+        RecyclerView.LayoutManager papersLM = new LinearLayoutManager(ContextUtil.getContext());
+        paperList.setLayoutManager(papersLM);
         paperList.setItemAnimator(new FadeInAnimator());
-        scheduleList = (RecyclerView) schedulePage.findViewById(R.id.recycler_view);
-        paperList.setAdapter(new HomePaperAdapter(paperInfos, new HomePaperAdapter.PaperAdapterListener() {
+        paperList.setAdapter(new HomePaperAdapter(allPaperInfos, new HomePaperAdapter.PaperAdapterListener() {
             @Override
             public void onStared(String paperId, boolean isStared) {
+
+            }
+
+            @Override
+            public void onItemClick(int position) {
+
+            }
+
+            @Override
+            public void onItemLongClick(int position) {
+
+            }
+        }));
+
+        scheduleList = (RecyclerView) schedulePage.findViewById(R.id.recycler_view);
+        scheduleList.addItemDecoration(new HorizontalDividerItemDecoration.Builder(getActivity())
+                .color(getResources().getColor(R.color.colorRecyclerViewDivider))
+                .size(getResources().getDimensionPixelSize(R.dimen.paper_recyclerview_divider_height))
+                .margin(getResources().getDimensionPixelSize(R.dimen.paper_recyclerview_divider_margin), 0)
+                .build());
+        RecyclerView.LayoutManager scheduleLM = new LinearLayoutManager(ContextUtil.getContext());
+        scheduleList.setLayoutManager(scheduleLM);
+        scheduleList.setItemAnimator(new FadeInAnimator());
+        scheduleList.setAdapter(new HomeScheduleAdapter(allPaperInfos,new HomeScheduleAdapter.ScheduleAdapterListener(){
+
+            @Override
+            public void onStatusChanged(boolean isOpened) {
+
+            }
+
+            @Override
+            public void onDailyCountChanged(int oldCount, int newCount) {
 
             }
 

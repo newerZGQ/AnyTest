@@ -29,9 +29,9 @@ public class HomeScheduleAdapter extends RecyclerView.Adapter {
     private final int ITEMTYPE = 2;
     private int viewType = GROUPTYPE;
 
-    private HomePaperAdapter.PaperAdapterListener listener;
+    private ScheduleAdapterListener listener;
 
-    public HomeScheduleAdapter(ArrayList<ExamPaperInfo> paperInfos,HomePaperAdapter.PaperAdapterListener listener) {
+    public HomeScheduleAdapter(ArrayList<ExamPaperInfo> paperInfos, ScheduleAdapterListener listener) {
         this.listener = listener;
         this.paperInfos = paperInfos;
         initData();
@@ -61,7 +61,7 @@ public class HomeScheduleAdapter extends RecyclerView.Adapter {
 
         final int positionTmp = position;
 
-        final HomePaperAdapter.PaperInfoViewHolder holder1 = (HomePaperAdapter.PaperInfoViewHolder) holder;
+        final PaperInfoViewHolder holder1 = (PaperInfoViewHolder) holder;
         final ExamPaperInfo info = paperInfos.get(position);
         //设置paperlabel的正面以及反面
 //        holder1.paperLabel.setSidesStyle(new RotateTextView.UpAndDownSideStyle() {
@@ -115,7 +115,6 @@ public class HomeScheduleAdapter extends RecyclerView.Adapter {
 //                        }
 //                    });
                     holder1.paperStar.setBackground(context.getDrawable(R.drawable.inactive_star));
-                    listener.onStared(info.getId(),false);
 //                    Toast.makeText(getActivity(), "取消收藏", Toast.LENGTH_SHORT).show();
                 } else {
 //                    realm.executeTransaction(new Realm.Transaction() {
@@ -125,7 +124,6 @@ public class HomeScheduleAdapter extends RecyclerView.Adapter {
 //                        }
 //                    });
                     holder1.paperStar.setBackground(context.getDrawable(R.drawable.active_star));
-                    listener.onStared(info.getId(),true);
 //                    Toast.makeText(getActivity(), "已收藏", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -245,7 +243,8 @@ public class HomeScheduleAdapter extends RecyclerView.Adapter {
     }
 
     public interface ScheduleAdapterListener{
-        public void onStared(String paperId,boolean isStared);
+        public void onStatusChanged(boolean isOpened);
+        public void onDailyCountChanged(int oldCount,int newCount);
         public void onItemClick(int position);
         public void onItemLongClick(int position);
     }
