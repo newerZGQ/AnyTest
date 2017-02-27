@@ -58,23 +58,6 @@ public class SearchFragment extends BaseFragment {
         void onAttachSearchViewBack(FloatingSearchView searchView);
     }
 
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        if (context instanceof SearchFragmentCallbacks) {
-//            mCallbacks = (SearchFragmentCallbacks) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement SearchFragmentCallbacks");
-//        }
-//    }
-//
-//    @Override
-//    public void onDetach() {
-//        super.onDetach();
-//        mCallbacks = null;
-//    }
-
 
     @Override
     protected void onAttachToContext(Context context) {

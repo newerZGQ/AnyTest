@@ -308,25 +308,6 @@ public class HomeFragment extends BaseFragment {
             mListener.onFragmentInteraction(uri);
         }
     }
-//    @TargetApi(23)
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//        onAttachToContext(context);
-//    }
-//
-//    /*
-// * Deprecated on API 23
-// * Use onAttachToContext instead
-// */
-//    @SuppressWarnings("deprecation")
-//    @Override
-//    public void onAttach(Activity activity) {
-//        super.onAttach(activity);
-//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-//            onAttachToContext(activity);
-//        }
-//    }
     @Override
     protected void onAttachToContext(Context context) {
         if (context instanceof OnHomeFragmentListener) {
