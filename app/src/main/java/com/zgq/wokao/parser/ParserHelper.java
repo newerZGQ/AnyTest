@@ -48,23 +48,23 @@ public class ParserHelper {
             throw new com.zgq.wokao.exception.ParseException("请检查大标题");
         }
         for (PaperParser.Topic tmp : topics){
-            switch (tmp.getType()){
-                case fillin:
+            switch (tmp.getType().getIndex()){
+                case QuestionType.fillin_index:
                     paper.setFillInQuestions(parseFillin(tmp));
                     break;
-                case tf:
+                case QuestionType.tf_index:
                     paper.setTfQuestions(parseTF(tmp));
                     break;
-                case sglc:
+                case QuestionType.sglc_index:
                     paper.setSglChoQuestions(parseSgl(tmp));
                     break;
-                case mtlc:
+                case QuestionType.mtlc_index:
                     paper.setMultChoQuestions(parseMult(tmp));
                     break;
-                case disc:
+                case QuestionType.disc_index:
                     paper.setDiscussQuestions(parseDis(tmp));
                     break;
-                case notQst:
+                case QuestionType.noqst_index:
                     break;
             }
         }

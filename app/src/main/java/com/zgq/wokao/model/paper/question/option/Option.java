@@ -9,6 +9,9 @@ public class Option extends RealmObject{
     private String option;
     private String tag;
 
+    public Option() {
+    }
+
     public Option(Builder builder) {
         this.option = builder.option;
         this.tag = builder.tag;

@@ -19,6 +19,9 @@ public class MultChoQuestion extends RealmObject implements IQuestion {
     private QuestionRecord record;
     private Options options;
 
+    public MultChoQuestion() {
+    }
+
     public MultChoQuestion(Builder builder) {
         this.body = builder.body;
         this.answer = builder.answer;

@@ -110,12 +110,12 @@ public class DataXml2ObjParser {
                     case XmlNodeInfo.typeNode:
 //                        String ss = pullParser.nextText();
 //                        Log.d("-------type",ss);
-                        fillInQuestion.getInfo().setType(pullParser.nextText());
+                        fillInQuestion.getInfo().setType(changeIntToType(pullParser.nextText()));
                         continue;
                     case XmlNodeInfo.bodyNode:
 //                        String sss = pullParser.nextText();
 //                        Log.d("-------body",sss);
-                        fillInQuestion.getBody().setContent((pullParser.nextText());
+                        fillInQuestion.getBody().setContent((pullParser.nextText()));
                         continue;
                     case XmlNodeInfo.answerNode:
 //                        String ssss = pullParser.nextText();
@@ -147,7 +147,7 @@ public class DataXml2ObjParser {
                     case XmlNodeInfo.typeNode:
 //                        String ss = pullParser.nextText();
 //                        Log.d("-------type",ss);
-                        tfQuestion.setType(pullParser.nextText());
+                        tfQuestion.getInfo().setType(changeIntToType(pullParser.nextText()));
                         continue;
                     case XmlNodeInfo.bodyNode:
 //                        String sss = pullParser.nextText();
@@ -178,13 +178,13 @@ public class DataXml2ObjParser {
                         sglChoQuestion.getInfo().setId(Integer.parseInt(pullParser.nextText()));
                         continue;
                     case XmlNodeInfo.typeNode:
-                        sglChoQuestion.getInfo().setType(pullParser.nextText());
+                        sglChoQuestion.getInfo().setType(changeIntToType(pullParser.nextText()));
                         continue;
                     case XmlNodeInfo.bodyNode:
                         sglChoQuestion.getBody().setContent(pullParser.nextText());
                         continue;
                     case XmlNodeInfo.answerNode:
-                        sglChoQuestion.setAnswer(pullParser.nextText());
+                        sglChoQuestion.getAnswer().setContent(pullParser.nextText());
                         continue;
                     case XmlNodeInfo.optionNode:
                         sglChoQuestion.getOptions().addOption(new Option.Builder().option(pullParser.nextText()).tag("").build());
@@ -196,7 +196,7 @@ public class DataXml2ObjParser {
 
     private MultChoQuestion parseMultChoQuestion(XmlPullParser pullParser) throws Exception {
         if (!XmlNodeInfo.multChoQuestionNode.equals(pullParser.getName())) return null;
-        MultChoQuestion multChoQuestion = new MultChoQuestion();
+        MultChoQuestion multChoQuestion = new MultChoQuestion.Builder().build();
         int event = 0;
         while (true) {
             event = pullParser.next();
@@ -210,7 +210,7 @@ public class DataXml2ObjParser {
                         multChoQuestion.getInfo().setId(Integer.parseInt(pullParser.nextText()));
                         continue;
                     case XmlNodeInfo.typeNode:
-                        multChoQuestion.getInfo().setType(pullParser.nextText());
+                        multChoQuestion.getInfo().setType(changeIntToType(pullParser.nextText()));
                         continue;
                     case XmlNodeInfo.bodyNode:
                         multChoQuestion.getBody().setContent(pullParser.nextText());
@@ -228,7 +228,7 @@ public class DataXml2ObjParser {
 
     private DiscussIQuestion parseDiscussQuestion(XmlPullParser pullParser) throws Exception {
         if (!XmlNodeInfo.discussQuestionNode.equals(pullParser.getName())) return null;
-        DiscussIQuestion discussQuestion = new DiscussIQuestion();
+        DiscussIQuestion discussQuestion = new DiscussIQuestion.Builder().build();
         int event = 0;
         while (true) {
             event = pullParser.next();
@@ -242,7 +242,7 @@ public class DataXml2ObjParser {
                         discussQuestion.getInfo().setId(Integer.parseInt(pullParser.nextText()));
                         continue;
                     case XmlNodeInfo.typeNode:
-                        discussQuestion.getInfo().setType(pullParser.nextText());
+                        discussQuestion.getInfo().setType(changeIntToType(pullParser.nextText()));
                         continue;
                     case XmlNodeInfo.bodyNode:
                         discussQuestion.getBody().setContent(pullParser.nextText());
@@ -255,10 +255,20 @@ public class DataXml2ObjParser {
         return discussQuestion;
     }
 
-    private QuestionType changeIntToType(int type){
+    private QuestionType changeIntToType(String type){
         switch (type){
-
+            case "fill_in_question":
+                return QuestionType.fillin;
+            case "tf_question":
+                return QuestionType.tf;
+            case "sglcho_question":
+                return QuestionType.sglc;
+            case "multcho_question":
+                return QuestionType.mtlc;
+            case "discuss_question":
+                return QuestionType.disc;
+            default:
+                return null;
         }
-        return null;
     }
 }

@@ -30,6 +30,8 @@ public class ExamPaperInfo extends RealmObject implements Serializable ,Searchab
         this.schedule = schedule;
     }
 
+    public ExamPaperInfo() {
+    }
     public ExamPaperInfo(String id, String title, String author, String createDate, String lastStudyDate, Schedule schedule) {
         this.id = id;
         this.title = title;
@@ -112,8 +114,7 @@ public class ExamPaperInfo extends RealmObject implements Serializable ,Searchab
         isInSchedule = inSchedule;
     }
 
-    public ExamPaperInfo() {
-    }
+
 
     public Schedule getSchedule() {
         return schedule;

@@ -11,6 +11,8 @@ public class DailyRecord extends RealmObject{
     private int studyCount;
     private boolean isCompleted;
 
+    public DailyRecord(){}
+
     public DailyRecord(Builder builder){
         this.date = builder.date;
         this.studyNumber = builder.studyNumber;

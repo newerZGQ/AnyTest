@@ -23,6 +23,10 @@ android {
             url 'http://dl.bintray.com/lukaville/maven'
         }
     }
+    repositories {
+        mavenCentral()
+    }
+
     buildTypes {
         release {
             minifyEnabled false

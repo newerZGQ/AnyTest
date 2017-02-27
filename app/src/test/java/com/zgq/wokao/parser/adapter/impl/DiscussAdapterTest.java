@@ -35,9 +35,9 @@ public class DiscussAdapterTest {
         ArrayList<DiscussIQuestion> results = adapter.parse(test);
         System.out.println("--->>size"+results.size());
         for (DiscussIQuestion tmp: results){
-            System.out.println("---->>"+tmp.getId());
-            System.out.println("---->>"+tmp.getBody());
-            System.out.println("---->>"+tmp.getAnswer());
+//            System.out.println("---->>"+tmp.getInfo().getId());
+//            System.out.println("---->>"+tmp.getBody());
+//            System.out.println("---->>"+tmp.getAnswer());
         }
     }
 

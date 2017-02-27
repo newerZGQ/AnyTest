@@ -35,9 +35,9 @@ public class TFAdapterTest {
         ArrayList<TFIQuestion> results = adapter.parse(test);
         System.out.println("--->>size"+results.size());
         for (TFIQuestion tmp: results){
-            System.out.println("---->>"+tmp.getId());
-            System.out.println("---->>"+tmp.getBody());
-            System.out.println("---->>"+tmp.getAnswer());
+//            System.out.println("---->>"+tmp.getId());
+//            System.out.println("---->>"+tmp.getBody());
+//            System.out.println("---->>"+tmp.getAnswer());
         }
     }
 }

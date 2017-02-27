@@ -25,20 +25,20 @@ public class QuestionParser extends BaseParser implements IQuestionParser{
     @Override
     public void setAdapter(QuestionType type) {
         this.type = type;
-        switch (type){
-            case fillin:
+        switch (type.getIndex()){
+            case QuestionType.fillin_index:
                 adapter = new FillInAdapter();
                 break;
-            case tf:
+            case QuestionType.tf_index:
                 adapter = new TFAdapter();
                 break;
-            case sglc:
+            case QuestionType.sglc_index:
                 adapter = new SglChoAdapter();
                 break;
-            case mtlc:
+            case QuestionType.mtlc_index:
                 adapter = new MultChoAdapter();
                 break;
-            case disc:
+            case QuestionType.disc_index:
                 adapter = new DiscussAdapter();
                 break;
         }

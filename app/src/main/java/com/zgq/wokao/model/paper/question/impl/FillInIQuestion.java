@@ -18,6 +18,9 @@ public class FillInIQuestion extends RealmObject implements IQuestion {
     private QuestionInfo info;
     private QuestionRecord record;
 
+    public FillInIQuestion() {
+    }
+
     public FillInIQuestion(Builder builder) {
         this.body = builder.body;
         this.answer = builder.answer;

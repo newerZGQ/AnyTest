@@ -18,6 +18,9 @@ public class DiscussIQuestion extends RealmObject implements IQuestion {
     private QuestionInfo info;
     private QuestionRecord record;
 
+    public DiscussIQuestion() {
+    }
+
     public DiscussIQuestion(Builder builder) {
         this.body = builder.body;
         this.answer = builder.answer;

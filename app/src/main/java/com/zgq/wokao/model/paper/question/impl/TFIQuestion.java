@@ -18,6 +18,9 @@ public class TFIQuestion extends RealmObject implements IQuestion {
     private QuestionInfo info;
     private QuestionRecord record;
 
+    public TFIQuestion() {
+    }
+
     public TFIQuestion(Builder builder) {
         this.body = builder.body;
         this.answer = builder.answer;
