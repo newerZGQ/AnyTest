@@ -1,7 +1,7 @@
 package com.zgq.wokao.model.search;
 
 import com.zgq.wokao.model.paper.ExamPaperInfo;
-import com.zgq.wokao.model.paper.Question;
+import com.zgq.wokao.model.paper.question.IQuestion;
 
 /**
  * Created by zgq on 2017/2/11.
@@ -11,7 +11,7 @@ public class SearchQstItem implements Searchable {
     private ExamPaperInfo info;
     private int qstType;
     private int qstId;
-    private Question qst;
+    private IQuestion qst;
 
     public ExamPaperInfo getInfo() {
         return info;
@@ -37,11 +37,11 @@ public class SearchQstItem implements Searchable {
         this.qstType = qstType;
     }
 
-    public Question getQst() {
+    public IQuestion getQst() {
         return qst;
     }
 
-    public void setQst(Question qst) {
+    public void setQst(IQuestion qst) {
         this.qst = qst;
     }
 }

@@ -1,13 +1,13 @@
 package com.zgq.wokao.parser;
 
-import com.zgq.wokao.model.paper.DiscussQuestion;
-import com.zgq.wokao.model.paper.FillInQuestion;
-import com.zgq.wokao.model.paper.MultChoQuestion;
+import com.zgq.wokao.model.paper.question.impl.DiscussIQuestion;
+import com.zgq.wokao.model.paper.question.impl.FillInIQuestion;
+import com.zgq.wokao.model.paper.question.impl.MultChoQuestion;
 import com.zgq.wokao.model.paper.NormalExamPaper;
-import com.zgq.wokao.model.paper.Question;
+import com.zgq.wokao.model.paper.question.impl.SglChoQuestion;
+import com.zgq.wokao.model.paper.question.impl.TFIQuestion;
+import com.zgq.wokao.model.paper.question.IQuestion;
 import com.zgq.wokao.model.paper.QuestionType;
-import com.zgq.wokao.model.paper.SglChoQuestion;
-import com.zgq.wokao.model.paper.TFQuestion;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -71,39 +71,39 @@ public class ParserHelper {
         return paper;
     }
 
-    private <T extends Question> ArrayList<T> parseQuestion(QuestionType type,PaperParser.Topic resource){
+    private <T extends IQuestion> ArrayList<T> parseQuestion(QuestionType type, PaperParser.Topic resource){
         QuestionParser parser = new QuestionParser();
         parser.setAdapter(type);
         ArrayList<T> list = (ArrayList<T>) parser.parse(resource);
         return list;
     }
 
-    private RealmList<FillInQuestion> parseFillin(PaperParser.Topic resource){
+    private RealmList<FillInIQuestion> parseFillin(PaperParser.Topic resource){
         QuestionParser parser = new QuestionParser();
         parser.setAdapter(QuestionType.fillin);
-        ArrayList<Question> list = parser.parse(resource);
-        RealmList<FillInQuestion> results = new RealmList<>();
-        for (Question tmp: list){
-            results.add((FillInQuestion)tmp);
+        ArrayList<IQuestion> list = parser.parse(resource);
+        RealmList<FillInIQuestion> results = new RealmList<>();
+        for (IQuestion tmp: list){
+            results.add((FillInIQuestion)tmp);
         }
         return results;
     }
-    private RealmList<TFQuestion> parseTF(PaperParser.Topic resource){
+    private RealmList<TFIQuestion> parseTF(PaperParser.Topic resource){
         QuestionParser parser = new QuestionParser();
         parser.setAdapter(QuestionType.tf);
-        ArrayList<Question> list = parser.parse(resource);
-        RealmList<TFQuestion> results = new RealmList<>();
-        for (Question tmp: list){
-            results.add((TFQuestion)tmp);
+        ArrayList<IQuestion> list = parser.parse(resource);
+        RealmList<TFIQuestion> results = new RealmList<>();
+        for (IQuestion tmp: list){
+            results.add((TFIQuestion)tmp);
         }
         return results;
     }
     private RealmList<SglChoQuestion> parseSgl(PaperParser.Topic resource){
         QuestionParser parser = new QuestionParser();
         parser.setAdapter(QuestionType.sglc);
-        ArrayList<Question> list = parser.parse(resource);
+        ArrayList<IQuestion> list = parser.parse(resource);
         RealmList<SglChoQuestion> results = new RealmList<>();
-        for (Question tmp: list){
+        for (IQuestion tmp: list){
             results.add((SglChoQuestion)tmp);
         }
         return results;
@@ -111,20 +111,20 @@ public class ParserHelper {
     private RealmList<MultChoQuestion> parseMult(PaperParser.Topic resource){
         QuestionParser parser = new QuestionParser();
         parser.setAdapter(QuestionType.mtlc);
-        ArrayList<Question> list = parser.parse(resource);
+        ArrayList<IQuestion> list = parser.parse(resource);
         RealmList<MultChoQuestion> results = new RealmList<>();
-        for (Question tmp: list){
+        for (IQuestion tmp: list){
             results.add((MultChoQuestion) tmp);
         }
         return results;
     }
-    private RealmList<DiscussQuestion> parseDis(PaperParser.Topic resource){
+    private RealmList<DiscussIQuestion> parseDis(PaperParser.Topic resource){
         QuestionParser parser = new QuestionParser();
         parser.setAdapter(QuestionType.disc);
-        ArrayList<Question> list = parser.parse(resource);
-        RealmList<DiscussQuestion> results = new RealmList<>();
-        for (Question tmp: list){
-            results.add((DiscussQuestion) tmp);
+        ArrayList<IQuestion> list = parser.parse(resource);
+        RealmList<DiscussIQuestion> results = new RealmList<>();
+        for (IQuestion tmp: list){
+            results.add((DiscussIQuestion) tmp);
         }
         return results;
     }

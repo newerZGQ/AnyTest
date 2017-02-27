@@ -20,6 +20,12 @@ import android.widget.TextView;
 import com.umeng.analytics.MobclickAgent;
 import com.zgq.wokao.R;
 import com.zgq.wokao.Util.DateUtil;
+import com.zgq.wokao.model.paper.question.impl.DiscussIQuestion;
+import com.zgq.wokao.model.paper.question.impl.FillInIQuestion;
+import com.zgq.wokao.model.paper.question.impl.MultChoQuestion;
+import com.zgq.wokao.model.paper.question.impl.SglChoQuestion;
+import com.zgq.wokao.model.paper.question.impl.TFIQuestion;
+import com.zgq.wokao.model.paper.question.IQuestion;
 import com.zgq.wokao.ui.adapter.BaseStudySystemAdapter;
 import com.zgq.wokao.ui.adapter.DiscussQuestionAdapter;
 import com.zgq.wokao.ui.adapter.FillInQuestionAdapter;
@@ -27,15 +33,9 @@ import com.zgq.wokao.ui.adapter.MultChoQuestionAdapter;
 import com.zgq.wokao.ui.adapter.SglChoQuestionAdapter;
 import com.zgq.wokao.ui.adapter.TFQuestionAdapter;
 import com.zgq.wokao.model.paper.Constant;
-import com.zgq.wokao.model.paper.DiscussQuestion;
-import com.zgq.wokao.model.paper.FillInQuestion;
-import com.zgq.wokao.model.paper.MultChoQuestion;
 import com.zgq.wokao.model.paper.MyQuestionAnswer;
 import com.zgq.wokao.model.paper.NormalExamPaper;
-import com.zgq.wokao.model.paper.Question;
 import com.zgq.wokao.model.paper.QuestionAnswer;
-import com.zgq.wokao.model.paper.SglChoQuestion;
-import com.zgq.wokao.model.paper.TFQuestion;
 
 
 import java.util.ArrayList;
@@ -98,12 +98,12 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
 
     private int currentQuestionType = Constant.FILLINQUESTIONTYPE;
 
-    private ArrayList<Question> currentAllQuestions = new ArrayList<>();
+    private ArrayList<IQuestion> currentAllQuestions = new ArrayList<>();
     private ArrayList<Boolean>  allAnsweredList = new ArrayList<>();
     private PagerAdapter        currentAllQstAdapter;
     private ArrayList<QuestionAnswer> currentAllMyAnswer = new ArrayList<>();
 
-    private ArrayList<Question> currentStarQuestions = new ArrayList<>();
+    private ArrayList<IQuestion> currentStarQuestions = new ArrayList<>();
     private ArrayList<Boolean>  starAnsweredList = new ArrayList<>();
     private PagerAdapter        currentStarQstAdapter;
     private ArrayList<QuestionAnswer> currentStarMyAnswer = new ArrayList<>();
@@ -146,7 +146,7 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                currentAllQuestions.get(0).setStudied(true);
+//                currentAllQuestions.get(0).getRecord().updateRecord(true);
                 normalExamPaper.getPaperInfo().setLastStudyDate(DateUtil.getCurrentDate());
 //                Log.d("----->>last",DateUtil.getCurrentDate());
             }
@@ -177,12 +177,12 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
         currentAllQuestions.clear();
         switch (currentQuestionType){
             case Constant.FILLINQUESTIONTYPE:
-                for (FillInQuestion question: normalExamPaper.getFillInQuestions()){
+                for (FillInIQuestion question: normalExamPaper.getFillInQuestions()){
                     currentAllQuestions.add(question);
                 }
                 break;
             case Constant.TFQUESTIONTYPE:
-                for (TFQuestion question: normalExamPaper.getTfQuestions()){
+                for (TFIQuestion question: normalExamPaper.getTfQuestions()){
                     currentAllQuestions.add(question);
                 }
                 break;
@@ -197,7 +197,7 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
                 }
                 break;
             case Constant.DISCUSSQUESTIONTYPE:
-                for (DiscussQuestion question: normalExamPaper.getDiscussQuestions()){
+                for (DiscussIQuestion question: normalExamPaper.getDiscussQuestions()){
                     currentAllQuestions.add(question);
                 }
                 break;
@@ -214,16 +214,16 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
     //初始化当前的已经加星的问题链表
     private void initCurrentStaredQuestion(){
         currentStarQuestions.clear();
-        for (Question question: currentAllQuestions){
-            if (question.isStared()) currentStarQuestions.add(question);
+        for (IQuestion question: currentAllQuestions){
+            if (question.getInfo().isStared()) currentStarQuestions.add(question);
         }
     }
 
     private void initStarAnsweredList(){
         starAnsweredList.clear();
-        for (Question question: currentAllQuestions){
+        for (IQuestion question: currentAllQuestions){
             int i = currentAllQuestions.indexOf(question);
-            if (question.isStared())
+            if (question.getInfo().isStared())
                 starAnsweredList.add(allAnsweredList.get(i));
         }
     }
@@ -237,9 +237,9 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
 
     private void initCurrentMyStarAnswer(){
         currentStarMyAnswer.clear();
-        for (Question question: currentAllQuestions){
+        for (IQuestion question: currentAllQuestions){
             int i = currentAllQuestions.indexOf(question);
-            if (question.isStared())
+            if (question.getInfo().isStared())
                 currentStarMyAnswer.add(currentAllMyAnswer.get(i));
         }
     }
@@ -285,22 +285,22 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
                 //设置已经学习过了这个问题 //重置该位置的myAnswer
                 if (currentMode == ALLQUESTIONMODE){
 //                    if (isNeedAnswer()) {
-//                        currentAllMyAnswer.get(position).setAnswer("");
+//                        currentAllMyAnswer.get(position).setContent("");
 //                    }
                     realm.executeTransaction(new Realm.Transaction() {
                         @Override
                         public void execute(Realm realm) {
-                            currentAllQuestions.get(p).setStudied(true);
+//                            currentAllQuestions.get(p).getInfo().setStudied(true);
                         }
                     });
                 }else{
 //                    if (isNeedAnswer()) {
-//                        currentStarMyAnswer.get(position).setAnswer("");
+//                        currentStarMyAnswer.get(position).setContent("");
 //                    }
                     realm.executeTransaction(new Realm.Transaction() {
                         @Override
                         public void execute(Realm realm) {
-                            currentStarQuestions.get(p).setStudied(true);
+//                            currentStarQuestions.get(p).setStudied(true);
                         }
                     });
                 }
@@ -336,7 +336,7 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
     private void upDateBottomMenu(int position){
         switch (getCurrentMode()){
             case ALLQUESTIONMODE:
-                if (currentAllQuestions.get(position).isStared()){
+                if (currentAllQuestions.get(position).getInfo().isStared()){
                     starLabel.setBackground(getResources().getDrawable(R.drawable.active_star));
                 }else{
                     starLabel.setBackground(getResources().getDrawable(R.drawable.inactive_star));
@@ -349,7 +349,7 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
                 break;
             case STARQUESTIONMODE:
                 if (currentStarQuestions.size() == 0) return;
-                if (currentStarQuestions.get(position).isStared()){
+                if (currentStarQuestions.get(position).getInfo().isStared()){
                     starLabel.setBackground(getResources().getDrawable(R.drawable.active_star));
                 }else{
                     starLabel.setBackground(getResources().getDrawable(R.drawable.inactive_star));
@@ -381,11 +381,11 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
         final int position = getCurrentQstAdapter().getCurrentPosition();
         switch(getCurrentMode()){
             case ALLQUESTIONMODE:
-                if (currentAllQuestions.get(position).isStared()){
+                if (currentAllQuestions.get(position).getInfo().isStared()){
                     realm.executeTransaction(new Realm.Transaction() {
                         @Override
                         public void execute(Realm realm) {
-                            currentAllQuestions.get(position).setStared(false);
+                            currentAllQuestions.get(position).getInfo().setStared(false);
                         }
                     });
                     starLabel.setBackground(getResources().getDrawable(R.drawable.inactive_star));
@@ -393,18 +393,18 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
                     realm.executeTransaction(new Realm.Transaction() {
                         @Override
                         public void execute(Realm realm) {
-                            currentAllQuestions.get(position).setStared(true);
+                            currentAllQuestions.get(position).getInfo().setStared(true);
                         }
                     });
                     starLabel.setBackground(getResources().getDrawable(R.drawable.active_star));
                 }
                 break;
             case STARQUESTIONMODE:
-                if (currentStarQuestions.get(position).isStared()){
+                if (currentStarQuestions.get(position).getInfo().isStared()){
                     realm.executeTransaction(new Realm.Transaction() {
                         @Override
                         public void execute(Realm realm) {
-                            currentStarQuestions.get(position).setStared(false);
+                            currentStarQuestions.get(position).getInfo().setStared(false);
                         }
                     });
                     starLabel.setBackground(getResources().getDrawable(R.drawable.inactive_star));
@@ -412,7 +412,7 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
                     realm.executeTransaction(new Realm.Transaction() {
                         @Override
                         public void execute(Realm realm) {
-                            currentStarQuestions.get(position).setStared(true);
+                            currentStarQuestions.get(position).getInfo().setStared(true);
                         }
                     });
                     starLabel.setBackground(getResources().getDrawable(R.drawable.active_star));

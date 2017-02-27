@@ -1,4 +1,4 @@
-package com.zgq.wokao.model.schedule;
+package com.zgq.wokao.model.paper.question.record;
 
 import io.realm.RealmObject;
 
@@ -9,6 +9,8 @@ import io.realm.RealmObject;
 public class QuestionRecord extends RealmObject implements IQuestionRecord{
     private int studyNumber;
     private int correctNumber;
+    //表示这道题是否学习过，一旦试卷所有试题都学习完，则会重置为false;
+    private boolean isStudied;
     @Override
     public void updateRecord(boolean isCorrect){
         studyNumber++;
@@ -30,21 +32,11 @@ public class QuestionRecord extends RealmObject implements IQuestionRecord{
         this.correctNumber = correctNumber;
     }
 
-//    public static class Builder{
-//        private int studyNumber;
-//        private int correctNumber;
-//
-//        public Builder studyNumber(int studyNumber){
-//            this.studyNumber = studyNumber;
-//            return this;
-//        }
-//        public Builder correctNumber(int correctNumber){
-//            this.correctNumber = correctNumber;
-//            return this;
-//        }
-//        public QuestionRecord build(){
-//            return new QuestionRecord(this);
-//        }
-//    }
+    public boolean isStudied() {
+        return isStudied;
+    }
 
+    public void setStudied(boolean studied) {
+        isStudied = studied;
+    }
 }

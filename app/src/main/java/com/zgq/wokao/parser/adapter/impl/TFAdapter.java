@@ -1,9 +1,8 @@
 package com.zgq.wokao.parser.adapter.impl;
 
 import com.zgq.wokao.Util.ListUtil;
-import com.zgq.wokao.model.paper.FillInQuestion;
 import com.zgq.wokao.model.paper.QuestionType;
-import com.zgq.wokao.model.paper.TFQuestion;
+import com.zgq.wokao.model.paper.question.impl.TFIQuestion;
 import com.zgq.wokao.parser.adapter.BaseAdapter;
 import com.zgq.wokao.parser.adapter.ITFAdapter;
 import com.zgq.wokao.parser.context.QuestionContext;
@@ -20,7 +19,7 @@ public class TFAdapter extends BaseAdapter implements ITFAdapter {
     private QuestionType type = QuestionType.tf;
     ArrayList<String> content = new ArrayList<>();
     QuestionContext context = new QuestionContext();
-    private ArrayList<TFQuestion> results = new ArrayList<>();
+    private ArrayList<TFIQuestion> results = new ArrayList<>();
 
     public TFAdapter() {
         initParam();
@@ -36,14 +35,14 @@ public class TFAdapter extends BaseAdapter implements ITFAdapter {
     }
 
     @Override
-    public ArrayList<TFQuestion> parse(String resource) {
+    public ArrayList<TFIQuestion> parse(String resource) {
         String[] strings = resource.split("\n");
         content = (ArrayList<String>) ListUtil.array2list(strings);
         parseRes(content);
         return results;
     }
 
-    private ArrayList<TFQuestion> parseRes(ArrayList<String> content) {
+    private ArrayList<TFIQuestion> parseRes(ArrayList<String> content) {
         //题号
         int number = 1;
         String bodyString = "";
@@ -63,7 +62,7 @@ public class TFAdapter extends BaseAdapter implements ITFAdapter {
                 if (bodyString.equals("")){
 
                 }else{
-                    TFQuestion question = parseSingle(number, bodyString);
+                    TFIQuestion question = parseSingle(number, bodyString);
                     if (question != null) {
                         results.add(question);
                         number++;
@@ -80,30 +79,30 @@ public class TFAdapter extends BaseAdapter implements ITFAdapter {
             }
         }
 
-        TFQuestion question = parseSingle(number, builder.toString());
+        TFIQuestion question = parseSingle(number, builder.toString());
         if (question != null) {
             results.add(question);
         }
         return results;
     }
 
-    private TFQuestion parseSingle(int number, String questionRes) {
+    private TFIQuestion parseSingle(int number, String questionRes) {
         System.out.println("---->>single" + questionRes);
-        TFQuestion question = new TFQuestion();
-        question.setId(number);
+        TFIQuestion question = new TFIQuestion.Builder().build();
+        question.getInfo().setId(number);
         inContext(QuestionItemType.number);
         String[] resArray = trimNum(questionRes).split("\n");
         StringBuilder builder = new StringBuilder();
         for (String tmp : resArray) {
             tmp = tmp.trim();
             if (tmp.startsWith("答案")) {
-                question.setBody(builder.toString());
+                question.getBody().setContent(builder.toString());
                 inContext(QuestionItemType.body);
                 String answerTmp = tmp.substring(2).trim();
                 if (answerTmp.startsWith(":") || answerTmp.startsWith("：")) {
-                    question.setAnswer(answerTmp.substring(1).trim());
+                    question.getAnswer().setContent(answerTmp.substring(1).trim());
                 } else {
-                    question.setAnswer(answerTmp);
+                    question.getAnswer().setContent(answerTmp);
                 }
                 inContext(QuestionItemType.answer);
                 continue;

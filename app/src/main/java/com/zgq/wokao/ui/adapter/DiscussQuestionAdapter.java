@@ -9,14 +9,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.zgq.wokao.R;
-import com.zgq.wokao.model.paper.Question;
+import com.zgq.wokao.model.paper.question.IQuestion;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class DiscussQuestionAdapter extends PagerAdapter implements BaseStudySystemAdapter{
     //显示的数据
-    private ArrayList<Question> datas = null;
+    private ArrayList<IQuestion> datas = null;
     private LinkedList<View> mViewCache = null;
     private Context mContext ;
     private LayoutInflater mLayoutInflater = null;
@@ -28,7 +28,7 @@ public class DiscussQuestionAdapter extends PagerAdapter implements BaseStudySys
 
     private DiscussQuestionViewHolder holder;
 
-    public DiscussQuestionAdapter(ArrayList<Question> datas, ArrayList<Boolean> hasShowAnswer,Context context) {
+    public DiscussQuestionAdapter(ArrayList<IQuestion> datas, ArrayList<Boolean> hasShowAnswer, Context context) {
         super();
         this.datas = datas;
         this.mContext = context ;
@@ -76,9 +76,9 @@ public class DiscussQuestionAdapter extends PagerAdapter implements BaseStudySys
             discussQuestionViewHolder = (DiscussQuestionViewHolder)convertView.getTag();
         }
         holder = discussQuestionViewHolder;
-        discussQuestionViewHolder.questionBody.setText(datas.get(position).getBody());
+        discussQuestionViewHolder.questionBody.setText(datas.get(position).getBody().getContent());
         if (hasShowAnswer.get(position)) {
-            discussQuestionViewHolder.questionAnswer.setText(datas.get(position).getAnswer());
+            discussQuestionViewHolder.questionAnswer.setText(datas.get(position).getAnswer().getContent());
         }else {
             discussQuestionViewHolder.questionAnswer.setText("");
         }
@@ -104,7 +104,7 @@ public class DiscussQuestionAdapter extends PagerAdapter implements BaseStudySys
     @Override
     public void showCurrentAnswer(){
         if (hasShowAnswer.get(currentPosition)) return;
-        ((DiscussQuestionViewHolder)(currentView.getTag())).questionAnswer.setText(datas.get(currentPosition).getAnswer());
+        ((DiscussQuestionViewHolder)(currentView.getTag())).questionAnswer.setText(datas.get(currentPosition).getAnswer().getContent());
         hasShowAnswer.set(currentPosition,true);
     }
 

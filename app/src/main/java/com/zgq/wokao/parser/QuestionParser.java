@@ -1,6 +1,6 @@
 package com.zgq.wokao.parser;
 
-import com.zgq.wokao.model.paper.Question;
+import com.zgq.wokao.model.paper.question.IQuestion;
 import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.parser.adapter.IAdapter;
 import com.zgq.wokao.parser.adapter.impl.DiscussAdapter;
@@ -9,7 +9,6 @@ import com.zgq.wokao.parser.adapter.impl.MultChoAdapter;
 import com.zgq.wokao.parser.adapter.impl.SglChoAdapter;
 import com.zgq.wokao.parser.adapter.impl.TFAdapter;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -20,7 +19,7 @@ public class QuestionParser extends BaseParser implements IQuestionParser{
 
     private QuestionType type;
     private IAdapter adapter;
-    private ArrayList<Question> results = new ArrayList<>();
+    private ArrayList<IQuestion> results = new ArrayList<>();
 
 
     @Override
@@ -46,7 +45,7 @@ public class QuestionParser extends BaseParser implements IQuestionParser{
     }
 
     @Override
-    public ArrayList<Question> parse(PaperParser.Topic resource) {
+    public ArrayList<IQuestion> parse(PaperParser.Topic resource) {
         results =  adapter.parse(resource.getContent());
         return  results;
     }

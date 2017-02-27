@@ -1,16 +1,13 @@
 package com.zgq.wokao.parser.adapter.impl;
 
-import com.zgq.wokao.model.paper.Option;
-import com.zgq.wokao.model.paper.SglChoQuestion;
-import com.zgq.wokao.model.paper.TFQuestion;
+import com.zgq.wokao.model.paper.question.impl.SglChoQuestion;
+import com.zgq.wokao.model.paper.question.option.Option;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by zhangguoqiang on 2017/2/19.
@@ -47,8 +44,8 @@ public class SglChoAdapterTest {
         for (SglChoQuestion tmp: results){
             System.out.println("---->>id "+tmp.getId());
             System.out.println("---->>body "+tmp.getBody());
-            for (Option option: tmp.getOptions()){
-                System.out.println("---->>option "+option.getOption());
+            for (Option option : tmp.getOptionList()){
+                System.out.println("---->>option "+ option.getOption());
             }
             System.out.println("---->>answer "+tmp.getAnswer());
         }

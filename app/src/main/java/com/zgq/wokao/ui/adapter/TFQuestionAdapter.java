@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.zgq.wokao.R;
 import com.zgq.wokao.model.paper.MyQuestionAnswer;
-import com.zgq.wokao.model.paper.Question;
+import com.zgq.wokao.model.paper.question.IQuestion;
 import com.zgq.wokao.model.paper.QuestionAnswer;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ import java.util.LinkedList;
  * Created by zgq on 16-7-6.
  */
 public class TFQuestionAdapter extends PagerAdapter implements BaseStudySystemAdapter{
-    private ArrayList<Question> datas = null;
+    private ArrayList<IQuestion> datas = null;
     private LinkedList<View> mViewCache = null;
     private Context mContext ;
     private LayoutInflater mLayoutInflater = null;
@@ -33,7 +33,7 @@ public class TFQuestionAdapter extends PagerAdapter implements BaseStudySystemAd
 
     private TFQuestionViewHolder holder;
 
-    public TFQuestionAdapter(ArrayList<Question> datas, ArrayList<Boolean> hasShowAnswer, ArrayList<QuestionAnswer> myAnswer, Context context) {
+    public TFQuestionAdapter(ArrayList<IQuestion> datas, ArrayList<Boolean> hasShowAnswer, ArrayList<QuestionAnswer> myAnswer, Context context) {
         super();
         this.datas = datas;
         this.mContext = context ;
@@ -99,7 +99,7 @@ public class TFQuestionAdapter extends PagerAdapter implements BaseStudySystemAd
         });
         if (hasShowAnswer.get(position)) {
             String answer = myAnswer.get(position).getAnswer();
-            String answer1 = getRealAnswer(datas.get(position).getAnswer());
+            String answer1 = getRealAnswer(datas.get(position).getAnswer().getContent());
             TextView trueLabel = (TextView) holder.optionTrue.findViewById(R.id.tfqst_option_true_label);
             TextView falseLabel = (TextView) holder.optionFalse.findViewById(R.id.tfqst_option_false_label);
             if (answer.equals(answer1)){
@@ -164,7 +164,7 @@ public class TFQuestionAdapter extends PagerAdapter implements BaseStudySystemAd
         final TextView trueLabel = (TextView) holder.optionTrue.findViewById(R.id.tfqst_option_true_label);
         final TextView falseLabel = (TextView) holder.optionFalse.findViewById(R.id.tfqst_option_false_label);
 
-        if (answer.getAnswer().equals(getRealAnswer(datas.get(position).getAnswer()))){
+        if (answer.getAnswer().equals(getRealAnswer(datas.get(position).getAnswer().getContent()))){
             holder.optionFalse.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -194,7 +194,7 @@ public class TFQuestionAdapter extends PagerAdapter implements BaseStudySystemAd
         final TextView trueLabel = (TextView) holder.optionTrue.findViewById(R.id.tfqst_option_true_label);
         final TextView falseLabel = (TextView) holder.optionFalse.findViewById(R.id.tfqst_option_false_label);
 
-        if (answer.getAnswer().equals(getRealAnswer(datas.get(position).getAnswer()))){
+        if (answer.getAnswer().equals(getRealAnswer(datas.get(position).getAnswer().getContent()))){
             holder.optionFalse.postDelayed(new Runnable() {
                 @Override
                 public void run() {

@@ -10,9 +10,9 @@ import android.widget.TextView;
 
 import com.zgq.wokao.R;
 import com.zgq.wokao.model.paper.MyQuestionAnswer;
-import com.zgq.wokao.model.paper.Question;
+import com.zgq.wokao.model.paper.question.impl.SglChoQuestion;
+import com.zgq.wokao.model.paper.question.IQuestion;
 import com.zgq.wokao.model.paper.QuestionAnswer;
-import com.zgq.wokao.model.paper.SglChoQuestion;
 import com.zgq.wokao.ui.view.QuestionOptionView;
 
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ import java.util.LinkedList;
  * Created by zgq on 16-7-6.
  */
 public class SglChoQuestionAdapter extends PagerAdapter implements BaseStudySystemAdapter,View.OnClickListener{
-    private ArrayList<Question> datas = null;
+    private ArrayList<IQuestion> datas = null;
     private LinkedList<ViewGroup> mViewCache = null;
     private Context mContext ;
     private LayoutInflater mLayoutInflater = null;
@@ -35,7 +35,7 @@ public class SglChoQuestionAdapter extends PagerAdapter implements BaseStudySyst
 
     private SglChoQuestionViewHolder holder;
 
-    public SglChoQuestionAdapter(ArrayList<Question> datas, ArrayList<Boolean> hasShowAnswer, ArrayList<QuestionAnswer> myAnswer, Context context) {
+    public SglChoQuestionAdapter(ArrayList<IQuestion> datas, ArrayList<Boolean> hasShowAnswer, ArrayList<QuestionAnswer> myAnswer, Context context) {
         super();
         this.datas = datas;
         this.mContext = context ;
@@ -92,9 +92,9 @@ public class SglChoQuestionAdapter extends PagerAdapter implements BaseStudySyst
         layout.removeAllViewsInLayout();
         ArrayList<QuestionOptionView> optionViews = sglChoQuestionViewHolder.optionViews;
         optionViews.clear();
-        for (int i = 0;i<sglChoQuestion.getOptionsCount();i++){
+        for (int i = 0;i<sglChoQuestion.getOptions().getOptionsCount();i++){
             QuestionOptionView optionView = new QuestionOptionView(mContext);
-            optionView.setContent(getLabelFromPosition(i),sglChoQuestion.getOptions().get(i).toString());
+            optionView.setContent(getLabelFromPosition(i),sglChoQuestion.getOptions().getOptionList().get(i).toString());
             //setTag 标识位置
             optionView.setTag(i);
             optionViews.add(optionView);
@@ -105,7 +105,7 @@ public class SglChoQuestionAdapter extends PagerAdapter implements BaseStudySyst
         }
         if (hasShowAnswer.get(position)) {
             int selected = getOptionPositionFromLabel(myAnswer.get(position).getAnswer());
-            int right    = getOptionPositionFromLabel(sglChoQuestion.getAnswer());
+            int right    = getOptionPositionFromLabel(sglChoQuestion.getAnswer().getContent());
             if (selected == right){
                 for (int i = 0; i<optionViews.size();i++){
                     if (i == selected) optionViews.get(i).setToCorrect();
@@ -175,7 +175,7 @@ public class SglChoQuestionAdapter extends PagerAdapter implements BaseStudySyst
         answer.setAnswer(getLabelFromPosition(selectedOption));
         myAnswer.set(getCurrentPosition(),answer);
 
-        showCurrentAnswer(selectedOption,getOptionPositionFromLabel(question.getAnswer()));
+        showCurrentAnswer(selectedOption,getOptionPositionFromLabel(question.getAnswer().getContent()));
 
         hasShowAnswer.set(currentPosition,true);
     }

@@ -1,7 +1,7 @@
 package com.zgq.wokao.parser.adapter.impl;
 
 import com.zgq.wokao.Util.ListUtil;
-import com.zgq.wokao.model.paper.FillInQuestion;
+import com.zgq.wokao.model.paper.question.impl.FillInIQuestion;
 import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.parser.adapter.BaseAdapter;
 import com.zgq.wokao.parser.adapter.IFillInAdapter;
@@ -19,7 +19,7 @@ public class FillInAdapter extends BaseAdapter implements IFillInAdapter {
     private QuestionType type = QuestionType.fillin;
     ArrayList<String> content = new ArrayList<>();
     QuestionContext context = new QuestionContext();
-    private ArrayList<FillInQuestion> results = new ArrayList<>();
+    private ArrayList<FillInIQuestion> results = new ArrayList<>();
 
     public FillInAdapter() {
         initParam();
@@ -35,14 +35,14 @@ public class FillInAdapter extends BaseAdapter implements IFillInAdapter {
     }
 
     @Override
-    public ArrayList<FillInQuestion> parse(String resource) {
+    public ArrayList<FillInIQuestion> parse(String resource) {
         String[] strings = resource.split("\n");
         content = (ArrayList<String>) ListUtil.array2list(strings);
         parseRes(content);
         return results;
     }
 
-    private ArrayList<FillInQuestion> parseRes(ArrayList<String> content) {
+    private ArrayList<FillInIQuestion> parseRes(ArrayList<String> content) {
         //题号
         int number = 1;
         String bodyString = "";
@@ -62,7 +62,7 @@ public class FillInAdapter extends BaseAdapter implements IFillInAdapter {
                 if (bodyString.equals("")){
 
                 }else{
-                    FillInQuestion question = parseSingle(number, bodyString);
+                    FillInIQuestion question = parseSingle(number, bodyString);
                     if (question != null) {
                         results.add(question);
                         number++;
@@ -79,30 +79,30 @@ public class FillInAdapter extends BaseAdapter implements IFillInAdapter {
             }
         }
 
-        FillInQuestion question = parseSingle(number, builder.toString());
+        FillInIQuestion question = parseSingle(number, builder.toString());
         if (question != null) {
             results.add(question);
         }
         return results;
     }
 
-    private FillInQuestion parseSingle(int number, String questionRes) {
+    private FillInIQuestion parseSingle(int number, String questionRes) {
         System.out.println("---->>single" + questionRes);
-        FillInQuestion question = new FillInQuestion();
-        question.setId(number);
+        FillInIQuestion question = new FillInIQuestion.Builder().build();
+        question.getInfo().setId(number);
         inContext(QuestionItemType.number);
         String[] resArray = trimNum(questionRes).split("\n");
         StringBuilder builder = new StringBuilder();
         for (String tmp : resArray) {
             tmp = tmp.trim();
             if (tmp.startsWith("答案")) {
-                question.setBody(builder.toString());
+                question.getBody().setContent(builder.toString());
                 inContext(QuestionItemType.body);
                 String answerTmp = tmp.substring(2).trim();
                 if (answerTmp.startsWith(":") || answerTmp.startsWith("：")) {
-                    question.setAnswer(answerTmp.substring(1).trim());
+                    question.getAnswer().setContent(answerTmp.substring(1).trim());
                 } else {
-                    question.setAnswer(answerTmp);
+                    question.getAnswer().setContent(answerTmp);
                 }
                 inContext(QuestionItemType.answer);
                 continue;

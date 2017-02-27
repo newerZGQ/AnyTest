@@ -9,9 +9,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zgq.wokao.R;
-import com.zgq.wokao.model.paper.MultChoQuestion;
+import com.zgq.wokao.model.paper.question.impl.MultChoQuestion;
 import com.zgq.wokao.model.paper.MyQuestionAnswer;
-import com.zgq.wokao.model.paper.Question;
+import com.zgq.wokao.model.paper.question.IQuestion;
 import com.zgq.wokao.model.paper.QuestionAnswer;
 import com.zgq.wokao.ui.view.QuestionOptionView;
 
@@ -22,7 +22,7 @@ import java.util.LinkedList;
  * Created by zgq on 16-7-18.
  */
 public class MultChoQuestionAdapter extends PagerAdapter implements BaseStudySystemAdapter, View.OnClickListener {
-    private ArrayList<Question> datas = null;
+    private ArrayList<IQuestion> datas = null;
     private LinkedList<ViewGroup> mViewCache = null;
     private Context mContext;
     private LayoutInflater mLayoutInflater = null;
@@ -35,7 +35,7 @@ public class MultChoQuestionAdapter extends PagerAdapter implements BaseStudySys
 
     private MultiChoQuestionViewHolder holder;
 
-    public MultChoQuestionAdapter(ArrayList<Question> datas, ArrayList<Boolean> hasShowAnswer, ArrayList<QuestionAnswer> myAnswer, Context context) {
+    public MultChoQuestionAdapter(ArrayList<IQuestion> datas, ArrayList<Boolean> hasShowAnswer, ArrayList<QuestionAnswer> myAnswer, Context context) {
         super();
         this.datas = datas;
         this.mContext = context;
@@ -100,9 +100,9 @@ public class MultChoQuestionAdapter extends PagerAdapter implements BaseStudySys
         layout.removeAllViewsInLayout();
         ArrayList<QuestionOptionView> optionViews = multiChoQuestionViewHolder.optionViews;
         optionViews.clear();
-        for (int i = 0; i < multChoQuestion.getOptionsCount(); i++) {
+        for (int i = 0; i < multChoQuestion.getOptions().getOptionsCount(); i++) {
             QuestionOptionView optionView = new QuestionOptionView(mContext);
-            optionView.setContent(getLabelFromPosition(i), multChoQuestion.getOptions().get(i).toString());
+            optionView.setContent(getLabelFromPosition(i), multChoQuestion.getOptions().getOptionList().get(i).toString());
             //setTag 标识位置
             optionView.setTag(i);
             optionViews.add(optionView);
@@ -114,7 +114,7 @@ public class MultChoQuestionAdapter extends PagerAdapter implements BaseStudySys
         if (hasShowAnswer.get(position)) {
             String s = myAnswer.get(position).getAnswer();
             multiChoQuestionViewHolder.myAnswerTv.setText(s);
-            int[] correctAnswer = getRealAnswerPosition(getRealAnswer(datas.get(position).getAnswer()));
+            int[] correctAnswer = getRealAnswerPosition(getRealAnswer(datas.get(position).getAnswer().getContent()));
             for (int j = 0; j < correctAnswer.length; j++) {
                 optionViews.get(correctAnswer[j]).setToCorrect();
             }
@@ -148,7 +148,7 @@ public class MultChoQuestionAdapter extends PagerAdapter implements BaseStudySys
     @Override
     public void showCurrentAnswer() {
         int currentPosition = getCurrentPosition();
-        int[] correctAnswer = getRealAnswerPosition(getRealAnswer(datas.get(currentPosition).getAnswer()));
+        int[] correctAnswer = getRealAnswerPosition(getRealAnswer(datas.get(currentPosition).getAnswer().getContent()));
         View view = getCurrentView();
         MultiChoQuestionViewHolder holder = (MultiChoQuestionViewHolder) view.getTag();
         ArrayList<QuestionOptionView> optionViews = holder.optionViews;
@@ -167,7 +167,7 @@ public class MultChoQuestionAdapter extends PagerAdapter implements BaseStudySys
     @Override
     public void onClick(View v) {
 //        for (int i = 0;i<myAnswer.size();i++){
-//            Log.d("--------->>>",""+myAnswer.get(i).getAnswer());
+//            Log.d("--------->>>",""+myAnswer.get(i).getContent());
 //        }
         int currentPosition = getCurrentPosition();
         if (hasShowAnswer.get(currentPosition)) return;
@@ -193,7 +193,7 @@ public class MultChoQuestionAdapter extends PagerAdapter implements BaseStudySys
         answer.setAnswer(getRealAnswer(answerContent));
         myAnswer.set(currentPosition,answer);
 //        for (int i = 0;i<myAnswer.size();i++){
-//            Log.d("--------->>>",""+myAnswer.get(i).getAnswer());
+//            Log.d("--------->>>",""+myAnswer.get(i).getContent());
 //        }
     }
 

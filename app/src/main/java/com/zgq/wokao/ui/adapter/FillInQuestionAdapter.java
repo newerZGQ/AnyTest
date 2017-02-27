@@ -8,14 +8,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.zgq.wokao.R;
-import com.zgq.wokao.model.paper.Question;
+import com.zgq.wokao.model.paper.question.IQuestion;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class FillInQuestionAdapter extends PagerAdapter implements BaseStudySystemAdapter{
     //显示的数据
-    private ArrayList<Question> datas = null;
+    private ArrayList<IQuestion> datas = null;
     private LinkedList<View> mViewCache = null;
     private Context mContext ;
     private LayoutInflater mLayoutInflater = null;
@@ -27,7 +27,7 @@ public class FillInQuestionAdapter extends PagerAdapter implements BaseStudySyst
 
     private FillInQuestionViewHolder holder;
 
-    public FillInQuestionAdapter(ArrayList<Question> datas, ArrayList<Boolean> hasShowAnswer,Context context) {
+    public FillInQuestionAdapter(ArrayList<IQuestion> datas, ArrayList<Boolean> hasShowAnswer, Context context) {
         super();
         this.datas = datas;
         this.mContext = context ;
@@ -77,7 +77,7 @@ public class FillInQuestionAdapter extends PagerAdapter implements BaseStudySyst
         holder = fillInQuestionViewHolder;
         fillInQuestionViewHolder.questionBody.setText(""+(position+1)+". "+datas.get(position).getBody());
         if (hasShowAnswer.get(position)) {
-            fillInQuestionViewHolder.questionAnswer.setText(datas.get(position).getAnswer());
+            fillInQuestionViewHolder.questionAnswer.setText(datas.get(position).getAnswer().getContent());
         }else {
             fillInQuestionViewHolder.questionAnswer.setText("");
         }
@@ -103,7 +103,7 @@ public class FillInQuestionAdapter extends PagerAdapter implements BaseStudySyst
     @Override
     public void showCurrentAnswer(){
         if (hasShowAnswer.get(currentPosition)) return;
-        ((FillInQuestionViewHolder)(currentView.getTag())).questionAnswer.setText(datas.get(currentPosition).getAnswer());
+        ((FillInQuestionViewHolder)(currentView.getTag())).questionAnswer.setText(datas.get(currentPosition).getAnswer().getContent());
         hasShowAnswer.set(currentPosition,true);
     }
 

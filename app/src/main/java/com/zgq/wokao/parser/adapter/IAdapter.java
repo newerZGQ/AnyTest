@@ -1,9 +1,7 @@
 package com.zgq.wokao.parser.adapter;
 
-import com.zgq.wokao.model.paper.Question;
 import com.zgq.wokao.model.paper.QuestionType;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**

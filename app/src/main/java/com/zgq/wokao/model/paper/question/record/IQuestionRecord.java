@@ -1,4 +1,4 @@
-package com.zgq.wokao.model.schedule;
+package com.zgq.wokao.model.paper.question.record;
 
 /**
  * Created by zgq on 2017/2/27.

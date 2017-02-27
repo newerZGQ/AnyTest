@@ -1,15 +1,12 @@
 package com.zgq.wokao.parser.adapter.impl;
 
-import com.zgq.wokao.model.paper.DiscussQuestion;
-import com.zgq.wokao.model.paper.TFQuestion;
+import com.zgq.wokao.model.paper.question.impl.DiscussIQuestion;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by zhangguoqiang on 2017/2/19.
@@ -35,9 +32,9 @@ public class DiscussAdapterTest {
     public void parse() throws Exception {
         String test = "1. 及时（）\n答案：对\n(2) haha()\n答案：错";
 //        System.out.println("---->>"+test);
-        ArrayList<DiscussQuestion> results = adapter.parse(test);
+        ArrayList<DiscussIQuestion> results = adapter.parse(test);
         System.out.println("--->>size"+results.size());
-        for (DiscussQuestion tmp: results){
+        for (DiscussIQuestion tmp: results){
             System.out.println("---->>"+tmp.getId());
             System.out.println("---->>"+tmp.getBody());
             System.out.println("---->>"+tmp.getAnswer());

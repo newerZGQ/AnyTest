@@ -77,7 +77,7 @@ public class SearchResultsListAdapter extends RecyclerView.Adapter<SearchResults
         if (tmp instanceof SearchQstItem){
             Log.d(TAG,"SearchQstItem");
             SearchQstItem qstItem = (SearchQstItem)tmp;
-            holder.mColorName.setText(qstItem.getQst().getBody());
+            holder.mColorName.setText(qstItem.getQst().getBody().getContent());
         }
 //        Log.d(TAG,"bindview");
 

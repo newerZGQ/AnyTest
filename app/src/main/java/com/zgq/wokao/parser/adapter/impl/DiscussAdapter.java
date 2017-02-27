@@ -1,10 +1,8 @@
 package com.zgq.wokao.parser.adapter.impl;
 
 import com.zgq.wokao.Util.ListUtil;
-import com.zgq.wokao.model.paper.DiscussQuestion;
-import com.zgq.wokao.model.paper.Question;
+import com.zgq.wokao.model.paper.question.impl.DiscussIQuestion;
 import com.zgq.wokao.model.paper.QuestionType;
-import com.zgq.wokao.model.paper.TFQuestion;
 import com.zgq.wokao.parser.adapter.BaseAdapter;
 import com.zgq.wokao.parser.adapter.IDiscussAdapter;
 import com.zgq.wokao.parser.context.QuestionContext;
@@ -22,7 +20,7 @@ public class DiscussAdapter extends BaseAdapter implements IDiscussAdapter {
     private QuestionType type = QuestionType.disc;
     ArrayList<String> content = new ArrayList<>();
     QuestionContext context = new QuestionContext();
-    private ArrayList<DiscussQuestion> results = new ArrayList<>();
+    private ArrayList<DiscussIQuestion> results = new ArrayList<>();
 
     public DiscussAdapter() {
         initParam();
@@ -38,14 +36,14 @@ public class DiscussAdapter extends BaseAdapter implements IDiscussAdapter {
     }
 
     @Override
-    public ArrayList<DiscussQuestion> parse(String resource) {
+    public ArrayList<DiscussIQuestion> parse(String resource) {
         String[] strings = resource.split("\n");
         content = (ArrayList<String>) ListUtil.array2list(strings);
         parseRes(content);
         return results;
     }
 
-    private ArrayList<DiscussQuestion> parseRes(ArrayList<String> content) {
+    private ArrayList<DiscussIQuestion> parseRes(ArrayList<String> content) {
         //题号
         int number = 1;
         String bodyString = "";
@@ -65,7 +63,7 @@ public class DiscussAdapter extends BaseAdapter implements IDiscussAdapter {
                 if (bodyString.equals("")){
 
                 }else{
-                    DiscussQuestion question = parseSingle(number, bodyString);
+                    DiscussIQuestion question = parseSingle(number, bodyString);
                     if (question != null) {
                         results.add(question);
                         number++;
@@ -82,30 +80,30 @@ public class DiscussAdapter extends BaseAdapter implements IDiscussAdapter {
             }
         }
 
-        DiscussQuestion question = parseSingle(number, builder.toString());
+        DiscussIQuestion question = parseSingle(number, builder.toString());
         if (question != null) {
             results.add(question);
         }
         return results;
     }
 
-    private DiscussQuestion parseSingle(int number, String questionRes) {
+    private DiscussIQuestion parseSingle(int number, String questionRes) {
         System.out.println("---->>single" + questionRes);
-        DiscussQuestion question = new DiscussQuestion();
-        question.setId(number);
+        DiscussIQuestion question = new DiscussIQuestion.Builder().build();
+        question.getInfo().setId(number);
         inContext(QuestionItemType.number);
         String[] resArray = trimNum(questionRes).split("\n");
         StringBuilder builder = new StringBuilder();
         for (String tmp : resArray) {
             tmp = tmp.trim();
             if (tmp.startsWith("答案")) {
-                question.setBody(builder.toString());
+                question.getBody().setContent(builder.toString());
                 inContext(QuestionItemType.body);
                 String answerTmp = tmp.substring(2).trim();
                 if (answerTmp.startsWith(":") || answerTmp.startsWith("：")) {
-                    question.setAnswer(answerTmp.substring(1).trim());
+                    question.getAnswer().setContent(answerTmp.substring(1).trim());
                 } else {
-                    question.setAnswer(answerTmp);
+                    question.getAnswer().setContent(answerTmp);
                 }
                 inContext(QuestionItemType.answer);
                 continue;

@@ -17,13 +17,13 @@ import com.umeng.analytics.MobclickAgent;
 import com.zgq.wokao.R;
 import com.zgq.wokao.Util.DateUtil;
 import com.zgq.wokao.model.paper.Constant;
-import com.zgq.wokao.model.paper.DiscussQuestion;
+import com.zgq.wokao.model.paper.question.impl.DiscussIQuestion;
 import com.zgq.wokao.model.paper.ExamPaperInfo;
-import com.zgq.wokao.model.paper.FillInQuestion;
-import com.zgq.wokao.model.paper.MultChoQuestion;
+import com.zgq.wokao.model.paper.question.impl.FillInIQuestion;
+import com.zgq.wokao.model.paper.question.impl.MultChoQuestion;
 import com.zgq.wokao.model.paper.NormalExamPaper;
-import com.zgq.wokao.model.paper.SglChoQuestion;
-import com.zgq.wokao.model.paper.TFQuestion;
+import com.zgq.wokao.model.paper.question.impl.SglChoQuestion;
+import com.zgq.wokao.model.paper.question.impl.TFIQuestion;
 import com.zgq.wokao.ui.view.ObservableScrollView;
 
 import butterknife.BindView;
@@ -150,11 +150,11 @@ public class QuestionsListActivity extends AppCompatActivity implements View.OnC
     private void initView() {
         headZoomView = (ImageView) obsscrollView.getPullRootView().findViewById(R.id.iv_zoom);
         Glide.with(this).load(background[(int)(Math.random()*3)]).into(headZoomView);
-        RealmList<FillInQuestion> fiQstList = normalExamPaper.getFillInQuestions();
-        RealmList<TFQuestion> tfQstList = normalExamPaper.getTfQuestions();
+        RealmList<FillInIQuestion> fiQstList = normalExamPaper.getFillInQuestions();
+        RealmList<TFIQuestion> tfQstList = normalExamPaper.getTfQuestions();
         RealmList<SglChoQuestion> scQstList = normalExamPaper.getSglChoQuestions();
         RealmList<MultChoQuestion> mcQstList = normalExamPaper.getMultChoQuestions();
-        RealmList<DiscussQuestion> dsQstList = normalExamPaper.getDiscussQuestions();
+        RealmList<DiscussIQuestion> dsQstList = normalExamPaper.getDiscussQuestions();
 
         ((TextView) obsscrollView.getPullRootView().findViewById(R.id.paper_title)).setText(paperTitle);
         ((TextView) obsscrollView.getPullRootView().findViewById(R.id.paper_author)).setText(paperAuthor);
@@ -204,8 +204,8 @@ public class QuestionsListActivity extends AppCompatActivity implements View.OnC
             fiQstTypeInfo = (RelativeLayout) obsscrollView.getPullRootView().findViewById(R.id.fiqstType);
             fiQstTypeInfo.setVisibility(View.VISIBLE);
             int count = 0;
-            for (FillInQuestion fillInQuestion : fiQstList) {
-                if (fillInQuestion.isStared()) count++;
+            for (FillInIQuestion fillInQuestion : fiQstList) {
+                if (fillInQuestion.getInfo().isStared()) count++;
             }
             setQuestionTypeInfo(fiQstTypeInfo, R.drawable.circle_background_upside_cyan, "填", "填空题", "共" + fiQstList.size() + "题, " + "收藏" + count + "题");
         } else {
@@ -217,8 +217,8 @@ public class QuestionsListActivity extends AppCompatActivity implements View.OnC
             tfQstTypeInfo = (RelativeLayout) obsscrollView.getPullRootView().findViewById(R.id.tfqstType);
             tfQstTypeInfo.setVisibility(View.VISIBLE);
             int count = 0;
-            for (TFQuestion tfQuestion : tfQstList) {
-                if (tfQuestion.isStared()) count++;
+            for (TFIQuestion tfQuestion : tfQstList) {
+                if (tfQuestion.getInfo().isStared()) count++;
             }
             setQuestionTypeInfo(tfQstTypeInfo, R.drawable.circle_background_upside_orange, "判", "判断题", "共" + tfQstList.size() + "题, " + "收藏" + count + "题");
         } else {
@@ -231,7 +231,7 @@ public class QuestionsListActivity extends AppCompatActivity implements View.OnC
             scQstTypeInfo.setVisibility(View.VISIBLE);
             int count = 0;
             for (SglChoQuestion sglChoQuestion : scQstList) {
-                if (sglChoQuestion.isStared()) count++;
+                if (sglChoQuestion.getInfo().isStared()) count++;
             }
             setQuestionTypeInfo(scQstTypeInfo, R.drawable.circle_background_upside_lime, "单", "单项选择题", "共" + scQstList.size() + "题, " + "收藏" + count + "题");
         } else {
@@ -244,7 +244,7 @@ public class QuestionsListActivity extends AppCompatActivity implements View.OnC
             mcQstTypeInfo.setVisibility(View.VISIBLE);
             int count = 0;
             for (MultChoQuestion multChoQuestion : mcQstList) {
-                if (multChoQuestion.isStared()) count++;
+                if (multChoQuestion.getInfo().isStared()) count++;
             }
             setQuestionTypeInfo(mcQstTypeInfo, R.drawable.circle_background_upside_teal, "多", "多项选择题", "共" + mcQstList.size() + "题, " + "收藏" + count + "题");
         } else {
@@ -256,8 +256,8 @@ public class QuestionsListActivity extends AppCompatActivity implements View.OnC
             dsQstTypeInfo = (RelativeLayout) obsscrollView.getPullRootView().findViewById(R.id.dsqstType);
             dsQstTypeInfo.setVisibility(View.VISIBLE);
             int count = 0;
-            for (DiscussQuestion discussQuestion : dsQstList) {
-                if (discussQuestion.isStared()) count++;
+            for (DiscussIQuestion discussQuestion : dsQstList) {
+                if (discussQuestion.getInfo().isStared()) count++;
             }
             setQuestionTypeInfo(dsQstTypeInfo, R.drawable.circle_background_upside_green, "简", "简答题", "共" + dsQstList.size() + "题, " + "收藏" + count + "题");
         } else {
@@ -326,34 +326,34 @@ public class QuestionsListActivity extends AppCompatActivity implements View.OnC
     }
 
     public int getStudiedCount(final NormalExamPaper normalExamPaper) {
-        RealmList<FillInQuestion> fillInQuestions = normalExamPaper.getFillInQuestions();
-        RealmList<TFQuestion> tfQuestions = normalExamPaper.getTfQuestions();
+        RealmList<FillInIQuestion> fillInQuestions = normalExamPaper.getFillInQuestions();
+        RealmList<TFIQuestion> tfQuestions = normalExamPaper.getTfQuestions();
         RealmList<SglChoQuestion> sglChoQuestions = normalExamPaper.getSglChoQuestions();
         RealmList<MultChoQuestion> multChoQuestions = normalExamPaper.getMultChoQuestions();
-        RealmList<DiscussQuestion> discussQuestions = normalExamPaper.getDiscussQuestions();
+        RealmList<DiscussIQuestion> discussQuestions = normalExamPaper.getDiscussQuestions();
         for (int i = 0; i < fillInQuestions.size(); i++) {
 //            Log.d("----->>", "fi" +i+ fillInQuestions.get(i).isStudied());
-            if (!fillInQuestions.get(i).isStudied())
+            if (!fillInQuestions.get(i).getRecord().isStudied())
                 return normalExamPaper.getPaperInfo().getStudyCount();
         }
         for (int i = 0; i < tfQuestions.size(); i++) {
 //            Log.d("----->>", "tf" +i+ tfQuestions.get(i).isStudied());
-            if (!tfQuestions.get(i).isStudied())
+            if (!tfQuestions.get(i).getRecord().isStudied())
                 return normalExamPaper.getPaperInfo().getStudyCount();
         }
         for (int i = 0; i < sglChoQuestions.size(); i++) {
 //            Log.d("----->>", "sg" +i+ sglChoQuestions.get(i).isStudied());
-            if (!sglChoQuestions.get(i).isStudied())
+            if (!sglChoQuestions.get(i).getRecord().isStudied())
                 return normalExamPaper.getPaperInfo().getStudyCount();
         }
         for (int i = 0; i < multChoQuestions.size(); i++) {
 //            Log.d("----->>", "mu" +i+ multChoQuestions.get(i).isStudied());
-            if (!multChoQuestions.get(i).isStudied())
+            if (!multChoQuestions.get(i).getRecord().isStudied())
                 return normalExamPaper.getPaperInfo().getStudyCount();
         }
         for (int i = 0; i < discussQuestions.size(); i++) {
 //            Log.d("----->>", "di" +i+ discussQuestions.get(i).isStudied());
-            if (!discussQuestions.get(i).isStudied())
+            if (!discussQuestions.get(i).getRecord().isStudied())
                 return normalExamPaper.getPaperInfo().getStudyCount();
         }
         realm.executeTransaction(new Realm.Transaction() {
@@ -368,43 +368,31 @@ public class QuestionsListActivity extends AppCompatActivity implements View.OnC
     }
 
     private void setAllQuestionUnstudied(NormalExamPaper normalExamPaper) {
-        final RealmList<FillInQuestion> fillInQuestions = normalExamPaper.getFillInQuestions();
-        final RealmList<TFQuestion> tfQuestions = normalExamPaper.getTfQuestions();
+        final RealmList<FillInIQuestion> fillInQuestions = normalExamPaper.getFillInQuestions();
+        final RealmList<TFIQuestion> tfQuestions = normalExamPaper.getTfQuestions();
         final RealmList<SglChoQuestion> sglChoQuestions = normalExamPaper.getSglChoQuestions();
         final RealmList<MultChoQuestion> multChoQuestions = normalExamPaper.getMultChoQuestions();
-        final RealmList<DiscussQuestion> discussQuestions = normalExamPaper.getDiscussQuestions();
+        final RealmList<DiscussIQuestion> discussQuestions = normalExamPaper.getDiscussQuestions();
 
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 for (int i = 0; i < fillInQuestions.size(); i++) {
-                    fillInQuestions.get(i).setStudied(false);
+                    fillInQuestions.get(i).getRecord().setStudied(false);
                 }
                 for (int i = 0; i < tfQuestions.size(); i++) {
-                    tfQuestions.get(i).setStudied(false);
+                    tfQuestions.get(i).getRecord().setStudied(false);
                 }
                 for (int i = 0; i < sglChoQuestions.size(); i++) {
-                    sglChoQuestions.get(i).setStudied(false);
+                    sglChoQuestions.get(i).getRecord().setStudied(false);
                 }
                 for (int i = 0; i < multChoQuestions.size(); i++) {
-                    multChoQuestions.get(i).setStudied(false);
+                    multChoQuestions.get(i).getRecord().setStudied(false);
                 }
                 for (int i = 0; i < discussQuestions.size(); i++) {
-                    discussQuestions.get(i).setStudied(false);
+                    discussQuestions.get(i).getRecord().setStudied(false);
                 }
             }
         });
-//        for (int i = 0; i < tfQuestions.size(); i++) {
-//            tfQuestions.get(i).setStudied(false);
-//        }
-//        for (int i = 0; i < sglChoQuestions.size(); i++) {
-//            sglChoQuestions.get(i).setStudied(false);
-//        }
-//        for (int i = 0; i < multChoQuestions.size(); i++) {
-//            multChoQuestions.get(i).setStudied(false);
-//        }
-//        for (int i = 0; i < discussQuestions.size(); i++) {
-//            discussQuestions.get(i).setStudied(false);
-//        }
     }
 }

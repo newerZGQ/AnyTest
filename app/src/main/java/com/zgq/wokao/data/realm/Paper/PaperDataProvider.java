@@ -10,7 +10,7 @@ import com.zgq.wokao.Util.UUIDUtil;
 import com.zgq.wokao.data.realm.BaseRealmProvider;
 import com.zgq.wokao.model.paper.ExamPaperInfo;
 import com.zgq.wokao.model.paper.NormalExamPaper;
-import com.zgq.wokao.model.paper.Question;
+import com.zgq.wokao.model.paper.question.IQuestion;
 import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.search.SearchInfoItem;
 import com.zgq.wokao.model.search.SearchQstItem;
@@ -191,17 +191,17 @@ public class PaperDataProvider extends BaseRealmProvider<NormalExamPaper> implem
         return results;
     }
 
-    private List<SearchQstItem> searchQstFromList(String query, List<Question> list,
+    private List<SearchQstItem> searchQstFromList(String query, List<IQuestion> list,
                                                   ExamPaperInfo info, int qstType){
         List<SearchQstItem> results = new ArrayList<>();
-        for (Question tmp : list){
-            if (tmp.getBody().contains(query)){
+        for (IQuestion tmp : list){
+            if (tmp.getBody().getContent().contains(query)){
 //                Log.d("---->>searchQstFromList",tmp.getBody());
                 SearchQstItem item = new SearchQstItem();
                 item.setInfo(info);
                 item.setQstType(qstType);
                 item.setQst(tmp);
-                item.setQstId(tmp.getId());
+                item.setQstId(tmp.getInfo().getId());
                 results.add(item);
             }
         }

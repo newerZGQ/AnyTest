@@ -1,14 +1,12 @@
 package com.zgq.wokao.parser.adapter.impl;
 
-import com.zgq.wokao.model.paper.FillInQuestion;
+import com.zgq.wokao.model.paper.question.impl.FillInIQuestion;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by zhangguoqiang on 2017/2/19.
@@ -34,9 +32,9 @@ public class FillInAdapterTest {
     public void parse() throws Exception {
         String test = "1. 及时（）\n答案：就是\n(2) haha()\n答案：xiaoshenem";
 //        System.out.println("---->>"+test);
-        ArrayList<FillInQuestion> results = adapter.parse(test);
+        ArrayList<FillInIQuestion> results = adapter.parse(test);
         System.out.println("--->>size"+results.size());
-        for (FillInQuestion tmp: results){
+        for (FillInIQuestion tmp: results){
             System.out.println("---->>"+tmp.getId());
             System.out.println("---->>"+tmp.getBody());
             System.out.println("---->>"+tmp.getAnswer());
