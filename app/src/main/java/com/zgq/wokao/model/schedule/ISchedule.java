@@ -5,7 +5,10 @@ package com.zgq.wokao.model.schedule;
  */
 
 public interface ISchedule {
+    public void open();
     public int getDailyCount();
     public void setDailyCount(int count);
-    public void addRecord(Record record);
+    public void addRecord();
+    public Record getcurrentRecord();
+    public void recordPlus1();
 }

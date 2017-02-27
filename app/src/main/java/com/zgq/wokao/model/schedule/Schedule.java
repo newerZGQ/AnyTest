@@ -11,9 +11,30 @@ import io.realm.RealmObject;
 
 public class Schedule extends RealmObject implements ISchedule{
     //是否开启学习计划
-    private int isOpened;
+    private boolean isOpened;
     private int dailyCount;
     private RealmList<Record> records = new RealmList<>();
+
+    public boolean isOpened() {
+        return isOpened;
+    }
+
+    public void setOpened(boolean opened) {
+        isOpened = opened;
+    }
+
+    public RealmList<Record> getRecords() {
+        return records;
+    }
+
+    public void setRecords(RealmList<Record> records) {
+        this.records = records;
+    }
+
+    @Override
+    public void open() {
+        this.isOpened = true;
+    }
 
     @Override
     public int getDailyCount() {
@@ -26,23 +47,19 @@ public class Schedule extends RealmObject implements ISchedule{
     }
 
     @Override
-    public void addRecord(Record record) {
-        records.add(record);
+    public void addRecord() {
+
     }
 
-    public int getIsOpened() {
-        return isOpened;
+    @Override
+    public Record getcurrentRecord() {
+        return null;
     }
 
-    public void setIsOpened(int isOpened) {
-        this.isOpened = isOpened;
+    @Override
+    public void recordPlus1() {
+
     }
 
-    public RealmList<Record> getRecords() {
-        return records;
-    }
 
-    public void setRecords(RealmList<Record> records) {
-        this.records = records;
-    }
 }
