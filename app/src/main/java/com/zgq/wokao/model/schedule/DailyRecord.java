@@ -5,13 +5,13 @@ import io.realm.RealmObject;
 /**
  * Created by zgq on 2017/2/25.
  */
-public class Record extends RealmObject{
+public class DailyRecord extends RealmObject{
     private String date;
     private int studyNumber;
     private int studyCount;
     private boolean isCompleted;
 
-    public Record(Builder builder){
+    public DailyRecord(Builder builder){
         this.date = builder.date;
         this.studyNumber = builder.studyNumber;
         this.studyCount = builder.studyCount;
@@ -76,8 +76,8 @@ public class Record extends RealmObject{
             return this;
         }
 
-        public Record build(){
-            return new Record(this);
+        public DailyRecord build(){
+            return new DailyRecord(this);
         }
 
     }

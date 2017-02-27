@@ -2,8 +2,6 @@ package com.zgq.wokao.model.schedule;
 
 import com.zgq.wokao.Util.DateUtil;
 
-import java.util.ArrayList;
-
 import io.realm.RealmList;
 import io.realm.RealmObject;
 
@@ -15,7 +13,7 @@ public class Schedule extends RealmObject implements ISchedule{
     //是否开启学习计划
     private boolean isOpened;
     private int dailyCount;
-    private RealmList<Record> records = new RealmList<>();
+    private RealmList<DailyRecord> dailyRecords = new RealmList<>();
 
     public boolean isOpened() {
         return isOpened;
@@ -25,12 +23,12 @@ public class Schedule extends RealmObject implements ISchedule{
         this.isOpened = false;
     }
 
-    public RealmList<Record> getRecords() {
-        return records;
+    public RealmList<DailyRecord> getDailyRecords() {
+        return dailyRecords;
     }
 
-    public void setRecords(RealmList<Record> records) {
-        this.records = records;
+    public void setDailyRecords(RealmList<DailyRecord> dailyRecords) {
+        this.dailyRecords = dailyRecords;
     }
 
     @Override
@@ -53,31 +51,31 @@ public class Schedule extends RealmObject implements ISchedule{
         if (lastRecordIsCurrent()){
             return;
         }
-        Record record = new Record.Builder().date(DateUtil.getFormatData("yyyy-MM-dd"))
+        DailyRecord dailyRecord = new DailyRecord.Builder().date(DateUtil.getFormatData("yyyy-MM-dd"))
                 .isCompleted(false)
                 .studyCount(this.dailyCount)
                 .studyNumber(0)
                 .build();
-        records.add(record);
+        dailyRecords.add(dailyRecord);
     }
 
     @Override
-    public Record getcurrentRecord() {
+    public DailyRecord getcurrentRecord() {
         if (!lastRecordIsCurrent()){
             addRecord();
         }
-        return records.get(records.size()-1);
+        return dailyRecords.get(dailyRecords.size()-1);
     }
 
     @Override
     public void recordPlus1() {
-        Record record = getcurrentRecord();
-        record.addStudyNumber();
+        DailyRecord dailyRecord = getcurrentRecord();
+        dailyRecord.addStudyNumber();
     }
     //判断最后一次记录是不是今天的
     private boolean lastRecordIsCurrent(){
-        if (records.size() == 0) return false;
-        Record last = records.get(records.size()-1);
+        if (dailyRecords.size() == 0) return false;
+        DailyRecord last = dailyRecords.get(dailyRecords.size()-1);
         String currentData = DateUtil.getYYYY_MM_DD();
         if (last.getDate().equals(currentData)){
             return true;
