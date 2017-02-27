@@ -58,9 +58,26 @@ public class SearchFragment extends BaseFragment {
         void onAttachSearchViewBack(FloatingSearchView searchView);
     }
 
+//    @Override
+//    public void onAttach(Context context) {
+//        super.onAttach(context);
+//        if (context instanceof SearchFragmentCallbacks) {
+//            mCallbacks = (SearchFragmentCallbacks) context;
+//        } else {
+//            throw new RuntimeException(context.toString()
+//                    + " must implement SearchFragmentCallbacks");
+//        }
+//    }
+//
+//    @Override
+//    public void onDetach() {
+//        super.onDetach();
+//        mCallbacks = null;
+//    }
+
+
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
+    protected void onAttachToContext(Context context) {
         if (context instanceof SearchFragmentCallbacks) {
             mCallbacks = (SearchFragmentCallbacks) context;
         } else {
@@ -69,14 +86,8 @@ public class SearchFragment extends BaseFragment {
         }
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mCallbacks = null;
-    }
-
-    protected void attachSearchViewBack(FloatingSearchView searchView){
-        if(mCallbacks != null){
+    protected void attachSearchViewBack(FloatingSearchView searchView) {
+        if (mCallbacks != null) {
             //点击搜索框的返回按钮时执行操作
             mCallbacks.onAttachSearchViewBack(searchView);
         }
@@ -125,7 +136,7 @@ public class SearchFragment extends BaseFragment {
         mSearchView.setOnSearchListener(new FloatingSearchView.OnSearchListener() {
             @Override
             public void onSuggestionClicked(final SearchSuggestion searchSuggestion) {
-                final HistorySuggestion suggestion = (HistorySuggestion)searchSuggestion;
+                final HistorySuggestion suggestion = (HistorySuggestion) searchSuggestion;
                 mLastQuery = suggestion.getBody();
                 SearchHelper.findPaperAndQst(mLastQuery, null, new SearchHelper.OnFindPaperAndQstListener() {
                     @Override

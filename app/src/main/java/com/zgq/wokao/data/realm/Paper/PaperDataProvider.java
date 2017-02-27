@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.zgq.wokao.Util.FileUtil;
 import com.zgq.wokao.Util.ListUtil;
+import com.zgq.wokao.Util.UUIDUtil;
 import com.zgq.wokao.data.realm.BaseRealmProvider;
 import com.zgq.wokao.model.paper.ExamPaperInfo;
 import com.zgq.wokao.model.paper.NormalExamPaper;
@@ -33,9 +34,7 @@ import io.realm.RealmResults;
 /**
  * Created by zgq on 16-6-20.
  */
-public class PaperDataProvider extends BaseRealmProvider<NormalExamPaper> implements IPaperDataProvider {
-
-    private Realm realm = Realm.getDefaultInstance();
+public class PaperDataProvider extends BaseRealmProvider<NormalExamPaper> implements IPaperDataProvider ,IPaperInfoDataProvider{
 
     private PaperDataProvider() {
         setClass(NormalExamPaper.class);
@@ -68,7 +67,7 @@ public class PaperDataProvider extends BaseRealmProvider<NormalExamPaper> implem
      */
     @Override
     public List<NormalExamPaper> getAllPaper() {
-        RealmResults<NormalExamPaper> results = realm.where(NormalExamPaper.class).findAll();
+        RealmResults<NormalExamPaper> results = getRealm().where(NormalExamPaper.class).findAll();
         return changeRealmListToList(results);
     }
 
@@ -78,7 +77,7 @@ public class PaperDataProvider extends BaseRealmProvider<NormalExamPaper> implem
      */
     @Override
     public List<ExamPaperInfo> getAllPaperInfo() {
-        RealmResults<ExamPaperInfo> results = realm.where(ExamPaperInfo.class).findAll();
+        RealmResults<ExamPaperInfo> results = getRealm().where(ExamPaperInfo.class).findAll();
         return changeRealmListToList(results);
     }
 
@@ -100,11 +99,18 @@ public class PaperDataProvider extends BaseRealmProvider<NormalExamPaper> implem
 
     @Override
     public List<ExamPaperInfo> getSchedulePapers() {
-        RealmResults<ExamPaperInfo> results = realm
+        RealmResults<ExamPaperInfo> results = getRealm()
                 .where(ExamPaperInfo.class)
                 .equalTo("isInSchedule",true)
                 .findAll();
         return changeRealmListToList(results);
+    }
+
+    @Override
+    public void update(ExamPaperInfo info) {
+        getRealm().beginTransaction();
+        getRealm().copyToRealmOrUpdate(info);
+        getRealm().commitTransaction();
     }
 
     /**
@@ -114,7 +120,7 @@ public class PaperDataProvider extends BaseRealmProvider<NormalExamPaper> implem
      */
     public List<SearchInfoItem> searchInfoItem(String query){
         if (query == null || query.equals("")) return null;
-        RealmQuery<ExamPaperInfo> infoQuery = realm.where(ExamPaperInfo.class);
+        RealmQuery<ExamPaperInfo> infoQuery = getRealm().where(ExamPaperInfo.class);
         infoQuery.contains("title",query);
 //        infoQuery.or().contains("author",query);
         List<ExamPaperInfo> paperInfos = infoQuery.findAll();
@@ -292,6 +298,7 @@ public class PaperDataProvider extends BaseRealmProvider<NormalExamPaper> implem
             }
             try {
                 normalExamPaper = dataXml2ObjParser.parse(xmlFile);
+                normalExamPaper.getPaperInfo().setId(UUIDUtil.getID());
             } catch (Exception e) {
                 Log.d("----normal", "exception");
             }

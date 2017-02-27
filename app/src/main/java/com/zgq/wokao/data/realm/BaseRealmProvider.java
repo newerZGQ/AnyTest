@@ -18,6 +18,11 @@ public abstract class BaseRealmProvider<T extends RealmObject> implements DataPr
     }
 
     @Override
+    public Realm getRealm() {
+        return realm;
+    }
+
+    @Override
     public void save(T entity) {
         realm.beginTransaction();
         realm.copyToRealm(entity);

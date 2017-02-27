@@ -1,9 +1,12 @@
 package com.zgq.wokao.ui.fragment.impl;
 
 import android.animation.ObjectAnimator;
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -25,10 +28,8 @@ import com.gigamole.navigationtabstrip.NavigationTabStrip;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 import com.zgq.wokao.R;
 import com.zgq.wokao.Util.ContextUtil;
-import com.zgq.wokao.Util.NormalExamPaperUtil;
 import com.zgq.wokao.data.realm.Paper.PaperDataProvider;
 import com.zgq.wokao.model.paper.ExamPaperInfo;
-import com.zgq.wokao.model.paper.NormalExamPaper;
 import com.zgq.wokao.ui.adapter.HomePaperAdapter;
 import com.zgq.wokao.ui.adapter.HomeScheduleAdapter;
 import com.zgq.wokao.ui.fragment.BaseFragment;
@@ -119,7 +120,6 @@ public class HomeFragment extends BaseFragment {
     private void getRecyclerViewData() {
         allPaperInfos = (ArrayList<ExamPaperInfo>) PaperDataProvider.getInstance().getAllPaperInfo();
         schedPaperInfos = (ArrayList<ExamPaperInfo>) PaperDataProvider.getInstance().getSchedulePapers();
-        Log.d("---->>paapers",""+allPaperInfos.size());
     }
 
     private View initView(LayoutInflater inflater, ViewGroup container,
@@ -184,8 +184,8 @@ public class HomeFragment extends BaseFragment {
         final List<View> viewList = new ArrayList<>();
         View papersPage = getInflater().inflate(R.layout.viewpager_layout,null);
         View schedulePage = getInflater().inflate(R.layout.viewpager_layout,null);
-        viewList.add(papersPage);
         viewList.add(schedulePage);
+        viewList.add(papersPage);
 
         paperList = (RecyclerView) papersPage.findViewById(R.id.recycler_view);
         paperList.addItemDecoration(
@@ -199,13 +199,14 @@ public class HomeFragment extends BaseFragment {
         paperList.setItemAnimator(new FadeInAnimator());
         paperList.setAdapter(new HomePaperAdapter(allPaperInfos, new HomePaperAdapter.PaperAdapterListener() {
             @Override
-            public void onStared(String paperId, boolean isStared) {
-
+            public void onStared(int position, boolean isStared) {
+                allPaperInfos.get(position).setStared(isStared);
+                PaperDataProvider.getInstance().update(allPaperInfos.get(position));
             }
 
             @Override
             public void onItemClick(int position) {
-
+                mListener.goQuestionsList(allPaperInfos.get(position).getId());
             }
 
             @Override
@@ -288,6 +289,12 @@ public class HomeFragment extends BaseFragment {
                 }
             }
         });
+        searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.goSearch();
+            }
+        });
     }
 
     public void updatePaperInfos() {
@@ -301,10 +308,27 @@ public class HomeFragment extends BaseFragment {
             mListener.onFragmentInteraction(uri);
         }
     }
-
+//    @TargetApi(23)
+//    @Override
+//    public void onAttach(Context context) {
+//        super.onAttach(context);
+//        onAttachToContext(context);
+//    }
+//
+//    /*
+// * Deprecated on API 23
+// * Use onAttachToContext instead
+// */
+//    @SuppressWarnings("deprecation")
+//    @Override
+//    public void onAttach(Activity activity) {
+//        super.onAttach(activity);
+//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+//            onAttachToContext(activity);
+//        }
+//    }
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
+    protected void onAttachToContext(Context context) {
         if (context instanceof OnHomeFragmentListener) {
             mListener = (OnHomeFragmentListener) context;
         } else {
@@ -328,8 +352,9 @@ public class HomeFragment extends BaseFragment {
      * This interface must be implemented by activities that contain this
      */
     public interface OnHomeFragmentListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+        void goSearch();
+        void goQuestionsList(String paperId);
     }
 
     static class MyHandler extends Handler {

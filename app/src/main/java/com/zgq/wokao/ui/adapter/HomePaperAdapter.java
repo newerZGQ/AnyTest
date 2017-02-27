@@ -55,7 +55,7 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
 
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
         if (paperInfos.size() == 0 || paperInfos == null) return;
 
@@ -115,7 +115,7 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
 //                        }
 //                    });
                     holder1.paperStar.setBackground(context.getDrawable(R.drawable.inactive_star));
-                    listener.onStared(info.getId(),false);
+                    listener.onStared(position,false);
 //                    Toast.makeText(getActivity(), "取消收藏", Toast.LENGTH_SHORT).show();
                 } else {
 //                    realm.executeTransaction(new Realm.Transaction() {
@@ -125,7 +125,7 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
 //                        }
 //                    });
                     holder1.paperStar.setBackground(context.getDrawable(R.drawable.active_star));
-                    listener.onStared(info.getId(),true);
+                    listener.onStared(position,true);
 //                    Toast.makeText(getActivity(), "已收藏", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -245,7 +245,7 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
     }
 
     public interface PaperAdapterListener{
-        public void onStared(String paperId,boolean isStared);
+        public void onStared(int position,boolean isStared);
         public void onItemClick(int position);
         public void onItemLongClick(int position);
     }

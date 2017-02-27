@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import com.zgq.wokao.R;
+import com.zgq.wokao.data.realm.Paper.PaperDataProvider;
 import com.zgq.wokao.ui.fragment.impl.HomeFragment;
 
 public class HomeActivity extends BaseActivity implements HomeFragment.OnHomeFragmentListener {
@@ -27,5 +28,17 @@ public class HomeActivity extends BaseActivity implements HomeFragment.OnHomeFra
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    @Override
+    public void goSearch() {
+        openActivity(SearchActivity.class);
+    }
+
+    @Override
+    public void goQuestionsList(String paperId) {
+        Bundle bundle = new Bundle();
+        bundle.putString("paperId",paperId);
+        openActivity(QuestionsListActivity.class,bundle);
     }
 }

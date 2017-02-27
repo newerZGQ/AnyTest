@@ -127,11 +127,9 @@ public class QuestionsListActivity extends AppCompatActivity implements View.OnC
         background[1] = R.drawable.image_grassland;
         background[2] = R.drawable.image_night_star;
 
-        String title = getIntent().getStringExtra("paperTitle");
-        String author = getIntent().getStringExtra("paperAuthor");
+        String paperId = getIntent().getStringExtra("paperId");
         RealmResults<NormalExamPaper> papers = realm.where(NormalExamPaper.class).
-                equalTo("paperInfo.title", title).
-                equalTo("paperInfo.author", author).
+                equalTo("paperInfo.id", paperId).
                 findAll();
 
         normalExamPaper = papers.get(0);
