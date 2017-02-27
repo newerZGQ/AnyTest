@@ -50,7 +50,11 @@ public class Record extends RealmObject{
         isCompleted = completed;
     }
 
-    static class Builder{
+    public void addStudyNumber(){
+        studyNumber++;
+    }
+
+    public static class Builder{
         private String date;
         private int studyNumber;
         private int studyCount;

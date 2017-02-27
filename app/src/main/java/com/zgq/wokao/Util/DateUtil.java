@@ -9,7 +9,15 @@ import java.util.Date;
  */
 public class DateUtil {
     public static String getCurrentDate() {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return getFormatData("yyyy-MM-dd HH:mm:ss");
+    }
+
+    public static String getYYYY_MM_DD(){
+        return getFormatData("yyyy-MM-dd");
+    }
+
+    public static String getFormatData(String format){
+        SimpleDateFormat formatter = new SimpleDateFormat(format);
         Date curDate = new Date(System.currentTimeMillis());//获取当前时间
         String str = formatter.format(curDate);
         return str;
