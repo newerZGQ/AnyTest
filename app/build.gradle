@@ -50,17 +50,7 @@ dependencies {
     //ConverterFactory的Gson依赖包
     //ConverterFactory的String依赖包
     //dialog lib
-    compile files('libs/MobCommons-2016.1222.1756.jar')
-    compile files('libs/MobTools-2016.1222.1756.jar')
-    compile files('libs/ShareSDK-Core-2.8.0.jar')
-    compile files('libs/ShareSDK-QQ-2.8.0.jar')
-    compile files('libs/ShareSDK-QZone-2.8.0.jar')
-    compile files('libs/ShareSDK-SinaWeibo-2.8.0.jar')
-    compile files('libs/ShareSDK-TencentWeibo-2.8.0.jar')
-    compile files('libs/ShareSDK-Wechat-2.8.0.jar')
-    compile files('libs/ShareSDK-Wechat-Core-2.8.0.jar')
-    compile files('libs/ShareSDK-Wechat-Favorite-2.8.0.jar')
-    compile files('libs/ShareSDK-Wechat-Moments-2.8.0.jar')
+
     compile files('libs/tm-extractors-0.4.jar')
     compile files('libs/pdfbox-2.0.4.jar')
     compile files('libs/commons-logging-1.2.jar')
