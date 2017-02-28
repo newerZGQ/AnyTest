@@ -1,7 +1,7 @@
 package com.zgq.wokao.parser;
 
 import com.zgq.wokao.exception.ParseException;
-import com.zgq.wokao.model.paper.info.ExamPaperInfo;
+import com.zgq.wokao.model.paper.info.ExamIPaperInfo;
 import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.parser.context.PaperContext;
 import com.zgq.wokao.parser.context.item.PaperItemType;
@@ -22,7 +22,7 @@ public class PaperParser extends BaseParser implements IPaperParser{
     private InputStream is;
     private PaperContext context = new PaperContext();
     private ArrayList<Topic> topicLists = new ArrayList<>();
-    private ExamPaperInfo info = new ExamPaperInfo();
+    private ExamIPaperInfo info = new ExamIPaperInfo();
 
     private int contextLength = 5;
 
@@ -39,7 +39,7 @@ public class PaperParser extends BaseParser implements IPaperParser{
         return topicLists;
     }
 
-    public ExamPaperInfo getInfo() {
+    public ExamIPaperInfo getInfo() {
         return info;
     }
 

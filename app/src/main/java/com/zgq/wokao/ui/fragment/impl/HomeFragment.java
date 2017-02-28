@@ -25,7 +25,7 @@ import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 import com.zgq.wokao.R;
 import com.zgq.wokao.Util.ContextUtil;
 import com.zgq.wokao.data.realm.Paper.PaperDataProvider;
-import com.zgq.wokao.model.paper.info.ExamPaperInfo;
+import com.zgq.wokao.model.paper.info.ExamIPaperInfo;
 import com.zgq.wokao.ui.adapter.HomePaperAdapter;
 import com.zgq.wokao.ui.adapter.HomeScheduleAdapter;
 import com.zgq.wokao.ui.fragment.BaseFragment;
@@ -60,8 +60,8 @@ public class HomeFragment extends BaseFragment {
     private String mParam2;
 
     private Realm realm = Realm.getDefaultInstance();
-    private ArrayList<ExamPaperInfo> allPaperInfos = new ArrayList<>();
-    private ArrayList<ExamPaperInfo> schedPaperInfos = new ArrayList<>();
+    private ArrayList<ExamIPaperInfo> allPaperInfos = new ArrayList<>();
+    private ArrayList<ExamIPaperInfo> schedPaperInfos = new ArrayList<>();
 
 
     private MyHandler myHandler;
@@ -114,8 +114,8 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void getRecyclerViewData() {
-        allPaperInfos = (ArrayList<ExamPaperInfo>) PaperDataProvider.getInstance().getAllPaperInfo();
-        schedPaperInfos = (ArrayList<ExamPaperInfo>) PaperDataProvider.getInstance().getSchedulePapers();
+        allPaperInfos = (ArrayList<ExamIPaperInfo>) PaperDataProvider.getInstance().getAllPaperInfo();
+        schedPaperInfos = (ArrayList<ExamIPaperInfo>) PaperDataProvider.getInstance().getSchedulePapers();
     }
 
     private View initView(LayoutInflater inflater, ViewGroup container,

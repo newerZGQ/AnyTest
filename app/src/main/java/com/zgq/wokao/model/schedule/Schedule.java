@@ -9,7 +9,7 @@ import io.realm.RealmObject;
  * Created by zgq on 2017/2/25.
  */
 
-public class Schedule extends RealmObject implements ISchedule{
+public class Schedule extends RealmObject implements ISchedule {
     //是否开启学习计划
     private boolean isOpened;
     private int dailyCount;
@@ -19,6 +19,7 @@ public class Schedule extends RealmObject implements ISchedule{
         return isOpened;
     }
 
+    @Override
     public void close() {
         this.isOpened = false;
     }
@@ -48,7 +49,7 @@ public class Schedule extends RealmObject implements ISchedule{
 
     @Override
     public void addRecord() {
-        if (lastRecordIsCurrent()){
+        if (lastRecordIsCurrent()) {
             return;
         }
         DailyRecord dailyRecord = new DailyRecord.Builder().date(DateUtil.getFormatData("yyyy-MM-dd"))
@@ -61,10 +62,10 @@ public class Schedule extends RealmObject implements ISchedule{
 
     @Override
     public DailyRecord getcurrentRecord() {
-        if (!lastRecordIsCurrent()){
+        if (!lastRecordIsCurrent()) {
             addRecord();
         }
-        return dailyRecords.get(dailyRecords.size()-1);
+        return dailyRecords.get(dailyRecords.size() - 1);
     }
 
     @Override
@@ -72,12 +73,13 @@ public class Schedule extends RealmObject implements ISchedule{
         DailyRecord dailyRecord = getcurrentRecord();
         dailyRecord.addStudyNumber();
     }
+
     //判断最后一次记录是不是今天的
-    private boolean lastRecordIsCurrent(){
+    private boolean lastRecordIsCurrent() {
         if (dailyRecords.size() == 0) return false;
-        DailyRecord last = dailyRecords.get(dailyRecords.size()-1);
+        DailyRecord last = dailyRecords.get(dailyRecords.size() - 1);
         String currentData = DateUtil.getYYYY_MM_DD();
-        if (last.getDate().equals(currentData)){
+        if (last.getDate().equals(currentData)) {
             return true;
         }
         return false;

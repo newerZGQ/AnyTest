@@ -10,7 +10,7 @@ import io.realm.RealmObject;
 /**
  * Created by zgq on 16-6-20.
  */
-public class ExamPaperInfo extends RealmObject implements Serializable ,Searchable {
+public class ExamIPaperInfo extends RealmObject implements IPaperInfo, Serializable ,Searchable {
     private String id;
     private String title;
     private String author;
@@ -30,9 +30,9 @@ public class ExamPaperInfo extends RealmObject implements Serializable ,Searchab
         this.schedule = schedule;
     }
 
-    public ExamPaperInfo() {
+    public ExamIPaperInfo() {
     }
-    public ExamPaperInfo(String id, String title, String author, String createDate, String lastStudyDate, Schedule schedule) {
+    public ExamIPaperInfo(String id, String title, String author, String createDate, String lastStudyDate, Schedule schedule) {
         this.id = id;
         this.title = title;
         this.author = author;
@@ -86,6 +86,7 @@ public class ExamPaperInfo extends RealmObject implements Serializable ,Searchab
         return stared;
     }
 
+    @Override
     public void setStared(boolean stared) {
         this.stared = stared;
     }
@@ -109,13 +110,13 @@ public class ExamPaperInfo extends RealmObject implements Serializable ,Searchab
     public boolean isInSchedule() {
         return isInSchedule;
     }
-
+    @Override
     public void setInSchedule(boolean inSchedule) {
         isInSchedule = inSchedule;
     }
 
 
-
+    @Override
     public Schedule getSchedule() {
         return schedule;
     }

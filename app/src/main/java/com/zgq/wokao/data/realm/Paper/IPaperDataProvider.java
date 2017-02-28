@@ -1,6 +1,6 @@
 package com.zgq.wokao.data.realm.Paper;
 
-import com.zgq.wokao.model.paper.info.ExamPaperInfo;
+import com.zgq.wokao.model.paper.info.ExamIPaperInfo;
 import com.zgq.wokao.model.paper.NormalIExamPaper;
 import com.zgq.wokao.model.search.Searchable;
 
@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface IPaperDataProvider {
     public List<NormalIExamPaper> getAllPaper();
-    public List<ExamPaperInfo> getAllPaperInfo();
+    public List<ExamIPaperInfo> getAllPaperInfo();
     public List<Searchable> search(String query);
-    public List<ExamPaperInfo> getSchedulePapers();
+    public List<ExamIPaperInfo> getSchedulePapers();
 }

@@ -8,7 +8,7 @@ import com.zgq.wokao.Util.ListUtil;
 import com.zgq.wokao.Util.UUIDUtil;
 import com.zgq.wokao.data.realm.BaseRealmProvider;
 import com.zgq.wokao.model.paper.NormalIExamPaper;
-import com.zgq.wokao.model.paper.info.ExamPaperInfo;
+import com.zgq.wokao.model.paper.info.ExamIPaperInfo;
 import com.zgq.wokao.model.paper.question.IQuestion;
 import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.search.SearchInfoItem;
@@ -75,8 +75,8 @@ public class PaperDataProvider extends BaseRealmProvider<NormalIExamPaper> imple
      * @return
      */
     @Override
-    public List<ExamPaperInfo> getAllPaperInfo() {
-        RealmResults<ExamPaperInfo> results = getRealm().where(ExamPaperInfo.class).findAll();
+    public List<ExamIPaperInfo> getAllPaperInfo() {
+        RealmResults<ExamIPaperInfo> results = getRealm().where(ExamIPaperInfo.class).findAll();
         return changeRealmListToList(results);
     }
 
@@ -97,16 +97,16 @@ public class PaperDataProvider extends BaseRealmProvider<NormalIExamPaper> imple
     }
 
     @Override
-    public List<ExamPaperInfo> getSchedulePapers() {
-        RealmResults<ExamPaperInfo> results = getRealm()
-                .where(ExamPaperInfo.class)
+    public List<ExamIPaperInfo> getSchedulePapers() {
+        RealmResults<ExamIPaperInfo> results = getRealm()
+                .where(ExamIPaperInfo.class)
                 .equalTo("isInSchedule",true)
                 .findAll();
         return changeRealmListToList(results);
     }
 
     @Override
-    public void update(ExamPaperInfo info) {
+    public void update(ExamIPaperInfo info) {
         getRealm().beginTransaction();
         getRealm().copyToRealmOrUpdate(info);
         getRealm().commitTransaction();
@@ -119,12 +119,12 @@ public class PaperDataProvider extends BaseRealmProvider<NormalIExamPaper> imple
      */
     public List<SearchInfoItem> searchInfoItem(String query){
         if (query == null || query.equals("")) return null;
-        RealmQuery<ExamPaperInfo> infoQuery = getRealm().where(ExamPaperInfo.class);
+        RealmQuery<ExamIPaperInfo> infoQuery = getRealm().where(ExamIPaperInfo.class);
         infoQuery.contains("title",query);
 //        infoQuery.or().contains("author",query);
-        List<ExamPaperInfo> paperInfos = infoQuery.findAll();
+        List<ExamIPaperInfo> paperInfos = infoQuery.findAll();
         List<SearchInfoItem> results = new ArrayList<>();
-        for (ExamPaperInfo info : paperInfos){
+        for (ExamIPaperInfo info : paperInfos){
             SearchInfoItem item = new SearchInfoItem();
             item.setInfo(info);
             results.add(item);
@@ -191,7 +191,7 @@ public class PaperDataProvider extends BaseRealmProvider<NormalIExamPaper> imple
     }
 
     private List<SearchQstItem> searchQstFromList(String query, List<IQuestion> list,
-                                                  ExamPaperInfo info, int qstType){
+                                                  ExamIPaperInfo info, int qstType){
         List<SearchQstItem> results = new ArrayList<>();
         for (IQuestion tmp : list){
             if (tmp.getBody().getContent().contains(query)){
@@ -232,7 +232,7 @@ public class PaperDataProvider extends BaseRealmProvider<NormalIExamPaper> imple
         if (paper == null) {
             return false;
         }
-        ArrayList<ExamPaperInfo> infos = (ArrayList<ExamPaperInfo>) getAllPaperInfo();
+        ArrayList<ExamIPaperInfo> infos = (ArrayList<ExamIPaperInfo>) getAllPaperInfo();
         String thisInfo = paper.getPaperInfo().getTitle() + paper.getPaperInfo().getAuthor();
         for (int i = 0; i < infos.size(); i++) {
             if (thisInfo.equals(infos.get(i).getTitle() + infos.get(i).getAuthor())) return true;

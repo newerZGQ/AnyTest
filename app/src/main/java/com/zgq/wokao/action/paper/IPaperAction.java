@@ -7,9 +7,6 @@ import com.zgq.wokao.model.paper.IExamPaper;
  */
 
 public interface IPaperAction {
-    public void setPaperStar(IExamPaper paper,boolean stared);
-    public void openSchedule(IExamPaper paper);
-    public void closeSchedule(IExamPaper paper);
-    public void setDailyCount(IExamPaper paper,int count);
-
+    public void addExamPaper();
+    public void deleteExamPaper();
 }
