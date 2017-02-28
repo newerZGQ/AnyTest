@@ -6,7 +6,7 @@ import com.zgq.wokao.model.paper.IExamPaper;
  * Created by zgq on 2017/2/28.
  */
 
-public interface IPaperInfoAction extends IPaperAction {
+public interface IPaperInfoAction {
     public void star(IExamPaper paper);
     public void unStar(IExamPaper paper);
     public void setTitle(IExamPaper paper,String title);

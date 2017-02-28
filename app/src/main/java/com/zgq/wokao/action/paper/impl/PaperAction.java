@@ -16,9 +16,7 @@ import io.realm.Realm;
  * Created by zgq on 2017/2/28.
  */
 
-public class PaperAction extends BaseAction implements IPaperAction,IPaperInfoAction
-        ,IPaperSchdlAction,IQuestionAction,
-        IQuestionInfoAction,IQuestionRecordAction{
+public class PaperAction extends BaseAction implements IPaperAction,IQuestionAction {
     @Override
     public void star(final IExamPaper paper) {
         getRealm().executeTransaction(new Realm.Transaction() {
