@@ -1,17 +1,17 @@
 package com.zgq.wokao.data.realm.Paper;
 
+import com.zgq.wokao.data.realm.Paper.impl.PaperDaoImpl;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by zgq on 2017/2/11.
  */
 public class PaperDataProviderTest {
 
-    PaperDataProvider provider = PaperDataProvider.getInstance();
+    PaperDaoImpl provider = PaperDaoImpl.getInstance();
     @Before
     public void setUp() throws Exception {
 

@@ -10,9 +10,10 @@ import java.util.List;
  * Created by zgq on 2017/2/11.
  */
 
-public interface IPaperDataProvider {
+public interface IPaperDao extends IPaperInfoDao,IPaperSchdlDao{
+    public void addExamPaper();
+    public void deleteExamPaper();
     public List<NormalIExamPaper> getAllPaper();
-    public List<ExamIPaperInfo> getAllPaperInfo();
     public List<Searchable> search(String query);
     public List<ExamIPaperInfo> getSchedulePapers();
 }

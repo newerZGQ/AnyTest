@@ -2,7 +2,7 @@ package com.zgq.wokao.action.search;
 
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.zgq.wokao.Util.DateUtil;
-import com.zgq.wokao.data.realm.Paper.PaperDataProvider;
+import com.zgq.wokao.data.realm.Paper.impl.PaperDaoImpl;
 import com.zgq.wokao.data.realm.search.SearchHistoryProvider;
 import com.zgq.wokao.model.search.HistorySuggestion;
 import com.zgq.wokao.model.search.SearchHistory;
@@ -37,7 +37,7 @@ public class SearchAction {
         listener.onResults(results);
     }
     public static void findPaperAndQst(String query, Integer limit, OnFindPaperAndQstListener listener){
-        List<Searchable> list = PaperDataProvider.getInstance().search(query);
+        List<Searchable> list = PaperDaoImpl.getInstance().search(query);
         listener.onResults(list);
     }
 

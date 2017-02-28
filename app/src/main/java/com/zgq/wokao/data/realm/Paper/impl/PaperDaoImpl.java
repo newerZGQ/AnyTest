@@ -1,4 +1,4 @@
-package com.zgq.wokao.data.realm.Paper;
+package com.zgq.wokao.data.realm.Paper.impl;
 
 import android.os.Handler;
 import android.os.Message;
@@ -7,6 +7,9 @@ import com.zgq.wokao.Util.FileUtil;
 import com.zgq.wokao.Util.ListUtil;
 import com.zgq.wokao.Util.UUIDUtil;
 import com.zgq.wokao.data.realm.BaseRealmProvider;
+import com.zgq.wokao.data.realm.Paper.IPaperDao;
+import com.zgq.wokao.data.realm.Paper.IQuestionDao;
+import com.zgq.wokao.model.paper.IExamPaper;
 import com.zgq.wokao.model.paper.NormalIExamPaper;
 import com.zgq.wokao.model.paper.info.ExamIPaperInfo;
 import com.zgq.wokao.model.paper.question.IQuestion;
@@ -33,35 +36,163 @@ import io.realm.RealmResults;
 /**
  * Created by zgq on 16-6-20.
  */
-public class PaperDataProvider extends BaseRealmProvider<NormalIExamPaper> implements IPaperDataProvider ,IPaperInfoDataProvider{
+public class PaperDaoImpl extends BaseRealmProvider<NormalIExamPaper> implements IPaperDao, IQuestionDao {
 
-    private PaperDataProvider() {
+    private PaperDaoImpl() {
         setClass(NormalIExamPaper.class);
     }
 
-    public static final PaperDataProvider getInstance() {
+    public static final PaperDaoImpl getInstance() {
         return ProviderHolder.instance;
+    }
+
+    @Override
+    public void star(final IQuestion question) {
+        getRealm().executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                question.getInfo().setStared(true);
+            }
+        });
+
+    }
+
+    @Override
+    public void unStar(final IQuestion question) {
+        getRealm().executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                question.getInfo().setStared(false);
+            }
+        });
+    }
+
+    @Override
+    public void star(final IExamPaper paper) {
+        getRealm().executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                paper.getPaperInfo().setStared(true);
+            }
+        });
+    }
+
+    @Override
+    public void unStar(final IExamPaper paper) {
+        getRealm().executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                paper.getPaperInfo().setStared(false);
+            }
+        });
+    }
+
+    @Override
+    public void setTitle(IExamPaper paper, String title) {
+
+    }
+
+    @Override
+    public void addToSchedule(final IExamPaper paper) {
+        getRealm().executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                paper.getPaperInfo().setInSchedule(true);
+            }
+        });
+    }
+
+    @Override
+    public void removeFromSchedule(final IExamPaper paper) {
+        getRealm().executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                paper.getPaperInfo().setInSchedule(false);
+            }
+        });
+    }
+
+    @Override
+    public void openSchedule(final IExamPaper paper) {
+        getRealm().executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                paper.getPaperInfo().getSchedule().open();
+            }
+        });
+    }
+
+    @Override
+    public void closeSchedule(final IExamPaper paper) {
+        getRealm().executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                paper.getPaperInfo().getSchedule().close();
+            }
+        });
+    }
+
+    @Override
+    public void setDailyCount(final IExamPaper paper, final int count) {
+        getRealm().executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                paper.getPaperInfo().getSchedule().setDailyCount(count);
+            }
+        });
+    }
+
+    @Override
+    public void updateDailyRecord(final IExamPaper paper) {
+        getRealm().executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                paper.getPaperInfo().getSchedule().recordPlus1();
+            }
+        });
+    }
+
+    @Override
+    public void updateQuestionRecord(final IQuestion question, final boolean isCorrect) {
+        getRealm().executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                question.getRecord().updateRecord(isCorrect);
+            }
+        });
     }
 
 
     private static class ProviderHolder {
-        private static PaperDataProvider instance = new PaperDataProvider();
+        private static PaperDaoImpl instance = new PaperDaoImpl();
     }
 
     /**
      * 保存paper
+     *
      * @param entity
      */
     @Override
     public void save(NormalIExamPaper entity) {
-        if (examPaperIsExist(entity)){
+        if (examPaperIsExist(entity)) {
             return;
         }
         super.save(entity);
     }
 
+    @Override
+    public void addExamPaper() {
+
+    }
+
+    @Override
+    public void deleteExamPaper() {
+
+    }
+
     /**
      * get所有Paper
+     *
      * @return
      */
     @Override
@@ -72,6 +203,7 @@ public class PaperDataProvider extends BaseRealmProvider<NormalIExamPaper> imple
 
     /**
      * get所有paperinfo
+     *
      * @return
      */
     @Override
@@ -82,17 +214,18 @@ public class PaperDataProvider extends BaseRealmProvider<NormalIExamPaper> imple
 
     /**
      * 搜索符合条件的item
+     *
      * @param query
      * @return
      */
     @Override
     public List<Searchable> search(String query) {
-        if (query == null || query.equals("")){
+        if (query == null || query.equals("")) {
             return null;
         }
         List<SearchInfoItem> infos = searchInfoItem(query);
         List<SearchQstItem> qstItems = searchQstItemList(query);
-        List<Searchable> results = ListUtil.assem(cast2Searchable(infos),cast2Searchable(qstItems));
+        List<Searchable> results = ListUtil.assem(cast2Searchable(infos), cast2Searchable(qstItems));
         return results;
     }
 
@@ -100,31 +233,25 @@ public class PaperDataProvider extends BaseRealmProvider<NormalIExamPaper> imple
     public List<ExamIPaperInfo> getSchedulePapers() {
         RealmResults<ExamIPaperInfo> results = getRealm()
                 .where(ExamIPaperInfo.class)
-                .equalTo("isInSchedule",true)
+                .equalTo("isInSchedule", true)
                 .findAll();
         return changeRealmListToList(results);
     }
 
-    @Override
-    public void update(ExamIPaperInfo info) {
-        getRealm().beginTransaction();
-        getRealm().copyToRealmOrUpdate(info);
-        getRealm().commitTransaction();
-    }
-
     /**
      * 搜索满足条件的SearchInfoItem,仅匹配试卷标题
+     *
      * @param query
      * @return
      */
-    public List<SearchInfoItem> searchInfoItem(String query){
+    public List<SearchInfoItem> searchInfoItem(String query) {
         if (query == null || query.equals("")) return null;
         RealmQuery<ExamIPaperInfo> infoQuery = getRealm().where(ExamIPaperInfo.class);
-        infoQuery.contains("title",query);
+        infoQuery.contains("title", query);
 //        infoQuery.or().contains("author",query);
         List<ExamIPaperInfo> paperInfos = infoQuery.findAll();
         List<SearchInfoItem> results = new ArrayList<>();
-        for (ExamIPaperInfo info : paperInfos){
+        for (ExamIPaperInfo info : paperInfos) {
             SearchInfoItem item = new SearchInfoItem();
             item.setInfo(info);
             results.add(item);
@@ -135,22 +262,22 @@ public class PaperDataProvider extends BaseRealmProvider<NormalIExamPaper> imple
 
     /**
      * 从所有题目中匹配，仅匹配题干
+     *
      * @param query
      * @return
      */
-    public List<SearchQstItem> searchQstItemList(String query){
+    public List<SearchQstItem> searchQstItemList(String query) {
         List<SearchQstItem> results = new ArrayList<>();
         List<NormalIExamPaper> papers = getAllPaper();
-        for (NormalIExamPaper tmp : papers){
-            results = ListUtil.assem(results,searchQstFromPaper(query,tmp));
+        for (NormalIExamPaper tmp : papers) {
+            results = ListUtil.assem(results, searchQstFromPaper(query, tmp));
         }
 //        Log.d("---->>searchQstItemList",""+results.size());
         return results;
     }
 
 
-
-    private List<SearchQstItem> searchQstFromPaper(String query,NormalIExamPaper paper){
+    private List<SearchQstItem> searchQstFromPaper(String query, NormalIExamPaper paper) {
         List<SearchQstItem> results = new ArrayList<>();
         results = ListUtil.assem(
                 searchQstFromList(
@@ -159,42 +286,42 @@ public class PaperDataProvider extends BaseRealmProvider<NormalIExamPaper> imple
                         paper.getPaperInfo(), QuestionType.fillin.getIndex()),
                 searchQstFromList(
                         query,
-                        (List)paper.getTfQuestions(),
+                        (List) paper.getTfQuestions(),
                         paper.getPaperInfo(),
                         QuestionType.tf.getIndex()),
                 searchQstFromList(
                         query,
-                        (List)paper.getSglChoQuestions(),
+                        (List) paper.getSglChoQuestions(),
                         paper.getPaperInfo(),
                         QuestionType.sglc.getIndex()),
                 searchQstFromList(
                         query,
-                        (List)paper.getMultChoQuestions(),
+                        (List) paper.getMultChoQuestions(),
                         paper.getPaperInfo(),
                         QuestionType.mtlc.getIndex()),
                 searchQstFromList(
                         query,
-                        (List)paper.getDiscussQuestions(),
+                        (List) paper.getDiscussQuestions(),
                         paper.getPaperInfo(),
                         QuestionType.disc.getIndex())
-                );
+        );
 //        Log.d("---->>searchQstFromPape",""+results.size());
         return results;
     }
 
-    private <T extends RealmObject> List<T> changeRealmListToList(RealmResults<T> list){
+    private <T extends RealmObject> List<T> changeRealmListToList(RealmResults<T> list) {
         List<T> results = new ArrayList<>();
-        for (T t : list){
+        for (T t : list) {
             results.add(t);
         }
         return results;
     }
 
     private List<SearchQstItem> searchQstFromList(String query, List<IQuestion> list,
-                                                  ExamIPaperInfo info, int qstType){
+                                                  ExamIPaperInfo info, int qstType) {
         List<SearchQstItem> results = new ArrayList<>();
-        for (IQuestion tmp : list){
-            if (tmp.getBody().getContent().contains(query)){
+        for (IQuestion tmp : list) {
+            if (tmp.getBody().getContent().contains(query)) {
 //                Log.d("---->>searchQstFromList",tmp.getBody());
                 SearchQstItem item = new SearchQstItem();
                 item.setInfo(info);
@@ -210,14 +337,15 @@ public class PaperDataProvider extends BaseRealmProvider<NormalIExamPaper> imple
 
     /**
      * T实现了Searchable，该方法把list内所有item转换为Searchable类型
+     *
      * @param list
      * @param <T>
      * @return
      */
-    private <T extends Searchable> List<Searchable> cast2Searchable(List<T> list){
+    private <T extends Searchable> List<Searchable> cast2Searchable(List<T> list) {
         List<Searchable> results = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++){
-            results.add(i, (Searchable)list.get(i));
+        for (int i = 0; i < list.size(); i++) {
+            results.add(i, (Searchable) list.get(i));
         }
         return results;
     }
@@ -225,6 +353,7 @@ public class PaperDataProvider extends BaseRealmProvider<NormalIExamPaper> imple
 
     /**
      * 检查paper是否存在，根据paper 名称和作者名称
+     *
      * @param paper
      * @return
      */

@@ -2,39 +2,26 @@ package com.zgq.wokao.action.paper.impl;
 
 import com.zgq.wokao.action.BaseAction;
 import com.zgq.wokao.action.paper.IPaperAction;
-import com.zgq.wokao.action.paper.IPaperInfoAction;
-import com.zgq.wokao.action.paper.IPaperSchdlAction;
 import com.zgq.wokao.action.paper.IQuestionAction;
-import com.zgq.wokao.action.paper.IQuestionInfoAction;
-import com.zgq.wokao.action.paper.IQuestionRecordAction;
+import com.zgq.wokao.data.realm.Paper.impl.PaperDaoImpl;
 import com.zgq.wokao.model.paper.IExamPaper;
 import com.zgq.wokao.model.paper.question.IQuestion;
-
-import io.realm.Realm;
 
 /**
  * Created by zgq on 2017/2/28.
  */
 
 public class PaperAction extends BaseAction implements IPaperAction,IQuestionAction {
+
+    private PaperDaoImpl paperDao = PaperDaoImpl.getInstance();
     @Override
     public void star(final IExamPaper paper) {
-        getRealm().executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                paper.getPaperInfo().setStared(true);
-            }
-        });
+        paperDao.star(paper);
     }
 
     @Override
     public void unStar(final IExamPaper paper) {
-        getRealm().executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                paper.getPaperInfo().setStared(false);
-            }
-        });
+        paperDao.unStar(paper);
     }
 
     @Override
@@ -44,62 +31,32 @@ public class PaperAction extends BaseAction implements IPaperAction,IQuestionAct
 
     @Override
     public void addToSchedule(final IExamPaper paper) {
-        getRealm().executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                paper.getPaperInfo().setInSchedule(true);
-            }
-        });
+        paperDao.addToSchedule(paper);
     }
 
     @Override
     public void removeFromSchedule(final IExamPaper paper) {
-        getRealm().executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                paper.getPaperInfo().setInSchedule(false);
-            }
-        });
+        paperDao.removeFromSchedule(paper);
     }
 
     @Override
     public void openSchedule(final IExamPaper paper) {
-        getRealm().executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                paper.getPaperInfo().getSchedule().open();
-            }
-        });
+        paperDao.openSchedule(paper);
     }
 
     @Override
     public void closeSchedule(final IExamPaper paper) {
-        getRealm().executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                paper.getPaperInfo().getSchedule().close();
-            }
-        });
+        paperDao.closeSchedule(paper);
     }
 
     @Override
     public void setDailyCount(final IExamPaper paper, final int count) {
-        getRealm().executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                paper.getPaperInfo().getSchedule().setDailyCount(count);
-            }
-        });
+        paperDao.setDailyCount(paper,count);
     }
 
     @Override
     public void updateDailyRecord(final IExamPaper paper) {
-        getRealm().executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                paper.getPaperInfo().getSchedule().recordPlus1();
-            }
-        });
+        paperDao.updateDailyRecord(paper);
     }
 
     @Override
@@ -114,31 +71,16 @@ public class PaperAction extends BaseAction implements IPaperAction,IQuestionAct
 
     @Override
     public void star(final IQuestion question) {
-        getRealm().executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                question.getInfo().setStared(true);
-            }
-        });
+        paperDao.star(question);
     }
 
     @Override
     public void unStar(final IQuestion question) {
-        getRealm().executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                question.getInfo().setStared(false);
-            }
-        });
+        paperDao.unStar(question);
     }
 
     @Override
     public void updateQuestionRecord(final IQuestion question, final boolean isCorrect) {
-        getRealm().executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                question.getRecord().updateRecord(isCorrect);
-            }
-        });
+        paperDao.updateQuestionRecord(question,isCorrect);
     }
 }

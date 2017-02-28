@@ -24,7 +24,7 @@ import com.gigamole.navigationtabstrip.NavigationTabStrip;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 import com.zgq.wokao.R;
 import com.zgq.wokao.Util.ContextUtil;
-import com.zgq.wokao.data.realm.Paper.PaperDataProvider;
+import com.zgq.wokao.data.realm.Paper.impl.PaperDaoImpl;
 import com.zgq.wokao.model.paper.info.ExamIPaperInfo;
 import com.zgq.wokao.ui.adapter.HomePaperAdapter;
 import com.zgq.wokao.ui.adapter.HomeScheduleAdapter;
@@ -114,8 +114,8 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void getRecyclerViewData() {
-        allPaperInfos = (ArrayList<ExamIPaperInfo>) PaperDataProvider.getInstance().getAllPaperInfo();
-        schedPaperInfos = (ArrayList<ExamIPaperInfo>) PaperDataProvider.getInstance().getSchedulePapers();
+        allPaperInfos = (ArrayList<ExamIPaperInfo>) PaperDaoImpl.getInstance().getAllPaperInfo();
+        schedPaperInfos = (ArrayList<ExamIPaperInfo>) PaperDaoImpl.getInstance().getSchedulePapers();
     }
 
     private View initView(LayoutInflater inflater, ViewGroup container,
@@ -197,7 +197,7 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onStared(int position, boolean isStared) {
                 allPaperInfos.get(position).setStared(isStared);
-                PaperDataProvider.getInstance().update(allPaperInfos.get(position));
+                PaperDaoImpl.getInstance().update(allPaperInfos.get(position));
             }
 
             @Override

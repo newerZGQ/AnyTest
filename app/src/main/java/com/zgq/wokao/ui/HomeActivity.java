@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import com.zgq.wokao.R;
-import com.zgq.wokao.data.realm.Paper.PaperDataProvider;
 import com.zgq.wokao.ui.fragment.impl.HomeFragment;
 
 public class HomeActivity extends BaseActivity implements HomeFragment.OnHomeFragmentListener {

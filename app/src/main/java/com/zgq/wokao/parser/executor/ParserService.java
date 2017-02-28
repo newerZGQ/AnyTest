@@ -6,7 +6,7 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.zgq.wokao.data.realm.Paper.PaperDataProvider;
+import com.zgq.wokao.data.realm.Paper.impl.PaperDaoImpl;
 import com.zgq.wokao.model.paper.NormalIExamPaper;
 
 /**
@@ -45,8 +45,8 @@ public class ParserService extends Service {
         thread.setListener(new ParserThread.OnCompletedListener() {
             @Override
             public void onCompleted(NormalIExamPaper paper) {
-                PaperDataProvider.getInstance().save(paper);
-                Log.d("---->>papersize",""+PaperDataProvider.getInstance().getAllPaperInfo().size());
+                PaperDaoImpl.getInstance().save(paper);
+                Log.d("---->>papersize",""+ PaperDaoImpl.getInstance().getAllPaperInfo().size());
             }
         });
         thread.start();
