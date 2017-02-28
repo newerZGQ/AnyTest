@@ -4,7 +4,7 @@ import android.util.Log;
 
 import com.zgq.wokao.Util.FileUtil;
 import com.zgq.wokao.exception.ParseException;
-import com.zgq.wokao.model.paper.NormalExamPaper;
+import com.zgq.wokao.model.paper.NormalIExamPaper;
 import com.zgq.wokao.parser.ParserHelper;
 
 import java.io.FileNotFoundException;
@@ -27,7 +27,7 @@ public class ParserThread extends Thread {
     public void run() {
         super.run();
         try {
-            NormalExamPaper paper = ParserHelper.getInstance().parse(FileUtil.getOrInitAppStoragePath()+"/default_1.txt");
+            NormalIExamPaper paper = ParserHelper.getInstance().parse(FileUtil.getOrInitAppStoragePath()+"/default_1.txt");
             Log.d("---->>",paper.getPaperInfo().getTitle());
             Log.d("---->>",paper.getDiscussQuestions().get(0).getBody().getContent());
 
@@ -40,6 +40,6 @@ public class ParserThread extends Thread {
     }
 
     public interface OnCompletedListener{
-        public void onCompleted(NormalExamPaper paper);
+        public void onCompleted(NormalIExamPaper paper);
     }
 }

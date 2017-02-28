@@ -9,10 +9,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zgq.wokao.R;
+import com.zgq.wokao.model.paper.question.answer.IAnswer;
 import com.zgq.wokao.model.paper.question.impl.MultChoQuestion;
-import com.zgq.wokao.model.paper.MyQuestionAnswer;
+import com.zgq.wokao.model.paper.question.answer.MyAnswer;
 import com.zgq.wokao.model.paper.question.IQuestion;
-import com.zgq.wokao.model.paper.QuestionAnswer;
 import com.zgq.wokao.ui.view.QuestionOptionView;
 
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class MultChoQuestionAdapter extends PagerAdapter implements BaseStudySys
     private Context mContext;
     private LayoutInflater mLayoutInflater = null;
     private ArrayList<Boolean> hasShowAnswer = null;
-    private ArrayList<QuestionAnswer> myAnswer = new ArrayList<>();
+    private ArrayList<IAnswer> myAnswer = new ArrayList<>();
 
     private ViewGroup currentView = null;
     private int currentPosition = 0;
@@ -35,7 +35,7 @@ public class MultChoQuestionAdapter extends PagerAdapter implements BaseStudySys
 
     private MultiChoQuestionViewHolder holder;
 
-    public MultChoQuestionAdapter(ArrayList<IQuestion> datas, ArrayList<Boolean> hasShowAnswer, ArrayList<QuestionAnswer> myAnswer, Context context) {
+    public MultChoQuestionAdapter(ArrayList<IQuestion> datas, ArrayList<Boolean> hasShowAnswer, ArrayList<IAnswer> myAnswer, Context context) {
         super();
         this.datas = datas;
         this.mContext = context;
@@ -112,7 +112,7 @@ public class MultChoQuestionAdapter extends PagerAdapter implements BaseStudySys
             view.setOnClickListener(this);
         }
         if (hasShowAnswer.get(position)) {
-            String s = myAnswer.get(position).getAnswer();
+            String s = myAnswer.get(position).getContent();
             multiChoQuestionViewHolder.myAnswerTv.setText(s);
             int[] correctAnswer = getRealAnswerPosition(getRealAnswer(datas.get(position).getAnswer().getContent()));
             for (int j = 0; j < correctAnswer.length; j++) {
@@ -155,7 +155,7 @@ public class MultChoQuestionAdapter extends PagerAdapter implements BaseStudySys
         for (int j = 0; j < correctAnswer.length; j++) {
             optionViews.get(correctAnswer[j]).setToCorrect();
         }
-        holder.myAnswerTv.setText(myAnswer.get(currentPosition).getAnswer());
+        holder.myAnswerTv.setText(myAnswer.get(currentPosition).getContent());
         hasShowAnswer.set(currentPosition,true);
     }
 
@@ -172,9 +172,9 @@ public class MultChoQuestionAdapter extends PagerAdapter implements BaseStudySys
         int currentPosition = getCurrentPosition();
         if (hasShowAnswer.get(currentPosition)) return;
 //        Log.d("------position",""+currentPosition);
-        MyQuestionAnswer answer = (MyQuestionAnswer) myAnswer.get(currentPosition);
+        MyAnswer answer = (MyAnswer) myAnswer.get(currentPosition);
 
-        String answerContent = answer.getAnswer();
+        String answerContent = answer.getContent();
 //        Log.d("------content",""+answerContent);
 
         QuestionOptionView view = (QuestionOptionView) v;
@@ -190,7 +190,7 @@ public class MultChoQuestionAdapter extends PagerAdapter implements BaseStudySys
             view.setSelected();
             answerContent = answerContent + optionLabel;
         }
-        answer.setAnswer(getRealAnswer(answerContent));
+        answer.setContent(getRealAnswer(answerContent));
         myAnswer.set(currentPosition,answer);
 //        for (int i = 0;i<myAnswer.size();i++){
 //            Log.d("--------->>>",""+myAnswer.get(i).getContent());

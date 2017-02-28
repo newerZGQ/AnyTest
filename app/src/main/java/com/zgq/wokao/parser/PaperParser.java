@@ -1,7 +1,7 @@
 package com.zgq.wokao.parser;
 
 import com.zgq.wokao.exception.ParseException;
-import com.zgq.wokao.model.paper.ExamPaperInfo;
+import com.zgq.wokao.model.paper.info.ExamPaperInfo;
 import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.parser.context.PaperContext;
 import com.zgq.wokao.parser.context.item.PaperItemType;

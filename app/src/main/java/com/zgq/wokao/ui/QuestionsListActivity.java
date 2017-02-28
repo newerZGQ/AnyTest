@@ -17,11 +17,11 @@ import com.umeng.analytics.MobclickAgent;
 import com.zgq.wokao.R;
 import com.zgq.wokao.Util.DateUtil;
 import com.zgq.wokao.model.paper.Constant;
+import com.zgq.wokao.model.paper.NormalIExamPaper;
 import com.zgq.wokao.model.paper.question.impl.DiscussIQuestion;
-import com.zgq.wokao.model.paper.ExamPaperInfo;
+import com.zgq.wokao.model.paper.info.ExamPaperInfo;
 import com.zgq.wokao.model.paper.question.impl.FillInIQuestion;
 import com.zgq.wokao.model.paper.question.impl.MultChoQuestion;
-import com.zgq.wokao.model.paper.NormalExamPaper;
 import com.zgq.wokao.model.paper.question.impl.SglChoQuestion;
 import com.zgq.wokao.model.paper.question.impl.TFIQuestion;
 import com.zgq.wokao.ui.view.ObservableScrollView;
@@ -64,7 +64,7 @@ public class QuestionsListActivity extends AppCompatActivity implements View.OnC
 
     private int[] background = new int[3];
 
-    private NormalExamPaper normalExamPaper;
+    private NormalIExamPaper normalExamPaper;
     private ExamPaperInfo info;
 
     private int toolbarLayoutHeight;
@@ -128,7 +128,7 @@ public class QuestionsListActivity extends AppCompatActivity implements View.OnC
         background[2] = R.drawable.image_night_star;
 
         String paperId = getIntent().getStringExtra("paperId");
-        RealmResults<NormalExamPaper> papers = realm.where(NormalExamPaper.class).
+        RealmResults<NormalIExamPaper> papers = realm.where(NormalIExamPaper.class).
                 equalTo("paperInfo.id", paperId).
                 findAll();
 
@@ -325,7 +325,7 @@ public class QuestionsListActivity extends AppCompatActivity implements View.OnC
         }
     }
 
-    public int getStudiedCount(final NormalExamPaper normalExamPaper) {
+    public int getStudiedCount(final NormalIExamPaper normalExamPaper) {
         RealmList<FillInIQuestion> fillInQuestions = normalExamPaper.getFillInQuestions();
         RealmList<TFIQuestion> tfQuestions = normalExamPaper.getTfQuestions();
         RealmList<SglChoQuestion> sglChoQuestions = normalExamPaper.getSglChoQuestions();
@@ -367,7 +367,7 @@ public class QuestionsListActivity extends AppCompatActivity implements View.OnC
         return normalExamPaper.getPaperInfo().getStudyCount();
     }
 
-    private void setAllQuestionUnstudied(NormalExamPaper normalExamPaper) {
+    private void setAllQuestionUnstudied(NormalIExamPaper normalExamPaper) {
         final RealmList<FillInIQuestion> fillInQuestions = normalExamPaper.getFillInQuestions();
         final RealmList<TFIQuestion> tfQuestions = normalExamPaper.getTfQuestions();
         final RealmList<SglChoQuestion> sglChoQuestions = normalExamPaper.getSglChoQuestions();

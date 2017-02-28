@@ -1,9 +1,9 @@
 package com.zgq.wokao.parser;
 
+import com.zgq.wokao.model.paper.NormalIExamPaper;
 import com.zgq.wokao.model.paper.question.impl.DiscussIQuestion;
 import com.zgq.wokao.model.paper.question.impl.FillInIQuestion;
 import com.zgq.wokao.model.paper.question.impl.MultChoQuestion;
-import com.zgq.wokao.model.paper.NormalExamPaper;
 import com.zgq.wokao.model.paper.question.impl.SglChoQuestion;
 import com.zgq.wokao.model.paper.question.impl.TFIQuestion;
 import com.zgq.wokao.model.paper.question.IQuestion;
@@ -31,8 +31,8 @@ public class ParserHelper {
     private static class InstanceHolder{
         private static ParserHelper helper = new ParserHelper();
     }
-    public NormalExamPaper parse(String fileStr) throws FileNotFoundException, com.zgq.wokao.exception.ParseException {
-        NormalExamPaper paper = new NormalExamPaper();
+    public NormalIExamPaper parse(String fileStr) throws FileNotFoundException, com.zgq.wokao.exception.ParseException {
+        NormalIExamPaper paper = new NormalIExamPaper();
         this.fileString = fileStr;
         if (fileString == null || fileString.equals("")){
             throw new com.zgq.wokao.exception.ParseException("路径不存在");

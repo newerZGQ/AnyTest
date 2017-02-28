@@ -20,6 +20,8 @@ import android.widget.TextView;
 import com.umeng.analytics.MobclickAgent;
 import com.zgq.wokao.R;
 import com.zgq.wokao.Util.DateUtil;
+import com.zgq.wokao.model.paper.NormalIExamPaper;
+import com.zgq.wokao.model.paper.question.answer.IAnswer;
 import com.zgq.wokao.model.paper.question.impl.DiscussIQuestion;
 import com.zgq.wokao.model.paper.question.impl.FillInIQuestion;
 import com.zgq.wokao.model.paper.question.impl.MultChoQuestion;
@@ -33,9 +35,7 @@ import com.zgq.wokao.ui.adapter.MultChoQuestionAdapter;
 import com.zgq.wokao.ui.adapter.SglChoQuestionAdapter;
 import com.zgq.wokao.ui.adapter.TFQuestionAdapter;
 import com.zgq.wokao.model.paper.Constant;
-import com.zgq.wokao.model.paper.MyQuestionAnswer;
-import com.zgq.wokao.model.paper.NormalExamPaper;
-import com.zgq.wokao.model.paper.QuestionAnswer;
+import com.zgq.wokao.model.paper.question.answer.MyAnswer;
 
 
 import java.util.ArrayList;
@@ -94,19 +94,19 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
     RelativeLayout rootView;
 
     private Realm realm = Realm.getDefaultInstance();
-    private NormalExamPaper normalExamPaper;
+    private NormalIExamPaper normalExamPaper;
 
     private int currentQuestionType = Constant.FILLINQUESTIONTYPE;
 
     private ArrayList<IQuestion> currentAllQuestions = new ArrayList<>();
     private ArrayList<Boolean>  allAnsweredList = new ArrayList<>();
     private PagerAdapter        currentAllQstAdapter;
-    private ArrayList<QuestionAnswer> currentAllMyAnswer = new ArrayList<>();
+    private ArrayList<IAnswer> currentAllMyAnswer = new ArrayList<>();
 
     private ArrayList<IQuestion> currentStarQuestions = new ArrayList<>();
     private ArrayList<Boolean>  starAnsweredList = new ArrayList<>();
     private PagerAdapter        currentStarQstAdapter;
-    private ArrayList<QuestionAnswer> currentStarMyAnswer = new ArrayList<>();
+    private ArrayList<IAnswer> currentStarMyAnswer = new ArrayList<>();
 
     private final int ALLQUESTIONMODE = 1;
     private final int STARQUESTIONMODE = 2;
@@ -158,7 +158,7 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
         String title = intent.getStringExtra("paperTitle");
         String author = intent.getStringExtra("paperAuthor");
         currentQuestionType = intent.getIntExtra("qstType", Constant.FILLINQUESTIONTYPE);
-        RealmResults<NormalExamPaper> papers = realm.where(NormalExamPaper.class).
+        RealmResults<NormalIExamPaper> papers = realm.where(NormalIExamPaper.class).
                 equalTo("paperInfo.title", title).
                 equalTo("paperInfo.author", author).
                 findAll();
@@ -230,7 +230,7 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
     private void initCurrentMyAllAnswer(){
         currentAllMyAnswer.clear();
         for (int i = 0; i< currentAllQuestions.size(); i++){
-            MyQuestionAnswer answer = new MyQuestionAnswer();
+            MyAnswer answer = new MyAnswer();
             currentAllMyAnswer.add(answer);
         }
     }

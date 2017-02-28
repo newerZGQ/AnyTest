@@ -2,14 +2,13 @@ package com.zgq.wokao.data.realm.Paper;
 
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
 import com.zgq.wokao.Util.FileUtil;
 import com.zgq.wokao.Util.ListUtil;
 import com.zgq.wokao.Util.UUIDUtil;
 import com.zgq.wokao.data.realm.BaseRealmProvider;
-import com.zgq.wokao.model.paper.ExamPaperInfo;
-import com.zgq.wokao.model.paper.NormalExamPaper;
+import com.zgq.wokao.model.paper.NormalIExamPaper;
+import com.zgq.wokao.model.paper.info.ExamPaperInfo;
 import com.zgq.wokao.model.paper.question.IQuestion;
 import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.search.SearchInfoItem;
@@ -34,10 +33,10 @@ import io.realm.RealmResults;
 /**
  * Created by zgq on 16-6-20.
  */
-public class PaperDataProvider extends BaseRealmProvider<NormalExamPaper> implements IPaperDataProvider ,IPaperInfoDataProvider{
+public class PaperDataProvider extends BaseRealmProvider<NormalIExamPaper> implements IPaperDataProvider ,IPaperInfoDataProvider{
 
     private PaperDataProvider() {
-        setClass(NormalExamPaper.class);
+        setClass(NormalIExamPaper.class);
     }
 
     public static final PaperDataProvider getInstance() {
@@ -54,7 +53,7 @@ public class PaperDataProvider extends BaseRealmProvider<NormalExamPaper> implem
      * @param entity
      */
     @Override
-    public void save(NormalExamPaper entity) {
+    public void save(NormalIExamPaper entity) {
         if (examPaperIsExist(entity)){
             return;
         }
@@ -66,8 +65,8 @@ public class PaperDataProvider extends BaseRealmProvider<NormalExamPaper> implem
      * @return
      */
     @Override
-    public List<NormalExamPaper> getAllPaper() {
-        RealmResults<NormalExamPaper> results = getRealm().where(NormalExamPaper.class).findAll();
+    public List<NormalIExamPaper> getAllPaper() {
+        RealmResults<NormalIExamPaper> results = getRealm().where(NormalIExamPaper.class).findAll();
         return changeRealmListToList(results);
     }
 
@@ -141,8 +140,8 @@ public class PaperDataProvider extends BaseRealmProvider<NormalExamPaper> implem
      */
     public List<SearchQstItem> searchQstItemList(String query){
         List<SearchQstItem> results = new ArrayList<>();
-        List<NormalExamPaper> papers = getAllPaper();
-        for (NormalExamPaper tmp : papers){
+        List<NormalIExamPaper> papers = getAllPaper();
+        for (NormalIExamPaper tmp : papers){
             results = ListUtil.assem(results,searchQstFromPaper(query,tmp));
         }
 //        Log.d("---->>searchQstItemList",""+results.size());
@@ -151,7 +150,7 @@ public class PaperDataProvider extends BaseRealmProvider<NormalExamPaper> implem
 
 
 
-    private List<SearchQstItem> searchQstFromPaper(String query,NormalExamPaper paper){
+    private List<SearchQstItem> searchQstFromPaper(String query,NormalIExamPaper paper){
         List<SearchQstItem> results = new ArrayList<>();
         results = ListUtil.assem(
                 searchQstFromList(
@@ -229,7 +228,7 @@ public class PaperDataProvider extends BaseRealmProvider<NormalExamPaper> implem
      * @param paper
      * @return
      */
-    public boolean examPaperIsExist(NormalExamPaper paper) {
+    public boolean examPaperIsExist(NormalIExamPaper paper) {
         if (paper == null) {
             return false;
         }
@@ -247,11 +246,11 @@ public class PaperDataProvider extends BaseRealmProvider<NormalExamPaper> implem
         if (txtFile == null || xmlFile == null || !FileUtil.isTxtFile(txtFile) || !FileUtil.isXmlFile(xmlFile)) {
             return;
         }
-        NormalExamPaper paper = null;
+        NormalIExamPaper paper = null;
         Callable callable = new ParseTxt2Realm(txtFile, xmlFile);
         Future future = pool.submit(callable);
         try {
-            paper = (NormalExamPaper) future.get();
+            paper = (NormalIExamPaper) future.get();
         } catch (Exception e) {
             Message message = Message.obtain();
             message.what = 0X1113;
@@ -281,10 +280,10 @@ public class PaperDataProvider extends BaseRealmProvider<NormalExamPaper> implem
         }
 
         @Override
-        public NormalExamPaper call() {
+        public NormalIExamPaper call() {
             DataTxt2XmlParser dataTxt2XmlParser = DataTxt2XmlParser.getInstance();
             DataXml2ObjParser dataXml2ObjParser = DataXml2ObjParser.getInstance();
-            NormalExamPaper normalExamPaper = null;
+            NormalIExamPaper normalExamPaper = null;
             try {
                 if (xmlFile.exists()) {
                     xmlFile.delete();

@@ -3,11 +3,11 @@ package com.zgq.wokao.parser;
 import android.util.Xml;
 
 import com.zgq.wokao.Util.UUIDUtil;
+import com.zgq.wokao.model.paper.NormalIExamPaper;
 import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.paper.question.impl.DiscussIQuestion;
 import com.zgq.wokao.model.paper.question.impl.FillInIQuestion;
 import com.zgq.wokao.model.paper.question.impl.MultChoQuestion;
-import com.zgq.wokao.model.paper.NormalExamPaper;
 import com.zgq.wokao.model.paper.question.impl.SglChoQuestion;
 import com.zgq.wokao.model.paper.question.option.Option;
 import com.zgq.wokao.model.paper.question.impl.TFIQuestion;
@@ -37,13 +37,13 @@ public class DataXml2ObjParser {
         return dataXml2ObjParser;
     }
 
-    public NormalExamPaper parse(File xmlFile) throws Exception,ParseException {
+    public NormalIExamPaper parse(File xmlFile) throws Exception,ParseException {
 
         if (!xmlFile.exists() || xmlFile == null) return null;
 
         FileInputStream fileInputStream = new FileInputStream(xmlFile);
 
-        NormalExamPaper normalExamPaper = new NormalExamPaper();
+        NormalIExamPaper normalExamPaper = new NormalIExamPaper();
         RealmList<FillInIQuestion> fillInQuestions = new RealmList<>();
         RealmList<TFIQuestion> tfQuestions = new RealmList<>();
         RealmList<SglChoQuestion> sglChoQuestions = new RealmList<>();

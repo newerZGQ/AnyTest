@@ -1,6 +1,6 @@
 package com.zgq.wokao.model.search;
 
-import com.zgq.wokao.model.paper.ExamPaperInfo;
+import com.zgq.wokao.model.paper.info.ExamPaperInfo;
 
 /**
  * Created by zgq on 2017/2/11.

@@ -9,9 +9,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zgq.wokao.R;
-import com.zgq.wokao.model.paper.MyQuestionAnswer;
+import com.zgq.wokao.model.paper.question.answer.IAnswer;
+import com.zgq.wokao.model.paper.question.answer.MyAnswer;
 import com.zgq.wokao.model.paper.question.IQuestion;
-import com.zgq.wokao.model.paper.QuestionAnswer;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -25,7 +25,7 @@ public class TFQuestionAdapter extends PagerAdapter implements BaseStudySystemAd
     private Context mContext ;
     private LayoutInflater mLayoutInflater = null;
     private ArrayList<Boolean> hasShowAnswer = null;
-    private ArrayList<QuestionAnswer> myAnswer = new ArrayList<>();
+    private ArrayList<IAnswer> myAnswer = new ArrayList<>();
 
     private View currentView = null;
     private int currentPosition = 0;
@@ -33,7 +33,7 @@ public class TFQuestionAdapter extends PagerAdapter implements BaseStudySystemAd
 
     private TFQuestionViewHolder holder;
 
-    public TFQuestionAdapter(ArrayList<IQuestion> datas, ArrayList<Boolean> hasShowAnswer, ArrayList<QuestionAnswer> myAnswer, Context context) {
+    public TFQuestionAdapter(ArrayList<IQuestion> datas, ArrayList<Boolean> hasShowAnswer, ArrayList<IAnswer> myAnswer, Context context) {
         super();
         this.datas = datas;
         this.mContext = context ;
@@ -98,7 +98,7 @@ public class TFQuestionAdapter extends PagerAdapter implements BaseStudySystemAd
             }
         });
         if (hasShowAnswer.get(position)) {
-            String answer = myAnswer.get(position).getAnswer();
+            String answer = myAnswer.get(position).getContent();
             String answer1 = getRealAnswer(datas.get(position).getAnswer().getContent());
             TextView trueLabel = (TextView) holder.optionTrue.findViewById(R.id.tfqst_option_true_label);
             TextView falseLabel = (TextView) holder.optionFalse.findViewById(R.id.tfqst_option_false_label);
@@ -155,8 +155,8 @@ public class TFQuestionAdapter extends PagerAdapter implements BaseStudySystemAd
     }
 
     public void onSelectedTrueOption(View view,int position){
-        MyQuestionAnswer answer = new MyQuestionAnswer();
-        answer.setAnswer("true");
+        MyAnswer answer = new MyAnswer();
+        answer.setContent("true");
         myAnswer.set(position,answer);
         hasShowAnswer.set(position,true);
         View view1 = getCurrentView();
@@ -164,7 +164,7 @@ public class TFQuestionAdapter extends PagerAdapter implements BaseStudySystemAd
         final TextView trueLabel = (TextView) holder.optionTrue.findViewById(R.id.tfqst_option_true_label);
         final TextView falseLabel = (TextView) holder.optionFalse.findViewById(R.id.tfqst_option_false_label);
 
-        if (answer.getAnswer().equals(getRealAnswer(datas.get(position).getAnswer().getContent()))){
+        if (answer.getContent().equals(getRealAnswer(datas.get(position).getAnswer().getContent()))){
             holder.optionFalse.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -185,8 +185,8 @@ public class TFQuestionAdapter extends PagerAdapter implements BaseStudySystemAd
         }
     }
     public void onSelectedFalseOption(View view,int position){
-        MyQuestionAnswer answer = new MyQuestionAnswer();
-        answer.setAnswer("false");
+        MyAnswer answer = new MyAnswer();
+        answer.setContent("false");
         myAnswer.set(position,answer);
         hasShowAnswer.set(position,true);
         View view1 = getCurrentView();
@@ -194,7 +194,7 @@ public class TFQuestionAdapter extends PagerAdapter implements BaseStudySystemAd
         final TextView trueLabel = (TextView) holder.optionTrue.findViewById(R.id.tfqst_option_true_label);
         final TextView falseLabel = (TextView) holder.optionFalse.findViewById(R.id.tfqst_option_false_label);
 
-        if (answer.getAnswer().equals(getRealAnswer(datas.get(position).getAnswer().getContent()))){
+        if (answer.getContent().equals(getRealAnswer(datas.get(position).getAnswer().getContent()))){
             holder.optionFalse.postDelayed(new Runnable() {
                 @Override
                 public void run() {

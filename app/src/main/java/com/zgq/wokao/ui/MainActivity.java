@@ -26,8 +26,8 @@ import com.zgq.wokao.R;
 import com.zgq.wokao.Util.DrawableUtil;
 import com.zgq.wokao.Util.NormalExamPaperUtil;
 import com.zgq.wokao.Util.StringUtil;
-import com.zgq.wokao.model.paper.ExamPaperInfo;
-import com.zgq.wokao.model.paper.NormalExamPaper;
+import com.zgq.wokao.model.paper.NormalIExamPaper;
+import com.zgq.wokao.model.paper.info.ExamPaperInfo;
 import com.zgq.wokao.data.realm.Paper.PaperDataProvider;
 import com.zgq.wokao.action.setting.MarketChecker;
 import com.zgq.wokao.ui.util.DialogUtil;
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private Realm realm = Realm.getDefaultInstance();
     private ArrayList<ExamPaperInfo> paperInfos = new ArrayList<>();
-    private ArrayList<NormalExamPaper> papers = new ArrayList<>();
+    private ArrayList<NormalIExamPaper> papers = new ArrayList<>();
 
     private boolean actionModeIsActive = false;
 
@@ -122,10 +122,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void getRecyclerViewData() {
-        papers = (ArrayList<NormalExamPaper>) PaperDataProvider.getInstance().getAllPaper();
+        papers = (ArrayList<NormalIExamPaper>) PaperDataProvider.getInstance().getAllPaper();
         NormalExamPaperUtil.sortPapers(papers);
         paperInfos.clear();
-        for (NormalExamPaper paper : papers) {
+        for (NormalIExamPaper paper : papers) {
             paperInfos.add(paper.getPaperInfo());
         }
     }

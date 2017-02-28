@@ -1,12 +1,9 @@
 package com.zgq.wokao.model.paper.question.answer;
 
-import io.realm.RealmObject;
-
 /**
- * Created by zgq on 2017/2/27.
+ * Created by zgq on 16-7-17.
  */
-
-public class Answer extends RealmObject implements IAnswer {
+public class MyAnswer implements IAnswer {
     private String content;
 
     @Override

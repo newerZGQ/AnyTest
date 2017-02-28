@@ -1,5 +1,6 @@
 package com.zgq.wokao.model.paper;
 
+import com.zgq.wokao.model.paper.info.ExamPaperInfo;
 import com.zgq.wokao.model.paper.question.IQuestion;
 import com.zgq.wokao.model.paper.question.impl.DiscussIQuestion;
 import com.zgq.wokao.model.paper.question.impl.FillInIQuestion;
@@ -15,7 +16,7 @@ import io.realm.RealmObject;
 /**
  * Created by zgq on 16-6-18.
  */
-public class NormalExamPaper extends RealmObject implements ExamPaper {
+public class NormalIExamPaper extends RealmObject implements IExamPaper {
     private ExamPaperInfo paperInfo = new ExamPaperInfo();
     private RealmList<FillInIQuestion> fillInQuestions;
     private RealmList<TFIQuestion> tfQuestions;
@@ -23,12 +24,12 @@ public class NormalExamPaper extends RealmObject implements ExamPaper {
     private RealmList<MultChoQuestion> multChoQuestions;
     private RealmList<DiscussIQuestion> discussQuestions;
 
-    public NormalExamPaper(){}
+    public NormalIExamPaper(){}
 
-    public NormalExamPaper(ExamPaperInfo paperInfo, RealmList<FillInIQuestion> fillInQuestions,
-                           RealmList<TFIQuestion> tfQuestions, RealmList<SglChoQuestion> sglChoQuestions,
-                           RealmList<MultChoQuestion> multChoQuestions,
-                           RealmList<DiscussIQuestion> discussQuestions) {
+    public NormalIExamPaper(ExamPaperInfo paperInfo, RealmList<FillInIQuestion> fillInQuestions,
+                            RealmList<TFIQuestion> tfQuestions, RealmList<SglChoQuestion> sglChoQuestions,
+                            RealmList<MultChoQuestion> multChoQuestions,
+                            RealmList<DiscussIQuestion> discussQuestions) {
         this.paperInfo = paperInfo;
         this.fillInQuestions = fillInQuestions;
         this.tfQuestions = tfQuestions;

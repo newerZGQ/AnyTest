@@ -1,4 +1,4 @@
-package com.zgq.wokao.model.paper;
+package com.zgq.wokao.model.paper.info;
 
 import com.zgq.wokao.model.schedule.Schedule;
 import com.zgq.wokao.model.search.Searchable;

@@ -1,6 +1,5 @@
 package com.zgq.wokao.model.paper.question;
 
-import com.zgq.wokao.model.paper.QuestionAnswer;
 import com.zgq.wokao.model.paper.question.answer.Answer;
 import com.zgq.wokao.model.paper.question.body.QuestionBody;
 import com.zgq.wokao.model.paper.question.info.QuestionInfo;
