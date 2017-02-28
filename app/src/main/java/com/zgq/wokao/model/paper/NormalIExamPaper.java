@@ -97,6 +97,6 @@ public class NormalIExamPaper extends RealmObject implements IExamPaper {
 
     @Override
     public String toString() {
-        return "试卷："+paperInfo.getTitle()+"\n"+"  "+"作者"+paperInfo.getAuthor();
+        return "试卷："+paperInfo.getTitle()+"\n"+"  "+"作者"+paperInfo.getAuthor()+" id:"+paperInfo.getId();
     }
 }

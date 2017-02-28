@@ -1,5 +1,6 @@
 package com.zgq.wokao.parser;
 
+import com.zgq.wokao.exception.ParseException;
 import com.zgq.wokao.model.paper.NormalIExamPaper;
 import com.zgq.wokao.model.paper.question.impl.DiscussIQuestion;
 import com.zgq.wokao.model.paper.question.impl.FillInIQuestion;
@@ -12,6 +13,7 @@ import com.zgq.wokao.model.paper.QuestionType;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import io.realm.RealmList;
@@ -41,8 +43,44 @@ public class ParserHelper {
         if (!file.exists()){
             throw new com.zgq.wokao.exception.ParseException("文件不存在");
         }
+//        PaperParser paperParser = new PaperParser();
+        return parse(new FileInputStream(file));
+//        ArrayList<PaperParser.Topic> topics = paperParser.parse(new FileInputStream(file));
+//        paper.setPaperInfo(paperParser.getInfo());
+//        if (topics.size() == 0){
+//            throw new com.zgq.wokao.exception.ParseException("请检查大标题");
+//        }
+//        for (PaperParser.Topic tmp : topics){
+//            switch (tmp.getType().getIndex()){
+//                case QuestionType.fillin_index:
+//                    paper.setFillInQuestions(parseFillin(tmp));
+//                    break;
+//                case QuestionType.tf_index:
+//                    paper.setTfQuestions(parseTF(tmp));
+//                    break;
+//                case QuestionType.sglc_index:
+//                    paper.setSglChoQuestions(parseSgl(tmp));
+//                    break;
+//                case QuestionType.mtlc_index:
+//                    paper.setMultChoQuestions(parseMult(tmp));
+//                    break;
+//                case QuestionType.disc_index:
+//                    paper.setDiscussQuestions(parseDis(tmp));
+//                    break;
+//                case QuestionType.noqst_index:
+//                    break;
+//            }
+//        }
+//        return paper;
+    }
+
+    public NormalIExamPaper parse(InputStream inputStream) throws ParseException {
+        if (inputStream == null){
+            throw new com.zgq.wokao.exception.ParseException("请检查是否为空文件");
+        }
+        NormalIExamPaper paper = new NormalIExamPaper();
         PaperParser paperParser = new PaperParser();
-        ArrayList<PaperParser.Topic> topics = paperParser.parse(new FileInputStream(file));
+        ArrayList<PaperParser.Topic> topics = paperParser.parse(inputStream);
         paper.setPaperInfo(paperParser.getInfo());
         if (topics.size() == 0){
             throw new com.zgq.wokao.exception.ParseException("请检查大标题");

@@ -15,7 +15,7 @@ import java.util.List;
  * Created by zgq on 2017/2/15.
  */
 
-public class SearchHelper {
+public class SearchAction {
     public interface OnFindPaperAndQstListener {
         void onResults(List<Searchable> results);
     }

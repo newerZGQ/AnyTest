@@ -1,5 +1,6 @@
-package com.zgq.wokao.action.paper;
+package com.zgq.wokao.action.parser;
 
+import com.zgq.wokao.exception.ParseException;
 import com.zgq.wokao.model.paper.IExamPaper;
 
 import java.io.InputStream;
@@ -9,7 +10,7 @@ import java.io.InputStream;
  */
 
 public interface IParser {
-    public IExamPaper parseFromFile(String filePath);
+    public IExamPaper parseFromFile(String filePath) throws ParseException;
     public IExamPaper parseFromIS(InputStream inputStream);
     public IExamPaper parseFromString(String content);
 }

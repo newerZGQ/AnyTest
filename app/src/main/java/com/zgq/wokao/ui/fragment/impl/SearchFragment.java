@@ -21,7 +21,7 @@ import com.zgq.wokao.R;
 import com.zgq.wokao.ui.adapter.SearchResultsListAdapter;
 import com.zgq.wokao.model.search.HistorySuggestion;
 import com.zgq.wokao.model.search.Searchable;
-import com.zgq.wokao.action.search.SearchHelper;
+import com.zgq.wokao.action.search.SearchAction;
 import com.zgq.wokao.ui.fragment.BaseFragment;
 
 import java.util.List;
@@ -103,7 +103,7 @@ public class SearchFragment extends BaseFragment {
                     mSearchView.clearSuggestions();
                 } else {
                     mSearchView.showProgress();
-                    SearchHelper.findSuggesions(newQuery, 10, new SearchHelper.OnFindSuggestionsListener() {
+                    SearchAction.findSuggesions(newQuery, 10, new SearchAction.OnFindSuggestionsListener() {
                         @Override
                         public void onResults(List<HistorySuggestion> results) {
                             mSearchView.swapSuggestions(results);
@@ -121,11 +121,11 @@ public class SearchFragment extends BaseFragment {
             public void onSuggestionClicked(final SearchSuggestion searchSuggestion) {
                 final HistorySuggestion suggestion = (HistorySuggestion) searchSuggestion;
                 mLastQuery = suggestion.getBody();
-                SearchHelper.findPaperAndQst(mLastQuery, null, new SearchHelper.OnFindPaperAndQstListener() {
+                SearchAction.findPaperAndQst(mLastQuery, null, new SearchAction.OnFindPaperAndQstListener() {
                     @Override
                     public void onResults(List<Searchable> results) {
                         mSearchResultsAdapter.swapData(results);
-                        SearchHelper.clickSuggestion(suggestion);
+                        SearchAction.clickSuggestion(suggestion);
 //                        Log.d("----->>de",SearchHistoryProvider.getInstance().query("的").getDate());
                     }
                 });
@@ -135,12 +135,12 @@ public class SearchFragment extends BaseFragment {
             @Override
             public void onSearchAction(String query) {
                 mLastQuery = query;
-                SearchHelper.findPaperAndQst(mLastQuery, null, new SearchHelper.OnFindPaperAndQstListener() {
+                SearchAction.findPaperAndQst(mLastQuery, null, new SearchAction.OnFindPaperAndQstListener() {
                     @Override
                     public void onResults(List<Searchable> results) {
                         mSearchResultsAdapter.swapData(results);
                         HistorySuggestion suggestion = new HistorySuggestion(mLastQuery);
-                        SearchHelper.addSuggestion(suggestion);
+                        SearchAction.addSuggestion(suggestion);
                     }
                 });
 //                Log.d(TAG, "onSearchAction()");
@@ -152,7 +152,7 @@ public class SearchFragment extends BaseFragment {
             public void onFocus() {
 
                 //show suggestions when search bar gains focus (typically history suggestions)
-                SearchHelper.getDefaultSuggestions(5, new SearchHelper.OnFindSuggestionsListener() {
+                SearchAction.getDefaultSuggestions(5, new SearchAction.OnFindSuggestionsListener() {
                     @Override
                     public void onResults(List<HistorySuggestion> results) {
                         mSearchView.swapSuggestions(results);
