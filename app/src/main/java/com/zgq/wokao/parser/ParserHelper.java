@@ -45,7 +45,7 @@ public class ParserHelper {
         }
 //        PaperParser paperParser = new PaperParser();
         return parse(new FileInputStream(file));
-//        ArrayList<PaperParser.Topic> topics = paperParser.parse(new FileInputStream(file));
+//        ArrayList<PaperParser.Topic> topics = paperParser.parseAndSave(new FileInputStream(file));
 //        paper.setPaperInfo(paperParser.getInfo());
 //        if (topics.size() == 0){
 //            throw new com.zgq.wokao.exception.ParseException("请检查大标题");

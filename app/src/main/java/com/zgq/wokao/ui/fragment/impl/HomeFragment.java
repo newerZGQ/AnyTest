@@ -24,8 +24,11 @@ import com.gigamole.navigationtabstrip.NavigationTabStrip;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 import com.zgq.wokao.R;
 import com.zgq.wokao.Util.ContextUtil;
+import com.zgq.wokao.action.paper.impl.PaperAction;
 import com.zgq.wokao.data.realm.Paper.impl.PaperDaoImpl;
-import com.zgq.wokao.model.paper.info.ExamIPaperInfo;
+import com.zgq.wokao.model.paper.NormalIExamPaper;
+import com.zgq.wokao.model.paper.info.ExamPaperInfo;
+import com.zgq.wokao.model.paper.info.IPaperInfo;
 import com.zgq.wokao.ui.adapter.HomePaperAdapter;
 import com.zgq.wokao.ui.adapter.HomeScheduleAdapter;
 import com.zgq.wokao.ui.fragment.BaseFragment;
@@ -60,8 +63,8 @@ public class HomeFragment extends BaseFragment {
     private String mParam2;
 
     private Realm realm = Realm.getDefaultInstance();
-    private ArrayList<ExamIPaperInfo> allPaperInfos = new ArrayList<>();
-    private ArrayList<ExamIPaperInfo> schedPaperInfos = new ArrayList<>();
+    private ArrayList<IPaperInfo> allPaperInfos = new ArrayList<>();
+    private ArrayList<IPaperInfo> schedPaperInfos = new ArrayList<>();
 
 
     private MyHandler myHandler;
@@ -69,6 +72,8 @@ public class HomeFragment extends BaseFragment {
     private DialogUtil.Listener marketListener;
 
     private OnHomeFragmentListener mListener;
+
+    private PaperAction paperAction = PaperAction.getInstance();
 
     public HomeFragment() {
         // Required empty public constructor
@@ -114,8 +119,8 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void getRecyclerViewData() {
-        allPaperInfos = (ArrayList<ExamIPaperInfo>) PaperDaoImpl.getInstance().getAllPaperInfo();
-        schedPaperInfos = (ArrayList<ExamIPaperInfo>) PaperDaoImpl.getInstance().getSchedulePapers();
+        allPaperInfos = (ArrayList<IPaperInfo>) PaperAction.getInstance().getAllPaperInfo();
+        schedPaperInfos = (ArrayList<IPaperInfo>) PaperAction.getInstance().getPaperInfosInSchdl();
     }
 
     private View initView(LayoutInflater inflater, ViewGroup container,
@@ -197,7 +202,7 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onStared(int position, boolean isStared) {
                 allPaperInfos.get(position).setStared(isStared);
-                PaperDaoImpl.getInstance().update(allPaperInfos.get(position));
+                paperAction.star(allPaperInfos.get(position).getId());
             }
 
             @Override

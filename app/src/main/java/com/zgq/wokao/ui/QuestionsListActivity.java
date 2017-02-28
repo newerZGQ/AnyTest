@@ -18,8 +18,8 @@ import com.zgq.wokao.R;
 import com.zgq.wokao.Util.DateUtil;
 import com.zgq.wokao.model.paper.Constant;
 import com.zgq.wokao.model.paper.NormalIExamPaper;
+import com.zgq.wokao.model.paper.info.ExamPaperInfo;
 import com.zgq.wokao.model.paper.question.impl.DiscussIQuestion;
-import com.zgq.wokao.model.paper.info.ExamIPaperInfo;
 import com.zgq.wokao.model.paper.question.impl.FillInIQuestion;
 import com.zgq.wokao.model.paper.question.impl.MultChoQuestion;
 import com.zgq.wokao.model.paper.question.impl.SglChoQuestion;
@@ -65,7 +65,7 @@ public class QuestionsListActivity extends AppCompatActivity implements View.OnC
     private int[] background = new int[3];
 
     private NormalIExamPaper normalExamPaper;
-    private ExamIPaperInfo info;
+    private ExamPaperInfo info;
 
     private int toolbarLayoutHeight;
     private int zoomViewHeight;

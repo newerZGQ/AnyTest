@@ -27,7 +27,7 @@ import com.zgq.wokao.Util.DrawableUtil;
 import com.zgq.wokao.Util.NormalExamPaperUtil;
 import com.zgq.wokao.Util.StringUtil;
 import com.zgq.wokao.model.paper.NormalIExamPaper;
-import com.zgq.wokao.model.paper.info.ExamIPaperInfo;
+import com.zgq.wokao.model.paper.info.ExamPaperInfo;
 import com.zgq.wokao.data.realm.Paper.impl.PaperDaoImpl;
 import com.zgq.wokao.action.setting.MarketChecker;
 import com.zgq.wokao.ui.util.DialogUtil;
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private Realm realm = Realm.getDefaultInstance();
-    private ArrayList<ExamIPaperInfo> paperInfos = new ArrayList<>();
+    private ArrayList<ExamPaperInfo> paperInfos = new ArrayList<>();
     private ArrayList<NormalIExamPaper> papers = new ArrayList<>();
 
     private boolean actionModeIsActive = false;
@@ -368,14 +368,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //recyclerView adapter
     public class PaperInfoAdapter extends RecyclerView.Adapter {
-        private ArrayList<ExamIPaperInfo> paperInfos = null;
+        private ArrayList<ExamPaperInfo> paperInfos = null;
         private ArrayList<Boolean> isItemSelectedList = new ArrayList<>();
         private ArrayList<Integer> colorlabelList = null;
         private final int GROUPTYPE = 1;
         private final int ITEMTYPE = 2;
         private int viewType = GROUPTYPE;
 
-        public PaperInfoAdapter(ArrayList<ExamIPaperInfo> paperInfos) {
+        public PaperInfoAdapter(ArrayList<ExamPaperInfo> paperInfos) {
             this.paperInfos = paperInfos;
             initData();
         }
@@ -403,7 +403,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (paperInfos.size() == 0 || paperInfos == null) return;
 
             final PaperInfoViewHolder holder1 = (PaperInfoViewHolder) holder;
-            final ExamIPaperInfo info = (ExamIPaperInfo) paperInfos.get(holder1.getAdapterPosition());
+            final ExamPaperInfo info = (ExamPaperInfo) paperInfos.get(holder1.getAdapterPosition());
             //设置paperlabel的正面以及反面
             holder1.paperLabel.setSidesStyle(new RotateTextView.UpAndDownSideStyle() {
                 @Override
@@ -560,7 +560,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             notifyDataSetChanged();
         }
 
-        private String getAuthorAndData(ExamIPaperInfo info) {
+        private String getAuthorAndData(ExamPaperInfo info) {
             String author = info.getAuthor();
             String lastDate = info.getLastStudyDate();
             if (author == null || author.equals("")) author = "      ";

@@ -10,7 +10,8 @@ import android.widget.TextView;
 import com.zgq.wokao.R;
 import com.zgq.wokao.Util.ContextUtil;
 import com.zgq.wokao.Util.DrawableUtil;
-import com.zgq.wokao.model.paper.info.ExamIPaperInfo;
+import com.zgq.wokao.model.paper.info.ExamPaperInfo;
+import com.zgq.wokao.model.paper.info.IPaperInfo;
 import com.zgq.wokao.ui.view.RotateTextView;
 
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ import java.util.ArrayList;
 public class HomePaperAdapter extends RecyclerView.Adapter {
     //recyclerView adapter
     private android.content.Context context = ContextUtil.getContext();
-    private ArrayList<ExamIPaperInfo> paperInfos = null;
+    private ArrayList<IPaperInfo> paperInfos = null;
     private ArrayList<Boolean> isItemSelectedList = new ArrayList<>();
     private ArrayList<Integer> colorlabelList = null;
     private final int GROUPTYPE = 1;
@@ -31,7 +32,7 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
 
     private PaperAdapterListener listener;
 
-    public HomePaperAdapter(ArrayList<ExamIPaperInfo> paperInfos, PaperAdapterListener listener) {
+    public HomePaperAdapter(ArrayList<IPaperInfo> paperInfos, PaperAdapterListener listener) {
         this.listener = listener;
         this.paperInfos = paperInfos;
         initData();
@@ -62,7 +63,7 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
         final int positionTmp = position;
 
         final PaperInfoViewHolder holder1 = (PaperInfoViewHolder) holder;
-        final ExamIPaperInfo info = paperInfos.get(position);
+        final IPaperInfo info = paperInfos.get(position);
         //设置paperlabel的正面以及反面
 //        holder1.paperLabel.setSidesStyle(new RotateTextView.UpAndDownSideStyle() {
 //            @Override
@@ -212,7 +213,7 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
-    private String getAuthorAndData(ExamIPaperInfo info) {
+    private String getAuthorAndData(IPaperInfo info) {
         String author = info.getAuthor();
         String lastDate = info.getLastStudyDate();
         if (author == null || author.equals("")) author = "      ";

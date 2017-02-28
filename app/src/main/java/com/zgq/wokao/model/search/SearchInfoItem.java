@@ -1,19 +1,19 @@
 package com.zgq.wokao.model.search;
 
-import com.zgq.wokao.model.paper.info.ExamIPaperInfo;
+import com.zgq.wokao.model.paper.info.ExamPaperInfo;
 
 /**
  * Created by zgq on 2017/2/11.
  */
 
 public class SearchInfoItem implements Searchable {
-    private ExamIPaperInfo info;
+    private ExamPaperInfo info;
 
-    public ExamIPaperInfo getInfo() {
+    public ExamPaperInfo getInfo() {
         return info;
     }
 
-    public void setInfo(ExamIPaperInfo info) {
+    public void setInfo(ExamPaperInfo info) {
         this.info = info;
     }
 }

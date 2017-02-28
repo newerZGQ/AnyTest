@@ -4,8 +4,16 @@ import com.zgq.wokao.action.BaseAction;
 import com.zgq.wokao.action.paper.IPaperAction;
 import com.zgq.wokao.action.paper.IQuestionAction;
 import com.zgq.wokao.data.realm.Paper.impl.PaperDaoImpl;
+import com.zgq.wokao.exception.ParseException;
 import com.zgq.wokao.model.paper.IExamPaper;
+import com.zgq.wokao.model.paper.NormalIExamPaper;
+import com.zgq.wokao.model.paper.info.IPaperInfo;
 import com.zgq.wokao.model.paper.question.IQuestion;
+import com.zgq.wokao.parser.ParserHelper;
+
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.util.List;
 
 /**
  * Created by zgq on 2017/2/28.
@@ -14,14 +22,48 @@ import com.zgq.wokao.model.paper.question.IQuestion;
 public class PaperAction extends BaseAction implements IPaperAction,IQuestionAction {
 
     private PaperDaoImpl paperDao = PaperDaoImpl.getInstance();
+    private ParserHelper parserHelper = ParserHelper.getInstance();
+
+    private PaperAction(){}
+
+    public static class InstanceHolder{
+        public static PaperAction instance = new PaperAction();
+    }
+
+    public static PaperAction getInstance(){
+        return InstanceHolder.instance;
+    }
+
+    @Override
+    public List<IPaperInfo> getAllPaperInfo() {
+        return paperDao.getAllPaperInfo();
+    }
+
+    @Override
+    public List<IPaperInfo> getPaperInfosInSchdl() {
+        return paperDao.getPaperInfosInSchdl();
+    }
+
     @Override
     public void star(final IExamPaper paper) {
         paperDao.star(paper);
     }
 
     @Override
+    public void star(String paperId) {
+        NormalIExamPaper paper = paperDao.query(paperId);
+        star(paper);
+    }
+
+    @Override
     public void unStar(final IExamPaper paper) {
         paperDao.unStar(paper);
+    }
+
+    @Override
+    public void unstar(String paperId) {
+        NormalIExamPaper paper = paperDao.query(paperId);
+        unStar(paper);
     }
 
     @Override
@@ -60,13 +102,32 @@ public class PaperAction extends BaseAction implements IPaperAction,IQuestionAct
     }
 
     @Override
-    public void addExamPaper() {
-
+    public void addExamPaper(IExamPaper paper) {
+        paperDao.save((NormalIExamPaper) paper);
     }
 
     @Override
-    public void deleteExamPaper() {
+    public void deleteExamPaper(IExamPaper paper) {
+        paperDao.delete((NormalIExamPaper) paper);
+    }
 
+    @Override
+    public IExamPaper queryById(String id) {
+        return paperDao.query(id);
+    }
+
+    @Override
+    public IExamPaper parseAndSave(String filePath) throws FileNotFoundException, ParseException {
+        NormalIExamPaper paper =  parserHelper.parse(filePath);
+        addExamPaper(paper);
+        return paper;
+    }
+
+    @Override
+    public IExamPaper parseAndSave(InputStream inputStream) throws ParseException {
+        NormalIExamPaper paper =  parserHelper.parse(inputStream);
+        addExamPaper(paper);
+        return paper;
     }
 
     @Override

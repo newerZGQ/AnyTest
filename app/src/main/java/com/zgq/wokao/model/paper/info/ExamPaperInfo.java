@@ -10,7 +10,7 @@ import io.realm.RealmObject;
 /**
  * Created by zgq on 16-6-20.
  */
-public class ExamIPaperInfo extends RealmObject implements IPaperInfo, Serializable ,Searchable {
+public class ExamPaperInfo extends RealmObject implements IPaperInfo, Serializable ,Searchable {
     private String id;
     private String title;
     private String author;
@@ -30,9 +30,9 @@ public class ExamIPaperInfo extends RealmObject implements IPaperInfo, Serializa
         this.schedule = schedule;
     }
 
-    public ExamIPaperInfo() {
+    public ExamPaperInfo() {
     }
-    public ExamIPaperInfo(String id, String title, String author, String createDate, String lastStudyDate, Schedule schedule) {
+    public ExamPaperInfo(String id, String title, String author, String createDate, String lastStudyDate, Schedule schedule) {
         this.id = id;
         this.title = title;
         this.author = author;

@@ -1,7 +1,7 @@
 package com.zgq.wokao.data.realm.Paper;
 
 import com.zgq.wokao.model.paper.IExamPaper;
-import com.zgq.wokao.model.paper.info.ExamIPaperInfo;
+import com.zgq.wokao.model.paper.info.IPaperInfo;
 
 import java.util.List;
 
@@ -10,7 +10,8 @@ import java.util.List;
  */
 
 public interface IPaperInfoDao {
-    public List<ExamIPaperInfo> getAllPaperInfo();
+    public List<IPaperInfo> getAllPaperInfo();
+    public List<IPaperInfo> getPaperInfosInSchdl();
     public void star(IExamPaper paper);
     public void unStar(IExamPaper paper);
     public void setTitle(IExamPaper paper,String title);

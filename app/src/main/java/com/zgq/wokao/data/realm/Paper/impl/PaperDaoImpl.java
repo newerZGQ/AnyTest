@@ -11,7 +11,8 @@ import com.zgq.wokao.data.realm.Paper.IPaperDao;
 import com.zgq.wokao.data.realm.Paper.IQuestionDao;
 import com.zgq.wokao.model.paper.IExamPaper;
 import com.zgq.wokao.model.paper.NormalIExamPaper;
-import com.zgq.wokao.model.paper.info.ExamIPaperInfo;
+import com.zgq.wokao.model.paper.info.ExamPaperInfo;
+import com.zgq.wokao.model.paper.info.IPaperInfo;
 import com.zgq.wokao.model.paper.question.IQuestion;
 import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.search.SearchInfoItem;
@@ -180,16 +181,6 @@ public class PaperDaoImpl extends BaseRealmProvider<NormalIExamPaper> implements
         super.save(entity);
     }
 
-    @Override
-    public void addExamPaper() {
-
-    }
-
-    @Override
-    public void deleteExamPaper() {
-
-    }
-
     /**
      * get所有Paper
      *
@@ -207,9 +198,25 @@ public class PaperDaoImpl extends BaseRealmProvider<NormalIExamPaper> implements
      * @return
      */
     @Override
-    public List<ExamIPaperInfo> getAllPaperInfo() {
-        RealmResults<ExamIPaperInfo> results = getRealm().where(ExamIPaperInfo.class).findAll();
-        return changeRealmListToList(results);
+    public List<IPaperInfo> getAllPaperInfo() {
+        RealmResults<ExamPaperInfo> results = getRealm().where(ExamPaperInfo.class).findAll();
+        List<ExamPaperInfo> list = changeRealmListToList(results);
+        return examPaperInfoToIPaperInfo(list);
+    }
+
+    @Override
+    public List<IPaperInfo> getPaperInfosInSchdl() {
+        RealmResults<ExamPaperInfo> results = getRealm().where(ExamPaperInfo.class).equalTo("isInSchedule",true).findAll();
+        List<ExamPaperInfo> list = changeRealmListToList(results);
+        return examPaperInfoToIPaperInfo(list);
+    }
+
+    private List<IPaperInfo> examPaperInfoToIPaperInfo(List<ExamPaperInfo> list){
+        ArrayList<IPaperInfo> results = new ArrayList<>();
+        for (ExamPaperInfo info: list){
+            results.add((IPaperInfo)info);
+        }
+        return results;
     }
 
     /**
@@ -230,9 +237,9 @@ public class PaperDaoImpl extends BaseRealmProvider<NormalIExamPaper> implements
     }
 
     @Override
-    public List<ExamIPaperInfo> getSchedulePapers() {
-        RealmResults<ExamIPaperInfo> results = getRealm()
-                .where(ExamIPaperInfo.class)
+    public List<ExamPaperInfo> getSchedulePapers() {
+        RealmResults<ExamPaperInfo> results = getRealm()
+                .where(ExamPaperInfo.class)
                 .equalTo("isInSchedule", true)
                 .findAll();
         return changeRealmListToList(results);
@@ -246,12 +253,12 @@ public class PaperDaoImpl extends BaseRealmProvider<NormalIExamPaper> implements
      */
     public List<SearchInfoItem> searchInfoItem(String query) {
         if (query == null || query.equals("")) return null;
-        RealmQuery<ExamIPaperInfo> infoQuery = getRealm().where(ExamIPaperInfo.class);
+        RealmQuery<ExamPaperInfo> infoQuery = getRealm().where(ExamPaperInfo.class);
         infoQuery.contains("title", query);
 //        infoQuery.or().contains("author",query);
-        List<ExamIPaperInfo> paperInfos = infoQuery.findAll();
+        List<ExamPaperInfo> paperInfos = infoQuery.findAll();
         List<SearchInfoItem> results = new ArrayList<>();
-        for (ExamIPaperInfo info : paperInfos) {
+        for (ExamPaperInfo info : paperInfos) {
             SearchInfoItem item = new SearchInfoItem();
             item.setInfo(info);
             results.add(item);
@@ -318,7 +325,7 @@ public class PaperDaoImpl extends BaseRealmProvider<NormalIExamPaper> implements
     }
 
     private List<SearchQstItem> searchQstFromList(String query, List<IQuestion> list,
-                                                  ExamIPaperInfo info, int qstType) {
+                                                  ExamPaperInfo info, int qstType) {
         List<SearchQstItem> results = new ArrayList<>();
         for (IQuestion tmp : list) {
             if (tmp.getBody().getContent().contains(query)) {
@@ -361,12 +368,20 @@ public class PaperDaoImpl extends BaseRealmProvider<NormalIExamPaper> implements
         if (paper == null) {
             return false;
         }
-        ArrayList<ExamIPaperInfo> infos = (ArrayList<ExamIPaperInfo>) getAllPaperInfo();
-        String thisInfo = paper.getPaperInfo().getTitle() + paper.getPaperInfo().getAuthor();
-        for (int i = 0; i < infos.size(); i++) {
-            if (thisInfo.equals(infos.get(i).getTitle() + infos.get(i).getAuthor())) return true;
+
+        if (getRealm().where(NormalIExamPaper.class)
+                .equalTo("paperInfo.id",paper.getPaperInfo().getId())
+                .findAll()
+                .size() == 0){
+         return false;
         }
-        return false;
+        return true;
+//        ArrayList<IPaperInfo> infos = (ArrayList<IPaperInfo>) getAllPaperInfo();
+//        String thisInfo = paper.getPaperInfo().getId();
+//        for (int i = 0; i < infos.size(); i++) {
+//            if (thisInfo.equals(infos.get(i).getId())) return true;
+//        }
+//        return false;
     }
 
     private static ExecutorService pool = Executors.newFixedThreadPool(4);

@@ -1,6 +1,6 @@
 package com.zgq.wokao.model.paper;
 
-import com.zgq.wokao.model.paper.info.ExamIPaperInfo;
+import com.zgq.wokao.model.paper.info.ExamPaperInfo;
 import com.zgq.wokao.model.paper.question.IQuestion;
 import com.zgq.wokao.model.paper.question.impl.DiscussIQuestion;
 import com.zgq.wokao.model.paper.question.impl.FillInIQuestion;
@@ -17,7 +17,7 @@ import io.realm.RealmObject;
  * Created by zgq on 16-6-18.
  */
 public class NormalIExamPaper extends RealmObject implements IExamPaper {
-    private ExamIPaperInfo paperInfo = new ExamIPaperInfo();
+    private ExamPaperInfo paperInfo = new ExamPaperInfo();
     private RealmList<FillInIQuestion> fillInQuestions;
     private RealmList<TFIQuestion> tfQuestions;
     private RealmList<SglChoQuestion> sglChoQuestions;
@@ -26,7 +26,7 @@ public class NormalIExamPaper extends RealmObject implements IExamPaper {
 
     public NormalIExamPaper(){}
 
-    public NormalIExamPaper(ExamIPaperInfo paperInfo, RealmList<FillInIQuestion> fillInQuestions,
+    public NormalIExamPaper(ExamPaperInfo paperInfo, RealmList<FillInIQuestion> fillInQuestions,
                             RealmList<TFIQuestion> tfQuestions, RealmList<SglChoQuestion> sglChoQuestions,
                             RealmList<MultChoQuestion> multChoQuestions,
                             RealmList<DiscussIQuestion> discussQuestions) {
@@ -39,11 +39,11 @@ public class NormalIExamPaper extends RealmObject implements IExamPaper {
     }
 
     @Override
-    public ExamIPaperInfo getPaperInfo() {
+    public ExamPaperInfo getPaperInfo() {
         return paperInfo;
     }
 
-    public void setPaperInfo(ExamIPaperInfo paperInfo) {
+    public void setPaperInfo(ExamPaperInfo paperInfo) {
         this.paperInfo = paperInfo;
     }
 
