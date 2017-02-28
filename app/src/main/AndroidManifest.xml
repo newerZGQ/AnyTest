@@ -47,7 +47,7 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".parser.executor.ParserService">
+        <service android:name=".executor.ParserService">
 
         </service>
 

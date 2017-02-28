@@ -1,10 +1,8 @@
-package com.zgq.wokao.parser.executor;
+package com.zgq.wokao.executor;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by zgq on 2017/2/20.

@@ -15,7 +15,7 @@ import com.zgq.wokao.R;
 
 import com.zgq.wokao.data.realm.Paper.impl.PaperDaoImpl;
 import com.zgq.wokao.action.setting.MarketChecker;
-import com.zgq.wokao.parser.executor.ParserService;
+import com.zgq.wokao.executor.ParserService;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -44,14 +44,13 @@ public class ActivityWelcome extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activity_welcome);
-        goService();
         ButterKnife.bind(this);
         initData();
         int i = (int) (Math.random() * 5);
         tip.setText(getResources().getString(tips[i]));
         if (isFirstTimeLogin()) {
             try {
-                parseExamPaperFromAsset();
+//                parseExamPaperFromAsset();
             } catch (Exception e) {
 
             }
@@ -134,11 +133,7 @@ public class ActivityWelcome extends AppCompatActivity {
         MarketChecker.WoringCounter.increase(this);
     }
 
-    private void goService(){
-        Intent intent = new Intent(ActivityWelcome.this, ParserService.class);
-        intent.putExtra("filePath","");
-        startService(intent);
-    }
+
 
 
     static class MyHandler extends Handler {
