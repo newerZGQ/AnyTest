@@ -11,6 +11,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,9 +26,6 @@ import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 import com.zgq.wokao.R;
 import com.zgq.wokao.Util.ContextUtil;
 import com.zgq.wokao.action.paper.impl.PaperAction;
-import com.zgq.wokao.data.realm.Paper.impl.PaperDaoImpl;
-import com.zgq.wokao.model.paper.NormalIExamPaper;
-import com.zgq.wokao.model.paper.info.ExamPaperInfo;
 import com.zgq.wokao.model.paper.info.IPaperInfo;
 import com.zgq.wokao.ui.adapter.HomePaperAdapter;
 import com.zgq.wokao.ui.adapter.HomeScheduleAdapter;
@@ -120,7 +118,9 @@ public class HomeFragment extends BaseFragment {
 
     private void getRecyclerViewData() {
         allPaperInfos = (ArrayList<IPaperInfo>) PaperAction.getInstance().getAllPaperInfo();
+        Log.d("---->>","all infos"+allPaperInfos.size());
         schedPaperInfos = (ArrayList<IPaperInfo>) PaperAction.getInstance().getPaperInfosInSchdl();
+        Log.d("---->>","all infos"+schedPaperInfos.size());
     }
 
     private View initView(LayoutInflater inflater, ViewGroup container,
@@ -142,17 +142,17 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void initTabStrip(){
-        tabStrip.setTitles("试卷", "日程");
+        tabStrip.setTitles("日程", "试卷");
         tabStrip.setTabIndex(0, true);
         tabStrip.setTitleSize(40);
         tabStrip.setStripColor(Color.RED);
         tabStrip.setStripWeight(10);
-        tabStrip.setStripFactor(0.5f);
+        tabStrip.setStripFactor(5f);
         tabStrip.setStripType(NavigationTabStrip.StripType.LINE);
         tabStrip.setStripGravity(NavigationTabStrip.StripGravity.BOTTOM);
         tabStrip.setTypeface("fonts/typeface.ttf");
         tabStrip.setCornersRadius(3);
-        tabStrip.setAnimationDuration(300);
+        tabStrip.setAnimationDuration(200);
         tabStrip.setInactiveColor(Color.GRAY);
         tabStrip.setActiveColor(Color.WHITE);
     }
@@ -185,36 +185,6 @@ public class HomeFragment extends BaseFragment {
         final List<View> viewList = new ArrayList<>();
         View papersPage = getInflater().inflate(R.layout.viewpager_layout,null);
         View schedulePage = getInflater().inflate(R.layout.viewpager_layout,null);
-        viewList.add(schedulePage);
-        viewList.add(papersPage);
-
-        paperList = (RecyclerView) papersPage.findViewById(R.id.recycler_view);
-        paperList.addItemDecoration(
-                new HorizontalDividerItemDecoration.Builder(getActivity())
-                        .color(getResources().getColor(R.color.colorRecyclerViewDivider))
-                        .size(getResources().getDimensionPixelSize(R.dimen.paper_recyclerview_divider_height))
-                        .margin(getResources().getDimensionPixelSize(R.dimen.paper_recyclerview_divider_margin), 0)
-                        .build());
-        RecyclerView.LayoutManager papersLM = new LinearLayoutManager(ContextUtil.getContext());
-        paperList.setLayoutManager(papersLM);
-        paperList.setItemAnimator(new FadeInAnimator());
-        paperList.setAdapter(new HomePaperAdapter(allPaperInfos, new HomePaperAdapter.PaperAdapterListener() {
-            @Override
-            public void onStared(int position, boolean isStared) {
-                allPaperInfos.get(position).setStared(isStared);
-                paperAction.star(allPaperInfos.get(position).getId());
-            }
-
-            @Override
-            public void onItemClick(int position) {
-                mListener.goQuestionsList(allPaperInfos.get(position).getId());
-            }
-
-            @Override
-            public void onItemLongClick(int position) {
-
-            }
-        }));
 
         scheduleList = (RecyclerView) schedulePage.findViewById(R.id.recycler_view);
         scheduleList.addItemDecoration(new HorizontalDividerItemDecoration.Builder(getActivity())
@@ -248,6 +218,37 @@ public class HomeFragment extends BaseFragment {
             }
         }));
 
+        paperList = (RecyclerView) papersPage.findViewById(R.id.recycler_view);
+        paperList.addItemDecoration(
+                new HorizontalDividerItemDecoration.Builder(getActivity())
+                        .color(getResources().getColor(R.color.colorRecyclerViewDivider))
+                        .size(getResources().getDimensionPixelSize(R.dimen.paper_recyclerview_divider_height))
+                        .margin(getResources().getDimensionPixelSize(R.dimen.paper_recyclerview_divider_margin), 0)
+                        .build());
+        RecyclerView.LayoutManager papersLM = new LinearLayoutManager(ContextUtil.getContext());
+        paperList.setLayoutManager(papersLM);
+        paperList.setItemAnimator(new FadeInAnimator());
+        paperList.setAdapter(new HomePaperAdapter(allPaperInfos, new HomePaperAdapter.PaperAdapterListener() {
+            @Override
+            public void onStared(int position, boolean isStared) {
+                allPaperInfos.get(position).setStared(isStared);
+                paperAction.star(allPaperInfos.get(position).getId());
+            }
+
+            @Override
+            public void onItemClick(int position) {
+                mListener.goQuestionsList(allPaperInfos.get(position).getId());
+            }
+
+            @Override
+            public void onItemLongClick(int position) {
+
+            }
+        }));
+
+        viewList.add(schedulePage);
+        viewList.add(papersPage);
+
         PagerAdapter adapter = new PagerAdapter() {
             @Override
             public int getCount() {
@@ -277,6 +278,12 @@ public class HomeFragment extends BaseFragment {
 
         viewPager.setAdapter(adapter);
         tabStrip.setViewPager(viewPager);
+    }
+
+    public void notifyDataChanged(){
+        getRecyclerViewData();
+        ((HomeScheduleAdapter)scheduleList.getAdapter()).setData(schedPaperInfos).notifyDataSetChanged();
+        ((HomePaperAdapter)paperList.getAdapter()).setData(allPaperInfos).notifyDataSetChanged();
     }
 
     private void initListener(){

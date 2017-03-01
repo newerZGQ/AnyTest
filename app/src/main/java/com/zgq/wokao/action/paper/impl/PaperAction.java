@@ -34,6 +34,13 @@ public class PaperAction extends BaseAction implements IPaperAction,IQuestionAct
         return InstanceHolder.instance;
     }
 
+    public void setAllPaperInSche(){
+        List<NormalIExamPaper> papers = getAllPaper();
+        for (NormalIExamPaper paper: papers){
+            paperDao.addToSchedule(paper);
+        }
+    }
+
     @Override
     public List<IPaperInfo> getAllPaperInfo() {
         return paperDao.getAllPaperInfo();
@@ -99,6 +106,11 @@ public class PaperAction extends BaseAction implements IPaperAction,IQuestionAct
     @Override
     public void updateDailyRecord(final IExamPaper paper) {
         paperDao.updateDailyRecord(paper);
+    }
+
+    @Override
+    public List<NormalIExamPaper> getAllPaper() {
+        return paperDao.getAllPaper();
     }
 
     @Override

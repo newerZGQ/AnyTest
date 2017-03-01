@@ -68,14 +68,19 @@ public class ParserService extends Service {
                     Log.d("---->>paper null","");
                     return;
                 }
+
                 Realm realm = Realm.getInstance(new RealmConfiguration.Builder(ParserService.this).name("other").build());
                 realm.executeTransaction(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
                         realm.copyToRealm(paper);
-                        listener.onCompleted();
                     }
                 });
+                listener.onCompleted();
+                Intent intent = new Intent();
+                intent.setAction("parse_action");
+                intent.putExtra("parse_result","success");
+                sendBroadcast(intent);
             }
         });
         thread.start();

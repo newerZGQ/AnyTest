@@ -73,7 +73,6 @@
                 android:layout_height="30dp"
                 android:layout_below="@+id/toolbar_layout"
                 app:nts_color="#000"
-                app:nts_size="15sp"
                 app:nts_weight="3dp"
                 app:nts_factor="2.5"
                 app:nts_type="point"

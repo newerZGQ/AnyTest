@@ -39,6 +39,11 @@ public class HomeScheduleAdapter extends RecyclerView.Adapter {
         initData();
     }
 
+    public HomeScheduleAdapter setData(ArrayList<IPaperInfo> paperInfos){
+        this.paperInfos = paperInfos;
+        return this;
+    }
+
     private void initData() {
         initIsItemSelectedList();
         initColorLabelList();

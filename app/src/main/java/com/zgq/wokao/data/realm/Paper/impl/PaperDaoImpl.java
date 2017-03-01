@@ -2,6 +2,7 @@ package com.zgq.wokao.data.realm.Paper.impl;
 
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 import com.zgq.wokao.Util.FileUtil;
 import com.zgq.wokao.Util.ListUtil;
@@ -207,6 +208,7 @@ public class PaperDaoImpl extends BaseRealmProvider<NormalIExamPaper> implements
     @Override
     public List<IPaperInfo> getPaperInfosInSchdl() {
         RealmResults<ExamPaperInfo> results = getRealm().where(ExamPaperInfo.class).equalTo("isInSchedule",true).findAll();
+        Log.d("---->>","paperdaoimpl "+results.size());
         List<ExamPaperInfo> list = changeRealmListToList(results);
         return examPaperInfoToIPaperInfo(list);
     }

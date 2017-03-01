@@ -8,12 +8,14 @@ import com.zgq.wokao.model.paper.NormalIExamPaper;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.List;
 
 /**
  * Created by zgq on 2017/2/28.
  */
 
 public interface IPaperAction extends IPaperInfoAction,IPaperSchdlAction{
+    public List<NormalIExamPaper> getAllPaper();
     public void addExamPaper(IExamPaper paper);
     public void deleteExamPaper(IExamPaper paper);
     public IExamPaper queryById(String id);

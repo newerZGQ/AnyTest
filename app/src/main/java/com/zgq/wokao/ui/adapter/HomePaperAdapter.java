@@ -38,6 +38,11 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
         initData();
     }
 
+    public HomePaperAdapter setData(ArrayList<IPaperInfo> paperInfos){
+        this.paperInfos = paperInfos;
+        return this;
+    }
+
     private void initData() {
         initIsItemSelectedList();
         initColorLabelList();

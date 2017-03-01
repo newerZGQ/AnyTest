@@ -14,4 +14,10 @@ public class SPConstant {
      * 是否已经打分
      */
     public static final String GRADE_STATE = "grade_state";
+
+
+    /**
+     * 是否第一次启动
+     */
+    public static final String FIRST_TIME_LOGIN = "first_time_login";
 }
