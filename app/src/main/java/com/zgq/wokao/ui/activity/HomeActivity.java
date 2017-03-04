@@ -1,55 +1,119 @@
 package com.zgq.wokao.ui.activity;
 
+import android.animation.ObjectAnimator;
 import android.app.Fragment;
-import android.content.BroadcastReceiver;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.ServiceConnection;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.IBinder;
-import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.gigamole.navigationtabstrip.NavigationTabStrip;
 import com.zgq.wokao.R;
 import com.zgq.wokao.Util.FileUtil;
 import com.zgq.wokao.action.login.LoginAction;
-import com.zgq.wokao.action.paper.impl.PaperAction;
-import com.zgq.wokao.executor.ParserService;
-import com.zgq.wokao.ui.fragment.impl.HomeFragment;
+import com.zgq.wokao.ui.fragment.impl.ScheduleFragment;
 import com.zgq.wokao.ui.presenter.impl.HomePresenterImpl;
 import com.zgq.wokao.ui.view.IHomeView;
+import com.zgq.wokao.ui.widget.SlideUp;
 
-public class HomeActivity extends BaseActivity implements HomeFragment.OnHomeFragmentListener , IHomeView {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class HomeActivity extends BaseActivity implements ScheduleFragment.OnScheduleFragmentListener, IHomeView ,View.OnClickListener{
 
     public static final String TAG = "HomeActivity";
 
     private HomePresenterImpl homePresenter;
 
-    private ParserService parserService;
+    private ScheduleFragment homeFragment;
 
-    private HomeFragment homeFragment;
-
-//    private ParseBroadcastReceiver receiver ;
+    @BindView(R.id.root_view)
+    View rootView;
+    @BindView(R.id.main_layout)
+    RelativeLayout mainLayout;
+    @BindView(R.id.menu_layout)
+    RelativeLayout menuLayout;
+    @BindView(R.id.toolbar_menu)
+    Button menuBtn;
+    @BindView(R.id.toolbar_search)
+    Button searchBtn;
+    SlideUp slideUp;
+    @BindView(R.id.toolbar_title)
+    TextView titleTv;
+    @BindView(R.id.home_tab)
+    NavigationTabStrip tabStrip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        homeFragment = HomeFragment.newInstance("","");
-        showFragment(homeFragment);
+        ButterKnife.bind(this);
+        homeFragment = ScheduleFragment.newInstance("","");
+        homePresenter = new HomePresenterImpl(this);
+        initView();
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
         homePresenter.showScheduleFragment();
         if (LoginAction.getInstance().isFirstTimeLogin()) {
             homePresenter.parseFromFile(FileUtil.getOrInitAppStoragePath()+"/default_1.txt");
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-//        unbindService(mServiceConnection);
-//        unregisterReceiver(receiver);
+    private void initView(){
+        initTabStrip();
+        initSlideUp();
+        setListener();
+    }
+
+    private void initTabStrip(){
+        tabStrip.setTitles("日程", "试卷");
+        tabStrip.setTabIndex(0, true);
+        tabStrip.setTitleSize(40);
+        tabStrip.setStripColor(Color.RED);
+        tabStrip.setStripWeight(10);
+        tabStrip.setStripFactor(5f);
+        tabStrip.setStripType(NavigationTabStrip.StripType.LINE);
+        tabStrip.setStripGravity(NavigationTabStrip.StripGravity.BOTTOM);
+        tabStrip.setTypeface("fonts/typeface.ttf");
+        tabStrip.setCornersRadius(3);
+        tabStrip.setAnimationDuration(200);
+        tabStrip.setInactiveColor(Color.GRAY);
+        tabStrip.setActiveColor(Color.WHITE);
+    }
+
+    private void initSlideUp(){
+        slideUp = new SlideUp.Builder(menuLayout)
+                .withListeners(new SlideUp.Listener(){
+                    @Override
+                    public void onSlide(float percent) {
+                        if (percent == 0.0) return;
+                        ObjectAnimator.ofFloat(mainLayout, "translationY", menuLayout.getHeight()*(1-percent/100)).
+                                setDuration(0).start();
+                    }
+
+                    @Override
+                    public void onVisibilityChanged(int visibility) {
+                        if (visibility == View.GONE){
+                            titleTv.setText("试卷工厂");
+                        }else{
+                            titleTv.setText("设置");
+                        }
+                    }
+                })
+                .withStartState(SlideUp.State.HIDDEN)
+                .withStartGravity(Gravity.TOP)
+                .build();
+    }
+
+    private void setListener(){
+        menuBtn.setOnClickListener(this);
+        searchBtn.setOnClickListener(this);
     }
 
     private void showFragment(Fragment fragment) {
@@ -73,42 +137,14 @@ public class HomeActivity extends BaseActivity implements HomeFragment.OnHomeFra
         bundle.putString("paperId",paperId);
         openActivity(QuestionsListActivity.class,bundle);
     }
-    ServiceConnection mServiceConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-            parserService = ((ParserService.MyBinder) iBinder).getParserService();
-
-            parserService.setListener(new ParserService.ParseListener() {
-                @Override
-                public void onCompleted() {
-
-                }
-            });
-            parserService.parsePaper("");
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName componentName) {
-
-        }
-    };
-
-
-
-//    private void goService(){
-//        Intent intent = new Intent(HomeActivity.this, ParserService.class);
-//        intent.putExtra("filePath","");
-//        bindService(intent,mServiceConnection, BIND_AUTO_CREATE);
-//    }
 
     @Override
-    public void showSlideUp() {
-
-    }
-
-    @Override
-    public void hideSlideUp() {
-
+    public void updateSlideUp() {
+        if (slideUp.isVisible()) {
+            slideUp.hide();
+        }else {
+            slideUp.show();
+        }
     }
 
     @Override
@@ -118,7 +154,7 @@ public class HomeActivity extends BaseActivity implements HomeFragment.OnHomeFra
 
     @Override
     public void showScheduleFragment() {
-
+        showFragment(homeFragment);
     }
 
     @Override
@@ -146,20 +182,15 @@ public class HomeActivity extends BaseActivity implements HomeFragment.OnHomeFra
 
     }
 
-//    public class ParseBroadcastReceiver extends BroadcastReceiver{
-//        @Override
-//        public void onReceive(Context context, Intent intent) {
-//            Log.d("---->>","receiver");
-//            String action = intent.getAction();
-//            String result = intent.getStringExtra("parse_result");
-//            if (action != null && result != null && action.equals("parse_action") && result.equals("success")){
-//                Log.d("---->>","receiver in");
-//                if (LoginAction.getInstance().isFirstTimeLogin()){
-//                    PaperAction.getInstance().setAllPaperInSche();
-//                    LoginAction.getInstance().setFirstTimeLoginFalse();
-//                }
-//                homeFragment.notifyDataChanged();
-//            }
-//        }
-//    }
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.toolbar_menu:
+                homePresenter.updateSlideUp();
+                break;
+            case R.id.toolbar_search:
+                homePresenter.goSearch();
+                break;
+        }
+    }
 }

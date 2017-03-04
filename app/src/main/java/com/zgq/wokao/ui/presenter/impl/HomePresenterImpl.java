@@ -1,6 +1,7 @@
 package com.zgq.wokao.ui.presenter.impl;
 
 import com.zgq.wokao.action.paper.IPaperAction;
+import com.zgq.wokao.action.paper.impl.PaperAction;
 import com.zgq.wokao.action.parser.IParserAction;
 import com.zgq.wokao.action.parser.ParserAction;
 import com.zgq.wokao.model.paper.IExamPaper;
@@ -14,12 +15,10 @@ import com.zgq.wokao.ui.view.IHomeView;
 public class HomePresenterImpl implements IHomePrerenter{
 
     private IHomeView homeView;
-    private IPaperAction paperAction;
-    private IParserAction parserAction;
-    public HomePresenterImpl(IHomeView homeView, IPaperAction paperAction, IParserAction parserAction){
+    private IPaperAction paperAction = PaperAction.getInstance();
+    private IParserAction parserAction = ParserAction.getInstance();
+    public HomePresenterImpl(IHomeView homeView){
         this.homeView = homeView;
-        this.paperAction = paperAction;
-        this.parserAction = parserAction;
         init();
     }
 
@@ -36,11 +35,8 @@ public class HomePresenterImpl implements IHomePrerenter{
             }
         });
     }
-    public void showSlideUp(){
-        homeView.showSlideUp();
-    }
-    public void hideSlideUp(){
-        homeView.hideSlideUp();
+    public void updateSlideUp(){
+        homeView.updateSlideUp();
     }
     public void goSearch(){
         homeView.goSerach();

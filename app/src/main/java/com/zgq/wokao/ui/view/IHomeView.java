@@ -5,8 +5,7 @@ package com.zgq.wokao.ui.view;
  */
 
 public interface IHomeView {
-    public void showSlideUp();
-    public void hideSlideUp();
+    public void updateSlideUp();
     public void goSerach();
     public void showScheduleFragment();
     public void showPapersFragment();

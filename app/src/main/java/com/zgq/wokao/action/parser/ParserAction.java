@@ -44,6 +44,11 @@ public class ParserAction implements IParserAction {
         public static ParserAction instance = new ParserAction();
     }
 
+
+    public static ParserAction getInstance(){
+        return InstanceHolder.instance;
+    }
+
     @Override
     public void setListener(ParseResultListener listener){
         this.listener = listener;
@@ -64,9 +69,6 @@ public class ParserAction implements IParserAction {
         context.unregisterReceiver(receiver);
     }
 
-    public ParserAction getInstance(){
-        return InstanceHolder.instance;
-    }
 
     ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override

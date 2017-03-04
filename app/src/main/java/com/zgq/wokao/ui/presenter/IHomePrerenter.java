@@ -8,4 +8,5 @@ import com.zgq.wokao.model.paper.IExamPaper;
 
 public interface IHomePrerenter {
     public IExamPaper parseFromFile(String filePath);
+
 }
