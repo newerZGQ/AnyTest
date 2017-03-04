@@ -1,4 +1,4 @@
-package com.zgq.wokao.ui;
+package com.zgq.wokao.ui.activity;
 
 /**
  * Created by zgq on 2017/2/11.

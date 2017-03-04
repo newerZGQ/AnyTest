@@ -80,6 +80,7 @@ public class ParserService extends Service {
                 Intent intent = new Intent();
                 intent.setAction("parse_action");
                 intent.putExtra("parse_result","success");
+                intent.putExtra("paperId",paper.getPaperInfo().getId());
                 sendBroadcast(intent);
             }
         });

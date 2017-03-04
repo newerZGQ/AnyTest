@@ -1,4 +1,4 @@
-package com.zgq.wokao.ui;
+package com.zgq.wokao.ui.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -24,7 +24,8 @@ import com.zgq.wokao.model.paper.question.impl.FillInIQuestion;
 import com.zgq.wokao.model.paper.question.impl.MultChoQuestion;
 import com.zgq.wokao.model.paper.question.impl.SglChoQuestion;
 import com.zgq.wokao.model.paper.question.impl.TFIQuestion;
-import com.zgq.wokao.ui.view.ObservableScrollView;
+import com.zgq.wokao.ui.activity.AnswerStudyActivity;
+import com.zgq.wokao.ui.widget.ObservableScrollView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-        <com.zgq.wokao.ui.view.ObservableScrollView
+        <com.zgq.wokao.ui.widget.ObservableScrollView
             android:id="@+id/scroll_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>

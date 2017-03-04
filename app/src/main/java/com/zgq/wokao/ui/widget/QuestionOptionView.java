@@ -1,4 +1,4 @@
-package com.zgq.wokao.ui.view;
+package com.zgq.wokao.ui.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;

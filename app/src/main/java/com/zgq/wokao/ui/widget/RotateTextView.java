@@ -1,4 +1,4 @@
-package com.zgq.wokao.ui.view;
+package com.zgq.wokao.ui.widget;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;

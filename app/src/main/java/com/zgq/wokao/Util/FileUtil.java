@@ -1,19 +1,13 @@
 package com.zgq.wokao.Util;
 
-import android.content.Context;
 import android.content.res.AssetManager;
 import android.os.Environment;
-
-import com.zgq.wokao.ui.ActivityWelcome;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
-import cn.qqtheme.framework.util.ConvertUtils;
-import cn.qqtheme.framework.util.StorageUtils;
 
 /**
  * Created by zgq on 16-6-18.

@@ -1,4 +1,4 @@
-package com.zgq.wokao.ui;
+package com.zgq.wokao.ui.activity;
 
 import android.app.Fragment;
 import android.os.Bundle;

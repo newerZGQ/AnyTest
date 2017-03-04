@@ -1,4 +1,4 @@
-package com.zgq.wokao.ui.view;
+package com.zgq.wokao.ui.widget;
 
 /**
  * Created by zgq on 2017/2/22.
@@ -38,8 +38,8 @@ import static android.view.Gravity.START;
 import static android.view.Gravity.TOP;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
-import static com.zgq.wokao.ui.view.SlideUp.State.HIDDEN;
-import static com.zgq.wokao.ui.view.SlideUp.State.SHOWED;
+import static com.zgq.wokao.ui.widget.SlideUp.State.HIDDEN;
+import static com.zgq.wokao.ui.widget.SlideUp.State.SHOWED;
 
 public class SlideUp implements View.OnTouchListener, ValueAnimator.AnimatorUpdateListener, Animator.AnimatorListener {
     private final static String TAG = "SlideUp";

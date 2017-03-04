@@ -4,7 +4,7 @@
     android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.zgq.wokao.ui.AnswerStudyActivity">
+    tools:context="com.zgq.wokao.ui.activity.AnswerStudyActivity">
     <View
         android:layout_width="match_parent"
         android:layout_height="48dp"

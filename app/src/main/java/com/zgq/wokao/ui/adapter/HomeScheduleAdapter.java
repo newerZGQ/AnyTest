@@ -10,10 +10,8 @@ import android.widget.TextView;
 import com.zgq.wokao.R;
 import com.zgq.wokao.Util.ContextUtil;
 import com.zgq.wokao.Util.DrawableUtil;
-import com.zgq.wokao.model.paper.IExamPaper;
-import com.zgq.wokao.model.paper.info.ExamPaperInfo;
 import com.zgq.wokao.model.paper.info.IPaperInfo;
-import com.zgq.wokao.ui.view.RotateTextView;
+import com.zgq.wokao.ui.widget.RotateTextView;
 
 import java.util.ArrayList;
 

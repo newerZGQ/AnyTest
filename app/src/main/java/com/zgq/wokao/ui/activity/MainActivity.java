@@ -1,4 +1,4 @@
-package com.zgq.wokao.ui;
+package com.zgq.wokao.ui.activity;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
@@ -31,7 +31,7 @@ import com.zgq.wokao.model.paper.info.ExamPaperInfo;
 import com.zgq.wokao.data.realm.Paper.impl.PaperDaoImpl;
 import com.zgq.wokao.action.setting.MarketChecker;
 import com.zgq.wokao.ui.util.DialogUtil;
-import com.zgq.wokao.ui.view.RotateTextView;
+import com.zgq.wokao.ui.widget.RotateTextView;
 
 import java.io.File;
 import java.lang.ref.WeakReference;

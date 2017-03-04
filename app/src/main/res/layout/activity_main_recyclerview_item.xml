@@ -57,7 +57,7 @@
             android:textSize="14sp" />
 
 
-        <com.zgq.wokao.ui.view.RotateTextView
+        <com.zgq.wokao.ui.widget.RotateTextView
             android:id="@+id/question_label"
             android:layout_width="40dp"
             android:layout_height="40dp"

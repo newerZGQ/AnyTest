@@ -1,4 +1,4 @@
-package com.zgq.wokao.ui;
+package com.zgq.wokao.ui.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,7 +15,6 @@ import com.zgq.wokao.R;
 
 import com.zgq.wokao.data.realm.Paper.impl.PaperDaoImpl;
 import com.zgq.wokao.action.setting.MarketChecker;
-import com.zgq.wokao.executor.ParserService;
 
 import java.io.File;
 import java.io.FileOutputStream;

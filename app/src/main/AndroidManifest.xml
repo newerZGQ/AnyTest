@@ -29,17 +29,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
-        <activity android:name=".ui.MainActivity" />
-        <activity android:name=".ui.AnswerStudyActivity" />
-        <activity android:name=".ui.QuestionsListActivity" />
-        <activity android:name=".ui.TutotialActivity" />
-        <activity android:name=".ui.SearchActivity" />
+        <activity android:name=".ui.activity.MainActivity" />
+        <activity android:name=".ui.activity.AnswerStudyActivity" />
+        <activity android:name=".ui.activity.QuestionsListActivity" />
+        <activity android:name=".ui.activity.TutotialActivity" />
+        <activity android:name=".ui.activity.SearchActivity" />
         <activity
-            android:name=".ui.HomeActivity"
+            android:name=".ui.activity.HomeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_home"
             android:theme="@style/FullscreenTheme"/>
-        <activity android:name=".ui.ActivityWelcome">
+        <activity android:name=".ui.activity.ActivityWelcome">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

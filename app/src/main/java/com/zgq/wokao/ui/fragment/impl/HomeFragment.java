@@ -31,7 +31,7 @@ import com.zgq.wokao.ui.adapter.HomePaperAdapter;
 import com.zgq.wokao.ui.adapter.HomeScheduleAdapter;
 import com.zgq.wokao.ui.fragment.BaseFragment;
 import com.zgq.wokao.ui.util.DialogUtil;
-import com.zgq.wokao.ui.view.SlideUp;
+import com.zgq.wokao.ui.widget.SlideUp;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
