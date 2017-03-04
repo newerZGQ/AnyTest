@@ -148,11 +148,6 @@ public class HomeActivity extends BaseActivity implements ScheduleFragment.OnSch
     }
 
     @Override
-    public void goSerach() {
-
-    }
-
-    @Override
     public void showScheduleFragment() {
         showFragment(homeFragment);
     }

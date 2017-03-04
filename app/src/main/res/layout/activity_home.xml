@@ -3,6 +3,7 @@
     android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/home_activity_background"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.zgq.wokao.ui.fragment.impl.ScheduleFragment">
 
@@ -10,9 +11,7 @@
         android:id="@+id/menu_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
         android:orientation="vertical">
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="500dp"
@@ -22,7 +21,6 @@
 
     <RelativeLayout
         android:id="@+id/main_layout"
-        android:background="@color/colorWhite"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -30,14 +28,13 @@
             android:id="@+id/toolbar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
             android:elevation="4dp"
             android:orientation="vertical">
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="24dp"
-                android:background="@color/colorStatusBar" />
+                android:background="@color/colorTransparent"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -58,6 +55,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="3"
                     android:gravity="center"
+                    android:textColor="@color/colorWhite"
                     android:text="试卷工厂" />
 
                 <Button

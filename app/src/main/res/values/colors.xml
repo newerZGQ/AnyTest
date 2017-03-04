@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#e7790d</color>
-    <color name="colorPrimaryDark">#d06d0c</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#42897D</color>
+    <color name="colorPrimaryDark">#1D4547</color>
+    <color name="colorAccent">#42897D</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBlack">#000000</color>
     <color name="colorOrange">#ff8a65</color>
@@ -14,7 +14,16 @@
     <color name="colorLime">#cddc39</color>
     <color name="colorIndigo">#3f51b5</color>
 
-    <color name="colorRed">#ab960000</color>
+    //代表题目类型的颜色
+    <color name="colorFillIn">#6CCF6E</color>
+    <color name="colorTF">#49B9AD</color>
+    <color name="colorSglcho">#9EB6A6</color>
+    <color name="colorMultcho">#4E7A4F</color>
+    <color name="colorDisc">#759267</color>
+    
+
+    <color name="colorRed">#6CCF6E</color>
+
 
     //状态栏
     <color name="colorStatusBar">#01cac4c4</color>

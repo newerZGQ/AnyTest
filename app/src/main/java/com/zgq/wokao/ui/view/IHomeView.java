@@ -6,7 +6,7 @@ package com.zgq.wokao.ui.view;
 
 public interface IHomeView {
     public void updateSlideUp();
-    public void goSerach();
+    public void goSearch();
     public void showScheduleFragment();
     public void showPapersFragment();
     public void showFragmetn(String fragmentTag);

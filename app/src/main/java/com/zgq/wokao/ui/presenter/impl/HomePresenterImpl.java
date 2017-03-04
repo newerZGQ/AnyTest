@@ -39,7 +39,7 @@ public class HomePresenterImpl implements IHomePrerenter{
         homeView.updateSlideUp();
     }
     public void goSearch(){
-        homeView.goSerach();
+        homeView.goSearch();
     }
     public void showScheduleFragment(){
         homeView.showScheduleFragment();
