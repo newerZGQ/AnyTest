@@ -10,5 +10,5 @@ import java.util.ArrayList;
 
 public interface ISchedulePresenter {
     public void onStartBtnClick();
-    public void setViewPager(ArrayList<ScheduleData> scheduleDatas);
+    public void setViewPager();
 }

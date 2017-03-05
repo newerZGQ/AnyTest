@@ -17,7 +17,7 @@
         android:id="@+id/schedule_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="click"
+        android:background="@drawable/start"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="12dp" />

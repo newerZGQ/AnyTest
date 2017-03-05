@@ -14,6 +14,7 @@ import com.zgq.wokao.R;
 import com.zgq.wokao.action.paper.impl.PaperAction;
 import com.zgq.wokao.model.paper.info.IPaperInfo;
 import com.zgq.wokao.model.viewdate.ScheduleData;
+import com.zgq.wokao.ui.adapter.SchedulePagerAdapter;
 import com.zgq.wokao.ui.fragment.BaseFragment;
 import com.zgq.wokao.ui.presenter.impl.SchedulePresenter;
 import com.zgq.wokao.ui.util.DialogUtil;
@@ -37,13 +38,6 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
 
     private String mParam1;
     private String mParam2;
-
-    private ArrayList<IPaperInfo> schedPaperInfos = new ArrayList<>();
-
-
-//    private MyHandler myHandler;
-
-    private DialogUtil.Listener marketListener;
 
     private OnScheduleFragmentListener mListener;
 
@@ -76,7 +70,6 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-//        initData();
     }
 
     @Override
@@ -84,25 +77,10 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
                              Bundle savedInstanceState) {
         rootView =  inflater.inflate(R.layout.fragment_schedule, container, false);
         ButterKnife.bind(this,rootView);
+        presenter.setViewPager();
         return rootView;
     }
 
-//    public void initData() {
-//        getRecyclerViewData();
-//        myHandler = new MyHandler(this);
-//    }
-
-    private void getRecyclerViewData() {
-        schedPaperInfos = (ArrayList<IPaperInfo>) PaperAction.getInstance().getPaperInfosInSchdl();
-    }
-
-    public void notifyDataChanged(){
-        getRecyclerViewData();
-    }
-
-    public void updatePaperInfos() {
-        getRecyclerViewData();
-    }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -143,7 +121,7 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
 
     @Override
     public void setViewPager(ArrayList<ScheduleData> scheduleDatas) {
-
+        viewPager.setAdapter(new SchedulePagerAdapter(scheduleDatas));
     }
 
     @Override
@@ -164,29 +142,4 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
         void onFragmentInteraction(Uri uri);
         void goQuestionsList(String paperId);
     }
-
-//    static class MyHandler extends Handler {
-//        WeakReference<ScheduleFragment> mWeakActivity;
-//
-//        public MyHandler(ScheduleFragment fragment) {
-//            mWeakActivity = new WeakReference<ScheduleFragment>(fragment);
-//        }
-//
-//        @Override
-//        public void handleMessage(Message msg) {
-//            switch (msg.what) {
-//                case 0X1111:
-//                    Toast.makeText(mWeakActivity.get().getActivity(),"解析成功",Toast.LENGTH_SHORT).show();
-//                    mWeakActivity.get().updatePaperInfos();
-//                    break;
-//                case 0X1112:
-//                    Toast.makeText(mWeakActivity.get().getActivity(),"解析错误，请检查文档标题和作者",Toast.LENGTH_SHORT).show();
-//                    break;
-//                case 0X1113:
-//                    Toast.makeText(mWeakActivity.get().getActivity(),"解析错误，请检查文档格式",Toast.LENGTH_SHORT).show();
-//                    break;
-//            }
-//            super.handleMessage(msg);
-//        }
-//    }
 }

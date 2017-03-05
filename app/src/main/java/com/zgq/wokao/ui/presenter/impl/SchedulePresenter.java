@@ -15,6 +15,8 @@ import java.util.ArrayList;
 public class SchedulePresenter implements ISchedulePresenter {
     private IScheduleView scheduleView;
     private PaperAction paperAction = PaperAction.getInstance();
+
+    private ArrayList<ScheduleData> scheduleDatas = new ArrayList<>();
     public SchedulePresenter(IScheduleView scheduleView){
         this.scheduleView = scheduleView;
     }
@@ -23,7 +25,7 @@ public class SchedulePresenter implements ISchedulePresenter {
     }
 
     @Override
-    public void setViewPager(ArrayList<ScheduleData> scheduleDatas) {
+    public void setViewPager() {
         scheduleView.setViewPager(scheduleDatas);
     }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@drawable/rounded_rectangle"
     android:orientation="vertical">
 
@@ -79,6 +79,7 @@
     </RelativeLayout>
 
     <GridLayout
+        android:id="@+id/questions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/record"
@@ -87,63 +88,71 @@
         android:rowCount="2">
 
         <Button
+            android:id="@+id/fillIn_Btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="0"
             android:layout_columnWeight="1"
             android:layout_row="0"
             android:layout_rowWeight="1"
-            android:text="填"
+            android:background="@drawable/fillin_back"
             android:textSize="40dp" />
 
         <Button
+            android:id="@+id/tf_Btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="1"
             android:layout_columnWeight="1"
             android:layout_row="0"
             android:layout_rowWeight="1"
-            android:text="判"
+            android:background="@drawable/tf_back"
             android:textSize="40dp" />
 
         <Button
+            android:id="@+id/sglcho_Btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="2"
             android:layout_columnWeight="1"
             android:layout_row="0"
             android:layout_rowWeight="1"
-            android:text="单"
+            android:background="@drawable/sglcho_back"
             android:textSize="40dp" />
         <Button
+            android:id="@+id/mulcho_Btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="0"
             android:layout_columnWeight="1"
             android:layout_row="1"
             android:layout_rowWeight="1"
-            android:text="多"
+            android:background="@drawable/mulcho_back"
             android:textSize="40dp" />
 
         <Button
+            android:id="@+id/disc_Btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="1"
             android:layout_columnWeight="1"
             android:layout_row="1"
             android:layout_rowWeight="1"
-            android:text="简"
+            android:background="@drawable/dis_btn"
             android:textSize="40dp" />
 
         <Button
+            android:id="@+id/all_Btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="2"
             android:layout_columnWeight="1"
             android:layout_row="1"
             android:layout_rowWeight="1"
+            android:background="@drawable/all_back"
             android:text="64"
-            android:textSize="40dp" />
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp" />
     </GridLayout>
 
 </RelativeLayout>

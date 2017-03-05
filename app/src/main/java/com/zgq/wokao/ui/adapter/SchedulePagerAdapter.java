@@ -1,6 +1,5 @@
 package com.zgq.wokao.ui.adapter;
 
-import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +22,7 @@ public class SchedulePagerAdapter extends PagerAdapter {
 
     private ArrayList<ScheduleData> scheduleDatas;
     //缓存 复用
-    private LinkedList<View> mViewCache = null;
+    private LinkedList<View> mViewCache = new LinkedList<>();
     private LayoutInflater layoutInflater = LayoutInflater.from(ContextUtil.getContext());
 
     public SchedulePagerAdapter(ArrayList<ScheduleData> scheduleDatas){
@@ -36,9 +35,8 @@ public class SchedulePagerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-//        View view = getInflater().inflate(R.layout.viewpager_schedule_item,null);
-//        container.addView(view);
-        return null;
+        return getScheduleView(container,position);
+
     }
 
     @Override
@@ -53,7 +51,7 @@ public class SchedulePagerAdapter extends PagerAdapter {
 
     @Override
     public boolean isViewFromObject(View view, Object object) {
-        return false;
+        return view == object;
     }
 
     public View getScheduleView(ViewGroup container, int position){
@@ -61,37 +59,31 @@ public class SchedulePagerAdapter extends PagerAdapter {
         View convertView = null;
         if(mViewCache.size() == 0){
             convertView = this.layoutInflater.inflate(R.layout.viewpager_schedule_item , null ,false);
-            TextView accuracy;
-            TextView title;
-            TextView countToday;
-            TextView countEveryday;
-            Button fillInBtn;
-            Button tfBtn;
-            Button sglChoBtn;
-            Button mulchoBtn;
-            Button discBtn;
-            ViewHolder viewHolder = new ViewHolder();
-            viewHolder.accuracy = accuracy;
-            viewHolder.title = title;
-            viewHolder.countToday = countToday;
-            viewHolder.countEveryday = countEveryday;
-            viewHolder.fillInBtn = fillInBtn;
-            viewHolder.tfBtn = tfBtn;
-            viewHolder.sglChoBtn = sglChoBtn;
-            viewHolder.mulchoBtn = mulchoBtn;
-            viewHolder.discBtn = discBtn;
-            convertView.setTag(fillInQuestionViewHolder);
+            TextView accuracy = (TextView)convertView.findViewById(R.id.accuracy);
+            TextView title = (TextView)convertView.findViewById(R.id.paper_title);
+            TextView countToday = (TextView)convertView.findViewById(R.id.count_today);
+            TextView countEveryday = (TextView)convertView.findViewById(R.id.count_everyday);
+            Button fillInBtn = (Button) convertView.findViewById(R.id.fillIn_Btn);
+            Button tfBtn = (Button) convertView.findViewById(R.id.tf_Btn);
+            Button sglChoBtn = (Button) convertView.findViewById(R.id.sglcho_Btn);
+            Button mulchoBtn = (Button) convertView.findViewById(R.id.mulcho_Btn);
+            Button discBtn = (Button) convertView.findViewById(R.id.disc_Btn);
+            holder = new ViewHolder();
+            holder.accuracy = accuracy;
+            holder.title = title;
+            holder.countToday = countToday;
+            holder.countEveryday = countEveryday;
+            holder.fillInBtn = fillInBtn;
+            holder.tfBtn = tfBtn;
+            holder.sglChoBtn = sglChoBtn;
+            holder.mulchoBtn = mulchoBtn;
+            holder.discBtn = discBtn;
+            convertView.setTag(holder);
         }else {
             convertView = mViewCache.removeFirst();
-            fillInQuestionViewHolder = (FillInQuestionAdapter.FillInQuestionViewHolder)convertView.getTag();
+            holder = (ViewHolder) convertView.getTag();
         }
-        holder = fillInQuestionViewHolder;
-        fillInQuestionViewHolder.questionBody.setText(""+(position+1)+". "+datas.get(position).getBody());
-        if (hasShowAnswer.get(position)) {
-            fillInQuestionViewHolder.questionAnswer.setText(datas.get(position).getAnswer().getContent());
-        }else {
-            fillInQuestionViewHolder.questionAnswer.setText("");
-        }
+        holder.accuracy.setText("64%");
         container.addView(convertView ,ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT );
         return convertView;
     }
