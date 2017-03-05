@@ -1,53 +1,38 @@
 package com.zgq.wokao.ui.fragment.impl;
 
-import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.gigamole.navigationtabstrip.NavigationTabStrip;
-import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 import com.zgq.wokao.R;
-import com.zgq.wokao.Util.ContextUtil;
 import com.zgq.wokao.action.paper.impl.PaperAction;
 import com.zgq.wokao.model.paper.info.IPaperInfo;
-import com.zgq.wokao.ui.adapter.HomePaperAdapter;
-import com.zgq.wokao.ui.adapter.HomeScheduleAdapter;
+import com.zgq.wokao.model.viewdate.ScheduleData;
 import com.zgq.wokao.ui.fragment.BaseFragment;
+import com.zgq.wokao.ui.presenter.impl.SchedulePresenter;
 import com.zgq.wokao.ui.util.DialogUtil;
-import com.zgq.wokao.ui.widget.SlideUp;
+import com.zgq.wokao.ui.view.IScheduleView;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import jp.wasabeef.recyclerview.animators.FadeInAnimator;
 
-public class ScheduleFragment extends BaseFragment {
+public class ScheduleFragment extends BaseFragment implements IScheduleView, View.OnClickListener{
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
     @BindView(R.id.schedule_pager)
     ViewPager viewPager;
+    @BindView(R.id.schedule_start)
+    Button startBtn;
     private View rootView;
 
     private String mParam1;
@@ -56,17 +41,15 @@ public class ScheduleFragment extends BaseFragment {
     private ArrayList<IPaperInfo> schedPaperInfos = new ArrayList<>();
 
 
-    private MyHandler myHandler;
+//    private MyHandler myHandler;
 
     private DialogUtil.Listener marketListener;
 
     private OnScheduleFragmentListener mListener;
 
-    private PaperAction paperAction = PaperAction.getInstance();
+    private SchedulePresenter presenter = new SchedulePresenter(this);
 
-    public ScheduleFragment() {
-        // Required empty public constructor
-    }
+    public ScheduleFragment() {}
 
     /**
      * Use this factory method to create a new instance of
@@ -93,7 +76,7 @@ public class ScheduleFragment extends BaseFragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        initData();
+//        initData();
     }
 
     @Override
@@ -104,14 +87,13 @@ public class ScheduleFragment extends BaseFragment {
         return rootView;
     }
 
-    public void initData() {
-        getRecyclerViewData();
-        myHandler = new MyHandler(this);
-    }
+//    public void initData() {
+//        getRecyclerViewData();
+//        myHandler = new MyHandler(this);
+//    }
 
     private void getRecyclerViewData() {
         schedPaperInfos = (ArrayList<IPaperInfo>) PaperAction.getInstance().getPaperInfosInSchdl();
-        Log.d("---->>","all infos"+schedPaperInfos.size());
     }
 
     public void notifyDataChanged(){
@@ -149,37 +131,95 @@ public class ScheduleFragment extends BaseFragment {
         return false;
     }
 
+    @Override
+    public void onStartBtnClick() {
+        presenter.onStartBtnClick();
+    }
+
+    @Override
+    public void setListener() {
+        startBtn.setOnClickListener(this);
+    }
+
+    @Override
+    public void setViewPager(ArrayList<ScheduleData> scheduleDatas) {
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.schedule_start:
+                presenter.onStartBtnClick();
+                break;
+            default:
+                break;
+        }
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      */
     public interface OnScheduleFragmentListener {
         void onFragmentInteraction(Uri uri);
-        void goSearch();
         void goQuestionsList(String paperId);
     }
 
-    static class MyHandler extends Handler {
-        WeakReference<ScheduleFragment> mWeakActivity;
-
-        public MyHandler(ScheduleFragment fragment) {
-            mWeakActivity = new WeakReference<ScheduleFragment>(fragment);
+    public class ScheduleAdapter extends PagerAdapter{
+        private ArrayList<ScheduleData> scheduleDatas;
+        public ScheduleAdapter(ArrayList<ScheduleData> scheduleDatas){
+            this.scheduleDatas = scheduleDatas;
+        }
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            super.destroyItem(container, position, object);
         }
 
         @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case 0X1111:
-                    Toast.makeText(mWeakActivity.get().getActivity(),"解析成功",Toast.LENGTH_SHORT).show();
-                    mWeakActivity.get().updatePaperInfos();
-                    break;
-                case 0X1112:
-                    Toast.makeText(mWeakActivity.get().getActivity(),"解析错误，请检查文档标题和作者",Toast.LENGTH_SHORT).show();
-                    break;
-                case 0X1113:
-                    Toast.makeText(mWeakActivity.get().getActivity(),"解析错误，请检查文档格式",Toast.LENGTH_SHORT).show();
-                    break;
-            }
-            super.handleMessage(msg);
+        public Object instantiateItem(ViewGroup container, int position) {
+            View view = getInflater().inflate(R.layout.viewpager_schedule_item,null);
+            container.addView(view);
+            return view;
+        }
+
+        @Override
+        public void notifyDataSetChanged() {
+            super.notifyDataSetChanged();
+        }
+
+        @Override
+        public int getCount() {
+            return scheduleDatas.size();
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return false;
         }
     }
+
+//    static class MyHandler extends Handler {
+//        WeakReference<ScheduleFragment> mWeakActivity;
+//
+//        public MyHandler(ScheduleFragment fragment) {
+//            mWeakActivity = new WeakReference<ScheduleFragment>(fragment);
+//        }
+//
+//        @Override
+//        public void handleMessage(Message msg) {
+//            switch (msg.what) {
+//                case 0X1111:
+//                    Toast.makeText(mWeakActivity.get().getActivity(),"解析成功",Toast.LENGTH_SHORT).show();
+//                    mWeakActivity.get().updatePaperInfos();
+//                    break;
+//                case 0X1112:
+//                    Toast.makeText(mWeakActivity.get().getActivity(),"解析错误，请检查文档标题和作者",Toast.LENGTH_SHORT).show();
+//                    break;
+//                case 0X1113:
+//                    Toast.makeText(mWeakActivity.get().getActivity(),"解析错误，请检查文档格式",Toast.LENGTH_SHORT).show();
+//                    break;
+//            }
+//            super.handleMessage(msg);
+//        }
+//    }
 }
