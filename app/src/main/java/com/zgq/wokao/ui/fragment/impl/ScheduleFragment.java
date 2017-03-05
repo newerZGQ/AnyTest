@@ -165,39 +165,6 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
         void goQuestionsList(String paperId);
     }
 
-    public class ScheduleAdapter extends PagerAdapter{
-        private ArrayList<ScheduleData> scheduleDatas;
-        public ScheduleAdapter(ArrayList<ScheduleData> scheduleDatas){
-            this.scheduleDatas = scheduleDatas;
-        }
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            super.destroyItem(container, position, object);
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            View view = getInflater().inflate(R.layout.viewpager_schedule_item,null);
-            container.addView(view);
-            return view;
-        }
-
-        @Override
-        public void notifyDataSetChanged() {
-            super.notifyDataSetChanged();
-        }
-
-        @Override
-        public int getCount() {
-            return scheduleDatas.size();
-        }
-
-        @Override
-        public boolean isViewFromObject(View view, Object object) {
-            return false;
-        }
-    }
-
 //    static class MyHandler extends Handler {
 //        WeakReference<ScheduleFragment> mWeakActivity;
 //
