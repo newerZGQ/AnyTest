@@ -16,6 +16,7 @@ import java.util.List;
 
 public interface IPaperAction extends IPaperInfoAction,IPaperSchdlAction{
     public List<NormalIExamPaper> getAllPaper();
+    public List<NormalIExamPaper> getAllPaperInSchdl();
     public void addExamPaper(IExamPaper paper);
     public void deleteExamPaper(IExamPaper paper);
     public IExamPaper queryById(String id);

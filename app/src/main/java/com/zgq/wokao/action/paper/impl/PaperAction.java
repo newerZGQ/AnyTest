@@ -38,6 +38,7 @@ public class PaperAction extends BaseAction implements IPaperAction,IQuestionAct
         List<NormalIExamPaper> papers = getAllPaper();
         for (NormalIExamPaper paper: papers){
             paperDao.addToSchedule(paper);
+            paperDao.openSchedule(paper);
         }
     }
 
@@ -111,6 +112,11 @@ public class PaperAction extends BaseAction implements IPaperAction,IQuestionAct
     @Override
     public List<NormalIExamPaper> getAllPaper() {
         return paperDao.getAllPaper();
+    }
+
+    @Override
+    public List<NormalIExamPaper> getAllPaperInSchdl() {
+        return paperDao.getAllPaperInSchdl();
     }
 
     @Override

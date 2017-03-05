@@ -121,7 +121,17 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
 
     @Override
     public void setViewPager(ArrayList<ScheduleData> scheduleDatas) {
-        viewPager.setAdapter(new SchedulePagerAdapter(scheduleDatas));
+        if (viewPager.getAdapter() == null) {
+            viewPager.setAdapter(new SchedulePagerAdapter(scheduleDatas));
+        }else {
+            ((SchedulePagerAdapter)viewPager.getAdapter()).setScheduleDatas(scheduleDatas);
+            viewPager.getAdapter().notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void notifyDataChanged() {
+        presenter.notifyDataChanged();
     }
 
     @Override

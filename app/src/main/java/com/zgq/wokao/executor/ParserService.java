@@ -26,6 +26,8 @@ public class ParserService extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
+        String filePath = intent.getStringExtra("filePath");
+        parsePaper(filePath);
         return new MyBinder();
     }
 

@@ -18,13 +18,12 @@ public class LoginAction extends BaseAction implements ILoginAction {
     }
     @Override
     public boolean isFirstTimeLogin() {
-        if (SharedPreferencesHelper.contains(SPConstant.FIRST_TIME_LOGIN)){
-            return (boolean) SharedPreferencesHelper.get(SPConstant.FIRST_TIME_LOGIN,true);
+        if (!SharedPreferencesHelper.contains(SPConstant.FIRST_TIME_LOGIN)){
+            SharedPreferencesHelper.put(SPConstant.FIRST_TIME_LOGIN,true);
         }
-        SharedPreferencesHelper.put(SPConstant.FIRST_TIME_LOGIN,true);
-        return true;
+        return (boolean) SharedPreferencesHelper.get(SPConstant.FIRST_TIME_LOGIN,true);
     }
-
+    @Override
     public void setFirstTimeLoginFalse(){
         SharedPreferencesHelper.put(SPConstant.FIRST_TIME_LOGIN,false);
     }

@@ -1,5 +1,6 @@
 package com.zgq.wokao.ui.presenter;
 
+import com.zgq.wokao.exception.ParseException;
 import com.zgq.wokao.model.paper.IExamPaper;
 
 /**
@@ -7,6 +8,6 @@ import com.zgq.wokao.model.paper.IExamPaper;
  */
 
 public interface IHomePrerenter {
-    public IExamPaper parseFromFile(String filePath);
+    public IExamPaper parseFromFile(String filePath) throws ParseException;
 
 }

@@ -4,6 +4,7 @@ import com.zgq.wokao.action.paper.IPaperAction;
 import com.zgq.wokao.action.paper.impl.PaperAction;
 import com.zgq.wokao.action.parser.IParserAction;
 import com.zgq.wokao.action.parser.ParserAction;
+import com.zgq.wokao.exception.ParseException;
 import com.zgq.wokao.model.paper.IExamPaper;
 import com.zgq.wokao.ui.presenter.IHomePrerenter;
 import com.zgq.wokao.ui.view.IHomeView;
@@ -19,10 +20,10 @@ public class HomePresenterImpl implements IHomePrerenter{
     private IParserAction parserAction = ParserAction.getInstance();
     public HomePresenterImpl(IHomeView homeView){
         this.homeView = homeView;
-        init();
+        initListener();
     }
 
-    private void init(){
+    private void initListener(){
         parserAction.setListener(new ParserAction.ParseResultListener() {
             @Override
             public void onParseSuccess(String paperId) {
@@ -48,7 +49,12 @@ public class HomePresenterImpl implements IHomePrerenter{
         homeView.showPapersFragment();
     }
     @Override
-    public IExamPaper parseFromFile(String filePath){
+    public IExamPaper parseFromFile(String filePath) {
+        try {
+            return parserAction.parseFromFile(filePath);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 }

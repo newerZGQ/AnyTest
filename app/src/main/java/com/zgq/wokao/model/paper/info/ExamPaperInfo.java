@@ -19,16 +19,9 @@ public class ExamPaperInfo extends RealmObject implements IPaperInfo, Serializab
     private boolean stared = false;
     private boolean parseRight;
     private int studyCount;
-
     //是否加入日程学习
     private boolean isInSchedule;
-    private Schedule schedule;
-
-
-
-    public void setSchedule(Schedule schedule) {
-        this.schedule = schedule;
-    }
+    private Schedule schedule = new Schedule();
 
     public ExamPaperInfo() {
     }
@@ -39,7 +32,6 @@ public class ExamPaperInfo extends RealmObject implements IPaperInfo, Serializab
         this.createDate = createDate;
         this.lastStudyDate = lastStudyDate;
         this.schedule = schedule;
-
     }
 
     public String getId() {
@@ -115,6 +107,9 @@ public class ExamPaperInfo extends RealmObject implements IPaperInfo, Serializab
         isInSchedule = inSchedule;
     }
 
+    public void setSchedule(Schedule schedule) {
+        this.schedule = schedule;
+    }
 
     @Override
     public Schedule getSchedule() {

@@ -12,4 +12,5 @@ public interface IScheduleView {
     public void onStartBtnClick();
     public void setListener();
     public void setViewPager(ArrayList<ScheduleData> scheduleDatas);
+    public void notifyDataChanged();
 }

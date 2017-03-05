@@ -28,15 +28,25 @@ public class SchedulePagerAdapter extends PagerAdapter {
     public SchedulePagerAdapter(ArrayList<ScheduleData> scheduleDatas){
         this.scheduleDatas = scheduleDatas;
     }
+
+    public ArrayList<ScheduleData> getScheduleDatas() {
+        return scheduleDatas;
+    }
+
+    public void setScheduleDatas(ArrayList<ScheduleData> scheduleDatas) {
+        this.scheduleDatas = scheduleDatas;
+    }
+
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        super.destroyItem(container, position, object);
+        View contentView = (View) object;
+        container.removeView(contentView);
+        this.mViewCache.add(contentView);
     }
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         return getScheduleView(container,position);
-
     }
 
     @Override

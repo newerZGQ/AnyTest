@@ -80,7 +80,7 @@ public class ParserAction implements IParserAction {
 
                 }
             });
-            parserService.parsePaper("");
+//            parserService.parsePaper("");
         }
 
         @Override
@@ -117,7 +117,6 @@ public class ParserAction implements IParserAction {
                 Log.d("---->>","receiver in");
                 if (LoginAction.getInstance().isFirstTimeLogin()){
                     PaperAction.getInstance().setAllPaperInSche();
-                    LoginAction.getInstance().setFirstTimeLoginFalse();
                 }
                 String paperId = intent.getStringExtra("paperId");
                 listener.onParseSuccess(paperId);

@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -29,7 +30,7 @@ public class HomeActivity extends BaseActivity implements ScheduleFragment.OnSch
 
     private HomePresenterImpl homePresenter;
 
-    private ScheduleFragment homeFragment;
+    private ScheduleFragment schedlFragment;
 
     @BindView(R.id.root_view)
     View rootView;
@@ -52,7 +53,7 @@ public class HomeActivity extends BaseActivity implements ScheduleFragment.OnSch
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
-        homeFragment = ScheduleFragment.newInstance("","");
+        schedlFragment = ScheduleFragment.newInstance("","");
         homePresenter = new HomePresenterImpl(this);
         initView();
     }
@@ -61,7 +62,9 @@ public class HomeActivity extends BaseActivity implements ScheduleFragment.OnSch
         super.onStart();
         homePresenter.showScheduleFragment();
         if (LoginAction.getInstance().isFirstTimeLogin()) {
+            Log.d("----->>",TAG+"first login");
             homePresenter.parseFromFile(FileUtil.getOrInitAppStoragePath()+"/default_1.txt");
+//            LoginAction.getInstance().setFirstTimeLoginFalse();
         }
     }
 
@@ -149,7 +152,7 @@ public class HomeActivity extends BaseActivity implements ScheduleFragment.OnSch
 
     @Override
     public void showScheduleFragment() {
-        showFragment(homeFragment);
+        showFragment(schedlFragment);
     }
 
     @Override
@@ -174,7 +177,7 @@ public class HomeActivity extends BaseActivity implements ScheduleFragment.OnSch
 
     @Override
     public void notifyDataChanged() {
-
+        schedlFragment.notifyDataChanged();
     }
 
     @Override

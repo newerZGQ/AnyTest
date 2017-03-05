@@ -120,6 +120,7 @@ public class PaperDaoImpl extends BaseRealmProvider<NormalIExamPaper> implements
             @Override
             public void execute(Realm realm) {
                 paper.getPaperInfo().getSchedule().open();
+                paper.getPaperInfo().getSchedule().addRecord();
             }
         });
     }
@@ -190,6 +191,14 @@ public class PaperDaoImpl extends BaseRealmProvider<NormalIExamPaper> implements
     @Override
     public List<NormalIExamPaper> getAllPaper() {
         RealmResults<NormalIExamPaper> results = getRealm().where(NormalIExamPaper.class).findAll();
+        return changeRealmListToList(results);
+    }
+
+    @Override
+    public List<NormalIExamPaper> getAllPaperInSchdl() {
+        RealmResults<NormalIExamPaper> results = getRealm().where(NormalIExamPaper.class)
+                .equalTo("paperInfo.isInSchedule",true)
+                .findAll();
         return changeRealmListToList(results);
     }
 

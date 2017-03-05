@@ -30,7 +30,7 @@ public class ParserThread extends Thread {
         super.run();
         try {
             Realm realm  = Realm.getDefaultInstance();
-            final NormalIExamPaper paper = ParserHelper.getInstance().parse(FileUtil.getOrInitAppStoragePath()+"/default_1.txt");
+            final NormalIExamPaper paper = ParserHelper.getInstance().parse(filePath);
             realm.executeTransaction(new Realm.Transaction() {
                 @Override
                 public void execute(Realm realm) {
