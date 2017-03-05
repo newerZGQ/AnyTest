@@ -2,9 +2,9 @@ package com.zgq.wokao.ui.fragment;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Context;
 import android.os.Build;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 
 /**

@@ -74,13 +74,6 @@ public class ParserAction implements IParserAction {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
             parserService = ((ParserService.MyBinder) iBinder).getParserService();
-            parserService.setListener(new ParserService.ParseListener() {
-                @Override
-                public void onCompleted() {
-
-                }
-            });
-//            parserService.parsePaper("");
         }
 
         @Override

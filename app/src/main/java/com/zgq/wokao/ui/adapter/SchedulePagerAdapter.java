@@ -1,6 +1,7 @@
 package com.zgq.wokao.ui.adapter;
 
 import android.support.v4.view.PagerAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.zgq.wokao.R;
 import com.zgq.wokao.Util.ContextUtil;
+import com.zgq.wokao.Util.FontsUtil;
 import com.zgq.wokao.model.viewdate.ScheduleData;
 
 import java.util.ArrayList;
@@ -19,6 +21,8 @@ import java.util.LinkedList;
  */
 
 public class SchedulePagerAdapter extends PagerAdapter {
+
+    public static final String TAG = "SchedulePagerAdapter";
 
     private ArrayList<ScheduleData> scheduleDatas;
     //缓存 复用
@@ -71,6 +75,7 @@ public class SchedulePagerAdapter extends PagerAdapter {
             convertView = this.layoutInflater.inflate(R.layout.viewpager_schedule_item , null ,false);
             TextView accuracy = (TextView)convertView.findViewById(R.id.accuracy);
             TextView title = (TextView)convertView.findViewById(R.id.paper_title);
+            title.setTypeface(FontsUtil.getSans_serif_thin());
             TextView countToday = (TextView)convertView.findViewById(R.id.count_today);
             TextView countEveryday = (TextView)convertView.findViewById(R.id.count_everyday);
             Button fillInBtn = (Button) convertView.findViewById(R.id.fillIn_Btn);
@@ -93,7 +98,10 @@ public class SchedulePagerAdapter extends PagerAdapter {
             convertView = mViewCache.removeFirst();
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.accuracy.setText("64%");
+        holder.accuracy.setText("94%");
+        holder.title.setText(scheduleDatas.get(position).getPaperTitle());
+        holder.countToday.setText(""+54);
+        holder.countEveryday.setText(""+67);
         container.addView(convertView ,ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT );
         return convertView;
     }

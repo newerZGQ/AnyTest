@@ -55,10 +55,10 @@ public class ScheduleData {
     public static class Formator{
         public static ScheduleData format(IExamPaper paper){
             ScheduleData data = new ScheduleData();
-//            data.setPaperTitle(paper.getPaperInfo().getTitle());
-//            data.setCountToday(paper.getPaperInfo().getSchedule().getcurrentRecord().getStudyNumber());
-//            data.setCountEveryday(paper.getPaperInfo().getSchedule().getDailyCount());
-//            data.setCountAllQuestions(34);
+            data.setPaperTitle(paper.getPaperInfo().getTitle());
+            data.setCountToday(paper.getPaperInfo().getSchedule().getcurrentRecord().getStudyNumber());
+            data.setCountEveryday(paper.getPaperInfo().getSchedule().getDailyCount());
+            data.setCountAllQuestions(34);
             return data;
         }
 

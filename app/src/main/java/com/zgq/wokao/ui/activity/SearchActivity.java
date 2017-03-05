@@ -1,7 +1,7 @@
 package com.zgq.wokao.ui.activity;
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.zgq.wokao.R;
@@ -24,14 +24,14 @@ public class SearchActivity extends BaseActivity implements SearchFragment.Searc
 
     @Override
     public void onBackPressed() {
-        Fragment fragment = getFragmentManager().findFragmentById(R.id.fragment_container);
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
         if (!(((SearchFragment)fragment).onActivityBackPress())) {
             super.onBackPressed();
         }
     }
 
     private void showFragment(Fragment fragment) {
-        getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
     }
 
     @Override

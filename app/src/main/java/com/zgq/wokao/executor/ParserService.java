@@ -1,6 +1,5 @@
 package com.zgq.wokao.executor;
 
-import android.app.IntentService;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
@@ -8,7 +7,6 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.zgq.wokao.data.realm.Paper.impl.PaperDaoImpl;
 import com.zgq.wokao.model.paper.NormalIExamPaper;
 
 import io.realm.Realm;
@@ -20,8 +18,6 @@ import io.realm.RealmConfiguration;
 
 public class ParserService extends Service {
     public static final String TAG = "ParserService";
-
-    private ParseListener listener;
 
     @Nullable
     @Override
@@ -53,14 +49,6 @@ public class ParserService extends Service {
         }
     }
 
-    public void setListener(ParseListener listener){
-        this.listener = listener;
-    }
-
-    public interface ParseListener{
-        public void onCompleted();
-    }
-
     public void parsePaper(String filePath){
         ParserThread thread = new ParserThread(filePath);
         thread.setListener(new ParserThread.OnCompletedListener() {
@@ -78,7 +66,6 @@ public class ParserService extends Service {
                         realm.copyToRealm(paper);
                     }
                 });
-                listener.onCompleted();
                 Intent intent = new Intent();
                 intent.setAction("parse_action");
                 intent.putExtra("parse_result","success");
@@ -88,7 +75,4 @@ public class ParserService extends Service {
         });
         thread.start();
     }
-
-
-
 }

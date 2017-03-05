@@ -1,11 +1,13 @@
 package com.zgq.wokao.ui.activity;
 
 import android.animation.ObjectAnimator;
-import android.app.Fragment;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -16,21 +18,28 @@ import com.gigamole.navigationtabstrip.NavigationTabStrip;
 import com.zgq.wokao.R;
 import com.zgq.wokao.Util.FileUtil;
 import com.zgq.wokao.action.login.LoginAction;
+import com.zgq.wokao.ui.fragment.impl.PapersFragment;
 import com.zgq.wokao.ui.fragment.impl.ScheduleFragment;
 import com.zgq.wokao.ui.presenter.impl.HomePresenterImpl;
 import com.zgq.wokao.ui.view.IHomeView;
 import com.zgq.wokao.ui.widget.SlideUp;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HomeActivity extends BaseActivity implements ScheduleFragment.OnScheduleFragmentListener, IHomeView ,View.OnClickListener{
+public class HomeActivity extends BaseActivity implements
+        ScheduleFragment.OnScheduleFragmentListener,
+        PapersFragment.OnPaperFragmentListener,
+        IHomeView ,
+        View.OnClickListener{
 
     public static final String TAG = "HomeActivity";
 
     private HomePresenterImpl homePresenter;
 
-    private ScheduleFragment schedlFragment;
+    ArrayList<Fragment> fragments = new ArrayList<>();
 
     @BindView(R.id.root_view)
     View rootView;
@@ -47,13 +56,14 @@ public class HomeActivity extends BaseActivity implements ScheduleFragment.OnSch
     TextView titleTv;
     @BindView(R.id.home_tab)
     NavigationTabStrip tabStrip;
+    @BindView(R.id.viewpaper)
+    ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
-        schedlFragment = ScheduleFragment.newInstance("","");
         homePresenter = new HomePresenterImpl(this);
         initView();
     }
@@ -62,7 +72,6 @@ public class HomeActivity extends BaseActivity implements ScheduleFragment.OnSch
         super.onStart();
         homePresenter.showScheduleFragment();
         if (LoginAction.getInstance().isFirstTimeLogin()) {
-            Log.d("----->>",TAG+"first login");
             homePresenter.parseFromFile(FileUtil.getOrInitAppStoragePath()+"/default_1.txt");
 //            LoginAction.getInstance().setFirstTimeLoginFalse();
         }
@@ -71,6 +80,7 @@ public class HomeActivity extends BaseActivity implements ScheduleFragment.OnSch
     private void initView(){
         initTabStrip();
         initSlideUp();
+        initViewPager();
         setListener();
     }
 
@@ -78,7 +88,7 @@ public class HomeActivity extends BaseActivity implements ScheduleFragment.OnSch
         tabStrip.setTitles("日程", "试卷");
         tabStrip.setTabIndex(0, true);
         tabStrip.setTitleSize(40);
-        tabStrip.setStripColor(Color.RED);
+        tabStrip.setStripColor(Color.WHITE);
         tabStrip.setStripWeight(10);
         tabStrip.setStripFactor(5f);
         tabStrip.setStripType(NavigationTabStrip.StripType.LINE);
@@ -103,9 +113,11 @@ public class HomeActivity extends BaseActivity implements ScheduleFragment.OnSch
                     @Override
                     public void onVisibilityChanged(int visibility) {
                         if (visibility == View.GONE){
-                            titleTv.setText("试卷工厂");
+                            titleTv.setText("");
+                            titleTv.setBackground(getDrawable(R.drawable.appname));
                         }else{
                             titleTv.setText("设置");
+                            titleTv.setBackground(null);
                         }
                     }
                 })
@@ -114,13 +126,17 @@ public class HomeActivity extends BaseActivity implements ScheduleFragment.OnSch
                 .build();
     }
 
+    private void initViewPager(){
+        ScheduleFragment schedlFragment = ScheduleFragment.newInstance("","");
+        PapersFragment papersFragment = PapersFragment.newInstance();
+        fragments.add(schedlFragment);
+        fragments.add(papersFragment);
+        viewPager.setAdapter(new HomeFragmentPagerAdapter(getSupportFragmentManager(),fragments));
+    }
+
     private void setListener(){
         menuBtn.setOnClickListener(this);
         searchBtn.setOnClickListener(this);
-    }
-
-    private void showFragment(Fragment fragment) {
-        getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
     }
 
 
@@ -152,16 +168,16 @@ public class HomeActivity extends BaseActivity implements ScheduleFragment.OnSch
 
     @Override
     public void showScheduleFragment() {
-        showFragment(schedlFragment);
+        viewPager.setCurrentItem(0);
     }
 
     @Override
     public void showPapersFragment() {
-
+        viewPager.setCurrentItem(1);
     }
 
     @Override
-    public void showFragmetn(String fragmentTag) {
+    public void showFragment(String fragmentTag) {
 
     }
 
@@ -177,7 +193,7 @@ public class HomeActivity extends BaseActivity implements ScheduleFragment.OnSch
 
     @Override
     public void notifyDataChanged() {
-        schedlFragment.notifyDataChanged();
+        ((ScheduleFragment)fragments.get(0)).notifyDataChanged();
     }
 
     @Override
@@ -189,6 +205,25 @@ public class HomeActivity extends BaseActivity implements ScheduleFragment.OnSch
             case R.id.toolbar_search:
                 homePresenter.goSearch();
                 break;
+        }
+    }
+
+    public class HomeFragmentPagerAdapter extends FragmentPagerAdapter {
+        ArrayList<Fragment> fragments;
+
+        public HomeFragmentPagerAdapter(FragmentManager fm, ArrayList<Fragment> fragments) {
+            super(fm);
+            this.fragments = fragments;
+        }
+
+        @Override
+        public int getCount() {
+            return fragments.size();
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return fragments.get(position);
         }
     }
 }

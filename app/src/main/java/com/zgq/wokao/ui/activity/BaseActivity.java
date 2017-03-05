@@ -16,6 +16,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
@@ -23,7 +24,7 @@ import android.widget.Toast;
 
 import com.zgq.wokao.MyApplication;
 
-public abstract class BaseActivity extends Activity {
+public abstract class BaseActivity extends AppCompatActivity {
 
     private Toast toast = null;
 
@@ -138,12 +139,6 @@ public abstract class BaseActivity extends Activity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-    }
-
-    @SuppressWarnings("deprecation")
-    @Override
-    public Object onRetainNonConfigurationInstance() {
-        return super.onRetainNonConfigurationInstance();
     }
 
     /**

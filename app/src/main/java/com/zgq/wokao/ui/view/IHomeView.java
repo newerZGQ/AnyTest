@@ -9,7 +9,7 @@ public interface IHomeView {
     public void goSearch();
     public void showScheduleFragment();
     public void showPapersFragment();
-    public void showFragmetn(String fragmentTag);
+    public void showFragment(String fragmentTag);
     public void showProgressBar();
     public void hideProgressBar();
     public void notifyDataChanged();

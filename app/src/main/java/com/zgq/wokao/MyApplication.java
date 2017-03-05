@@ -6,6 +6,7 @@ import android.content.Context;
 
 import com.zgq.wokao.Util.ContextUtil;
 import com.zgq.wokao.Util.FileUtil;
+import com.zgq.wokao.Util.FontsUtil;
 import com.zgq.wokao.Util.StringUtil;
 import com.zgq.wokao.data.sp.SharedPreferencesHelper;
 
@@ -35,6 +36,7 @@ public class MyApplication extends Application {
             }
         }
         ContextUtil.init(this);
+        FontsUtil.init(this);
 
         SharedPreferencesHelper.init(this);
         StringUtil.init(this);

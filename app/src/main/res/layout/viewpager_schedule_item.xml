@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_marginRight="20dp"
+    android:layout_marginLeft="20dp"
     android:background="@drawable/rounded_rectangle"
     android:orientation="vertical">
 
@@ -9,6 +11,7 @@
         android:id="@+id/accuracy_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
         <TextView
@@ -16,143 +19,148 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/accuracy_label"
-            android:layout_marginStart="64dp"
+            android:layout_marginStart="40dp"
             android:layout_toEndOf="@+id/accuracy_label"
             android:text="54%"
             android:textColor="#15967D"
-            android:textSize="30sp" />
+            android:textSize="45sp" />
 
         <TextView
             android:id="@+id/accuracy_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:textColor="#133B36"
             android:text="正确率" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/paper_title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/accuracy_layout"
-        android:layout_marginStart="64dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="14dp"
+        android:layout_marginEnd="50dp"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:fontFamily="sans-serif-thin"
         android:text="历年考研政治真题讲解" />
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/record"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/paper_title"
         android:layout_marginTop="10dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:paddingTop="10dp"
+        android:orientation="horizontal"
         android:background="@drawable/separator_line">
-
-        <TextView
-            android:id="@+id/count_today"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="100dp"
-            android:layout_marginTop="10dp"
-            android:text="37" />
-
-        <TextView
-            android:id="@+id/count_everyday"
-            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="40dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/count_today"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:text="37" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textSize="13sp"
+                android:textColor="@color/black"
+                android:text="今日学习" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="250dp"
-            android:layout_marginTop="10dp"
-            android:text="67" />
+            android:layout_weight="1"
+            android:layout_marginEnd="40dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/count_everyday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:text="67" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textSize="13sp"
+                android:textColor="@color/black"
+                android:text="每日任务" />
+        </LinearLayout>
+    </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="100dp"
-            android:layout_marginTop="50dp"
-            android:text="今日学习" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="250dp"
-            android:layout_marginTop="50dp"
-            android:text="每日任务" />
-    </RelativeLayout>
-
-    <GridLayout
+    <RelativeLayout
         android:id="@+id/questions"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/record"
-        android:layout_centerHorizontal="true"
-        android:columnCount="3"
-        android:rowCount="2">
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp">
+        <Button
+            android:id="@+id/sglcho_Btn"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/sglcho_back"/>
+        <Button
+            android:id="@+id/tf_Btn"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_toStartOf="@+id/sglcho_Btn"
+            android:background="@drawable/tf_back" />
 
         <Button
             android:id="@+id/fillIn_Btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="0"
-            android:layout_columnWeight="1"
-            android:layout_row="0"
-            android:layout_rowWeight="1"
-            android:background="@drawable/fillin_back"
-            android:textSize="40dp" />
-
-        <Button
-            android:id="@+id/tf_Btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="1"
-            android:layout_columnWeight="1"
-            android:layout_row="0"
-            android:layout_rowWeight="1"
-            android:background="@drawable/tf_back"
-            android:textSize="40dp" />
-
-        <Button
-            android:id="@+id/sglcho_Btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="2"
-            android:layout_columnWeight="1"
-            android:layout_row="0"
-            android:layout_rowWeight="1"
-            android:background="@drawable/sglcho_back"
-            android:textSize="40dp" />
-        <Button
-            android:id="@+id/mulcho_Btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="0"
-            android:layout_columnWeight="1"
-            android:layout_row="1"
-            android:layout_rowWeight="1"
-            android:background="@drawable/mulcho_back"
-            android:textSize="40dp" />
-
-        <Button
-            android:id="@+id/disc_Btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="1"
-            android:layout_columnWeight="1"
-            android:layout_row="1"
-            android:layout_rowWeight="1"
-            android:background="@drawable/dis_btn"
-            android:textSize="40dp" />
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_toStartOf="@+id/tf_Btn"
+            android:background="@drawable/fillin_back" />
 
         <Button
             android:id="@+id/all_Btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="2"
-            android:layout_columnWeight="1"
-            android:layout_row="1"
-            android:layout_rowWeight="1"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_below="@id/sglcho_Btn"
+            android:layout_alignParentEnd="true"
             android:background="@drawable/all_back"
             android:text="64"
             android:textColor="@color/colorWhite"
             android:textSize="20sp" />
-    </GridLayout>
+
+        <Button
+            android:id="@+id/disc_Btn"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_below="@+id/tf_Btn"
+            android:layout_toStartOf="@id/all_Btn"
+            android:background="@drawable/dis_btn"/>
+
+        <Button
+            android:id="@+id/mulcho_Btn"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_below="@+id/fillIn_Btn"
+            android:layout_toStartOf="@id/disc_Btn"
+            android:background="@drawable/mulcho_back"/>
+
+    </RelativeLayout>
 
 </RelativeLayout>
