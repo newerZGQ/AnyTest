@@ -23,39 +23,17 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
     //recyclerView adapter
     private android.content.Context context = ContextUtil.getContext();
     private ArrayList<IPaperInfo> paperInfos = null;
-    private ArrayList<Boolean> isItemSelectedList = new ArrayList<>();
-    private ArrayList<Integer> colorlabelList = null;
-    private final int GROUPTYPE = 1;
-    private final int ITEMTYPE = 2;
-    private int viewType = GROUPTYPE;
 
     private PaperAdapterListener listener;
 
     public HomePaperAdapter(ArrayList<IPaperInfo> paperInfos, PaperAdapterListener listener) {
         this.listener = listener;
         this.paperInfos = paperInfos;
-        initData();
     }
 
     public HomePaperAdapter setData(ArrayList<IPaperInfo> paperInfos){
         this.paperInfos = paperInfos;
         return this;
-    }
-
-    private void initData() {
-        initIsItemSelectedList();
-        initColorLabelList();
-    }
-
-    private void initIsItemSelectedList() {
-        isItemSelectedList.clear();
-        for (int i = 0; i < paperInfos.size(); i++) {
-            isItemSelectedList.add(false);
-        }
-    }
-
-    private void initColorLabelList() {
-        colorlabelList = DrawableUtil.getCircleDrawableSet(paperInfos.size());
     }
 
 
@@ -68,22 +46,6 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
 
         final PaperInfoViewHolder holder1 = (PaperInfoViewHolder) holder;
         final IPaperInfo info = paperInfos.get(position);
-        //设置paperlabel的正面以及反面
-//        holder1.paperLabel.setSidesStyle(new RotateTextView.UpAndDownSideStyle() {
-//            @Override
-//            public void setUpSideStyle() {
-//                holder.paperLabel.setText(info.getTitle().substring(0, 1));
-//                holder1.paperLabel.setBackground(context.getDrawable(colorlabelList.get(position)));
-//                holder1.item.setBackgroundColor(context.getColor(R.color.colorWhite));
-//            }
-//
-//            @Override
-//            public void setDownSideStyle() {
-//                holder1.paperLabel.setText("");
-//                holder1.paperLabel.setBackground(context.getDrawable(R.drawable.circle_background_downside_right_icon));
-//                holder1.item.setBackgroundColor(context.getColor(R.color.colorRecyclerViewItemSelectedBackGround));
-//            }
-//        });
         //title 以及label的初始显示
         if (info.getTitle() != null) {
             holder1.paperName.setText(info.getTitle());
@@ -109,32 +71,6 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
         } else {
             holder1.paperStar.setBackground(context.getDrawable(R.drawable.active_star));
         }
-        holder1.paperStar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (info.isStared()) {
-//                    realm.executeTransaction(new Realm.Transaction() {
-//                        @Override
-//                        public void execute(Realm realm) {
-//                            info.setStared(false);
-//                        }
-//                    });
-                    holder1.paperStar.setBackground(context.getDrawable(R.drawable.inactive_star));
-                    listener.onStared(position,false);
-//                    Toast.makeText(getActivity(), "取消收藏", Toast.LENGTH_SHORT).show();
-                } else {
-//                    realm.executeTransaction(new Realm.Transaction() {
-//                        @Override
-//                        public void execute(Realm realm) {
-//                            info.setStared(true);
-//                        }
-//                    });
-                    holder1.paperStar.setBackground(context.getDrawable(R.drawable.active_star));
-                    listener.onStared(position,true);
-//                    Toast.makeText(getActivity(), "已收藏", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
         //paperlabel的单击事件
         holder1.paperLabel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -168,27 +104,11 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
             }
         });
 
-        switch (holder.getItemViewType()) {
-            case ITEMTYPE:
-                break;
-            case GROUPTYPE:
-                holder1.groupTitle.setVisibility(View.VISIBLE);
-                if (position == 0) {
-                    holder1.groupTitle.setText("最近");
-                } else {
-                    holder1.groupTitle.setText("其他");
-                }
-                break;
-        }
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (position == 0 || position == 3) {
-            return GROUPTYPE;
-        } else {
-            return ITEMTYPE;
-        }
+        return 0;
     }
 
     @Override
@@ -201,20 +121,6 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.activity_main_recyclerview_item, parent,false);
         return new PaperInfoViewHolder(view);
-    }
-
-    public void removeSpecificPosition(int position) {
-        paperInfos.remove(position);
-        isItemSelectedList.remove(position);
-        colorlabelList.remove(position);
-        notifyItemRemoved(position);
-    }
-
-    private void releaseSelectedView() {
-        for (int i = 0; i < isItemSelectedList.size(); i++) {
-            isItemSelectedList.set(i, false);
-        }
-        notifyDataSetChanged();
     }
 
     private String getAuthorAndData(IPaperInfo info) {
@@ -250,7 +156,6 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
     }
 
     public interface PaperAdapterListener{
-        public void onStared(int position,boolean isStared);
         public void onItemClick(int position);
         public void onItemLongClick(int position);
     }

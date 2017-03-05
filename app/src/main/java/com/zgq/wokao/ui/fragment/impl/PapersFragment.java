@@ -3,20 +3,31 @@ package com.zgq.wokao.ui.fragment.impl;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.zgq.wokao.R;
+import com.zgq.wokao.model.paper.info.IPaperInfo;
+import com.zgq.wokao.ui.adapter.HomePaperAdapter;
 import com.zgq.wokao.ui.fragment.BaseFragment;
+import com.zgq.wokao.ui.presenter.impl.PapersPresenter;
+import com.zgq.wokao.ui.view.IPapersView;
 
-public class PapersFragment extends BaseFragment {
+import java.util.ArrayList;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class PapersFragment extends BaseFragment implements IPapersView{
 
     private OnPaperFragmentListener mListener;
+    @BindView(R.id.paper_list)
+    RecyclerView paperList;
 
-    public PapersFragment() {
-        // Required empty public constructor
-    }
+    private PapersPresenter papersPresenter = new PapersPresenter(this);
+    public PapersFragment() {}
 
     public static PapersFragment newInstance() {
         PapersFragment fragment = new PapersFragment();
@@ -32,10 +43,12 @@ public class PapersFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_papers, container, false);
+        View rootView =  inflater.inflate(R.layout.fragment_papers, container, false);
+        ButterKnife.bind(this,rootView);
+        papersPresenter.setPaperList();
+        return rootView;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
 
@@ -67,6 +80,21 @@ public class PapersFragment extends BaseFragment {
     @Override
     public boolean onActivityBackPress() {
         return false;
+    }
+
+    @Override
+    public void setPaperList(ArrayList<IPaperInfo> paperInfos) {
+        paperList.setAdapter(new HomePaperAdapter(paperInfos, new HomePaperAdapter.PaperAdapterListener() {
+            @Override
+            public void onItemClick(int position) {
+
+            }
+
+            @Override
+            public void onItemLongClick(int position) {
+
+            }
+        }));
     }
 
     public interface OnPaperFragmentListener {

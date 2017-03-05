@@ -96,7 +96,7 @@ public class HomeActivity extends BaseActivity implements
         tabStrip.setTypeface("fonts/typeface.ttf");
         tabStrip.setCornersRadius(3);
         tabStrip.setAnimationDuration(200);
-        tabStrip.setInactiveColor(Color.GRAY);
+        tabStrip.setInactiveColor(getResources().getColor(R.color.colorTransparentWhite));
         tabStrip.setActiveColor(Color.WHITE);
         tabStrip.setViewPager(viewPager);
     }
