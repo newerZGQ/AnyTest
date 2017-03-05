@@ -78,10 +78,10 @@ public class HomeActivity extends BaseActivity implements
     }
 
     private void initView(){
-        initTabStrip();
         initSlideUp();
         initViewPager();
         setListener();
+        initTabStrip();
     }
 
     private void initTabStrip(){
@@ -91,13 +91,14 @@ public class HomeActivity extends BaseActivity implements
         tabStrip.setStripColor(Color.WHITE);
         tabStrip.setStripWeight(10);
         tabStrip.setStripFactor(5f);
-        tabStrip.setStripType(NavigationTabStrip.StripType.LINE);
+        tabStrip.setStripType(NavigationTabStrip.StripType.POINT);
         tabStrip.setStripGravity(NavigationTabStrip.StripGravity.BOTTOM);
         tabStrip.setTypeface("fonts/typeface.ttf");
         tabStrip.setCornersRadius(3);
         tabStrip.setAnimationDuration(200);
         tabStrip.setInactiveColor(Color.GRAY);
         tabStrip.setActiveColor(Color.WHITE);
+        tabStrip.setViewPager(viewPager);
     }
 
     private void initSlideUp(){
