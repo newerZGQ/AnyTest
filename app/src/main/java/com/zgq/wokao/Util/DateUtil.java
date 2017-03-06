@@ -23,6 +23,14 @@ public class DateUtil {
         return str;
     }
 
+    public static String getYYYY_MM_DD(String dateString) throws ParseException {
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = format1.parse(dateString);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-DD");
+        String string = format.format(date);
+        return string;
+    }
+
     /**
      * 格式化时间（输出类似于 刚刚, 4分钟前, 一小时前, 昨天这样的时间）
      *
@@ -74,7 +82,6 @@ public class DateUtil {
                 e.printStackTrace();
             }
         }
-
         return display;
     }
 

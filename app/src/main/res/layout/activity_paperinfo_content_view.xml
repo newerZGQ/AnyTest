@@ -11,18 +11,18 @@
         android:textSize="14sp"/>
     <include
         android:id="@+id/fiqstType"
-        layout="@layout/activity_questionlist_qsttype_group"/>
+        layout="@layout/activity_paperinfo_qsttype_group"/>
     <include
         android:id="@+id/tfqstType"
-        layout="@layout/activity_questionlist_qsttype_group"/>
+        layout="@layout/activity_paperinfo_qsttype_group"/>
     <include
         android:id="@+id/scqstType"
-        layout="@layout/activity_questionlist_qsttype_group"/>
+        layout="@layout/activity_paperinfo_qsttype_group"/>
     <include
         android:id="@+id/mcqstType"
-        layout="@layout/activity_questionlist_qsttype_group"/>
+        layout="@layout/activity_paperinfo_qsttype_group"/>
     <include
         android:id="@+id/dsqstType"
-        layout="@layout/activity_questionlist_qsttype_group"/>
+        layout="@layout/activity_paperinfo_qsttype_group"/>
 
 </LinearLayout>

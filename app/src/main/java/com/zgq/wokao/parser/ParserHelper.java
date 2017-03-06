@@ -1,5 +1,6 @@
 package com.zgq.wokao.parser;
 
+import com.zgq.wokao.Util.DateUtil;
 import com.zgq.wokao.exception.ParseException;
 import com.zgq.wokao.model.paper.NormalIExamPaper;
 import com.zgq.wokao.model.paper.question.impl.DiscussIQuestion;
@@ -45,33 +46,6 @@ public class ParserHelper {
         }
 //        PaperParser paperParser = new PaperParser();
         return parse(new FileInputStream(file));
-//        ArrayList<PaperParser.Topic> topics = paperParser.parseAndSave(new FileInputStream(file));
-//        paper.setPaperInfo(paperParser.getInfo());
-//        if (topics.size() == 0){
-//            throw new com.zgq.wokao.exception.ParseException("请检查大标题");
-//        }
-//        for (PaperParser.Topic tmp : topics){
-//            switch (tmp.getType().getIndex()){
-//                case QuestionType.fillin_index:
-//                    paper.setFillInQuestions(parseFillin(tmp));
-//                    break;
-//                case QuestionType.tf_index:
-//                    paper.setTfQuestions(parseTF(tmp));
-//                    break;
-//                case QuestionType.sglc_index:
-//                    paper.setSglChoQuestions(parseSgl(tmp));
-//                    break;
-//                case QuestionType.mtlc_index:
-//                    paper.setMultChoQuestions(parseMult(tmp));
-//                    break;
-//                case QuestionType.disc_index:
-//                    paper.setDiscussQuestions(parseDis(tmp));
-//                    break;
-//                case QuestionType.noqst_index:
-//                    break;
-//            }
-//        }
-//        return paper;
     }
 
     public NormalIExamPaper parse(InputStream inputStream) throws ParseException {
@@ -106,6 +80,7 @@ public class ParserHelper {
                     break;
             }
         }
+        paper.getPaperInfo().setCreateDate(DateUtil.getCurrentDate());
         return paper;
     }
 

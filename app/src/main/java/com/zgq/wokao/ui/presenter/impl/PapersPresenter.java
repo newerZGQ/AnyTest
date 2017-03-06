@@ -1,5 +1,7 @@
 package com.zgq.wokao.ui.presenter.impl;
 
+import android.util.Log;
+
 import com.zgq.wokao.action.paper.IPaperAction;
 import com.zgq.wokao.action.paper.impl.PaperAction;
 import com.zgq.wokao.model.paper.info.IPaperInfo;
@@ -13,6 +15,7 @@ import java.util.ArrayList;
  */
 
 public class PapersPresenter implements IPapersPresenter {
+    private static final String TAG = "PapersPresenter";
     private IPapersView papersView;
     private IPaperAction paperAction = PaperAction.getInstance();
 
@@ -24,8 +27,10 @@ public class PapersPresenter implements IPapersPresenter {
     }
 
     public ArrayList<IPaperInfo> getPaperInfos(boolean needUpdate) {
-        if (needUpdate || paperInfos == null){
+        if (needUpdate || paperInfos == null || paperInfos.size() == 0){
+            Log.d("----->>",TAG+" getpaperinfos in");
             paperInfos = (ArrayList<IPaperInfo>) paperAction.getAllPaperInfo();
+            Log.d("----->>",TAG+" paperinfo size"+paperInfos.size());
         }
         return paperInfos;
     }
@@ -33,5 +38,11 @@ public class PapersPresenter implements IPapersPresenter {
     @Override
     public void setPaperList() {
         papersView.setPaperList(getPaperInfos(false));
+    }
+
+    @Override
+    public void notifyDataChanged() {
+        getPaperInfos(true);
+        papersView.notifyDataChanged();
     }
 }

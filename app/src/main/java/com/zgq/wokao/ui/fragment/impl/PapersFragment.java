@@ -1,15 +1,19 @@
 package com.zgq.wokao.ui.fragment.impl;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.zgq.wokao.R;
 import com.zgq.wokao.model.paper.info.IPaperInfo;
+import com.zgq.wokao.ui.activity.PaperInfoActivity;
 import com.zgq.wokao.ui.adapter.HomePaperAdapter;
 import com.zgq.wokao.ui.fragment.BaseFragment;
 import com.zgq.wokao.ui.presenter.impl.PapersPresenter;
@@ -19,8 +23,11 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.recyclerview.animators.FadeInAnimator;
 
 public class PapersFragment extends BaseFragment implements IPapersView{
+
+    private static final String TAG = "PapersFragment";
 
     private OnPaperFragmentListener mListener;
     @BindView(R.id.paper_list)
@@ -84,17 +91,28 @@ public class PapersFragment extends BaseFragment implements IPapersView{
 
     @Override
     public void setPaperList(ArrayList<IPaperInfo> paperInfos) {
+        Log.d("----->>",TAG+" setPaperlist");
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        paperList.setLayoutManager(layoutManager);
+        paperList.setItemAnimator(new FadeInAnimator());
         paperList.setAdapter(new HomePaperAdapter(paperInfos, new HomePaperAdapter.PaperAdapterListener() {
             @Override
-            public void onItemClick(int position) {
-
+            public void onItemClick(int position, IPaperInfo info) {
+                Intent intent = new Intent(getActivity(), PaperInfoActivity.class);
+                intent.putExtra("paperId",info.getId());
+                startActivity(intent);
             }
 
             @Override
-            public void onItemLongClick(int position) {
+            public void onItemLongClick(int position, IPaperInfo info) {
 
             }
         }));
+    }
+
+    @Override
+    public void notifyDataChanged() {
+        paperList.getAdapter().notifyDataSetChanged();
     }
 
     public interface OnPaperFragmentListener {

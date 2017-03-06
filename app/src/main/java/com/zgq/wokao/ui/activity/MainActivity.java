@@ -488,7 +488,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent();
-                    intent.setClass(MainActivity.this, QuestionsListActivity.class);
+                    intent.setClass(MainActivity.this, PaperInfoActivity.class);
                     intent.putExtra("paperTitle", info.getTitle());
                     intent.putExtra("paperAuthor", info.getAuthor());
                     startActivity(intent);
@@ -542,7 +542,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_main_recyclerview_item, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_papers_recyclerview_item, parent, false);
             return new PaperInfoViewHolder(view);
         }
 
@@ -584,11 +584,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 super(itemView);
                 item = (RelativeLayout) itemView.findViewById(R.id.list_item);
                 paperName = (TextView) itemView.findViewById(R.id.paper_name);
-                paperLabel = (RotateTextView) itemView.findViewById(R.id.question_label);
+//                paperLabel = (RotateTextView) itemView.findViewById(R.id.question_label);
                 paperLabel.setClickable(true);
-                paperAuthorAndDate = (TextView) itemView.findViewById(R.id.auther);
-                paperStar = (TextView) itemView.findViewById(R.id.activity_main_paper_star_tv);
-                groupTitle = (TextView) itemView.findViewById(R.id.group_title);
+//                paperAuthorAndDate = (TextView) itemView.findViewById(R.id.auther);
+//                paperStar = (TextView) itemView.findViewById(R.id.activity_main_paper_star_tv);
+//                groupTitle = (TextView) itemView.findViewById(R.id.group_title);
             }
         }
     }

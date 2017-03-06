@@ -24,7 +24,6 @@ import com.zgq.wokao.model.paper.question.impl.FillInIQuestion;
 import com.zgq.wokao.model.paper.question.impl.MultChoQuestion;
 import com.zgq.wokao.model.paper.question.impl.SglChoQuestion;
 import com.zgq.wokao.model.paper.question.impl.TFIQuestion;
-import com.zgq.wokao.ui.activity.AnswerStudyActivity;
 import com.zgq.wokao.ui.widget.ObservableScrollView;
 
 import butterknife.BindView;
@@ -33,7 +32,7 @@ import io.realm.Realm;;
 import io.realm.RealmList;
 import io.realm.RealmResults;
 
-public class QuestionsListActivity extends AppCompatActivity implements View.OnClickListener {
+public class PaperInfoActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ObservableScrollView obsscrollView;
 
@@ -76,7 +75,7 @@ public class QuestionsListActivity extends AppCompatActivity implements View.OnC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initData();
-        setContentView(R.layout.activity_questions_list);
+        setContentView(R.layout.activity_paperinfo);
         ButterKnife.bind(this);
         initToolbar();
         loadViewForCode();
@@ -142,10 +141,8 @@ public class QuestionsListActivity extends AppCompatActivity implements View.OnC
         }else {
             lastStudyDate = DateUtil.formatDisplayTime(info.getLastStudyDate(), null);
         }
-//        Log.d("------>>laststudy",lastStudyDate);
         isPaperStar = info.isStared();
         paperStudyCount = getStudiedCount(normalExamPaper);
-//        Log.d("---->>", "" + paperStudyCount);
     }
 
     private void initView() {
@@ -286,9 +283,9 @@ public class QuestionsListActivity extends AppCompatActivity implements View.OnC
 
     private void loadViewForCode() {
         obsscrollView = (ObservableScrollView) findViewById(R.id.scroll_view);
-        View headView = LayoutInflater.from(this).inflate(R.layout.activity_questionlist_head_view, null, false);
-        View zoomView = LayoutInflater.from(this).inflate(R.layout.activity_questionlist_zoom_view, null, false);
-        View contentView = LayoutInflater.from(this).inflate(R.layout.activity_questionlist_content_view, null, false);
+        View headView = LayoutInflater.from(this).inflate(R.layout.activity_paperinfo_head_view, null, false);
+        View zoomView = LayoutInflater.from(this).inflate(R.layout.activity_paperinfo_zoom_view, null, false);
+        View contentView = LayoutInflater.from(this).inflate(R.layout.activity_paperinfo_content_view, null, false);
         obsscrollView.setHeaderView(headView);
         obsscrollView.setZoomView(zoomView);
         obsscrollView.setScrollContentView(contentView);

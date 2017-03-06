@@ -7,11 +7,20 @@ import com.zgq.wokao.model.paper.IExamPaper;
  */
 
 public class ScheduleData {
+    private String paperId;
     private String accuracy;
     private String paperTitle;
     private int countToday;
     private int countEveryday;
     private int countAllQuestions;
+
+    public String getPaperId() {
+        return paperId;
+    }
+
+    public void setPaperId(String paperId) {
+        this.paperId = paperId;
+    }
 
     public String getAccuracy() {
         return accuracy;
@@ -59,6 +68,7 @@ public class ScheduleData {
             data.setCountToday(paper.getPaperInfo().getSchedule().getcurrentRecord().getStudyNumber());
             data.setCountEveryday(paper.getPaperInfo().getSchedule().getDailyCount());
             data.setCountAllQuestions(34);
+            data.setPaperId(paper.getPaperInfo().getId());
             return data;
         }
 
