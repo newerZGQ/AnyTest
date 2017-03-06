@@ -16,6 +16,8 @@ import com.zgq.wokao.model.paper.info.ExamPaperInfo;
 import com.zgq.wokao.model.paper.info.IPaperInfo;
 import com.zgq.wokao.model.paper.question.IQuestion;
 import com.zgq.wokao.model.paper.QuestionType;
+import com.zgq.wokao.model.schedule.DailyRecord;
+import com.zgq.wokao.model.schedule.Schedule;
 import com.zgq.wokao.model.search.SearchInfoItem;
 import com.zgq.wokao.model.search.SearchQstItem;
 import com.zgq.wokao.model.search.Searchable;
@@ -31,6 +33,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import io.realm.Realm;
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
@@ -39,6 +42,8 @@ import io.realm.RealmResults;
  * Created by zgq on 16-6-20.
  */
 public class PaperDaoImpl extends BaseRealmProvider<NormalIExamPaper> implements IPaperDao, IQuestionDao {
+
+    Realm realm = getRealm();
 
     private PaperDaoImpl() {
         setClass(NormalIExamPaper.class);
@@ -49,120 +54,96 @@ public class PaperDaoImpl extends BaseRealmProvider<NormalIExamPaper> implements
     }
 
     @Override
-    public void star(final IQuestion question) {
-        getRealm().executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                question.getInfo().setStared(true);
-            }
-        });
+    public synchronized void star(final IQuestion question) {
+        realm.beginTransaction();
+        question.getInfo().setStared(true);
+        realm.commitTransaction();
+    }
+
+    @Override
+    public synchronized void unStar(final IQuestion question) {
+        realm.beginTransaction();
+        question.getInfo().setStared(false);
+        realm.commitTransaction();
+    }
+
+    @Override
+    public synchronized void star(final IExamPaper paper) {
+        realm.beginTransaction();
+        paper.getPaperInfo().setStared(true);
+        realm.commitTransaction();
+    }
+
+    @Override
+    public synchronized void unStar(final IExamPaper paper) {
+        realm.beginTransaction();
+        paper.getPaperInfo().setStared(false);
+        realm.commitTransaction();
+    }
+
+    @Override
+    public synchronized void setTitle(IExamPaper paper, String title) {
 
     }
 
     @Override
-    public void unStar(final IQuestion question) {
-        getRealm().executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                question.getInfo().setStared(false);
-            }
-        });
+    public synchronized void addToSchedule(final IExamPaper paper) {
+        realm.beginTransaction();
+        paper.getPaperInfo().setInSchedule(true);
+        realm.commitTransaction();
     }
 
     @Override
-    public void star(final IExamPaper paper) {
-        getRealm().executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                paper.getPaperInfo().setStared(true);
-            }
-        });
+    public synchronized void removeFromSchedule(final IExamPaper paper) {
+        realm.beginTransaction();
+        paper.getPaperInfo().setInSchedule(false);
+        realm.commitTransaction();
     }
 
     @Override
-    public void unStar(final IExamPaper paper) {
-        getRealm().executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                paper.getPaperInfo().setStared(false);
-            }
-        });
+    public synchronized void openSchedule(final IExamPaper paper) {
+        realm.beginTransaction();
+        paper.getPaperInfo().getSchedule().open();
+        realm.commitTransaction();
+
+        paper.getPaperInfo().getSchedule().addRecord();
     }
 
     @Override
-    public void setTitle(IExamPaper paper, String title) {
-
+    public synchronized void closeSchedule(final IExamPaper paper) {
+        realm.beginTransaction();
+        paper.getPaperInfo().getSchedule().close();
+        realm.commitTransaction();
     }
 
     @Override
-    public void addToSchedule(final IExamPaper paper) {
-        getRealm().executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                paper.getPaperInfo().setInSchedule(true);
-            }
-        });
+    public synchronized void setDailyCount(final IExamPaper paper, final int count) {
+        realm.beginTransaction();
+        paper.getPaperInfo().getSchedule().setDailyCount(count);
+        realm.commitTransaction();
     }
 
     @Override
-    public void removeFromSchedule(final IExamPaper paper) {
-        getRealm().executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                paper.getPaperInfo().setInSchedule(false);
-            }
-        });
+    public synchronized void updateDailyRecord(final IExamPaper paper) {
+        realm.beginTransaction();
+        paper.getPaperInfo().getSchedule().recordPlus1();
+        realm.commitTransaction();
     }
 
     @Override
-    public void openSchedule(final IExamPaper paper) {
-        getRealm().executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                paper.getPaperInfo().getSchedule().open();
-                paper.getPaperInfo().getSchedule().addRecord();
-            }
-        });
+    public synchronized void updateQuestionRecord(final IQuestion question, final boolean isCorrect) {
+        realm.beginTransaction();
+        question.getRecord().updateRecord(isCorrect);
+        realm.commitTransaction();
     }
 
     @Override
-    public void closeSchedule(final IExamPaper paper) {
-        getRealm().executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                paper.getPaperInfo().getSchedule().close();
-            }
-        });
-    }
+    public synchronized void addRecord(final Schedule schedule, final DailyRecord dailyRecord) {
+            realm.beginTransaction();
+        RealmList<DailyRecord> dailyRecords = schedule.getDailyRecords();
+            dailyRecords.add(dailyRecord);
 
-    @Override
-    public void setDailyCount(final IExamPaper paper, final int count) {
-        getRealm().executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                paper.getPaperInfo().getSchedule().setDailyCount(count);
-            }
-        });
-    }
-
-    @Override
-    public void updateDailyRecord(final IExamPaper paper) {
-        getRealm().executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                paper.getPaperInfo().getSchedule().recordPlus1();
-            }
-        });
-    }
-
-    @Override
-    public void updateQuestionRecord(final IQuestion question, final boolean isCorrect) {
-        getRealm().executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                question.getRecord().updateRecord(isCorrect);
-            }
-        });
+            realm.commitTransaction();
     }
 
 
@@ -190,13 +171,13 @@ public class PaperDaoImpl extends BaseRealmProvider<NormalIExamPaper> implements
      */
     @Override
     public List<NormalIExamPaper> getAllPaper() {
-        RealmResults<NormalIExamPaper> results = getRealm().where(NormalIExamPaper.class).findAll();
+        RealmResults<NormalIExamPaper> results = realm.where(NormalIExamPaper.class).findAll();
         return changeRealmListToList(results);
     }
 
     @Override
     public List<NormalIExamPaper> getAllPaperInSchdl() {
-        RealmResults<NormalIExamPaper> results = getRealm().where(NormalIExamPaper.class)
+        RealmResults<NormalIExamPaper> results = realm.where(NormalIExamPaper.class)
                 .equalTo("paperInfo.isInSchedule",true)
                 .findAll();
         return changeRealmListToList(results);
@@ -209,14 +190,14 @@ public class PaperDaoImpl extends BaseRealmProvider<NormalIExamPaper> implements
      */
     @Override
     public List<IPaperInfo> getAllPaperInfo() {
-        RealmResults<ExamPaperInfo> results = getRealm().where(ExamPaperInfo.class).findAll();
+        RealmResults<ExamPaperInfo> results = realm.where(ExamPaperInfo.class).findAll();
         List<ExamPaperInfo> list = changeRealmListToList(results);
         return examPaperInfoToIPaperInfo(list);
     }
 
     @Override
     public List<IPaperInfo> getPaperInfosInSchdl() {
-        RealmResults<ExamPaperInfo> results = getRealm().where(ExamPaperInfo.class).equalTo("isInSchedule",true).findAll();
+        RealmResults<ExamPaperInfo> results = realm.where(ExamPaperInfo.class).equalTo("isInSchedule",true).findAll();
         Log.d("---->>","paperdaoimpl "+results.size());
         List<ExamPaperInfo> list = changeRealmListToList(results);
         return examPaperInfoToIPaperInfo(list);
@@ -249,7 +230,7 @@ public class PaperDaoImpl extends BaseRealmProvider<NormalIExamPaper> implements
 
     @Override
     public List<ExamPaperInfo> getSchedulePapers() {
-        RealmResults<ExamPaperInfo> results = getRealm()
+        RealmResults<ExamPaperInfo> results = realm
                 .where(ExamPaperInfo.class)
                 .equalTo("isInSchedule", true)
                 .findAll();
@@ -264,9 +245,8 @@ public class PaperDaoImpl extends BaseRealmProvider<NormalIExamPaper> implements
      */
     public List<SearchInfoItem> searchInfoItem(String query) {
         if (query == null || query.equals("")) return null;
-        RealmQuery<ExamPaperInfo> infoQuery = getRealm().where(ExamPaperInfo.class);
+        RealmQuery<ExamPaperInfo> infoQuery = realm.where(ExamPaperInfo.class);
         infoQuery.contains("title", query);
-//        infoQuery.or().contains("author",query);
         List<ExamPaperInfo> paperInfos = infoQuery.findAll();
         List<SearchInfoItem> results = new ArrayList<>();
         for (ExamPaperInfo info : paperInfos) {
@@ -380,7 +360,7 @@ public class PaperDaoImpl extends BaseRealmProvider<NormalIExamPaper> implements
             return false;
         }
 
-        if (getRealm().where(NormalIExamPaper.class)
+        if (realm.where(NormalIExamPaper.class)
                 .equalTo("paperInfo.id",paper.getPaperInfo().getId())
                 .findAll()
                 .size() == 0){

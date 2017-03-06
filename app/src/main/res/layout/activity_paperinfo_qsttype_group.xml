@@ -6,12 +6,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <TextView
         android:id="@+id/question_type"
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:gravity="center_vertical"
         android:paddingLeft="72dp"
-        android:paddingRight="72dp"
         android:text="单选题"
         android:textColor="@color/colorFirstLevelText"
         android:textSize="16sp" />
@@ -20,10 +19,8 @@
         android:id="@+id/questiontype_info"
         android:layout_width="wrap_content"
         android:layout_height="16dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="72dp"
-        android:gravity="center_vertical"
+        android:layout_marginTop="16dp"
+        android:layout_toRightOf="@+id/question_type"
         android:text="zhangguoqaing"
         android:textColor="@color/colorSecondLevelText"
         android:textSize="12sp" />

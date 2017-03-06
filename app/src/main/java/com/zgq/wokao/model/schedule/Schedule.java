@@ -1,6 +1,7 @@
 package com.zgq.wokao.model.schedule;
 
 import com.zgq.wokao.Util.DateUtil;
+import com.zgq.wokao.data.realm.Paper.impl.PaperDaoImpl;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
@@ -57,15 +58,18 @@ public class Schedule extends RealmObject implements ISchedule {
                 .studyCount(this.dailyCount)
                 .studyNumber(0)
                 .build();
-        dailyRecords.add(dailyRecord);
+        PaperDaoImpl.getInstance().addRecord(this,dailyRecord);
     }
 
     @Override
     public DailyRecord getcurrentRecord() {
-        if (!lastRecordIsCurrent()) {
+        if (!lastRecordIsCurrent() || dailyRecords.size() == 0) {
             addRecord();
         }
-        return dailyRecords.get(dailyRecords.size() - 1);
+        if (dailyRecords.size() == 0){
+            return null;
+        }
+        return dailyRecords.last();
     }
 
     @Override
