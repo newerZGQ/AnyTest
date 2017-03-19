@@ -91,7 +91,7 @@ public class SchedulePagerAdapter extends PagerAdapter {
         }
         holder.title.setText(scheduleDatas.get(position).getPaperTitle());
         holder.addTime.setText(scheduleDatas.get(position).getAddTime());
-        
+
         container.addView(convertView ,ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT );
         return convertView;
     }

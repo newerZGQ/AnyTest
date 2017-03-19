@@ -13,6 +13,9 @@ public class QuestionInfo extends RealmObject implements IQuestionInfo {
     private QuestionType type;
     private int id;
     private boolean isStared;
+    private int studyCount;
+    private int correctCount;
+    private float accuracy;
 
     public QuestionType getType() {
         return type;
@@ -36,5 +39,29 @@ public class QuestionInfo extends RealmObject implements IQuestionInfo {
 
     public void setStared(boolean stared) {
         isStared = stared;
+    }
+
+    public int getStudyCount() {
+        return studyCount;
+    }
+
+    public void setStudyCount(int studyCount) {
+        this.studyCount = studyCount;
+    }
+
+    public int getCorrectCount() {
+        return correctCount;
+    }
+
+    public void setCorrectCount(int correctCount) {
+        this.correctCount = correctCount;
+    }
+
+    public float getAccuracy() {
+        return accuracy;
+    }
+
+    public void setAccuracy(float accuracy) {
+        this.accuracy = accuracy;
     }
 }

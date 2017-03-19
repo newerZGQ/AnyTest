@@ -6,7 +6,7 @@ import com.zgq.wokao.model.paper.IExamPaper;
  * Created by zgq on 2017/3/5.
  */
 
-public class ScheduleData {
+public class ScheduleData implements ViewData{
     private String paperId;
     private String accuracy;
     private String paperTitle;
@@ -81,6 +81,5 @@ public class ScheduleData {
             data.setPaperId(paper.getPaperInfo().getId());
             return data;
         }
-
     }
 }

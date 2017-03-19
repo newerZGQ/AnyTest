@@ -15,4 +15,15 @@ public interface IQuestion {
     public Answer getAnswer();
     public Options getOptions();
     public QuestionRecord getRecord();
+    public int getStudyCount();
+
+    public void setStudyCount(int studyCount);
+
+    public int getCorrectCount() ;
+
+    public void setCorrectCount(int correctCount);
+
+    public float getAccuracy() ;
+
+    public void setAccuracy(float accuracy);
 }
