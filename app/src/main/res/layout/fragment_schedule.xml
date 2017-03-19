@@ -6,23 +6,20 @@
     android:background="@color/colorTransparent"
     tools:context="com.zgq.wokao.ui.fragment.impl.ScheduleFragment">
 
+    <com.zgqview.accuracy.ScheduleInfoView
+        android:id="@+id/schedule_info"
+        android:layout_width="400dp"
+        android:layout_height="400dp"/>
+
+
+
     <android.support.v4.view.ViewPager
         android:id="@+id/schedule_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
         android:layout_marginTop="15dp"
-        android:layout_above="@+id/schedule_start">
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp">
     </android.support.v4.view.ViewPager>
-
-    <Button
-        android:id="@+id/schedule_start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/start"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="12dp" />
 
 </RelativeLayout>

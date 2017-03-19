@@ -32,8 +32,6 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
 
     @BindView(R.id.schedule_pager)
     ViewPager viewPager;
-    @BindView(R.id.schedule_start)
-    Button startBtn;
     private View rootView;
 
     private String mParam1;
@@ -116,16 +114,16 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
 
     @Override
     public void setListener() {
-        startBtn.setOnClickListener(this);
+
     }
 
     @Override
     public void setViewPager(ArrayList<ScheduleData> scheduleDatas) {
         if (viewPager.getAdapter() == null) {
-            viewPager.setAdapter(new SchedulePagerAdapter(scheduleDatas));
+            //viewPager.setAdapter(new SchedulePagerAdapter(scheduleDatas));
         }else {
             ((SchedulePagerAdapter)viewPager.getAdapter()).setScheduleDatas(scheduleDatas);
-            viewPager.getAdapter().notifyDataSetChanged();
+            //viewPager.getAdapter().notifyDataSetChanged();
         }
     }
 
@@ -137,9 +135,6 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.schedule_start:
-                presenter.onStartBtnClick();
-                break;
             default:
                 break;
         }

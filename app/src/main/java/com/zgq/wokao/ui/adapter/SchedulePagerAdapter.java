@@ -1,6 +1,7 @@
 package com.zgq.wokao.ui.adapter;
 
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -73,48 +74,32 @@ public class SchedulePagerAdapter extends PagerAdapter {
         View convertView = null;
         if(mViewCache.size() == 0){
             convertView = this.layoutInflater.inflate(R.layout.viewpager_schedule_item , null ,false);
-            TextView accuracy = (TextView)convertView.findViewById(R.id.accuracy);
             TextView title = (TextView)convertView.findViewById(R.id.paper_title);
             title.setTypeface(FontsUtil.getSans_serif_thin());
-            TextView countToday = (TextView)convertView.findViewById(R.id.count_today);
-            TextView countEveryday = (TextView)convertView.findViewById(R.id.count_everyday);
-            Button fillInBtn = (Button) convertView.findViewById(R.id.fillIn_Btn);
-            Button tfBtn = (Button) convertView.findViewById(R.id.tf_Btn);
-            Button sglChoBtn = (Button) convertView.findViewById(R.id.sglcho_Btn);
-            Button mulchoBtn = (Button) convertView.findViewById(R.id.mulcho_Btn);
-            Button discBtn = (Button) convertView.findViewById(R.id.disc_Btn);
+            TextView addTime = (TextView)convertView.findViewById(R.id.add_time);
+            Button startBtn = (Button) convertView.findViewById(R.id.start_study);
+            ViewPager qstPager = (ViewPager) convertView.findViewById(R.id.qst_datial_vp);
             holder = new ViewHolder();
-            holder.accuracy = accuracy;
             holder.title = title;
-            holder.countToday = countToday;
-            holder.countEveryday = countEveryday;
-            holder.fillInBtn = fillInBtn;
-            holder.tfBtn = tfBtn;
-            holder.sglChoBtn = sglChoBtn;
-            holder.mulchoBtn = mulchoBtn;
-            holder.discBtn = discBtn;
+            holder.addTime = addTime;
+            holder.startBtn = startBtn;
+            holder.qstPager = qstPager;
             convertView.setTag(holder);
         }else {
             convertView = mViewCache.removeFirst();
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.accuracy.setText("94%");
         holder.title.setText(scheduleDatas.get(position).getPaperTitle());
-        holder.countToday.setText(""+54);
-        holder.countEveryday.setText(""+67);
+        holder.addTime.setText(scheduleDatas.get(position).getAddTime());
+        
         container.addView(convertView ,ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT );
         return convertView;
     }
 
     public final class ViewHolder {
-        public TextView accuracy;
         public TextView title;
-        public TextView countToday;
-        public TextView countEveryday;
-        public Button fillInBtn;
-        public Button tfBtn;
-        public Button sglChoBtn;
-        public Button mulchoBtn;
-        public Button discBtn;
+        public TextView addTime;
+        public Button startBtn;
+        public ViewPager qstPager;
     }
 }

@@ -10,6 +10,8 @@ public class ScheduleData {
     private String paperId;
     private String accuracy;
     private String paperTitle;
+
+    private String addTime;
     private int countToday;
     private int countEveryday;
     private int countAllQuestions;
@@ -60,6 +62,14 @@ public class ScheduleData {
 
     public void setCountAllQuestions(int countAllQuestions) {
         this.countAllQuestions = countAllQuestions;
+    }
+
+    public String getAddTime() {
+        return addTime;
+    }
+
+    public void setAddTime(String addTime) {
+        this.addTime = addTime;
     }
     public static class Formator{
         public static ScheduleData format(IExamPaper paper){
