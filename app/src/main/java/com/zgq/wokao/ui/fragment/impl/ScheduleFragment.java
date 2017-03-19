@@ -1,5 +1,6 @@
 package com.zgq.wokao.ui.fragment.impl;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -76,8 +77,13 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
                              Bundle savedInstanceState) {
         rootView =  inflater.inflate(R.layout.fragment_schedule, container, false);
         ButterKnife.bind(this,rootView);
+        ObjectAnimator.ofFloat(viewPager,"translationY",0,500).setDuration(0).start();
         presenter.setViewPager();
         return rootView;
+    }
+
+    private void initViewPager(){
+        
     }
 
 
@@ -149,4 +155,6 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
         void onFragmentInteraction(Uri uri);
         void goQuestionsList(String paperId);
     }
+
+
 }
