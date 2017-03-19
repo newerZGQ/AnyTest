@@ -7,3 +7,6 @@
 .DS_Store
 /build
 /captures
+/app/build
+/AccuracyView/build
+/AccuracySample/build
