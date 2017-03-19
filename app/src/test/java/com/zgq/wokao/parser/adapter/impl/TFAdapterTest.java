@@ -1,6 +1,6 @@
 package com.zgq.wokao.parser.adapter.impl;
 
-import com.zgq.wokao.model.paper.question.impl.TFIQuestion;
+import com.zgq.wokao.model.paper.question.impl.TFQuestion;
 
 import org.junit.After;
 import org.junit.Before;
@@ -32,9 +32,9 @@ public class TFAdapterTest {
     public void parse() throws Exception {
         String test = "1. 及时（）\niderhang\n答案：对\n(2) haha()\n答案：错";
 //        System.out.println("---->>"+test);
-        ArrayList<TFIQuestion> results = adapter.parse(test);
+        ArrayList<TFQuestion> results = adapter.parse(test);
         System.out.println("--->>size"+results.size());
-        for (TFIQuestion tmp: results){
+        for (TFQuestion tmp: results){
 //            System.out.println("---->>"+tmp.getId());
 //            System.out.println("---->>"+tmp.getBody());
 //            System.out.println("---->>"+tmp.getAnswer());

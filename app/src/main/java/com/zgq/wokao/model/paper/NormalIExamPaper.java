@@ -2,11 +2,11 @@ package com.zgq.wokao.model.paper;
 
 import com.zgq.wokao.model.paper.info.ExamPaperInfo;
 import com.zgq.wokao.model.paper.question.IQuestion;
-import com.zgq.wokao.model.paper.question.impl.DiscussIQuestion;
-import com.zgq.wokao.model.paper.question.impl.FillInIQuestion;
+import com.zgq.wokao.model.paper.question.impl.DiscussQuestion;
+import com.zgq.wokao.model.paper.question.impl.FillInQuestion;
 import com.zgq.wokao.model.paper.question.impl.MultChoQuestion;
 import com.zgq.wokao.model.paper.question.impl.SglChoQuestion;
-import com.zgq.wokao.model.paper.question.impl.TFIQuestion;
+import com.zgq.wokao.model.paper.question.impl.TFQuestion;
 
 import java.util.ArrayList;
 
@@ -18,18 +18,18 @@ import io.realm.RealmObject;
  */
 public class NormalIExamPaper extends RealmObject implements IExamPaper {
     private ExamPaperInfo paperInfo = new ExamPaperInfo();
-    private RealmList<FillInIQuestion> fillInQuestions;
-    private RealmList<TFIQuestion> tfQuestions;
+    private RealmList<FillInQuestion> fillInQuestions;
+    private RealmList<TFQuestion> tfQuestions;
     private RealmList<SglChoQuestion> sglChoQuestions;
     private RealmList<MultChoQuestion> multChoQuestions;
-    private RealmList<DiscussIQuestion> discussQuestions;
+    private RealmList<DiscussQuestion> discussQuestions;
 
     public NormalIExamPaper(){}
 
-    public NormalIExamPaper(ExamPaperInfo paperInfo, RealmList<FillInIQuestion> fillInQuestions,
-                            RealmList<TFIQuestion> tfQuestions, RealmList<SglChoQuestion> sglChoQuestions,
+    public NormalIExamPaper(ExamPaperInfo paperInfo, RealmList<FillInQuestion> fillInQuestions,
+                            RealmList<TFQuestion> tfQuestions, RealmList<SglChoQuestion> sglChoQuestions,
                             RealmList<MultChoQuestion> multChoQuestions,
-                            RealmList<DiscussIQuestion> discussQuestions) {
+                            RealmList<DiscussQuestion> discussQuestions) {
         this.paperInfo = paperInfo;
         this.fillInQuestions = fillInQuestions;
         this.tfQuestions = tfQuestions;
@@ -52,19 +52,19 @@ public class NormalIExamPaper extends RealmObject implements IExamPaper {
     }
 
 
-    public RealmList<FillInIQuestion> getFillInQuestions() {
+    public RealmList<FillInQuestion> getFillInQuestions() {
         return fillInQuestions;
     }
 
-    public void setFillInQuestions(RealmList<FillInIQuestion> fillInQuestions) {
+    public void setFillInQuestions(RealmList<FillInQuestion> fillInQuestions) {
         this.fillInQuestions = fillInQuestions;
     }
 
-    public RealmList<TFIQuestion> getTfQuestions() {
+    public RealmList<TFQuestion> getTfQuestions() {
         return tfQuestions;
     }
 
-    public void setTfQuestions(RealmList<TFIQuestion> tfQuestions) {
+    public void setTfQuestions(RealmList<TFQuestion> tfQuestions) {
         this.tfQuestions = tfQuestions;
     }
 
@@ -84,11 +84,11 @@ public class NormalIExamPaper extends RealmObject implements IExamPaper {
         this.multChoQuestions = multChoQuestions;
     }
 
-    public RealmList<DiscussIQuestion> getDiscussQuestions() {
+    public RealmList<DiscussQuestion> getDiscussQuestions() {
         return discussQuestions;
     }
 
-    public void setDiscussQuestions(RealmList<DiscussIQuestion> discussQuestions) {
+    public void setDiscussQuestions(RealmList<DiscussQuestion> discussQuestions) {
         this.discussQuestions = discussQuestions;
     }
 

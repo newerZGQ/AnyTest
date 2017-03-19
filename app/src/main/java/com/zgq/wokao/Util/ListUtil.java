@@ -5,6 +5,10 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.RealmResults;
+
 /**
  * Created by zgq on 2017/2/11.
  */
@@ -26,5 +30,12 @@ public class ListUtil {
             list.add(t);
         }
         return list;
+    }
+    public static <T extends RealmObject> List<T> changeRealmListToList(RealmList<T> list) {
+        List<T> results = new ArrayList<>();
+        for (T t : list) {
+            results.add(t);
+        }
+        return results;
     }
 }

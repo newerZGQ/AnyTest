@@ -3,7 +3,7 @@ package com.zgq.wokao.parser.adapter.impl;
 import android.util.Log;
 
 import com.zgq.wokao.Util.ListUtil;
-import com.zgq.wokao.model.paper.question.impl.FillInIQuestion;
+import com.zgq.wokao.model.paper.question.impl.FillInQuestion;
 import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.parser.adapter.BaseAdapter;
 import com.zgq.wokao.parser.adapter.IFillInAdapter;
@@ -21,7 +21,7 @@ public class FillInAdapter extends BaseAdapter implements IFillInAdapter {
     private QuestionType type = QuestionType.fillin;
     ArrayList<String> content = new ArrayList<>();
     QuestionContext context = new QuestionContext();
-    private ArrayList<FillInIQuestion> results = new ArrayList<>();
+    private ArrayList<FillInQuestion> results = new ArrayList<>();
 
     public FillInAdapter() {
         initParam();
@@ -37,14 +37,14 @@ public class FillInAdapter extends BaseAdapter implements IFillInAdapter {
     }
 
     @Override
-    public ArrayList<FillInIQuestion> parse(String resource) {
+    public ArrayList<FillInQuestion> parse(String resource) {
         String[] strings = resource.split("\n");
         content = (ArrayList<String>) ListUtil.array2list(strings);
         parseRes(content);
         return results;
     }
 
-    private ArrayList<FillInIQuestion> parseRes(ArrayList<String> content) {
+    private ArrayList<FillInQuestion> parseRes(ArrayList<String> content) {
         //题号
         int number = 1;
         String bodyString = "";
@@ -63,7 +63,7 @@ public class FillInAdapter extends BaseAdapter implements IFillInAdapter {
                 if (bodyString.equals("")){
 
                 }else{
-                    FillInIQuestion question = parseSingle(number, bodyString);
+                    FillInQuestion question = parseSingle(number, bodyString);
                     if (question != null) {
                         results.add(question);
                         number++;
@@ -79,15 +79,15 @@ public class FillInAdapter extends BaseAdapter implements IFillInAdapter {
             }
         }
 
-        FillInIQuestion question = parseSingle(number, builder.toString());
+        FillInQuestion question = parseSingle(number, builder.toString());
         if (question != null) {
             results.add(question);
         }
         return results;
     }
 
-    private FillInIQuestion parseSingle(int number, String questionRes) {
-        FillInIQuestion question = new FillInIQuestion.Builder().build();
+    private FillInQuestion parseSingle(int number, String questionRes) {
+        FillInQuestion question = new FillInQuestion.Builder().build();
         if (question == null){
             Log.d("---->>","question null");
         }

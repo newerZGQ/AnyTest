@@ -42,7 +42,7 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        if (paperInfos.size() == 0 || paperInfos == null) return;
+        if (paperInfos == null || paperInfos.size() == 0 ) return;
 
         final int positionTmp = position;
 

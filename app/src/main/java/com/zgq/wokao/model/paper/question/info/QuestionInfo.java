@@ -17,6 +17,11 @@ public class QuestionInfo extends RealmObject implements IQuestionInfo {
     private int correctCount;
     private float accuracy;
 
+    public QuestionInfo(){}
+    public QuestionInfo(QuestionType type){
+        this.type = type;
+    }
+
     public QuestionType getType() {
         return type;
     }

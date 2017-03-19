@@ -36,7 +36,6 @@ public class ActivityWelcome extends AppCompatActivity {
 
     private int[] tips = new int[5];
 
-    private Realm realm = Realm.getDefaultInstance();
     private MyHandler myHandler;
 
     @Override
@@ -47,14 +46,6 @@ public class ActivityWelcome extends AppCompatActivity {
         initData();
         int i = (int) (Math.random() * 5);
         tip.setText(getResources().getString(tips[i]));
-        if (isFirstTimeLogin()) {
-            try {
-//                parseExamPaperFromAsset();
-            } catch (Exception e) {
-
-            }
-
-        }
 
         TimerTask task = new TimerTask() {
             public void run() {
@@ -94,13 +85,6 @@ public class ActivityWelcome extends AppCompatActivity {
             sp.edit().putBoolean("first_time", false).apply();
         }
         return first;
-    }
-
-    private void parseExamPaperFromAsset() throws Exception {
-        AssetManager am = getAssets();
-        InputStream inputStream = am.open("default.txt");
-        File txt = createFileFromInputStream(inputStream);
-        PaperDaoImpl.getInstance().parseTxt2Realm(txt, new File(StorageUtils.getRootPath(ActivityWelcome.this) + "wokao/tmp.xml"), realm, myHandler);
     }
 
     private File createFileFromInputStream(InputStream inputStream) {

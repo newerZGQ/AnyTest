@@ -22,11 +22,11 @@ import com.zgq.wokao.R;
 import com.zgq.wokao.Util.DateUtil;
 import com.zgq.wokao.model.paper.NormalIExamPaper;
 import com.zgq.wokao.model.paper.question.answer.IAnswer;
-import com.zgq.wokao.model.paper.question.impl.DiscussIQuestion;
-import com.zgq.wokao.model.paper.question.impl.FillInIQuestion;
+import com.zgq.wokao.model.paper.question.impl.DiscussQuestion;
+import com.zgq.wokao.model.paper.question.impl.FillInQuestion;
 import com.zgq.wokao.model.paper.question.impl.MultChoQuestion;
 import com.zgq.wokao.model.paper.question.impl.SglChoQuestion;
-import com.zgq.wokao.model.paper.question.impl.TFIQuestion;
+import com.zgq.wokao.model.paper.question.impl.TFQuestion;
 import com.zgq.wokao.model.paper.question.IQuestion;
 import com.zgq.wokao.ui.adapter.BaseStudySystemAdapter;
 import com.zgq.wokao.ui.adapter.DiscussQuestionAdapter;
@@ -177,12 +177,12 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
         currentAllQuestions.clear();
         switch (currentQuestionType){
             case Constant.FILLINQUESTIONTYPE:
-                for (FillInIQuestion question: normalExamPaper.getFillInQuestions()){
+                for (FillInQuestion question: normalExamPaper.getFillInQuestions()){
                     currentAllQuestions.add(question);
                 }
                 break;
             case Constant.TFQUESTIONTYPE:
-                for (TFIQuestion question: normalExamPaper.getTfQuestions()){
+                for (TFQuestion question: normalExamPaper.getTfQuestions()){
                     currentAllQuestions.add(question);
                 }
                 break;
@@ -197,7 +197,7 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
                 }
                 break;
             case Constant.DISCUSSQUESTIONTYPE:
-                for (DiscussIQuestion question: normalExamPaper.getDiscussQuestions()){
+                for (DiscussQuestion question: normalExamPaper.getDiscussQuestions()){
                     currentAllQuestions.add(question);
                 }
                 break;

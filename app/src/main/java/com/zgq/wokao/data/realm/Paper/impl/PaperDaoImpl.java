@@ -41,7 +41,7 @@ import io.realm.RealmResults;
 /**
  * Created by zgq on 16-6-20.
  */
-public class PaperDaoImpl extends BaseRealmProvider<NormalIExamPaper> implements IPaperDao, IQuestionDao {
+public class PaperDaoImpl extends BaseRealmProvider<NormalIExamPaper> implements IPaperDao {
 
     Realm realm = getRealm();
 
@@ -53,19 +53,6 @@ public class PaperDaoImpl extends BaseRealmProvider<NormalIExamPaper> implements
         return ProviderHolder.instance;
     }
 
-    @Override
-    public synchronized void star(final IQuestion question) {
-        realm.beginTransaction();
-        question.getInfo().setStared(true);
-        realm.commitTransaction();
-    }
-
-    @Override
-    public synchronized void unStar(final IQuestion question) {
-        realm.beginTransaction();
-        question.getInfo().setStared(false);
-        realm.commitTransaction();
-    }
 
     @Override
     public synchronized void star(final IExamPaper paper) {
@@ -131,19 +118,12 @@ public class PaperDaoImpl extends BaseRealmProvider<NormalIExamPaper> implements
     }
 
     @Override
-    public synchronized void updateQuestionRecord(final IQuestion question, final boolean isCorrect) {
-        realm.beginTransaction();
-        question.getRecord().updateRecord(isCorrect);
-        realm.commitTransaction();
-    }
-
-    @Override
     public synchronized void addRecord(final Schedule schedule, final DailyRecord dailyRecord) {
-            realm.beginTransaction();
+        realm.beginTransaction();
         RealmList<DailyRecord> dailyRecords = schedule.getDailyRecords();
-            dailyRecords.add(dailyRecord);
+        dailyRecords.add(dailyRecord);
 
-            realm.commitTransaction();
+        realm.commitTransaction();
     }
 
 
@@ -178,7 +158,7 @@ public class PaperDaoImpl extends BaseRealmProvider<NormalIExamPaper> implements
     @Override
     public List<NormalIExamPaper> getAllPaperInSchdl() {
         RealmResults<NormalIExamPaper> results = realm.where(NormalIExamPaper.class)
-                .equalTo("paperInfo.isInSchedule",true)
+                .equalTo("paperInfo.isInSchedule", true)
                 .findAll();
         return changeRealmListToList(results);
     }
@@ -197,16 +177,16 @@ public class PaperDaoImpl extends BaseRealmProvider<NormalIExamPaper> implements
 
     @Override
     public List<IPaperInfo> getPaperInfosInSchdl() {
-        RealmResults<ExamPaperInfo> results = realm.where(ExamPaperInfo.class).equalTo("isInSchedule",true).findAll();
-        Log.d("---->>","paperdaoimpl "+results.size());
+        RealmResults<ExamPaperInfo> results = realm.where(ExamPaperInfo.class).equalTo("isInSchedule", true).findAll();
+        Log.d("---->>", "paperdaoimpl " + results.size());
         List<ExamPaperInfo> list = changeRealmListToList(results);
         return examPaperInfoToIPaperInfo(list);
     }
 
-    private List<IPaperInfo> examPaperInfoToIPaperInfo(List<ExamPaperInfo> list){
+    private List<IPaperInfo> examPaperInfoToIPaperInfo(List<ExamPaperInfo> list) {
         ArrayList<IPaperInfo> results = new ArrayList<>();
-        for (ExamPaperInfo info: list){
-            results.add((IPaperInfo)info);
+        for (ExamPaperInfo info : list) {
+            results.add((IPaperInfo) info);
         }
         return results;
     }
@@ -361,10 +341,10 @@ public class PaperDaoImpl extends BaseRealmProvider<NormalIExamPaper> implements
         }
 
         if (realm.where(NormalIExamPaper.class)
-                .equalTo("paperInfo.id",paper.getPaperInfo().getId())
+                .equalTo("paperInfo.id", paper.getPaperInfo().getId())
                 .findAll()
-                .size() == 0){
-         return false;
+                .size() == 0) {
+            return false;
         }
         return true;
 //        ArrayList<IPaperInfo> infos = (ArrayList<IPaperInfo>) getAllPaperInfo();

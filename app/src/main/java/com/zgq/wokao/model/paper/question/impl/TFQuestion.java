@@ -1,5 +1,6 @@
 package com.zgq.wokao.model.paper.question.impl;
 
+import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.paper.question.IQuestion;
 import com.zgq.wokao.model.paper.question.answer.Answer;
 import com.zgq.wokao.model.paper.question.body.QuestionBody;
@@ -12,16 +13,16 @@ import io.realm.RealmObject;
 /**
  * Created by zgq on 16-6-18.
  */
-public class TFIQuestion extends RealmObject implements IQuestion {
+public class TFQuestion extends RealmObject implements IQuestion {
     private QuestionBody body;
     private Answer answer;
     private QuestionInfo info;
     private QuestionRecord record;
 
-    public TFIQuestion() {
+    public TFQuestion() {
     }
 
-    public TFIQuestion(Builder builder) {
+    public TFQuestion(Builder builder) {
         this.body = builder.body;
         this.answer = builder.answer;
         this.info = builder.info;
@@ -33,7 +34,7 @@ public class TFIQuestion extends RealmObject implements IQuestion {
             this.answer = new Answer();
         }
         if (this.info == null){
-            this.info = new QuestionInfo();
+            this.info = new QuestionInfo(QuestionType.tf);
         }
         if (this.record == null){
             this.record = new QuestionRecord();
@@ -103,8 +104,8 @@ public class TFIQuestion extends RealmObject implements IQuestion {
             return this;
         }
 
-        public TFIQuestion build(){
-            return new TFIQuestion(this);
+        public TFQuestion build(){
+            return new TFQuestion(this);
         }
     }
 }

@@ -5,12 +5,12 @@ import android.util.Xml;
 import com.zgq.wokao.Util.UUIDUtil;
 import com.zgq.wokao.model.paper.NormalIExamPaper;
 import com.zgq.wokao.model.paper.QuestionType;
-import com.zgq.wokao.model.paper.question.impl.DiscussIQuestion;
-import com.zgq.wokao.model.paper.question.impl.FillInIQuestion;
+import com.zgq.wokao.model.paper.question.impl.DiscussQuestion;
+import com.zgq.wokao.model.paper.question.impl.FillInQuestion;
 import com.zgq.wokao.model.paper.question.impl.MultChoQuestion;
 import com.zgq.wokao.model.paper.question.impl.SglChoQuestion;
+import com.zgq.wokao.model.paper.question.impl.TFQuestion;
 import com.zgq.wokao.model.paper.question.option.Option;
-import com.zgq.wokao.model.paper.question.impl.TFIQuestion;
 
 import org.xmlpull.v1.XmlPullParser;
 
@@ -44,11 +44,11 @@ public class DataXml2ObjParser {
         FileInputStream fileInputStream = new FileInputStream(xmlFile);
 
         NormalIExamPaper normalExamPaper = new NormalIExamPaper();
-        RealmList<FillInIQuestion> fillInQuestions = new RealmList<>();
-        RealmList<TFIQuestion> tfQuestions = new RealmList<>();
+        RealmList<FillInQuestion> fillInQuestions = new RealmList<>();
+        RealmList<TFQuestion> tfQuestions = new RealmList<>();
         RealmList<SglChoQuestion> sglChoQuestions = new RealmList<>();
         RealmList<MultChoQuestion> multChoQuestions = new RealmList<>();
-        RealmList<DiscussIQuestion> discussQuestions = new RealmList<>();
+        RealmList<DiscussQuestion> discussQuestions = new RealmList<>();
 
         parser = Xml.newPullParser();
         parser.setInput(fileInputStream, "UTF-8");
@@ -90,9 +90,9 @@ public class DataXml2ObjParser {
         return normalExamPaper;
     }
 
-    private FillInIQuestion parseFillInQuestion(XmlPullParser pullParser) throws Exception {
+    private FillInQuestion parseFillInQuestion(XmlPullParser pullParser) throws Exception {
         if (!XmlNodeInfo.fillInQuestionNode.equals(pullParser.getName())) return null;
-        FillInIQuestion fillInQuestion = new FillInIQuestion.Builder().build();
+        FillInQuestion fillInQuestion = new FillInQuestion.Builder().build();
 //        Log.d("---------->>",pullParser.getName());
         int event = 0;
         while (true) {
@@ -127,9 +127,9 @@ public class DataXml2ObjParser {
         return fillInQuestion;
     }
 
-    private TFIQuestion parseTFQuestion(XmlPullParser pullParser) throws Exception {
+    private TFQuestion parseTFQuestion(XmlPullParser pullParser) throws Exception {
         if (!XmlNodeInfo.tfQuestionNode.equals(pullParser.getName())) return null;
-        TFIQuestion tfQuestion = new TFIQuestion.Builder().build();
+        TFQuestion tfQuestion = new TFQuestion.Builder().build();
         int event = 0;
         while (true) {
             event = pullParser.next();
@@ -226,9 +226,9 @@ public class DataXml2ObjParser {
         return multChoQuestion;
     }
 
-    private DiscussIQuestion parseDiscussQuestion(XmlPullParser pullParser) throws Exception {
+    private DiscussQuestion parseDiscussQuestion(XmlPullParser pullParser) throws Exception {
         if (!XmlNodeInfo.discussQuestionNode.equals(pullParser.getName())) return null;
-        DiscussIQuestion discussQuestion = new DiscussIQuestion.Builder().build();
+        DiscussQuestion discussQuestion = new DiscussQuestion.Builder().build();
         int event = 0;
         while (true) {
             event = pullParser.next();

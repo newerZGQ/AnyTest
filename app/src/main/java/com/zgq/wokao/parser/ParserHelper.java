@@ -3,11 +3,11 @@ package com.zgq.wokao.parser;
 import com.zgq.wokao.Util.DateUtil;
 import com.zgq.wokao.exception.ParseException;
 import com.zgq.wokao.model.paper.NormalIExamPaper;
-import com.zgq.wokao.model.paper.question.impl.DiscussIQuestion;
-import com.zgq.wokao.model.paper.question.impl.FillInIQuestion;
+import com.zgq.wokao.model.paper.question.impl.DiscussQuestion;
+import com.zgq.wokao.model.paper.question.impl.FillInQuestion;
 import com.zgq.wokao.model.paper.question.impl.MultChoQuestion;
 import com.zgq.wokao.model.paper.question.impl.SglChoQuestion;
-import com.zgq.wokao.model.paper.question.impl.TFIQuestion;
+import com.zgq.wokao.model.paper.question.impl.TFQuestion;
 import com.zgq.wokao.model.paper.question.IQuestion;
 import com.zgq.wokao.model.paper.QuestionType;
 
@@ -91,23 +91,23 @@ public class ParserHelper {
         return list;
     }
 
-    private RealmList<FillInIQuestion> parseFillin(PaperParser.Topic resource){
+    private RealmList<FillInQuestion> parseFillin(PaperParser.Topic resource){
         QuestionParser parser = new QuestionParser();
         parser.setAdapter(QuestionType.fillin);
         ArrayList<IQuestion> list = parser.parse(resource);
-        RealmList<FillInIQuestion> results = new RealmList<>();
+        RealmList<FillInQuestion> results = new RealmList<>();
         for (IQuestion tmp: list){
-            results.add((FillInIQuestion)tmp);
+            results.add((FillInQuestion)tmp);
         }
         return results;
     }
-    private RealmList<TFIQuestion> parseTF(PaperParser.Topic resource){
+    private RealmList<TFQuestion> parseTF(PaperParser.Topic resource){
         QuestionParser parser = new QuestionParser();
         parser.setAdapter(QuestionType.tf);
         ArrayList<IQuestion> list = parser.parse(resource);
-        RealmList<TFIQuestion> results = new RealmList<>();
+        RealmList<TFQuestion> results = new RealmList<>();
         for (IQuestion tmp: list){
-            results.add((TFIQuestion)tmp);
+            results.add((TFQuestion)tmp);
         }
         return results;
     }
@@ -131,13 +131,13 @@ public class ParserHelper {
         }
         return results;
     }
-    private RealmList<DiscussIQuestion> parseDis(PaperParser.Topic resource){
+    private RealmList<DiscussQuestion> parseDis(PaperParser.Topic resource){
         QuestionParser parser = new QuestionParser();
         parser.setAdapter(QuestionType.disc);
         ArrayList<IQuestion> list = parser.parse(resource);
-        RealmList<DiscussIQuestion> results = new RealmList<>();
+        RealmList<DiscussQuestion> results = new RealmList<>();
         for (IQuestion tmp: list){
-            results.add((DiscussIQuestion) tmp);
+            results.add((DiscussQuestion) tmp);
         }
         return results;
     }

@@ -2,6 +2,7 @@ package com.zgq.wokao.model.viewdate;
 
 import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.paper.question.IQuestion;
+import com.zgq.wokao.model.paper.question.info.IQuestionInfo;
 import com.zgq.wokao.model.paper.question.info.QuestionInfo;
 
 import java.util.ArrayList;
@@ -9,19 +10,26 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import io.realm.Realm;
+
 /**
  * Created by zgq on 2017/3/19.
  */
 
 public class QstData implements ViewData{
+
     //题目类型
-    private QuestionType type;
+    private QuestionType type = QuestionType.fillin;
     //学习次数
     private int studyNum;
     //正确率
     private float accuracy;
     //易错题
     private List<IQuestion> fallibleQsts;
+    //题目数量
+    private int qstCount;
+    //收藏题目数量
+    private int starCount;
 
     public QuestionType getType() {
         return type;
@@ -55,6 +63,22 @@ public class QstData implements ViewData{
         this.fallibleQsts = fallibleQsts;
     }
 
+    public int getQstCount() {
+        return qstCount;
+    }
+
+    public void setQstCount(int qstCount) {
+        this.qstCount = qstCount;
+    }
+
+    public int getStarCount() {
+        return starCount;
+    }
+
+    public void setStarCount(int starCount) {
+        this.starCount = starCount;
+    }
+
     public static class Formator{
         public static QstData format(List<IQuestion> questions){
             QstData data = new QstData();
@@ -68,18 +92,27 @@ public class QstData implements ViewData{
 
             int studyCount = 0;
             int correctCount = 0;
-
-            for (QuestionInfo info: infos){
+            int starCount = 0;
+            for (IQuestionInfo info: infos){
                 studyCount += info.getStudyCount();
                 correctCount += info.getCorrectCount();
+                Realm realm = Realm.getDefaultInstance();
+                realm.beginTransaction();
                 info.setAccuracy(info.getStudyCount() == 0? 1f :info.getCorrectCount()/info.getStudyCount());
+                realm.commitTransaction();
+                if (info.isStared()) starCount++;
             }
 
             Collections.sort(questions,new SortQstByAccuracy());
-
+            data.setStudyNum(studyCount);
+            data.setStarCount(starCount);
             data.setAccuracy(studyCount == 0 ? 1f : correctCount/studyCount);
             data.setType(questions.get(0).getInfo().getType());
-            data.setFallibleQsts(questions.subList(0,3));
+            if (questions.size() >= 3) {
+                data.setFallibleQsts(questions.subList(0, 3));
+            }else{
+                data.setFallibleQsts(questions);
+            }
             return data;
         }
     }
@@ -90,7 +123,7 @@ public class QstData implements ViewData{
         public int compare(Object lhs, Object rhs) {
             IQuestion left = (IQuestion)lhs;
             IQuestion right = (IQuestion)rhs;
-            return left.getAccuracy() >= right.getAccuracy() ? 1 : 0;
+            return left.getInfo().getAccuracy() >= right.getInfo().getAccuracy() ? 1 : 0;
         }
     }
 }

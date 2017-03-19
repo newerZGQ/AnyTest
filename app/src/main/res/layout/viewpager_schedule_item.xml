@@ -49,11 +49,9 @@
         </RelativeLayout>
     </LinearLayout>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/qst_datial_vp"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/qst_datial_rl"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </android.support.v4.view.ViewPager>
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

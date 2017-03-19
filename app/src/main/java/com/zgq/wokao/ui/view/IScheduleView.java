@@ -1,5 +1,6 @@
 package com.zgq.wokao.ui.view;
 
+import com.zgq.wokao.model.viewdate.QstData;
 import com.zgq.wokao.model.viewdate.ScheduleData;
 
 import java.util.ArrayList;
@@ -11,6 +12,6 @@ import java.util.ArrayList;
 public interface IScheduleView {
     public void onStartBtnClick();
     public void setListener();
-    public void setViewPager(ArrayList<ScheduleData> scheduleDatas);
+    public void setViewPager(ArrayList<ScheduleData> scheduleDatas, ArrayList<ArrayList<QstData>> qstDataLists);
     public void notifyDataChanged();
 }

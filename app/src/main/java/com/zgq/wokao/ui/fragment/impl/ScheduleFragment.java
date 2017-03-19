@@ -13,6 +13,7 @@ import android.widget.Button;
 import com.zgq.wokao.R;
 import com.zgq.wokao.action.paper.impl.PaperAction;
 import com.zgq.wokao.model.paper.info.IPaperInfo;
+import com.zgq.wokao.model.viewdate.QstData;
 import com.zgq.wokao.model.viewdate.ScheduleData;
 import com.zgq.wokao.ui.adapter.SchedulePagerAdapter;
 import com.zgq.wokao.ui.fragment.BaseFragment;
@@ -118,13 +119,14 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
     }
 
     @Override
-    public void setViewPager(ArrayList<ScheduleData> scheduleDatas) {
+    public void setViewPager(ArrayList<ScheduleData> scheduleDatas, ArrayList<ArrayList<QstData>> qstDataLists) {
         if (viewPager.getAdapter() == null) {
-            //viewPager.setAdapter(new SchedulePagerAdapter(scheduleDatas));
+            viewPager.setAdapter(new SchedulePagerAdapter(scheduleDatas,qstDataLists));
         }else {
             ((SchedulePagerAdapter)viewPager.getAdapter()).setScheduleDatas(scheduleDatas);
-            //viewPager.getAdapter().notifyDataSetChanged();
+            ((SchedulePagerAdapter)viewPager.getAdapter()).setQstDatasList(qstDataLists);
         }
+        viewPager.getAdapter().notifyDataSetChanged();
     }
 
     @Override

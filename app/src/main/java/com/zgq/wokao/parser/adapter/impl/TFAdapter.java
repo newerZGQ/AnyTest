@@ -2,7 +2,7 @@ package com.zgq.wokao.parser.adapter.impl;
 
 import com.zgq.wokao.Util.ListUtil;
 import com.zgq.wokao.model.paper.QuestionType;
-import com.zgq.wokao.model.paper.question.impl.TFIQuestion;
+import com.zgq.wokao.model.paper.question.impl.TFQuestion;
 import com.zgq.wokao.parser.adapter.BaseAdapter;
 import com.zgq.wokao.parser.adapter.ITFAdapter;
 import com.zgq.wokao.parser.context.QuestionContext;
@@ -19,7 +19,7 @@ public class TFAdapter extends BaseAdapter implements ITFAdapter {
     private QuestionType type = QuestionType.tf;
     ArrayList<String> content = new ArrayList<>();
     QuestionContext context = new QuestionContext();
-    private ArrayList<TFIQuestion> results = new ArrayList<>();
+    private ArrayList<TFQuestion> results = new ArrayList<>();
 
     public TFAdapter() {
         initParam();
@@ -35,14 +35,14 @@ public class TFAdapter extends BaseAdapter implements ITFAdapter {
     }
 
     @Override
-    public ArrayList<TFIQuestion> parse(String resource) {
+    public ArrayList<TFQuestion> parse(String resource) {
         String[] strings = resource.split("\n");
         content = (ArrayList<String>) ListUtil.array2list(strings);
         parseRes(content);
         return results;
     }
 
-    private ArrayList<TFIQuestion> parseRes(ArrayList<String> content) {
+    private ArrayList<TFQuestion> parseRes(ArrayList<String> content) {
         //题号
         int number = 1;
         String bodyString = "";
@@ -62,7 +62,7 @@ public class TFAdapter extends BaseAdapter implements ITFAdapter {
                 if (bodyString.equals("")){
 
                 }else{
-                    TFIQuestion question = parseSingle(number, bodyString);
+                    TFQuestion question = parseSingle(number, bodyString);
                     if (question != null) {
                         results.add(question);
                         number++;
@@ -79,16 +79,16 @@ public class TFAdapter extends BaseAdapter implements ITFAdapter {
             }
         }
 
-        TFIQuestion question = parseSingle(number, builder.toString());
+        TFQuestion question = parseSingle(number, builder.toString());
         if (question != null) {
             results.add(question);
         }
         return results;
     }
 
-    private TFIQuestion parseSingle(int number, String questionRes) {
+    private TFQuestion parseSingle(int number, String questionRes) {
 //        System.out.println("---->>single" + questionRes);
-        TFIQuestion question = new TFIQuestion.Builder().build();
+        TFQuestion question = new TFQuestion.Builder().build();
         question.getInfo().setId(number);
         inContext(QuestionItemType.number);
         String[] resArray = trimNum(questionRes).split("\n");

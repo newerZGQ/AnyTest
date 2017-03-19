@@ -1,5 +1,6 @@
 package com.zgq.wokao.model.paper.question.impl;
 
+import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.paper.question.IQuestion;
 import com.zgq.wokao.model.paper.question.answer.Answer;
 import com.zgq.wokao.model.paper.question.body.QuestionBody;
@@ -35,7 +36,7 @@ public class MultChoQuestion extends RealmObject implements IQuestion {
             this.answer = new Answer();
         }
         if (this.info == null){
-            this.info = new QuestionInfo();
+            this.info = new QuestionInfo(QuestionType.mtlc);
         }
         if (this.record == null){
             this.record = new QuestionRecord();

@@ -4,15 +4,23 @@ import com.zgq.wokao.action.BaseAction;
 import com.zgq.wokao.action.paper.IPaperAction;
 import com.zgq.wokao.action.paper.IQuestionAction;
 import com.zgq.wokao.data.realm.Paper.impl.PaperDaoImpl;
+import com.zgq.wokao.data.realm.Paper.impl.QuestionDaoImpl;
 import com.zgq.wokao.exception.ParseException;
 import com.zgq.wokao.model.paper.IExamPaper;
 import com.zgq.wokao.model.paper.NormalIExamPaper;
+import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.paper.info.IPaperInfo;
 import com.zgq.wokao.model.paper.question.IQuestion;
+import com.zgq.wokao.model.paper.question.impl.DiscussQuestion;
+import com.zgq.wokao.model.paper.question.impl.FillInQuestion;
+import com.zgq.wokao.model.paper.question.impl.MultChoQuestion;
+import com.zgq.wokao.model.paper.question.impl.SglChoQuestion;
+import com.zgq.wokao.model.paper.question.impl.TFQuestion;
 import com.zgq.wokao.parser.ParserHelper;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,9 +30,47 @@ import java.util.List;
 public class PaperAction extends BaseAction implements IPaperAction,IQuestionAction {
 
     private PaperDaoImpl paperDao = PaperDaoImpl.getInstance();
+    private QuestionDaoImpl questionDao = QuestionDaoImpl.getInstance();
     private ParserHelper parserHelper = ParserHelper.getInstance();
 
     private PaperAction(){}
+
+    @Override
+    public ArrayList<IQuestion> getQuestins(IExamPaper paper, QuestionType type) {
+        int typeIndex = type.getIndex();
+        ArrayList<IQuestion> results = new ArrayList<>();
+        switch (typeIndex){
+            case QuestionType.fillin_index:
+                for (FillInQuestion question : paper.getFillInQuestions()){
+                    results.add((IQuestion)question);
+                }
+                break;
+            case QuestionType.tf_index:
+                for (TFQuestion question : paper.getTfQuestions()){
+                    results.add((IQuestion)question);
+                }
+                break;
+            case QuestionType.sglc_index:
+                for (SglChoQuestion question : paper.getSglChoQuestions()){
+                    results.add((IQuestion)question);
+                }
+                break;
+            case QuestionType.mtlc_index:
+                for (MultChoQuestion question : paper.getMultChoQuestions()){
+                    results.add((IQuestion)question);
+                }
+                break;
+            case QuestionType.disc_index:
+                for (DiscussQuestion question : paper.getDiscussQuestions()){
+                    results.add((IQuestion)question);
+                }
+                break;
+            default:
+                break;
+        }
+        return results;
+    }
+
 
     public static class InstanceHolder{
         public static PaperAction instance = new PaperAction();
@@ -150,16 +196,16 @@ public class PaperAction extends BaseAction implements IPaperAction,IQuestionAct
 
     @Override
     public void star(final IQuestion question) {
-        paperDao.star(question);
+        questionDao.star(question);
     }
 
     @Override
     public void unStar(final IQuestion question) {
-        paperDao.unStar(question);
+        questionDao.unStar(question);
     }
 
     @Override
     public void updateQuestionRecord(final IQuestion question, final boolean isCorrect) {
-        paperDao.updateQuestionRecord(question,isCorrect);
+        questionDao.updateQuestionRecord(question,isCorrect);
     }
 }
