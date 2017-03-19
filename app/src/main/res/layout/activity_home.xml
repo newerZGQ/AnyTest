@@ -41,6 +41,22 @@
                 android:layout_height="56dp"
                 android:gravity="center_vertical">
 
+                <com.gigamole.navigationtabstrip.NavigationTabStrip
+                    android:id="@+id/home_tab"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="100dp"
+                    android:layout_marginRight="100dp"
+                    app:nts_color="#000"
+                    app:nts_weight="3dp"
+                    app:nts_factor="2.5"
+                    app:nts_type="point"
+                    app:nts_gravity="top"
+                    app:nts_typeface="fonts/Roboto-Thin.ttf"
+                    app:nts_corners_radius="1.5dp"
+                    app:nts_animation_duration="300"
+                    app:nts_active_color="#000"
+                    app:nts_inactive_color="#c4c4c4"/>
                 <Button
                     android:id="@+id/toolbar_menu"
                     android:layout_width="56dp"
@@ -48,17 +64,6 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginStart="0dp"
                     android:background="@drawable/toolbar_more_background" />
-
-                <TextView
-                    android:id="@+id/toolbar_title"
-                    android:layout_width="40dp"
-                    android:layout_height="20dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="15sp"
-                    android:background="@drawable/appname" />
-
                 <Button
                     android:id="@+id/toolbar_search"
                     android:layout_width="56dp"
@@ -67,21 +72,6 @@
                     android:layout_marginEnd="0dp"
                     android:background="@drawable/toolbar_delete_background" />
             </RelativeLayout>
-
-            <com.gigamole.navigationtabstrip.NavigationTabStrip
-                android:id="@+id/home_tab"
-                android:layout_width="match_parent"
-                android:layout_height="25dp"
-                app:nts_color="#000"
-                app:nts_weight="3dp"
-                app:nts_factor="2.5"
-                app:nts_type="point"
-                app:nts_gravity="top"
-                app:nts_typeface="fonts/Roboto-Thin.ttf"
-                app:nts_corners_radius="1.5dp"
-                app:nts_animation_duration="300"
-                app:nts_active_color="#000"
-                app:nts_inactive_color="#c4c4c4"/>
         </LinearLayout>
         <android.support.v4.view.ViewPager
             android:id="@+id/viewpaper"

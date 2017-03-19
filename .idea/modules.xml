@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/AccuracySample/accuracysample.iml" filepath="$PROJECT_DIR$/AccuracySample/accuracysample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AccuracyView/AccuracyView.iml" filepath="$PROJECT_DIR$/AccuracyView/AccuracyView.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/wokao.iml" filepath="$PROJECT_DIR$/wokao.iml" />
     </modules>

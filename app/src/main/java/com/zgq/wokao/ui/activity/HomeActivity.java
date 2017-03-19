@@ -52,8 +52,6 @@ public class HomeActivity extends BaseActivity implements
     @BindView(R.id.toolbar_search)
     Button searchBtn;
     SlideUp slideUp;
-    @BindView(R.id.toolbar_title)
-    TextView titleTv;
     @BindView(R.id.home_tab)
     NavigationTabStrip tabStrip;
     @BindView(R.id.viewpaper)
@@ -88,10 +86,9 @@ public class HomeActivity extends BaseActivity implements
         tabStrip.setTitles("日程", "试卷");
         tabStrip.setTabIndex(0, true);
         tabStrip.setTitleSize(40);
-        tabStrip.setStripColor(Color.WHITE);
+        tabStrip.setStripColor(Color.TRANSPARENT);
         tabStrip.setStripWeight(10);
         tabStrip.setStripFactor(5f);
-        tabStrip.setStripType(NavigationTabStrip.StripType.POINT);
         tabStrip.setStripGravity(NavigationTabStrip.StripGravity.BOTTOM);
         tabStrip.setTypeface("fonts/typeface.ttf");
         tabStrip.setCornersRadius(3);
@@ -114,11 +111,9 @@ public class HomeActivity extends BaseActivity implements
                     @Override
                     public void onVisibilityChanged(int visibility) {
                         if (visibility == View.GONE){
-                            titleTv.setText("");
-                            titleTv.setBackground(getDrawable(R.drawable.appname));
+
                         }else{
-                            titleTv.setText("设置");
-                            titleTv.setBackground(null);
+
                         }
                     }
                 })

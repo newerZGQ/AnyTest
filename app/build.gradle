@@ -52,20 +52,17 @@ dependencies {
     //ConverterFactory的Gson依赖包
     //ConverterFactory的String依赖包
     //dialog lib
-
     compile files('libs/tm-extractors-0.4.jar')
     compile files('libs/pdfbox-2.0.4.jar')
     compile files('libs/commons-logging-1.2.jar')
     compile files('libs/fontbox-2.0.4.jar')
     //查询view
     //图片转文字
-
     // dagger 2 的配置 包括java 注解库
-//    compile 'com.google.dagger:dagger:2.4'
-//    apt 'com.google.dagger:dagger-compiler:2.4'
-//    compile 'org.glassfish:javax.annotation:10.0-b28'
+    //    compile 'com.google.dagger:dagger:2.4'
+    //    apt 'com.google.dagger:dagger-compiler:2.4'
+    //    compile 'org.glassfish:javax.annotation:10.0-b28'
     //tabtrip
-
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:support-v4:23.4.0'
     compile 'com.android.support:recyclerview-v7:23.4.0'
@@ -87,4 +84,5 @@ dependencies {
     compile 'com.github.devlight.navigationtabstrip:navigationtabstrip:1.0.4'
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.1.0'
+    compile project(':AccuracyView')
 }
