@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.pascalwelsch.holocircularprogressbar"
+    package="com.zgqview.accuracy"
     android:versionCode="2"
     android:versionName="1.1" > <!-- only important for Eclipse. Android Studio overrides this with the build.gradle -->
     <uses-sdk

@@ -21,12 +21,13 @@
             android:layout_gravity="center_horizontal"
             android:layout_height="wrap_content">
 
-            <com.pascalwelsch.Accuracy.AccuracyView
+            <com.zgqview.accuracy.AccuracyView
                 android:id="@+id/holoCircularProgressBar"
                 android:layout_width="300dp"
                 android:layout_height="300dp"
                 app:marker_progress="0.3"
-                app:progress="0.4" />
+                app:progress="0.4"
+                app:stroke_width="1.5dp"/>
         </LinearLayout>
     </ScrollView>
 

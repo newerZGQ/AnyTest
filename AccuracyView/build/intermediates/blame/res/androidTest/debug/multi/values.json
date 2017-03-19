@@ -25,20 +25,20 @@
                 "to": {
                     "startLine": 4,
                     "startColumn": 4,
-                    "startOffset": 531,
+                    "startOffset": 575,
                     "endLine": 13,
                     "endColumn": 12,
-                    "endOffset": 1016
+                    "endOffset": 1060
                 },
                 "from": {
                     "file": "/Users/zgq/AndroidStudioProjects/wokao/AccuracyView/build/intermediates/bundles/debug/res/values/values.xml",
                     "position": {
                         "startLine": 4,
                         "startColumn": 4,
-                        "startOffset": 531,
+                        "startOffset": 575,
                         "endLine": 13,
                         "endColumn": 12,
-                        "endOffset": 1016
+                        "endOffset": 1060
                     }
                 }
             },
@@ -46,20 +46,20 @@
                 "to": {
                     "startLine": 14,
                     "startColumn": 4,
-                    "startOffset": 1021,
+                    "startOffset": 1065,
                     "endLine": 23,
                     "endColumn": 12,
-                    "endOffset": 1506
+                    "endOffset": 1550
                 },
                 "from": {
                     "file": "/Users/zgq/AndroidStudioProjects/wokao/AccuracyView/build/intermediates/bundles/debug/res/values/values.xml",
                     "position": {
                         "startLine": 14,
                         "startColumn": 4,
-                        "startOffset": 1021,
+                        "startOffset": 1065,
                         "endLine": 23,
                         "endColumn": 12,
-                        "endOffset": 1506
+                        "endOffset": 1550
                     }
                 }
             }

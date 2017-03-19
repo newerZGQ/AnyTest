@@ -1,6 +1,6 @@
 package com.example.accuracysample;
 
-import com.pascalwelsch.Accuracy.AccuracyView;
+import com.zgqview.accuracy.AccuracyView;
 
 import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
@@ -238,7 +238,7 @@ public class MainActivity extends Activity {
      * @param listener    the listener
      */
     private void animate(final AccuracyView progressBar,
-                         final AnimatorListener listener) {
+                          final AnimatorListener listener) {
         final float progress = (float) (Math.random() * 2);
         int duration = 3000;
         animate(progressBar, listener, progress, duration);

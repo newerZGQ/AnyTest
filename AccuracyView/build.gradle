@@ -1,8 +1,5 @@
 apply plugin: 'android-library'
 
-group = 'com.pascalwelsch.holocircularprogressbar'
-version = '1.3'
-
 android {
     compileSdkVersion 19
     buildToolsVersion '25.0.0'

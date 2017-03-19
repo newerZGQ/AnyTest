@@ -10,6 +10,7 @@
         <attr name="thumb_visible" format="boolean" />
         <attr name="marker_visible" format="boolean" />
         <attr name="android:gravity" />
+        <attr name="thumb_radius" format="integer" />
     </declare-styleable>
 
     <attr name="circularProgressBarStyle" format="reference" />

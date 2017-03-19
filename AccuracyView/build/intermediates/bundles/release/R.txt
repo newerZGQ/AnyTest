@@ -5,10 +5,21 @@ int attr progress 0x7f010002
 int attr progress_background_color 0x7f010005
 int attr progress_color 0x7f010004
 int attr stroke_width 0x7f010001
+int attr thumb_radius 0x7f010008
 int attr thumb_visible 0x7f010006
-int style CircularProgressBar 0x7f020000
-int style CircularProgressBarLight 0x7f020001
-int[] styleable AccuracyView { 0x010100af, 0x7f010001, 0x7f010002, 0x7f010003, 0x7f010004, 0x7f010005, 0x7f010006, 0x7f010007 }
+int id accuracy_view 0x7f040005
+int id btm_accuracy 0x7f040006
+int id btm_daily_count 0x7f040008
+int id btm_today_num 0x7f040007
+int id btm_view 0x7f040004
+int id top_accuracy 0x7f040001
+int id top_daily_count 0x7f040003
+int id top_today_num 0x7f040002
+int id top_view 0x7f040000
+int layout scheduleinfoview 0x7f020000
+int style CircularProgressBar 0x7f030000
+int style CircularProgressBarLight 0x7f030001
+int[] styleable AccuracyView { 0x010100af, 0x7f010001, 0x7f010002, 0x7f010003, 0x7f010004, 0x7f010005, 0x7f010006, 0x7f010007, 0x7f010008 }
 int styleable AccuracyView_android_gravity 0
 int styleable AccuracyView_marker_progress 3
 int styleable AccuracyView_marker_visible 7
@@ -16,4 +27,5 @@ int styleable AccuracyView_progress 2
 int styleable AccuracyView_progress_background_color 5
 int styleable AccuracyView_progress_color 4
 int styleable AccuracyView_stroke_width 1
+int styleable AccuracyView_thumb_radius 8
 int styleable AccuracyView_thumb_visible 6

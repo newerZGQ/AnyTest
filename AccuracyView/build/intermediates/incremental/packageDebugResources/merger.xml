@@ -8,6 +8,7 @@
         <attr format="boolean" name="thumb_visible"/>
         <attr format="boolean" name="marker_visible"/>
         <attr name="android:gravity"/>
+        <attr format="integer" name="thumb_radius"/>
     </declare-styleable><attr format="reference" name="circularProgressBarStyle"/></file><file path="/Users/zgq/AndroidStudioProjects/wokao/AccuracyView/res/values/styles.xml" qualifiers=""><style name="CircularProgressBarLight">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
@@ -26,4 +27,4 @@
         <item name="progress_background_color">#ffffffff</item>
         <item name="marker_visible">true</item>
         <item name="thumb_visible">true</item>
-    </style></file></source><source path="/Users/zgq/AndroidStudioProjects/wokao/AccuracyView/build/generated/res/rs/debug"/><source path="/Users/zgq/AndroidStudioProjects/wokao/AccuracyView/build/generated/res/resValues/debug"/></dataSet><dataSet config="debug" generated-set="debug$Generated"><source path="/Users/zgq/AndroidStudioProjects/wokao/AccuracyView/src/debug/res"/></dataSet><mergedItems><configuration qualifiers=""><declare-styleable name="AccuracyView"><attr format="dimension" name="stroke_width"/><attr format="float" name="progress"/><attr format="float" name="marker_progress"/><attr format="color" name="progress_color"/><attr format="color" name="progress_background_color"/><attr format="boolean" name="thumb_visible"/><attr format="boolean" name="marker_visible"/><attr name="android:gravity"/></declare-styleable></configuration></mergedItems></merger>
+    </style></file><file name="scheduleinfoview" path="/Users/zgq/AndroidStudioProjects/wokao/AccuracyView/res/layout/scheduleinfoview.xml" qualifiers="" type="layout"/></source><source path="/Users/zgq/AndroidStudioProjects/wokao/AccuracyView/build/generated/res/rs/debug"/><source path="/Users/zgq/AndroidStudioProjects/wokao/AccuracyView/build/generated/res/resValues/debug"/></dataSet><dataSet config="debug" generated-set="debug$Generated"><source path="/Users/zgq/AndroidStudioProjects/wokao/AccuracyView/src/debug/res"/></dataSet><mergedItems><configuration qualifiers=""><declare-styleable name="AccuracyView"><attr format="dimension" name="stroke_width"/><attr format="float" name="progress"/><attr format="float" name="marker_progress"/><attr format="color" name="progress_color"/><attr format="color" name="progress_background_color"/><attr format="boolean" name="thumb_visible"/><attr format="boolean" name="marker_visible"/><attr name="android:gravity"/><attr format="integer" name="thumb_radius"/></declare-styleable></configuration></mergedItems></merger>

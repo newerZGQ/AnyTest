@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.pascalwelsch.Accuracy.test" >
+    package="com.zgqview.accuracy.test" >
 
     <uses-sdk
         android:minSdkVersion="7"
@@ -10,8 +10,8 @@
         android:name="android.test.InstrumentationTestRunner"
         android:functionalTest="false"
         android:handleProfiling="false"
-        android:label="Tests for com.pascalwelsch.holocircularprogressbar.test"
-        android:targetPackage="com.pascalwelsch.holocircularprogressbar.test" />
+        android:label="Tests for com.zgqview.accuracy.test"
+        android:targetPackage="com.zgqview.accuracy.test" />
 
     <application>
         <uses-library android:name="android.test.runner" />
