@@ -156,13 +156,13 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
     @Override
     public void showDetail() {
         scheduleInfoView.showTop();
-        ObjectAnimator.ofFloat(viewPager,"translationY",500,0).setDuration(0).start();
+        ObjectAnimator.ofFloat(viewPager,"translationY",-500).setDuration(300).start();
     }
 
     @Override
     public void hideDetail() {
         scheduleInfoView.showBottom();
-        ObjectAnimator.ofFloat(viewPager,"translationY",0,500).setDuration(0).start();
+        ObjectAnimator.ofFloat(viewPager,"translationY",0,500).setDuration(300).start();
     }
 
     @Override
