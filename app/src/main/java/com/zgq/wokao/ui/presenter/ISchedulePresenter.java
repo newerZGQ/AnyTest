@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 
 public interface ISchedulePresenter {
-    public void onStartBtnClick();
     public void setViewPager();
     public void notifyDataChanged();
+    public void scheduleInfoChangeData(int position);
 }

@@ -298,13 +298,13 @@ public class AccuracyView extends View {
 
         // draw the marker at the correct rotated position
         if (mIsMarkerEnabled) {
-            final float markerRotation = getMarkerRotation();
-
-            canvas.save();
-            canvas.rotate(markerRotation - 90);
-            canvas.drawLine((float) (mThumbPosX + mThumbRadius / 2 * 1.4), mThumbPosY,
-                    (float) (mThumbPosX - mThumbRadius / 2 * 1.4), mThumbPosY, mMarkerColorPaint);
-            canvas.restore();
+//            final float markerRotation = getMarkerRotation();
+//
+//            canvas.save();
+//            canvas.rotate(markerRotation - 90);
+//            canvas.drawLine((float) (mThumbPosX + mThumbRadius / 2 * 1.4), mThumbPosY,
+//                    (float) (mThumbPosX - mThumbRadius / 2 * 1.4), mThumbPosY, mMarkerColorPaint);
+//            canvas.restore();
         }
 
         if (isThumbEnabled()) {

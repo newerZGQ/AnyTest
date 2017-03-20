@@ -43,6 +43,8 @@ public class ScheduleInfoView extends RelativeLayout {
 
     private ObjectAnimator accuracyAnimator;
 
+
+
     private Status status = Status.BOTTOM;
 
 
@@ -62,6 +64,14 @@ public class ScheduleInfoView extends RelativeLayout {
         super(context, attrs, defStyle);
         this.context = context;
         init();
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     private void init(){
@@ -94,13 +104,13 @@ public class ScheduleInfoView extends RelativeLayout {
         accuracyView.setProgress(progress);
     }
 
-    public void changeContent(final String accuracy, final float progress, final String todayNum, final String dailyCount){
+    public void changeContent(final String accuracy,final String todayNum, final String dailyCount){
         switch (status){
             case BOTTOM:
-                changeAnimator(accuracy,progress,todayNum,dailyCount,btmAccuracy,btmTodayNum,btmDailyCount);
+                changeAnimator(accuracy,todayNum,dailyCount,btmAccuracy,btmTodayNum,btmDailyCount);
                 break;
             case TOP:
-                changeAnimator(accuracy,progress,todayNum,dailyCount,topAccuracy,topTodayNum,topDailyCount);
+                changeAnimator(accuracy,todayNum,dailyCount,topAccuracy,topTodayNum,topDailyCount);
                 break;
             default:
                 break;
@@ -108,8 +118,8 @@ public class ScheduleInfoView extends RelativeLayout {
 
     }
 
-    private void changeAnimator(final String accuracy, final float progress,
-                                final String todayNum, final String dailyCount, final TextView accuracyTv,
+    private void changeAnimator(final String accuracy,final String todayNum,
+                                final String dailyCount, final TextView accuracyTv,
                                 final TextView todayNumTv, final TextView dailyCountTv){
         AnimatorSet set = new AnimatorSet();
         set.playTogether(
@@ -232,7 +242,7 @@ public class ScheduleInfoView extends RelativeLayout {
         accuracyAnimator.start();
     }
 
-    enum Status{
+    public enum Status{
         TOP,BOTTOM;
     }
 }

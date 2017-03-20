@@ -36,7 +36,7 @@ public class Main2Activity extends AppCompatActivity {
         change.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                scheduleInfoView.changeContent("45",34f,"34","78");
+                //scheduleInfoView.changeContent("45",34f,"34","78");
             }
         });
     }

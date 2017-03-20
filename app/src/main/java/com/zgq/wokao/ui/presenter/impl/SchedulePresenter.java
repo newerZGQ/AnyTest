@@ -23,37 +23,36 @@ public class SchedulePresenter implements ISchedulePresenter {
     private IScheduleView scheduleView;
     private PaperAction paperAction = PaperAction.getInstance();
 
+    private ArrayList<IExamPaper> schedulePapers = new ArrayList<>();
     private ArrayList<ScheduleData> scheduleDatas = new ArrayList<>();
     private ArrayList<ArrayList<QstData>> qstDatasList = new ArrayList<>();
 
     public SchedulePresenter(IScheduleView scheduleView){
         this.scheduleView = scheduleView;
-        init();
+        getData();
     }
 
-    private void init(){
+    private void getData(){
+        getSchedulePaper();
         getScheduleData();
         getQstData();
     }
 
+    private void getSchedulePaper(){
+        schedulePapers.clear();
+        schedulePapers = (ArrayList) paperAction.getAllPaperInSchdl();
+    }
     private void getScheduleData(){
         scheduleDatas.clear();
-        ArrayList<IExamPaper> papers = (ArrayList) paperAction.getAllPaperInSchdl();
-        for (IExamPaper paper: papers){
+        for (IExamPaper paper: schedulePapers){
             scheduleDatas.add(ScheduleData.Formator.format(paper));
         }
     }
-
     private void getQstData(){
         qstDatasList.clear();
-        ArrayList<IExamPaper> papers = (ArrayList) paperAction.getAllPaperInSchdl();
-        for (IExamPaper paper: papers){
+        for (IExamPaper paper: schedulePapers){
             qstDatasList.add(ViewDataAction.getInstance().getQstData(paper));
         }
-    }
-
-    public void onStartBtnClick(){
-
     }
 
     @Override
@@ -63,8 +62,12 @@ public class SchedulePresenter implements ISchedulePresenter {
 
     @Override
     public void notifyDataChanged() {
-        getScheduleData();
-        getQstData();
+        getData();
         setViewPager();
+    }
+
+    @Override
+    public void scheduleInfoChangeData(int position) {
+        scheduleView.scheduleInfoChangeData(scheduleDatas.get(position));
     }
 }
