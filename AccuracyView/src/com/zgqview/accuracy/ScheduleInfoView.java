@@ -43,9 +43,7 @@ public class ScheduleInfoView extends RelativeLayout {
 
     private ObjectAnimator accuracyAnimator;
 
-
-
-    private Status status = Status.BOTTOM;
+    private Status status = Status.TOP;
 
 
     public ScheduleInfoView(Context context) {
@@ -87,8 +85,8 @@ public class ScheduleInfoView extends RelativeLayout {
         btmTodayNum = (TextView) rootView.findViewById(R.id.btm_today_num);
         btmDailyCount = (TextView) rootView.findViewById(R.id.btm_daily_count);
 
-        viewAnimator(btmView,1f, 1f, 0f, 1f, 0);
-        viewAnimator(topView,1f, 0f, 1f, 0f, 0);
+        viewAnimator(btmView,0f, 0f, 0f, 0f, 0);
+        viewAnimator(topView,0f, 1f, 0f, 1f, 0);
     }
 
     public void setContent(String accuracy, float progress, String todayNum, String dailyCount){
@@ -115,7 +113,6 @@ public class ScheduleInfoView extends RelativeLayout {
             default:
                 break;
         }
-
     }
 
     private void changeAnimator(final String accuracy,final String todayNum,
@@ -179,7 +176,8 @@ public class ScheduleInfoView extends RelativeLayout {
         status = Status.TOP;
     }
 
-    private void viewAnimator(View view, float startScale, float endScale, float startAlpha, float endAlpha, int duration){
+    private void viewAnimator(View view, float startScale, float endScale,
+                              float startAlpha, float endAlpha, int duration){
         AnimatorSet set = new AnimatorSet();
         set.playTogether(
                 ObjectAnimator.ofFloat(view,"scaleX",startScale,endScale),

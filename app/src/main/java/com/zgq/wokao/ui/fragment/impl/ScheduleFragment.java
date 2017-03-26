@@ -145,7 +145,6 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
         }
         viewPager.getAdapter().notifyDataSetChanged();
         viewPager.addOnPageChangeListener(new SchedulePageChangeListener());
-        //ObjectAnimator.ofFloat(viewPager,"translationY",0,500).setDuration(0).start();
     }
 
     @Override
