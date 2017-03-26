@@ -205,7 +205,7 @@ public class PaperInfoActivity extends AppCompatActivity implements View.OnClick
             for (FillInQuestion fillInQuestion : fiQstList) {
                 if (fillInQuestion.getInfo().isStared()) count++;
             }
-            setQuestionTypeInfo(fiQstTypeInfo, R.drawable.fillin_qst_label, "", "填空题", "共" + fiQstList.size() + "题, " + "收藏" + count + "题");
+            //setQuestionTypeInfo(fiQstTypeInfo, R.drawable.fillin_qst_label, "", "填空题", "共" + fiQstList.size() + "题, " + "收藏" + count + "题");
         } else {
             fiQstTypeInfo = (RelativeLayout) obsscrollView.getPullRootView().findViewById(R.id.fiqstType);
             fiQstTypeInfo.setVisibility(View.GONE);
@@ -218,7 +218,7 @@ public class PaperInfoActivity extends AppCompatActivity implements View.OnClick
             for (TFQuestion tfQuestion : tfQstList) {
                 if (tfQuestion.getInfo().isStared()) count++;
             }
-            setQuestionTypeInfo(tfQstTypeInfo, R.drawable.tf_qst_label, "", "判断题", "共" + tfQstList.size() + "题, " + "收藏" + count + "题");
+            //setQuestionTypeInfo(tfQstTypeInfo, R.drawable.tf_qst_label, "", "判断题", "共" + tfQstList.size() + "题, " + "收藏" + count + "题");
         } else {
             tfQstTypeInfo = (RelativeLayout) obsscrollView.getPullRootView().findViewById(R.id.tfqstType);
             tfQstTypeInfo.setVisibility(View.GONE);
@@ -231,7 +231,7 @@ public class PaperInfoActivity extends AppCompatActivity implements View.OnClick
             for (SglChoQuestion sglChoQuestion : scQstList) {
                 if (sglChoQuestion.getInfo().isStared()) count++;
             }
-            setQuestionTypeInfo(scQstTypeInfo, R.drawable.sgl_qst_label, "", "单项选择题", "共" + scQstList.size() + "题, " + "收藏" + count + "题");
+            //setQuestionTypeInfo(scQstTypeInfo, R.drawable.sgl_qst_label, "", "单项选择题", "共" + scQstList.size() + "题, " + "收藏" + count + "题");
         } else {
             scQstTypeInfo = (RelativeLayout) obsscrollView.getPullRootView().findViewById(R.id.scqstType);
             scQstTypeInfo.setVisibility(View.GONE);
@@ -244,7 +244,7 @@ public class PaperInfoActivity extends AppCompatActivity implements View.OnClick
             for (MultChoQuestion multChoQuestion : mcQstList) {
                 if (multChoQuestion.getInfo().isStared()) count++;
             }
-            setQuestionTypeInfo(mcQstTypeInfo, R.drawable.mulcho_qst_label, "", "多项选择题", "共" + mcQstList.size() + "题, " + "收藏" + count + "题");
+            //setQuestionTypeInfo(mcQstTypeInfo, R.drawable.mulcho_qst_label, "", "多项选择题", "共" + mcQstList.size() + "题, " + "收藏" + count + "题");
         } else {
             mcQstTypeInfo = (RelativeLayout) obsscrollView.getPullRootView().findViewById(R.id.mcqstType);
             mcQstTypeInfo.setVisibility(View.GONE);
@@ -257,7 +257,7 @@ public class PaperInfoActivity extends AppCompatActivity implements View.OnClick
             for (DiscussQuestion discussQuestion : dsQstList) {
                 if (discussQuestion.getInfo().isStared()) count++;
             }
-            setQuestionTypeInfo(dsQstTypeInfo, R.drawable.disc_qst_label, "", "简答题", "共" + dsQstList.size() + "题, " + "收藏" + count + "题");
+            //setQuestionTypeInfo(dsQstTypeInfo, R.drawable.disc_qst_label, "", "简答题", "共" + dsQstList.size() + "题, " + "收藏" + count + "题");
         } else {
             dsQstTypeInfo = (RelativeLayout) obsscrollView.getPullRootView().findViewById(R.id.dsqstType);
             dsQstTypeInfo.setVisibility(View.GONE);

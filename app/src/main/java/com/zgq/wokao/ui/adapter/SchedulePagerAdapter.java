@@ -17,6 +17,7 @@ import com.zgq.wokao.Util.ContextUtil;
 import com.zgq.wokao.Util.FontsUtil;
 import com.zgq.wokao.model.viewdate.QstData;
 import com.zgq.wokao.model.viewdate.ScheduleData;
+import com.zgq.wokao.ui.fragment.impl.ScheduleFragment;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -39,6 +40,16 @@ public class SchedulePagerAdapter extends PagerAdapter {
     private LayoutInflater layoutInflater = LayoutInflater.from(ContextUtil.getContext());
 
     private OnViewClickListener listener;
+
+    private View currentView;
+    private View preView;
+    private View nextView;
+
+    public Status getStatus() {
+        return status;
+    }
+
+    private Status status = Status.SHOWADDTIME;
 
     private SchedulePagerAdapter(){}
 
@@ -124,8 +135,63 @@ public class SchedulePagerAdapter extends PagerAdapter {
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         holder.qstList.setLayoutManager(linearLayoutManager);
         holder.qstList.setAdapter(new QuestionInfoAdapter(qstDatasList.get(position)));
+        switch (status){
+            case SHOWADDTIME:
+                holder.startBtn.setVisibility(View.GONE);
+                holder.addTime.setVisibility(View.VISIBLE);
+                holder.topLayout.setBackgroundColor(ContextUtil.getContext().getResources().getColor(R.color.color_top_layout_background));
+                break;
+            case SHOWSTARTBTN:
+                holder.startBtn.setVisibility(View.VISIBLE);
+                holder.addTime.setVisibility(View.GONE);
+                holder.topLayout.setBackgroundColor(ContextUtil.getContext().getResources().getColor(R.color.transparent));
+                break;
+            default:
+                break;
+        }
         container.addView(convertView ,ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT );
         return convertView;
+    }
+
+    @Override
+    public void setPrimaryItem(ViewGroup container, int position, Object object) {
+        currentView = (View) object;
+        nextView = container.getChildAt(position+1);
+        super.setPrimaryItem(container, position, object);
+    }
+
+    public View getCurrentView() {
+        return currentView;
+    }
+
+    public View getPreView(){
+        return preView;
+    }
+
+    public View getNextView(){
+        return nextView;
+    }
+
+    public void changeStatus(Status status){
+        switch (status){
+            case SHOWADDTIME:
+                getCurrentView().findViewById(R.id.start_study).setVisibility(View.GONE);
+                getCurrentView().findViewById(R.id.add_time).setVisibility(View.VISIBLE);
+                getCurrentView().findViewById(R.id.top_layout).
+                        setBackgroundColor(ContextUtil.getContext().getResources().getColor(R.color.color_top_layout_background));
+
+                this.status = status;
+                break;
+            case SHOWSTARTBTN:
+                getCurrentView().findViewById(R.id.start_study).setVisibility(View.VISIBLE);
+                getCurrentView().findViewById(R.id.add_time).setVisibility(View.GONE);
+                getCurrentView().findViewById(R.id.top_layout).
+                        setBackgroundColor(ContextUtil.getContext().getResources().getColor(R.color.transparent));
+                this.status = status;
+                break;
+            default:
+                break;
+        }
     }
 
     public final class ViewHolder {
@@ -138,6 +204,10 @@ public class SchedulePagerAdapter extends PagerAdapter {
 
     public interface OnViewClickListener{
         public void onClickTopLayout(int position);
+    }
+
+    public enum Status{
+        SHOWSTARTBTN,SHOWADDTIME;
     }
 
 }

@@ -79,6 +79,7 @@ public class ScheduleData implements ViewData{
             data.setCountEveryday(paper.getPaperInfo().getSchedule().getDailyCount());
             data.setCountAllQuestions(34);
             data.setPaperId(paper.getPaperInfo().getId());
+            data.setAddTime(paper.getPaperInfo().getCreateDate());
             return data;
         }
     }

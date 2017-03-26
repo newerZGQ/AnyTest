@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zgq.wokao.R;
@@ -31,6 +32,7 @@ public class QuestionInfoAdapter extends RecyclerView.Adapter<QuestionInfoAdapte
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.recyclerview_qstinfo_item, parent,false);
+        LinearLayout rootView = (LinearLayout) view.findViewById(R.id.root_view);
         TextView qstTypeIcon = (TextView) view.findViewById(R.id.type_icon);
         TextView qstTypeTitle = (TextView) view.findViewById(R.id.type_title);
         TextView accuracy = (TextView) view.findViewById(R.id.accuracy);
@@ -39,36 +41,49 @@ public class QuestionInfoAdapter extends RecyclerView.Adapter<QuestionInfoAdapte
         Button fallible2 = (Button) view.findViewById(R.id.fallible_2);
         Button fallible3 = (Button) view.findViewById(R.id.fallible_3);
         TextView basicInfo = (TextView) view.findViewById(R.id.basic_info);
-        return new MyViewHolder(view,qstTypeIcon,qstTypeTitle,accuracy,studyCount,fallible1,fallible2,fallible3,basicInfo);
+        return new MyViewHolder(view,rootView,qstTypeIcon,qstTypeTitle,accuracy,studyCount,
+                fallible1,fallible2,fallible3,basicInfo);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        Log.d("----->>",""+qstDatas.size());
         if (qstDatas == null || qstDatas.size() == 0){
             return;
         }
-        final MyViewHolder holder1 = (MyViewHolder) holder;
         final QstData data = qstDatas.get(position);
 
         int qstType = data.getType().getIndex();
 
         switch (qstType){
             case QuestionType.fillin_index:
+                holder.rootView.setBackground(context.getDrawable(R.drawable.qst_background_fillin));
+                holder.qstTypeIcon.setBackground(context.getDrawable(R.drawable.qst_icon_fillin));
+                holder.qstTypeTitle.setText("填空题");
                 break;
             case QuestionType.tf_index:
+                holder.rootView.setBackground(context.getDrawable(R.drawable.qst_background_tf));
+                holder.qstTypeIcon.setBackground(context.getDrawable(R.drawable.qst_icon_tf));
+                holder.qstTypeTitle.setText("选择题");
                 break;
             case QuestionType.sglc_index:
+                holder.rootView.setBackground(context.getDrawable(R.drawable.qst_background_sgl));
+                holder.qstTypeIcon.setBackground(context.getDrawable(R.drawable.qst_icon_sgl));
+                holder.qstTypeTitle.setText("单选题");
                 break;
             case QuestionType.mtlc_index:
+                holder.rootView.setBackground(context.getDrawable(R.drawable.qst_background_mlc));
+                holder.qstTypeIcon.setBackground(context.getDrawable(R.drawable.qst_icon_mlc));
+                holder.qstTypeTitle.setText("多选题");
                 break;
             case QuestionType.disc_index:
+                holder.rootView.setBackground(context.getDrawable(R.drawable.qst_background_dis));
+                holder.qstTypeIcon.setBackground(context.getDrawable(R.drawable.qst_icon_dis));
+                holder.qstTypeTitle.setText("简答题");
                 break;
         }
-        holder1.accuracy.setText("54%");
-        holder1.fallible1.setText("1");
-        holder1.fallible2.setText("2");
-        holder1.fallible3.setText("3");
+        holder.accuracy.setText(""+data.getAccuracy());
+        holder.studyCount.setText("答题" + data.getStarCount() + "次");
+        holder.basicInfo.setText("共" + data.getQstCount() + "题，收藏" + data.getStarCount() + "题");
     }
 
     @Override
@@ -77,6 +92,7 @@ public class QuestionInfoAdapter extends RecyclerView.Adapter<QuestionInfoAdapte
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder{
+        public LinearLayout rootView;
         public TextView qstTypeIcon;
         public TextView qstTypeTitle;
         public TextView accuracy;
@@ -86,10 +102,11 @@ public class QuestionInfoAdapter extends RecyclerView.Adapter<QuestionInfoAdapte
         public Button fallible3;
         public TextView basicInfo;
 
-        public MyViewHolder(View itemView, TextView qstTypeIcon, TextView qstTypeTitle,
+        public MyViewHolder(View itemView, LinearLayout rootView, TextView qstTypeIcon, TextView qstTypeTitle,
                             TextView accuracy, TextView studyCount, Button fallible1, Button fallible2,
                             Button fallible3, TextView basicInfo) {
             super(itemView);
+            this.rootView = rootView;
             this.qstTypeIcon = qstTypeIcon;
             this.qstTypeTitle = qstTypeTitle;
             this.accuracy = accuracy;

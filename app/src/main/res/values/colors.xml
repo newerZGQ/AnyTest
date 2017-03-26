@@ -49,4 +49,7 @@
     <color name="colorActionModeStatusBarBackground">#616161</color>
 
     <color name="black_overlay">#66000000</color>
+
+    //schedulefragment
+    <color name="color_top_layout_background">#13ffffff</color>
 </resources>

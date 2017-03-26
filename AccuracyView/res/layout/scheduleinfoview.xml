@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <LinearLayout
@@ -48,6 +47,7 @@
     </LinearLayout>
     <RelativeLayout
         android:id="@+id/btm_view"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
@@ -59,8 +59,8 @@
 
             <com.zgqview.accuracy.AccuracyView
                 android:id="@+id/accuracy_view"
-                android:layout_width="260dp"
-                android:layout_height="260dp"
+                android:layout_width="280dp"
+                android:layout_height="280dp"
                 app:marker_progress="0.3"
                 app:progress="0.4"
                 app:stroke_width="1.5dp"/>
@@ -124,4 +124,4 @@
         </LinearLayout>
     </RelativeLayout>
 
-</LinearLayout>
+</RelativeLayout>

@@ -4,32 +4,24 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
 
 import com.zgq.wokao.R;
-import com.zgq.wokao.action.paper.impl.PaperAction;
-import com.zgq.wokao.model.paper.info.IPaperInfo;
+import com.zgq.wokao.Util.DensityUtil;
 import com.zgq.wokao.model.viewdate.QstData;
 import com.zgq.wokao.model.viewdate.ScheduleData;
 import com.zgq.wokao.ui.adapter.SchedulePagerAdapter;
 import com.zgq.wokao.ui.fragment.BaseFragment;
 import com.zgq.wokao.ui.presenter.impl.SchedulePresenter;
-import com.zgq.wokao.ui.util.DialogUtil;
 import com.zgq.wokao.ui.view.IScheduleView;
 import com.zgqview.accuracy.ScheduleInfoView;
-import com.zgqview.accuracy.ScheduleInfoView.Status.*;
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.zgqview.accuracy.ScheduleInfoView.Status.BOTTOM;
 
 public class ScheduleFragment extends BaseFragment implements IScheduleView, View.OnClickListener{
 
@@ -50,6 +42,8 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
     private SchedulePresenter presenter = new SchedulePresenter(this);
 
     private Status status = Status.SURVEY;
+
+    private int slipDistance;
 
     public ScheduleFragment() {}
 
@@ -85,9 +79,21 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
                              Bundle savedInstanceState) {
         rootView =  inflater.inflate(R.layout.fragment_schedule, container, false);
         ButterKnife.bind(this,rootView);
-        //ObjectAnimator.ofFloat(topLayout,"scaleY",0,500).setDuration(0).start();
         presenter.setViewPager();
+        viewPager.post(new Runnable() {
+            @Override
+            public void run() {
+                slipDistance = rootView.findViewById(R.id.qst_datial_rl).getHeight();
+                hideDetail();
+            }
+        });
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //hideDetail();
     }
 
     private void initViewPager(){
@@ -136,6 +142,8 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
                         public void onClickTopLayout(int position) {
                             if (status == Status.SURVEY){
                                 showDetail();
+                            }else{
+                                hideDetail();
                             }
                         }
                     }));
@@ -155,13 +163,17 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
     @Override
     public void showDetail() {
         scheduleInfoView.showTop();
-        ObjectAnimator.ofFloat(viewPager,"translationY",-500).setDuration(300).start();
+        ((SchedulePagerAdapter)viewPager.getAdapter()).changeStatus(SchedulePagerAdapter.Status.SHOWSTARTBTN);
+        ObjectAnimator.ofFloat(viewPager,"translationY",0).setDuration(300).start();
+        status = Status.DETAIL;
     }
 
     @Override
     public void hideDetail() {
         scheduleInfoView.showBottom();
-        ObjectAnimator.ofFloat(viewPager,"translationY",0,500).setDuration(300).start();
+        ((SchedulePagerAdapter)viewPager.getAdapter()).changeStatus(SchedulePagerAdapter.Status.SHOWADDTIME);
+        ObjectAnimator.ofFloat(viewPager,"translationY",0, slipDistance).setDuration(300).start();
+        status = Status.SURVEY;
     }
 
     @Override
@@ -169,8 +181,6 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
         scheduleInfoView.changeContent(data.getAccuracy(),String.valueOf(data.getCountToday())
                 ,String.valueOf(data.getCountEveryday()));
     }
-
-    private boolean showFullViewPager = false;
 
     @Override
     public void changeViewPagerStatus(boolean showFullView) {
@@ -181,10 +191,6 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.top_layout:
-                if (scheduleInfoView.getStatus() == BOTTOM){
-                    showDetail();
-                }
             default:
                 break;
         }
@@ -202,12 +208,12 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
 
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
         }
 
         @Override
         public void onPageSelected(int position) {
             presenter.scheduleInfoChangeData(position);
+            ((SchedulePagerAdapter)viewPager.getAdapter()).changeStatus(((SchedulePagerAdapter) viewPager.getAdapter()).getStatus());
         }
 
         @Override
