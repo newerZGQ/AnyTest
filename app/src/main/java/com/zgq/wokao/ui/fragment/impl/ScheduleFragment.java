@@ -220,5 +220,4 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
     public enum Status{
         SURVEY,DETAIL;
     }
-
 }
