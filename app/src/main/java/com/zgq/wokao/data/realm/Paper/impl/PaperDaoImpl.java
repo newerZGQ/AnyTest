@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import com.zgq.wokao.Util.DateUtil;
 import com.zgq.wokao.Util.FileUtil;
 import com.zgq.wokao.Util.ListUtil;
 import com.zgq.wokao.Util.UUIDUtil;
@@ -26,6 +27,7 @@ import com.zgq.wokao.parser.DataXml2ObjParser;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -84,6 +86,13 @@ public class PaperDaoImpl extends BaseRealmProvider<NormalIExamPaper> implements
     public synchronized void removeFromSchedule(final IExamPaper paper) {
         realm.beginTransaction();
         paper.getPaperInfo().setInSchedule(false);
+        realm.commitTransaction();
+    }
+
+    @Override
+    public void setLastStudyDate(IExamPaper paper) {
+        realm.beginTransaction();
+        paper.getPaperInfo().setLastStudyDate(DateUtil.getCurrentDate());
         realm.commitTransaction();
     }
 

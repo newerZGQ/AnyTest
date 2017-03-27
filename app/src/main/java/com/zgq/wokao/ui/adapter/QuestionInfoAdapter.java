@@ -56,28 +56,28 @@ public class QuestionInfoAdapter extends RecyclerView.Adapter<QuestionInfoAdapte
 
         switch (qstType){
             case QuestionType.fillin_index:
-                holder.rootView.setBackground(context.getDrawable(R.drawable.qst_background_fillin));
-                holder.qstTypeIcon.setBackground(context.getDrawable(R.drawable.qst_icon_fillin));
+                holder.rootView.setBackground(context.getResources().getDrawable(R.drawable.qst_background_fillin));
+                holder.qstTypeIcon.setBackground(context.getResources().getDrawable(R.drawable.qst_icon_fillin));
                 holder.qstTypeTitle.setText("填空题");
                 break;
             case QuestionType.tf_index:
-                holder.rootView.setBackground(context.getDrawable(R.drawable.qst_background_tf));
-                holder.qstTypeIcon.setBackground(context.getDrawable(R.drawable.qst_icon_tf));
+                holder.rootView.setBackground(context.getResources().getDrawable(R.drawable.qst_background_tf));
+                holder.qstTypeIcon.setBackground(context.getResources().getDrawable(R.drawable.qst_icon_tf));
                 holder.qstTypeTitle.setText("选择题");
                 break;
             case QuestionType.sglc_index:
-                holder.rootView.setBackground(context.getDrawable(R.drawable.qst_background_sgl));
-                holder.qstTypeIcon.setBackground(context.getDrawable(R.drawable.qst_icon_sgl));
+                holder.rootView.setBackground(context.getResources().getDrawable(R.drawable.qst_background_sgl));
+                holder.qstTypeIcon.setBackground(context.getResources().getDrawable(R.drawable.qst_icon_sgl));
                 holder.qstTypeTitle.setText("单选题");
                 break;
             case QuestionType.mtlc_index:
-                holder.rootView.setBackground(context.getDrawable(R.drawable.qst_background_mlc));
-                holder.qstTypeIcon.setBackground(context.getDrawable(R.drawable.qst_icon_mlc));
+                holder.rootView.setBackground(context.getResources().getDrawable(R.drawable.qst_background_mlc));
+                holder.qstTypeIcon.setBackground(context.getResources().getDrawable(R.drawable.qst_icon_mlc));
                 holder.qstTypeTitle.setText("多选题");
                 break;
             case QuestionType.disc_index:
-                holder.rootView.setBackground(context.getDrawable(R.drawable.qst_background_dis));
-                holder.qstTypeIcon.setBackground(context.getDrawable(R.drawable.qst_icon_dis));
+                holder.rootView.setBackground(context.getResources().getDrawable(R.drawable.qst_background_dis));
+                holder.qstTypeIcon.setBackground(context.getResources().getDrawable(R.drawable.qst_icon_dis));
                 holder.qstTypeTitle.setText("简答题");
                 break;
         }

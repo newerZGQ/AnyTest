@@ -17,4 +17,5 @@ public interface IPaperInfoDao extends IScheduleDao{
     public void setTitle(IExamPaper paper,String title);
     public void addToSchedule(IExamPaper paper);
     public void removeFromSchedule(IExamPaper paper);
+    public void setLastStudyDate(IExamPaper paper);
 }

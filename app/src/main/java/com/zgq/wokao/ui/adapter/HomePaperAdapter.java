@@ -100,14 +100,14 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
         public TextView paperName;
         public TextView createDate;
         public LinearLayout item;
-        public Button addSchedule;
+        //public Button addSchedule;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             item = (LinearLayout) itemView.findViewById(R.id.list_item);
             paperName = (TextView) itemView.findViewById(R.id.paper_name);
             createDate = (TextView) itemView.findViewById(R.id.create_date);
-            addSchedule = (Button) itemView.findViewById(R.id.add_schedule);
+            //addSchedule = (Button) itemView.findViewById(R.id.add_schedule);
         }
     }
 

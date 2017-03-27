@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.umeng.analytics.MobclickAgent;
 import com.zgq.wokao.R;
 import com.zgq.wokao.Util.DateUtil;
+import com.zgq.wokao.action.paper.impl.PaperAction;
 import com.zgq.wokao.model.paper.NormalIExamPaper;
 import com.zgq.wokao.model.paper.question.answer.IAnswer;
 import com.zgq.wokao.model.paper.question.impl.DiscussQuestion;
@@ -143,33 +144,29 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
             initCurrentMyAllAnswer();
             initCurrentMyStarAnswer();
         }
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-//                currentAllQuestions.get(0).getRecord().updateRecord(true);
-                normalExamPaper.getPaperInfo().setLastStudyDate(DateUtil.getCurrentDate());
-//                Log.d("----->>last",DateUtil.getCurrentDate());
-            }
-        });
+        PaperAction.getInstance().setLastStudyDate(normalExamPaper);
+//        realm.executeTransaction(new Realm.Transaction() {
+//            @Override
+//            public void execute(Realm realm) {
+////                currentAllQuestions.get(0).getRecord().updateRecord(true);
+//                normalExamPaper.getPaperInfo().setLastStudyDate(DateUtil.getCurrentDate());
+////                Log.d("----->>last",DateUtil.getCurrentDate());
+//            }
+//        });
     }
 
     private void initPaperData(){
         Intent intent = getIntent();
-        String title = intent.getStringExtra("paperTitle");
-        String author = intent.getStringExtra("paperAuthor");
+        String paperId = intent.getStringExtra("paperId");
         currentQuestionType = intent.getIntExtra("qstType", Constant.FILLINQUESTIONTYPE);
-        RealmResults<NormalIExamPaper> papers = realm.where(NormalIExamPaper.class).
-                equalTo("paperInfo.title", title).
-                equalTo("paperInfo.author", author).
-                findAll();
-        normalExamPaper = papers.get(0);
-//        realm.executeTransaction(new Realm.Transaction() {
-//            @Override
-//            public void execute(Realm realm) {
-//                int count = normalExamPaper.getPaperInfo().getStudyCount();
-//                normalExamPaper.getPaperInfo().setStudyCount(count+1);
-//            }
-//        });
+        //int initQstNum = intent.getIntExtra("qstNum",0);
+        normalExamPaper = (NormalIExamPaper) PaperAction.getInstance().queryById(paperId);
+//        RealmResults<NormalIExamPaper> papers = realm.where(NormalIExamPaper.class).
+//                equalTo("paperInfo.title", title).
+//                equalTo("paperInfo.author", author).
+//                findAll();
+
+        //normalExamPaper = papers.get(0);
     }
 
     //初始化当前的问题
@@ -270,6 +267,7 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
             public void run() {
                 ObjectAnimator.ofFloat(bottomMenu, "translationY", bottomMenu.getHeight() - setStared.getHeight()).
                         setDuration(0).start();
+                viewPager.setCurrentItem(getIntent().getIntExtra("qstNum",0));
             }
         });
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

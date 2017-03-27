@@ -1,5 +1,7 @@
 package com.zgq.wokao.action.paper.impl;
 
+import android.support.v4.view.PagerAdapter;
+
 import com.zgq.wokao.action.BaseAction;
 import com.zgq.wokao.action.paper.IPaperAction;
 import com.zgq.wokao.action.paper.IQuestionAction;
@@ -22,6 +24,8 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import io.realm.Realm;
 
 /**
  * Created by zgq on 2017/2/28.
@@ -133,6 +137,12 @@ public class PaperAction extends BaseAction implements IPaperAction,IQuestionAct
     @Override
     public void removeFromSchedule(final IExamPaper paper) {
         paperDao.removeFromSchedule(paper);
+    }
+
+    @Override
+    public void setLastStudyDate(IExamPaper paper) {
+
+
     }
 
     @Override
