@@ -5,6 +5,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -165,6 +166,7 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
         scheduleInfoView.showTop();
         ((SchedulePagerAdapter)viewPager.getAdapter()).changeStatus(SchedulePagerAdapter.Status.SHOWSTARTBTN);
         ObjectAnimator.ofFloat(viewPager,"translationY",0).setDuration(300).start();
+        adjustViewPager();
         status = Status.DETAIL;
     }
 
@@ -173,7 +175,33 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
         scheduleInfoView.showBottom();
         ((SchedulePagerAdapter)viewPager.getAdapter()).changeStatus(SchedulePagerAdapter.Status.SHOWADDTIME);
         ObjectAnimator.ofFloat(viewPager,"translationY",0, slipDistance).setDuration(300).start();
+        adjustViewPager();
         status = Status.SURVEY;
+    }
+    //调整viewpager前一夜后一页的状态为正确的
+    private void adjustViewPager(){
+        View tmpView = null;
+        for (int i = 0; i < viewPager.getChildCount(); i++){
+            if ((tmpView = viewPager.getChildAt(i)) != null){
+                switch(((SchedulePagerAdapter) viewPager.getAdapter()).getStatus()){
+                    case SHOWSTARTBTN:
+                        tmpView.findViewById(R.id.start_study).setVisibility(View.VISIBLE);
+                        tmpView.findViewById(R.id.add_time).setVisibility(View.GONE);
+                        tmpView.findViewById(R.id.top_layout).
+                                setBackgroundColor(getContext().getResources().getColor(R.color.transparent));
+                        break;
+                    case SHOWADDTIME:
+                        tmpView.findViewById(R.id.start_study).setVisibility(View.GONE);
+                        tmpView.findViewById(R.id.add_time).setVisibility(View.VISIBLE);
+                        tmpView.findViewById(R.id.top_layout).
+                                setBackgroundColor(getContext().getResources().getColor(R.color.color_top_layout_background));
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
     }
 
     @Override
@@ -212,7 +240,10 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
 
         @Override
         public void onPageSelected(int position) {
+            Log.d("ScheduleFragment","---->> pageselected");
             presenter.scheduleInfoChangeData(position);
+            Log.d("ScheduleFragment","---->> pageselected" + viewPager.getChildCount());
+
             ((SchedulePagerAdapter)viewPager.getAdapter()).changeStatus(((SchedulePagerAdapter) viewPager.getAdapter()).getStatus());
         }
 
