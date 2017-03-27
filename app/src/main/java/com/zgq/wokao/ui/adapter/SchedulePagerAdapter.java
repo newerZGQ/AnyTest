@@ -1,6 +1,7 @@
 package com.zgq.wokao.ui.adapter;
 
 import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,6 +32,8 @@ public class SchedulePagerAdapter extends PagerAdapter {
 
     public static final String TAG = "SchedulePagerAdapter";
 
+    private Context context;
+
     private ArrayList<ScheduleData> scheduleDatas;
 
     private ArrayList<ArrayList<QstData>> qstDatasList = new ArrayList<>();
@@ -53,12 +56,13 @@ public class SchedulePagerAdapter extends PagerAdapter {
 
     private SchedulePagerAdapter(){}
 
-    public SchedulePagerAdapter(ArrayList<ScheduleData> scheduleDatas,
+    public SchedulePagerAdapter(Context context,ArrayList<ScheduleData> scheduleDatas,
                                 ArrayList<ArrayList<QstData>> qstDatasList,
                                 OnViewClickListener listener){
         this.scheduleDatas = scheduleDatas;
         this.qstDatasList = qstDatasList;
         this.listener = listener;
+        this.context = context;
     }
 
     public ArrayList<ScheduleData> getScheduleDatas() {
@@ -134,7 +138,7 @@ public class SchedulePagerAdapter extends PagerAdapter {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ContextUtil.getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         holder.qstList.setLayoutManager(linearLayoutManager);
-        holder.qstList.setAdapter(new QuestionInfoAdapter(qstDatasList.get(position)));
+        holder.qstList.setAdapter(new QuestionInfoAdapter(context,qstDatasList.get(position)));
         switch (status){
             case SHOWADDTIME:
                 holder.startBtn.setVisibility(View.GONE);

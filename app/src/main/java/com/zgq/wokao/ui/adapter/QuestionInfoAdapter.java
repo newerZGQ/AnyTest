@@ -1,5 +1,7 @@
 package com.zgq.wokao.ui.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,9 +12,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zgq.wokao.R;
-import com.zgq.wokao.Util.ContextUtil;
+import com.zgq.wokao.Util.LogUtil;
+import com.zgq.wokao.model.paper.Constant;
 import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.viewdate.QstData;
+import com.zgq.wokao.ui.activity.AnswerStudyActivity;
 
 import java.util.ArrayList;
 
@@ -21,12 +25,14 @@ import java.util.ArrayList;
  */
 
 public class QuestionInfoAdapter extends RecyclerView.Adapter<QuestionInfoAdapter.MyViewHolder> {
-    private android.content.Context context = ContextUtil.getContext();
+    public static final String TAG = QuestionInfoAdapter.class.getName();
+    private Context context;
     private ArrayList<QstData> qstDatas = null;
 
     public QuestionInfoAdapter(){}
-    public QuestionInfoAdapter(ArrayList<QstData> qstDatas) {
+    public QuestionInfoAdapter(Context context,ArrayList<QstData> qstDatas) {
         this.qstDatas = qstDatas;
+        this.context = context;
     }
 
     @Override
@@ -57,26 +63,57 @@ public class QuestionInfoAdapter extends RecyclerView.Adapter<QuestionInfoAdapte
         switch (qstType){
             case QuestionType.fillin_index:
                 holder.rootView.setBackground(context.getResources().getDrawable(R.drawable.qst_background_fillin));
+                holder.rootView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.d(LogUtil.PREFIX+TAG,"----->>click in");
+                        startStudy(data.getPaperId(), Constant.FILLINQUESTIONTYPE, 0);
+                    }
+                });
                 holder.qstTypeIcon.setBackground(context.getResources().getDrawable(R.drawable.qst_icon_fillin));
                 holder.qstTypeTitle.setText("填空题");
                 break;
             case QuestionType.tf_index:
                 holder.rootView.setBackground(context.getResources().getDrawable(R.drawable.qst_background_tf));
+                holder.rootView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startStudy(data.getPaperId(), Constant.TFQUESTIONTYPE, 0);
+                    }
+                });
                 holder.qstTypeIcon.setBackground(context.getResources().getDrawable(R.drawable.qst_icon_tf));
                 holder.qstTypeTitle.setText("选择题");
                 break;
             case QuestionType.sglc_index:
                 holder.rootView.setBackground(context.getResources().getDrawable(R.drawable.qst_background_sgl));
+                holder.rootView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startStudy(data.getPaperId(), Constant.SGLCHOQUESTIONTYPE, 0);
+                    }
+                });
                 holder.qstTypeIcon.setBackground(context.getResources().getDrawable(R.drawable.qst_icon_sgl));
                 holder.qstTypeTitle.setText("单选题");
                 break;
             case QuestionType.mtlc_index:
                 holder.rootView.setBackground(context.getResources().getDrawable(R.drawable.qst_background_mlc));
+                holder.rootView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startStudy(data.getPaperId(), Constant.MULTCHOQUESTIONTYPE, 0);
+                    }
+                });
                 holder.qstTypeIcon.setBackground(context.getResources().getDrawable(R.drawable.qst_icon_mlc));
                 holder.qstTypeTitle.setText("多选题");
                 break;
             case QuestionType.disc_index:
                 holder.rootView.setBackground(context.getResources().getDrawable(R.drawable.qst_background_dis));
+                holder.rootView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startStudy(data.getPaperId(), Constant.DISCUSSQUESTIONTYPE, 0);
+                    }
+                });
                 holder.qstTypeIcon.setBackground(context.getResources().getDrawable(R.drawable.qst_icon_dis));
                 holder.qstTypeTitle.setText("简答题");
                 break;
@@ -116,5 +153,18 @@ public class QuestionInfoAdapter extends RecyclerView.Adapter<QuestionInfoAdapte
             this.fallible3 = fallible3;
             this.basicInfo = basicInfo;
         }
+    }
+
+    private void startStudy(String paperId, int type, int qstNum){
+        Log.d(LogUtil.PREFIX+TAG,"----->>"+paperId + " "+ type + " "+ qstNum);
+        Intent intent = new Intent(context,AnswerStudyActivity.class);
+        if (paperId != null && !paperId.equals("")) {
+            intent.putExtra("paperId", paperId);
+            intent.putExtra("qstType", type);
+            intent.putExtra("qstNum",qstNum);
+        }else {
+            return;
+        }
+        context.startActivity(intent);
     }
 }

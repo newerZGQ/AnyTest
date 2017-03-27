@@ -50,7 +50,7 @@ public abstract class BaseRealmProvider<T extends RealmObject> implements DataPr
             return null;
         }
         RealmQuery<T> query = realm.where(entityClass);
-        query.equalTo("id",id);
+        query.equalTo("paperInfo.id",id);
         RealmResults<T> results = query.findAll();
         if (results.isEmpty()){
             return null;

@@ -25,6 +25,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ScheduleFragment extends BaseFragment implements IScheduleView, View.OnClickListener{
+    public static final String TAG = "ScheduleFragment";
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -40,7 +41,7 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
 
     private OnScheduleFragmentListener mListener;
 
-    private SchedulePresenter presenter = new SchedulePresenter(this);
+    private SchedulePresenter presenter = new SchedulePresenter(this,getContext());
 
     private Status status = Status.SURVEY;
 
@@ -136,8 +137,10 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
 
     @Override
     public void setViewPager(ArrayList<ScheduleData> scheduleDatas, ArrayList<ArrayList<QstData>> qstDataLists) {
+        Log.d(TAG , ""+qstDataLists.size());
+        //Log.d(TAG , " position 0 "+qstDataLists.get(0).size());
         if (viewPager.getAdapter() == null) {
-            viewPager.setAdapter(new SchedulePagerAdapter(scheduleDatas, qstDataLists,
+            viewPager.setAdapter(new SchedulePagerAdapter(getContext(),scheduleDatas, qstDataLists,
                     new SchedulePagerAdapter.OnViewClickListener() {
                         @Override
                         public void onClickTopLayout(int position) {

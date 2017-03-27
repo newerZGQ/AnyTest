@@ -1,6 +1,7 @@
 package com.zgq.wokao.parser;
 
 import com.zgq.wokao.Util.DateUtil;
+import com.zgq.wokao.Util.UUIDUtil;
 import com.zgq.wokao.exception.ParseException;
 import com.zgq.wokao.model.paper.NormalIExamPaper;
 import com.zgq.wokao.model.paper.question.impl.DiscussQuestion;
@@ -81,6 +82,7 @@ public class ParserHelper {
             }
         }
         paper.getPaperInfo().setCreateDate(DateUtil.getCurrentDate());
+        paper.getPaperInfo().setId(UUIDUtil.getID());
         return paper;
     }
 

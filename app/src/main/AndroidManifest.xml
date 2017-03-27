@@ -30,7 +30,11 @@
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
         <activity android:name=".ui.activity.MainActivity" />
-        <activity android:name=".ui.activity.AnswerStudyActivity" />
+        <activity android:name=".ui.activity.AnswerStudyActivity">
+            <intent-filter>
+                <action android:name="AnswerStudyActivity"/>
+            </intent-filter>
+        </activity>
         <activity android:name=".ui.activity.PaperInfoActivity" />
         <activity android:name=".ui.activity.TutotialActivity" />
         <activity android:name=".ui.activity.SearchActivity" />

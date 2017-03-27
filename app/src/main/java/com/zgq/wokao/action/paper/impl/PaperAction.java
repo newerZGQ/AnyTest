@@ -141,8 +141,7 @@ public class PaperAction extends BaseAction implements IPaperAction,IQuestionAct
 
     @Override
     public void setLastStudyDate(IExamPaper paper) {
-
-
+        paperDao.setLastStudyDate(paper);
     }
 
     @Override

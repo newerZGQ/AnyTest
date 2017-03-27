@@ -1,6 +1,10 @@
 package com.zgq.wokao.model.viewdate;
 
+import android.util.Log;
+
+import com.zgq.wokao.Util.LogUtil;
 import com.zgq.wokao.model.paper.QuestionType;
+import com.zgq.wokao.model.paper.info.IPaperInfo;
 import com.zgq.wokao.model.paper.question.IQuestion;
 import com.zgq.wokao.model.paper.question.info.IQuestionInfo;
 import com.zgq.wokao.model.paper.question.info.QuestionInfo;
@@ -18,6 +22,10 @@ import io.realm.Realm;
 
 public class QstData implements ViewData{
 
+    public static final String TAG = QstData.class.getSimpleName();
+
+    //试卷id
+    private String paperId;
     //题目类型
     private QuestionType type = QuestionType.fillin;
     //学习次数
@@ -30,6 +38,13 @@ public class QstData implements ViewData{
     private int qstCount;
     //收藏题目数量
     private int starCount;
+    public String getPaperId() {
+        return paperId;
+    }
+
+    public void setPaperId(String paperId) {
+        this.paperId = paperId;
+    }
 
     public QuestionType getType() {
         return type;
@@ -80,7 +95,7 @@ public class QstData implements ViewData{
     }
 
     public static class Formator{
-        public static QstData format(List<IQuestion> questions){
+        public static QstData format(List<IQuestion> questions, IPaperInfo paperInfo){
             QstData data = new QstData();
             if (questions.size() == 0){
                 return data;
@@ -104,6 +119,8 @@ public class QstData implements ViewData{
             }
 
             Collections.sort(questions,new SortQstByAccuracy());
+            Log.d(LogUtil.PREFIX+TAG,"----->>" + paperInfo.getId());
+            data.setPaperId(paperInfo.getId());
             data.setStudyNum(studyCount);
             data.setStarCount(starCount);
             data.setAccuracy(studyCount == 0 ? 1f : correctCount/studyCount);

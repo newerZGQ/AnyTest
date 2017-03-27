@@ -1,5 +1,6 @@
 package com.zgq.wokao.ui.presenter.impl;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.zgq.wokao.action.paper.impl.PaperAction;
@@ -21,14 +22,16 @@ import java.util.ArrayList;
 public class SchedulePresenter implements ISchedulePresenter {
     public static final String TAG = "SchedulePresenter";
     private IScheduleView scheduleView;
+    private Context context;
     private PaperAction paperAction = PaperAction.getInstance();
 
     private ArrayList<IExamPaper> schedulePapers = new ArrayList<>();
     private ArrayList<ScheduleData> scheduleDatas = new ArrayList<>();
     private ArrayList<ArrayList<QstData>> qstDatasList = new ArrayList<>();
 
-    public SchedulePresenter(IScheduleView scheduleView){
+    public SchedulePresenter(IScheduleView scheduleView, Context context){
         this.scheduleView = scheduleView;
+        this.context = context;
         getData();
     }
 
