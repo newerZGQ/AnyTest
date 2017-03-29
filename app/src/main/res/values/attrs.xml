@@ -13,4 +13,20 @@
         <attr name="metaButtonBarStyle" format="reference" />
         <attr name="metaButtonBarButtonStyle" format="reference" />
     </declare-styleable>
+
+    <declare-styleable name="AccuracyView">
+        <attr name="stroke_width" format="dimension" />
+        <attr name="progress" format="float" />
+        <attr name="marker_progress" format="float" />
+        <attr name="progress_color" format="color" />
+        <attr name="progress_background_color" format="color" />
+        <attr name="thumb_visible" format="boolean" />
+        <attr name="marker_visible" format="boolean" />
+        <attr name="android:gravity" />
+        <attr name="thumb_radius" format="integer" />
+    </declare-styleable>
+
+    <attr name="circularProgressBarStyle" format="reference" />
+
+
 </resources>
