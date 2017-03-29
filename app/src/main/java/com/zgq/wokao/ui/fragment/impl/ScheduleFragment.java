@@ -19,7 +19,8 @@ import com.zgq.wokao.ui.adapter.SchedulePagerAdapter;
 import com.zgq.wokao.ui.fragment.BaseFragment;
 import com.zgq.wokao.ui.presenter.impl.SchedulePresenter;
 import com.zgq.wokao.ui.view.IScheduleView;
-import com.zgqview.accuracy.ScheduleInfoView;
+import com.zgq.wokao.ui.widget.ScheduleInfoView;
+
 import java.util.ArrayList;
 
 import butterknife.BindView;
