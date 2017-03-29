@@ -1,1 +1,1 @@
-include ':app', ':AccuracyView', ':AccuracySample'
+include ':app'
