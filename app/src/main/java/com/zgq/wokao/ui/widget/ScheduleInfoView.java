@@ -31,6 +31,7 @@ public class ScheduleInfoView extends RelativeLayout {
 
     private RelativeLayout btmView;
     private AccuracyView accuracyView;
+    private AccuracyView scheduleView;
     private TextView btmAccuracy;
     private TextView btmTodayNum;
     private TextView btmDailyCount;
@@ -81,8 +82,7 @@ public class ScheduleInfoView extends RelativeLayout {
 
         btmView = (RelativeLayout) rootView.findViewById(R.id.btm_view);
         accuracyView = (AccuracyView) rootView.findViewById(R.id.accuracy_view);
-        //accuracyView.setProgressColor(Color.parseColor("E50041"));
-        //accuracyView.setProgressBackgroundColor(Color.parseColor("2de50041"));
+        scheduleView = (AccuracyView) rootView.findViewById(R.id.schedule_view);
         btmAccuracy = (TextView) rootView.findViewById(R.id.btm_accuracy);
         btmTodayNum = (TextView) rootView.findViewById(R.id.btm_today_num);
         btmDailyCount = (TextView) rootView.findViewById(R.id.btm_daily_count);
@@ -101,7 +101,8 @@ public class ScheduleInfoView extends RelativeLayout {
         topAccuracy.setText(accuracy);
         btmAccuracy.setText(accuracy);
 
-        accuracyView.setProgress(0.5f);
+        accuracyView.setProgress(progress);
+
     }
 
     public void changeContent(final String accuracy,final String todayNum, final String dailyCount){

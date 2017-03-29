@@ -53,7 +53,11 @@
     //schedulefragment
     <color name="color_top_layout_background">#13ffffff</color>
     <color name="color_accuracy_circle_1_hard">#E50041</color>
-    <color name="color_accuracy_circle_1_light">#2de50041</color>
+    <color name="color_accuracy_circle_1_light">#14e50041</color>
     <color name="color_accuracy_circle_2_hard">#FFD437</color>
-    <color name="color_accuracy_circle_2_light">#48ffd437</color>
+    <color name="color_accuracy_circle_2_light">#20ffd437</color>
+
+
+    //homeactivity
+    <color name="color_home_activity_background">#031027</color>
 </resources>
