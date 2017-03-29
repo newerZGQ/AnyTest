@@ -6,7 +6,7 @@
     android:background="@color/colorTransparent"
     tools:context="com.zgq.wokao.ui.fragment.impl.ScheduleFragment">
 
-    <com.zgqview.accuracy.ScheduleInfoView
+    <com.zgq.wokao.ui.widget.ScheduleInfoView
         android:id="@+id/schedule_info"
         android:layout_marginTop="30dp"
         android:layout_width="400dp"
