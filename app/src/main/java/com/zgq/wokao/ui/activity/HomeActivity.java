@@ -90,7 +90,7 @@ public class HomeActivity extends BaseActivity implements
         tabStrip.setStripWeight(10);
         tabStrip.setStripFactor(5f);
         tabStrip.setStripGravity(NavigationTabStrip.StripGravity.BOTTOM);
-        tabStrip.setTypeface("fonts/typeface.ttf");
+        //tabStrip.setTypeface("fonts/typeface.ttf");
         tabStrip.setCornersRadius(3);
         tabStrip.setAnimationDuration(200);
         tabStrip.setInactiveColor(getResources().getColor(R.color.colorTransparentWhite));
