@@ -1,5 +1,8 @@
 package com.zgqview.accuracy;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -16,9 +19,9 @@ import android.view.View;
 
 
 /**
- * HoloCircularProgressBar custom view.
+ * AccuracyView custom view.
  *
- * https://github.com/passsy/android-HoloCircularProgressBar
+ * https://github.com/passsy/android-AccuracyView
  *
  * @author Pascal.Welsch
  * @version 1.3 (03.10.2014)
@@ -85,7 +88,7 @@ public class AccuracyView extends View {
     /**
      * The stroke width used to paint the circle.
      */
-    private int mCircleStrokeWidth = 10;
+    private int mCircleStrokeWidth = 50;
 
     /**
      * The gravity of the view. Where should the Circle be drawn within the given bounds
@@ -114,7 +117,7 @@ public class AccuracyView extends View {
     /**
      * indicates if the thumb is visible
      */
-    private boolean mIsThumbEnabled = true;
+    private boolean mIsThumbEnabled = false;
 
     /**
      * The Marker color paint.
@@ -182,7 +185,7 @@ public class AccuracyView extends View {
     /**
      * The pointer width (in pixels).
      */
-    private int mThumbRadius = 10;
+    private int mThumbRadius = 20;
 
     /**
      * The Translation offset x which gives us the ability to use our own coordinates system.
@@ -199,6 +202,15 @@ public class AccuracyView extends View {
      * #mGravity}..
      */
     private int mVerticalInset = 0;
+    /**
+     * 动画，setprogress时使用
+     */
+    private ValueAnimator valueAnimator;
+
+    /**
+     * 动画监听器
+     */
+    private ValueAnimator.AnimatorUpdateListener animatorUpdateListener;
 
     /**
      * Instantiates a new holo circular progress bar.
@@ -227,7 +239,7 @@ public class AccuracyView extends View {
      * @param defStyle the def style
      */
     public AccuracyView(final Context context, final AttributeSet attrs,
-                        final int defStyle) {
+                                   final int defStyle) {
         super(context, attrs, defStyle);
 
         // load the styled attributes and set their properties
@@ -241,22 +253,21 @@ public class AccuracyView extends View {
                 setProgressBackgroundColor(attributes
                         .getColor(R.styleable.AccuracyView_progress_background_color,
                                 Color.GREEN));
-                setProgress(
+                drawProgress(
                         attributes.getFloat(R.styleable.AccuracyView_progress, 0.0f));
                 setMarkerProgress(
                         attributes.getFloat(R.styleable.AccuracyView_marker_progress,
                                 0.0f));
                 setWheelSize((int) attributes
-                        .getDimension(R.styleable.AccuracyView_stroke_width, 10));
+                        .getDimension(R.styleable.AccuracyView_stroke_width, 40));
                 setThumbEnabled(attributes
-                        .getBoolean(R.styleable.AccuracyView_thumb_visible, true));
+                        .getBoolean(R.styleable.AccuracyView_thumb_visible, false));
                 setMarkerEnabled(attributes
-                        .getBoolean(R.styleable.AccuracyView_marker_visible, true));
-                setmThumbRadius(attributes
-                        .getInt(R.styleable.AccuracyView_thumb_radius,10));
-//                mGravity = attributes
-//                        .getInt(R.styleable.HoloCircularProgressBar_android_gravity,
-//                                Gravity.CENTER);
+                        .getBoolean(R.styleable.AccuracyView_marker_visible, false));
+
+                mGravity = attributes
+                        .getInt(R.styleable.AccuracyView_android_gravity,
+                                Gravity.CENTER);
             } finally {
                 // make sure recycle is always called.
                 attributes.recycle();
@@ -297,7 +308,7 @@ public class AccuracyView extends View {
                 mProgressColorPaint);
 
         // draw the marker at the correct rotated position
-        if (mIsMarkerEnabled) {
+//        if (mIsMarkerEnabled) {
 //            final float markerRotation = getMarkerRotation();
 //
 //            canvas.save();
@@ -305,22 +316,21 @@ public class AccuracyView extends View {
 //            canvas.drawLine((float) (mThumbPosX + mThumbRadius / 2 * 1.4), mThumbPosY,
 //                    (float) (mThumbPosX - mThumbRadius / 2 * 1.4), mThumbPosY, mMarkerColorPaint);
 //            canvas.restore();
-        }
-
-        if (isThumbEnabled()) {
-            // draw the thumb square at the correct rotated position
-            canvas.save();
-            canvas.rotate(progressRotation - 90);
-            // rotate the square by 45 degrees
+//        }
+//
+//        if (isThumbEnabled()) {
+//            // draw the thumb square at the correct rotated position
+//            canvas.save();
+//            canvas.rotate(progressRotation - 90);
+//            // rotate the square by 45 degrees
 //            canvas.rotate(45, mThumbPosX, mThumbPosY);
 //            mSquareRect.left = mThumbPosX - mThumbRadius / 3;
 //            mSquareRect.right = mThumbPosX + mThumbRadius / 3;
 //            mSquareRect.top = mThumbPosY - mThumbRadius / 3;
 //            mSquareRect.bottom = mThumbPosY + mThumbRadius / 3;
 //            canvas.drawRect(mSquareRect, mThumbColorPaint);
-            canvas.drawCircle(mThumbPosX, mThumbPosY, mThumbRadius, mThumbColorPaint);
-            canvas.restore();
-        }
+//            canvas.restore();
+//        }
     }
 
     @Override
@@ -378,7 +388,7 @@ public class AccuracyView extends View {
     protected void onRestoreInstanceState(final Parcelable state) {
         if (state instanceof Bundle) {
             final Bundle bundle = (Bundle) state;
-            setProgress(bundle.getFloat(INSTANCE_STATE_PROGRESS));
+            drawProgress(bundle.getFloat(INSTANCE_STATE_PROGRESS));
             setMarkerProgress(bundle.getFloat(INSTANCE_STATE_MARKER_PROGRESS));
 
             final int progressColor = bundle.getInt(INSTANCE_STATE_PROGRESS_COLOR);
@@ -429,15 +439,6 @@ public class AccuracyView extends View {
         return mMarkerProgress;
     }
 
-
-    public int getmThumbRadius() {
-        return mThumbRadius;
-    }
-
-    public void setmThumbRadius(int mThumbRadius) {
-        this.mThumbRadius = mThumbRadius;
-    }
-
     /**
      * gives the current progress of the ProgressBar. Value between 0..1 if you set the progress to
      * >1 you'll get progress % 1 as return value
@@ -486,7 +487,7 @@ public class AccuracyView extends View {
      * @param progress the new marker progress
      */
     public void setMarkerProgress(final float progress) {
-        mIsMarkerEnabled = true;
+        mIsMarkerEnabled = false;
         mMarkerProgress = progress;
     }
 
@@ -495,7 +496,7 @@ public class AccuracyView extends View {
      *
      * @param progress the new progress
      */
-    public void setProgress(final float progress) {
+    private void drawProgress(final float progress) {
         if (progress == mProgress) {
             return;
         }
@@ -558,7 +559,6 @@ public class AccuracyView extends View {
      */
     public void setWheelSize(final int dimension) {
         mCircleStrokeWidth = dimension;
-
         // update the paints
         updateBackgroundColor();
         updateMarkerColor();
@@ -639,7 +639,6 @@ public class AccuracyView extends View {
         mBackgroundColorPaint.setColor(mProgressBackgroundColor);
         mBackgroundColorPaint.setStyle(Paint.Style.STROKE);
         mBackgroundColorPaint.setStrokeWidth(mCircleStrokeWidth);
-
         invalidate();
     }
 
@@ -663,6 +662,7 @@ public class AccuracyView extends View {
         mProgressColorPaint.setColor(mProgressColor);
         mProgressColorPaint.setStyle(Paint.Style.STROKE);
         mProgressColorPaint.setStrokeWidth(mCircleStrokeWidth);
+        mProgressColorPaint.setStrokeCap(Paint.Cap.ROUND);
 
         mThumbColorPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mThumbColorPaint.setColor(mProgressColor);
@@ -672,4 +672,67 @@ public class AccuracyView extends View {
         invalidate();
     }
 
+    public void setProgress(float progress){
+        animate(this,progress);
+    }
+
+    /**
+     * Animate.
+     *
+     * @param progressBar the progress bar
+     */
+    private void animate(AccuracyView progressBar,float mProgress) {
+        int duration = 2000;
+        animate(progressBar, mProgress, duration);
+    }
+
+    private void animate(final AccuracyView progressBar,
+                         final float progress, final int duration) {
+        if (valueAnimator != null){
+            valueAnimator.reverse();
+        }
+        valueAnimator = ValueAnimator.ofFloat(0,progress);
+        valueAnimator.setDuration(duration);
+
+        valueAnimator.addListener(new Animator.AnimatorListener() {
+
+            @Override
+            public void onAnimationCancel(final Animator animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(final Animator animation) {
+                progressBar.drawProgress(progress);
+            }
+
+            @Override
+            public void onAnimationRepeat(final Animator animation) {
+            }
+
+            @Override
+            public void onAnimationStart(final Animator animation) {
+            }
+        });
+        if (animatorUpdateListener != null) {
+            valueAnimator.addUpdateListener(animatorUpdateListener);
+        }
+        //valueAnimator.reverse();
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+
+            @Override
+            public void onAnimationUpdate(final ValueAnimator animation) {
+                progressBar.drawProgress((Float) animation.getAnimatedValue());
+            }
+        });
+        progressBar.drawProgress(progress);
+        valueAnimator.start();
+    }
+
+    public ValueAnimator.AnimatorUpdateListener getAnimatorUpdateListener() {
+        return animatorUpdateListener;
+    }
+
+    public void setAnimatorUpdateListener(ValueAnimator.AnimatorUpdateListener animatorUpdateListener) {
+        this.animatorUpdateListener = animatorUpdateListener;
+    }
 }

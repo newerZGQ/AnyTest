@@ -16,6 +16,15 @@ public class Schedule extends RealmObject implements ISchedule {
     private int dailyCount;
     private RealmList<DailyRecord> dailyRecords = new RealmList<>();
 
+    public Schedule(){
+        DailyRecord dailyRecord = new DailyRecord.Builder().date(DateUtil.getFormatData("yyyy-MM-dd"))
+                .isCompleted(false)
+                .studyCount(this.dailyCount)
+                .studyNumber(0)
+                .build();
+        dailyRecords.add(dailyRecord);
+    }
+
     public boolean isOpened() {
         return isOpened;
     }

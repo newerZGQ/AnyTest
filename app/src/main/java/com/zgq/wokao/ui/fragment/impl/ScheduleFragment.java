@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.zgq.wokao.R;
 import com.zgq.wokao.Util.DensityUtil;
+import com.zgq.wokao.Util.LogUtil;
 import com.zgq.wokao.model.viewdate.QstData;
 import com.zgq.wokao.model.viewdate.ScheduleData;
 import com.zgq.wokao.ui.adapter.SchedulePagerAdapter;
@@ -209,6 +210,7 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
 
     @Override
     public void scheduleInfoChangeData(ScheduleData data) {
+        Log.d(LogUtil.PREFIX+ " "+TAG,"----->>"+data.getAccuracy() + " "+ data.getCountToday()+" "+ data.getCountEveryday());
         scheduleInfoView.changeContent(data.getAccuracy(),String.valueOf(data.getCountToday())
                 ,String.valueOf(data.getCountEveryday()));
     }
@@ -217,7 +219,6 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
     public void changeViewPagerStatus(boolean showFullView) {
 
     }
-
 
     @Override
     public void onClick(View v) {
@@ -243,10 +244,7 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
 
         @Override
         public void onPageSelected(int position) {
-            Log.d("ScheduleFragment","---->> pageselected");
             presenter.scheduleInfoChangeData(position);
-            Log.d("ScheduleFragment","---->> pageselected" + viewPager.getChildCount());
-
             ((SchedulePagerAdapter)viewPager.getAdapter()).changeStatus(((SchedulePagerAdapter) viewPager.getAdapter()).getStatus());
         }
 

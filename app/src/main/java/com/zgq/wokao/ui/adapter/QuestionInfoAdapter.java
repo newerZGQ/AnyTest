@@ -62,7 +62,7 @@ public class QuestionInfoAdapter extends RecyclerView.Adapter<QuestionInfoAdapte
 
         switch (qstType){
             case QuestionType.fillin_index:
-                holder.rootView.setBackground(context.getResources().getDrawable(R.drawable.qst_background_fillin));
+                holder.rootView.setBackground(context.getResources().getDrawable(R.drawable.rectangle_test));
                 holder.rootView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

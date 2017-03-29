@@ -22,5 +22,5 @@ public interface IPaperAction extends IPaperInfoAction,IPaperSchdlAction{
     public IExamPaper queryById(String id);
     public IExamPaper parseAndSave(String filePath) throws FileNotFoundException, ParseException;
     public IExamPaper parseAndSave(InputStream inputStream) throws ParseException;
-
+    public float getTotalAccuracy(IExamPaper paper);
 }

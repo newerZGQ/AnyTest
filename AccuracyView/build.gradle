@@ -5,7 +5,7 @@ android {
     buildToolsVersion '25.0.0'
 
     defaultConfig {
-        minSdkVersion 7
+        minSdkVersion 19
         targetSdkVersion 19
     }
 
@@ -20,4 +20,8 @@ android {
     lintOptions {
         abortOnError false
     }
+}
+
+dependencies {
+
 }

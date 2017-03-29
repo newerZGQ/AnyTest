@@ -1,6 +1,10 @@
 package com.zgq.wokao.model.viewdate;
 
+import android.util.Log;
+
+import com.zgq.wokao.action.paper.impl.PaperAction;
 import com.zgq.wokao.model.paper.IExamPaper;
+import com.zgq.wokao.model.paper.info.ExamPaperInfo;
 
 /**
  * Created by zgq on 2017/3/5.
@@ -75,12 +79,18 @@ public class ScheduleData implements ViewData{
         public static ScheduleData format(IExamPaper paper){
             ScheduleData data = new ScheduleData();
             data.setPaperTitle(paper.getPaperInfo().getTitle());
+            ExamPaperInfo info = (ExamPaperInfo)paper.getPaperInfo();
             data.setCountToday(paper.getPaperInfo().getSchedule().getcurrentRecord().getStudyNumber());
-            data.setCountEveryday(paper.getPaperInfo().getSchedule().getDailyCount());
+            data.setCountEveryday(((ExamPaperInfo)paper.getPaperInfo()).getSchedule().getDailyCount());
             data.setCountAllQuestions(34);
+            Log.d("zgq---->>",""+((ExamPaperInfo)paper.getPaperInfo()).getId());
             data.setPaperId(paper.getPaperInfo().getId());
             data.setAddTime(paper.getPaperInfo().getCreateDate());
+            data.setAccuracy(String.valueOf(PaperAction.getInstance().getTotalAccuracy(paper)));
+            Log.d("zgq---->>",""+String.valueOf(PaperAction.getInstance().getTotalAccuracy(paper)));
             return data;
         }
     }
+
+
 }

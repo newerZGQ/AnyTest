@@ -204,6 +204,35 @@ public class PaperAction extends BaseAction implements IPaperAction,IQuestionAct
     }
 
     @Override
+    public float getTotalAccuracy(IExamPaper paper) {
+        float accuracy = 0f;
+        int studyCount = 0;
+        int correctCount = 0;
+        for (IQuestion question : getQuestins(paper,QuestionType.fillin)){
+            studyCount += question.getRecord().getStudyNumber();
+            correctCount += question.getRecord().getCorrectNumber();
+        }
+        for (IQuestion question : getQuestins(paper,QuestionType.tf)){
+            studyCount += question.getRecord().getStudyNumber();
+            correctCount += question.getRecord().getCorrectNumber();
+        }
+        for (IQuestion question : getQuestins(paper,QuestionType.sglc)){
+            studyCount += question.getRecord().getStudyNumber();
+            correctCount += question.getRecord().getCorrectNumber();
+        }
+        for (IQuestion question : getQuestins(paper,QuestionType.mtlc)){
+            studyCount += question.getRecord().getStudyNumber();
+            correctCount += question.getRecord().getCorrectNumber();
+        }
+        for (IQuestion question : getQuestins(paper,QuestionType.disc)){
+            studyCount += question.getRecord().getStudyNumber();
+            correctCount += question.getRecord().getCorrectNumber();
+        }
+        if (studyCount == 0) return 0f;
+        return correctCount/studyCount;
+    }
+
+    @Override
     public void star(final IQuestion question) {
         questionDao.star(question);
     }
