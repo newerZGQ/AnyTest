@@ -57,6 +57,12 @@
     <color name="color_accuracy_circle_2_hard">#FFD437</color>
     <color name="color_accuracy_circle_2_light">#20ffd437</color>
 
+    <color name="color_1">#EF9A9A</color>
+    <color name="color_2">#E53935</color>
+    <color name="color_3">#F8BBD0</color>
+    <color name="color_4">#D81B60</color>
+    <color name="color_5">#880E4F</color>
+
 
     //homeactivity
     <color name="color_home_activity_background">#031027</color>

@@ -52,10 +52,9 @@
             </RelativeLayout>
         </LinearLayout>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/qst_datial_rl"
+        <com.wirelesspienetwork.overview.views.Overview
+            android:id="@+id/qst_datial_cards"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingTop="30dp" />
+            android:layout_height="match_parent" />
 
 </LinearLayout>

@@ -87,7 +87,7 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
         viewPager.post(new Runnable() {
             @Override
             public void run() {
-                slipDistance = rootView.findViewById(R.id.qst_datial_rl).getHeight();
+                slipDistance = rootView.findViewById(R.id.qst_datial_cards).getHeight();
                 hideDetail();
             }
         });
@@ -211,7 +211,7 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
 
     @Override
     public void scheduleInfoChangeData(ScheduleData data) {
-        Log.d(LogUtil.PREFIX+ " "+TAG,"----->>"+data.getAccuracy() + " "+ data.getCountToday()+" "+ data.getCountEveryday());
+        //Log.d(LogUtil.PREFIX+ " "+TAG,"----->>"+data.getAccuracy() + " "+ data.getCountToday()+" "+ data.getCountEveryday());
         scheduleInfoView.changeContent(data.getAccuracy(),String.valueOf(data.getCountToday())
                 ,String.valueOf(data.getCountEveryday()));
     }

@@ -83,5 +83,7 @@ dependencies {
     compile 'com.rmtheis:tess-two:5.4.1'
     compile 'com.github.devlight.navigationtabstrip:navigationtabstrip:1.0.4'
     testCompile 'junit:junit:4.12'
+    compile 'com.loopeer.library:cardstack:1.0.2'
     apt 'com.jakewharton:butterknife-compiler:8.1.0'
+    compile project(':lib')
 }

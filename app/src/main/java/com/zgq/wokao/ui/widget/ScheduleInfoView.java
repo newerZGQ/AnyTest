@@ -123,12 +123,15 @@ public class ScheduleInfoView extends RelativeLayout {
                                 final TextView todayNumTv, final TextView dailyCountTv){
         AnimatorSet set = new AnimatorSet();
         set.playTogether(
-                ObjectAnimator.ofFloat(accuracyTv,"scaleX",1f,0f),
-                ObjectAnimator.ofFloat(accuracyTv,"scaleY",1f,0f),
-                ObjectAnimator.ofFloat(todayNumTv,"scaleX",1f,0f),
-                ObjectAnimator.ofFloat(todayNumTv,"scaleY",1f,0f),
-                ObjectAnimator.ofFloat(dailyCountTv,"scaleX",1f,0f),
-                ObjectAnimator.ofFloat(dailyCountTv,"scaleY",1f,0f)
+                ObjectAnimator.ofFloat(accuracyTv,"scaleX",1f,0.8f),
+                ObjectAnimator.ofFloat(accuracyTv,"scaleY",1f,0.8f),
+                ObjectAnimator.ofFloat(accuracyTv,"alpha",1f,0f),
+                ObjectAnimator.ofFloat(todayNumTv,"scaleX",1f,0.8f),
+                ObjectAnimator.ofFloat(todayNumTv,"scaleY",1f,0.8f),
+                ObjectAnimator.ofFloat(todayNumTv,"alpha",1f,0f),
+                ObjectAnimator.ofFloat(dailyCountTv,"scaleX",1f,0.8f),
+                ObjectAnimator.ofFloat(dailyCountTv,"scaleY",1f,0.8f),
+                ObjectAnimator.ofFloat(dailyCountTv,"alpha",1f,0f)
         );
         set.addListener(new Animator.AnimatorListener() {
             @Override
@@ -144,12 +147,15 @@ public class ScheduleInfoView extends RelativeLayout {
                 setContent(accuracy,progress,todayNum,dailyCount);
                 AnimatorSet set_1 = new AnimatorSet();
                 set_1.playTogether(
-                        ObjectAnimator.ofFloat(accuracyTv,"scaleX",0f,1f),
-                        ObjectAnimator.ofFloat(accuracyTv,"scaleY",0f,1f),
-                        ObjectAnimator.ofFloat(todayNumTv,"scaleX",0f,1f),
-                        ObjectAnimator.ofFloat(todayNumTv,"scaleY",0f,1f),
-                        ObjectAnimator.ofFloat(dailyCountTv,"scaleX",0f,1f),
-                        ObjectAnimator.ofFloat(dailyCountTv,"scaleY",0f,1f)
+                        ObjectAnimator.ofFloat(accuracyTv,"scaleX",0.8f,1f),
+                        ObjectAnimator.ofFloat(accuracyTv,"scaleY",0.8f,1f),
+                        ObjectAnimator.ofFloat(accuracyTv,"alpha",0f,1f),
+                        ObjectAnimator.ofFloat(todayNumTv,"scaleX",0.8f,1f),
+                        ObjectAnimator.ofFloat(todayNumTv,"scaleY",0.8f,1f),
+                        ObjectAnimator.ofFloat(todayNumTv,"alpha",0f,1f),
+                        ObjectAnimator.ofFloat(dailyCountTv,"scaleX",0.8f,1f),
+                        ObjectAnimator.ofFloat(dailyCountTv,"scaleY",0.8f,1f),
+                        ObjectAnimator.ofFloat(dailyCountTv,"alpha",0f,1f)
                 );
                 set_1.setDuration(200).start();
             }
