@@ -57,6 +57,9 @@
     <color name="color_accuracy_circle_2_hard">#FFD437</color>
     <color name="color_accuracy_circle_2_light">#20ffd437</color>
 
+    <color name="color_daily_count_uncompleted">#E50041</color>
+    <color name="color_daily_count_completed">#1e8b1c</color>
+
     <color name="color_1">#EF9A9A</color>
     <color name="color_2">#E53935</color>
     <color name="color_3">#F8BBD0</color>
@@ -66,4 +69,7 @@
 
     //homeactivity
     <color name="color_home_activity_background">#031027</color>
+    <color name="color_home_activity_selected_tab">#19b99a</color>
+    <color name="color_home_inactivity_selected_tab">#84acbfb9</color>
+
 </resources>

@@ -43,6 +43,7 @@
 
                 <com.gigamole.navigationtabstrip.NavigationTabStrip
                     android:id="@+id/home_tab"
+                    android:layout_centerVertical="true"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="100dp"
@@ -59,18 +60,20 @@
                     app:nts_inactive_color="#c4c4c4"/>
                 <Button
                     android:id="@+id/toolbar_menu"
-                    android:layout_width="56dp"
-                    android:layout_height="match_parent"
                     android:layout_alignParentLeft="true"
-                    android:layout_marginStart="0dp"
-                    android:background="@drawable/toolbar_more_background" />
+                    android:layout_marginStart="24dp"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/ic_menu_white_36pt_2x"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp" />
                 <Button
                     android:id="@+id/toolbar_search"
-                    android:layout_width="56dp"
-                    android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
-                    android:layout_marginEnd="0dp"
-                    android:background="@drawable/toolbar_delete_background" />
+                    android:layout_marginEnd="24dp"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/ic_search_white_72pt_2x"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp" />
             </RelativeLayout>
         </LinearLayout>
         <android.support.v4.view.ViewPager

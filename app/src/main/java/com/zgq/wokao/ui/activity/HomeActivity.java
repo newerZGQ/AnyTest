@@ -85,7 +85,7 @@ public class HomeActivity extends BaseActivity implements
     private void initTabStrip(){
         tabStrip.setTitles("日程", "试卷");
         tabStrip.setTabIndex(0, true);
-        tabStrip.setTitleSize(40);
+        tabStrip.setTitleSize(50);
         tabStrip.setStripColor(Color.TRANSPARENT);
         tabStrip.setStripWeight(10);
         tabStrip.setStripFactor(5f);
@@ -93,8 +93,8 @@ public class HomeActivity extends BaseActivity implements
         //tabStrip.setTypeface("fonts/typeface.ttf");
         tabStrip.setCornersRadius(3);
         tabStrip.setAnimationDuration(200);
-        tabStrip.setInactiveColor(getResources().getColor(R.color.colorTransparentWhite));
-        tabStrip.setActiveColor(Color.WHITE);
+        tabStrip.setInactiveColor(getResources().getColor(R.color.color_home_inactivity_selected_tab));
+        tabStrip.setActiveColor(getResources().getColor(R.color.color_home_activity_selected_tab));
         tabStrip.setViewPager(viewPager);
     }
 

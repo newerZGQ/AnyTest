@@ -2,13 +2,11 @@ package com.zgq.wokao.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.wirelesspienetwork.overview.model.OverviewAdapter;
-import com.wirelesspienetwork.overview.model.ViewHolder;
 import com.zgq.wokao.R;
 import com.zgq.wokao.Util.LogUtil;
 import com.zgq.wokao.model.paper.QuestionType;
@@ -45,10 +43,18 @@ public class CardViewAdapter extends OverviewAdapter<CardViewHolder, QstData> {
     @Override
     public void onBindViewHolder(final CardViewHolder cardViewHolder) {
         //cardViewHolder.view.setBackgroundColor(Color.argb(255, 240, 240, 240));
-        if (position%2==0) {
-            cardViewHolder.view.setBackground(context.getResources().getDrawable(R.drawable.qst_card_background));
-        }else{
+        if (position == 0) {
             cardViewHolder.view.setBackground(context.getResources().getDrawable(R.drawable.qst_card_background_1));
+        }else if(position == 1){
+          cardViewHolder.view.setBackground(context.getResources().getDrawable(R.drawable.qst_card_background_2));
+        } else if (position == 2){
+            cardViewHolder.view.setBackground(context.getResources().getDrawable(R.drawable.qst_card_background_5));
+        }
+        else if (position == 3){
+            cardViewHolder.view.setBackground(context.getResources().getDrawable(R.drawable.qst_card_background_3));
+        }
+        else if (position == 4){
+            cardViewHolder.view.setBackground(context.getResources().getDrawable(R.drawable.qst_card_background_4));
         }
         final QstData qstData = cardViewHolder.model;
         switch (qstData.getType().getIndex()){

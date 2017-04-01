@@ -5,7 +5,6 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
-import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +13,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zgq.wokao.R;
-import com.zgq.wokao.Util.ContextUtil;
 
 /**
  * Created by zgq on 2017/3/19.
@@ -25,9 +23,7 @@ public class ScheduleInfoView extends RelativeLayout {
     private View rootView;
 
     private LinearLayout topView;
-    private TextView topAccuracy;
-    private TextView topTodayNum;
-    private TextView topDailyCount;
+    private TextView topIsCompletedTv;
 
     private RelativeLayout btmView;
     private AccuracyView accuracyView;
@@ -76,9 +72,7 @@ public class ScheduleInfoView extends RelativeLayout {
     private void init(){
         rootView = LayoutInflater.from(context).inflate(R.layout.scheduleinfoview,this);
         topView = (LinearLayout) rootView.findViewById(R.id.top_view);
-        topAccuracy = (TextView) rootView.findViewById(R.id.top_accuracy);
-        topTodayNum = (TextView) rootView.findViewById(R.id.top_today_num);
-        topDailyCount = (TextView) rootView.findViewById(R.id.top_daily_count);
+        topIsCompletedTv = (TextView) rootView.findViewById(R.id.is_completed_day_count);
 
         btmView = (RelativeLayout) rootView.findViewById(R.id.btm_view);
         accuracyView = (AccuracyView) rootView.findViewById(R.id.accuracy_view);
@@ -91,36 +85,81 @@ public class ScheduleInfoView extends RelativeLayout {
         viewAnimator(topView,0f, 1f, 0f, 1f, 0);
     }
 
-    public void setContent(String accuracy, float progress, String todayNum, String dailyCount){
-        topTodayNum.setText(todayNum);
-        topDailyCount.setText(dailyCount);
-
+    public void setBtmContent(String accuracy, float progress, String todayNum, String dailyCount){
         btmTodayNum.setText(todayNum);
         btmDailyCount.setText(dailyCount);
-
-        topAccuracy.setText(accuracy);
         btmAccuracy.setText(accuracy);
-
         accuracyView.setProgress(progress);
-
     }
+
+//    public void setTopContent(final String todayNum, final String dailyCount){
+//        topIsCompletedTv.setText(studyDayCount);
+//    }
 
     public void changeContent(final String accuracy,final String todayNum, final String dailyCount){
         switch (status){
             case BOTTOM:
-                changeAnimator(accuracy,todayNum,dailyCount,btmAccuracy,btmTodayNum,btmDailyCount);
+                changeBtmAnimator(accuracy,todayNum,dailyCount,btmAccuracy,btmTodayNum,btmDailyCount);
                 break;
             case TOP:
-                changeAnimator(accuracy,todayNum,dailyCount,topAccuracy,topTodayNum,topDailyCount);
+                changeTopAnimator(todayNum,dailyCount, topIsCompletedTv);
                 break;
             default:
                 break;
         }
     }
 
-    private void changeAnimator(final String accuracy,final String todayNum,
-                                final String dailyCount, final TextView accuracyTv,
-                                final TextView todayNumTv, final TextView dailyCountTv){
+    private void changeTopAnimator(final String todayNum, final String dailyCount,
+                                   final TextView topIsCompletedTv){
+        AnimatorSet set = new AnimatorSet();
+        set.playTogether(
+                ObjectAnimator.ofFloat(topIsCompletedTv,"scaleX",1f,0.8f),
+                ObjectAnimator.ofFloat(topIsCompletedTv,"scaleY",1f,0.8f),
+                ObjectAnimator.ofFloat(topIsCompletedTv,"alpha",1f,0f)
+        );
+        set.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                int todayNumInt = Integer.valueOf(todayNum);
+                int dailyCountInt = Integer.valueOf(dailyCount);
+                if (todayNumInt < dailyCountInt){
+                    topIsCompletedTv.setText("今日任务未完成，再接再厉！");
+                    topIsCompletedTv.setTextColor(context.getResources().getColor(R.color.color_daily_count_uncompleted));
+                }else{
+                    topIsCompletedTv.setText("恭喜您！今日任务已经完成");
+                    topIsCompletedTv.setTextColor(context.getResources().getColor(R.color.color_daily_count_completed));
+                }
+                //setTopContent(studyDayCount);
+                AnimatorSet set_1 = new AnimatorSet();
+                set_1.playTogether(
+                        ObjectAnimator.ofFloat(topIsCompletedTv,"scaleX",0.8f,1f),
+                        ObjectAnimator.ofFloat(topIsCompletedTv,"scaleY",0.8f,1f),
+                        ObjectAnimator.ofFloat(topIsCompletedTv,"alpha",0f,1f)
+                );
+                set_1.setDuration(200).start();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animator) {
+
+            }
+        });
+        set.setDuration(200).start();
+    }
+
+    private void changeBtmAnimator(final String accuracy, final String todayNum,
+                                   final String dailyCount, final TextView accuracyTv,
+                                   final TextView todayNumTv, final TextView dailyCountTv){
         AnimatorSet set = new AnimatorSet();
         set.playTogether(
                 ObjectAnimator.ofFloat(accuracyTv,"scaleX",1f,0.8f),
@@ -144,7 +183,7 @@ public class ScheduleInfoView extends RelativeLayout {
                 accuracyTv.setText(accuracy);
                 todayNumTv.setText(todayNum);
                 dailyCountTv.setText(dailyCount);
-                setContent(accuracy,progress,todayNum,dailyCount);
+                setBtmContent(accuracy,progress,todayNum,dailyCount);
                 AnimatorSet set_1 = new AnimatorSet();
                 set_1.playTogether(
                         ObjectAnimator.ofFloat(accuracyTv,"scaleX",0.8f,1f),

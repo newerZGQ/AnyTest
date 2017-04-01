@@ -283,7 +283,7 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
                 //设置已经学习过了这个问题 //重置该位置的myAnswer
                 if (currentMode == ALLQUESTIONMODE){
 //                    if (isNeedAnswer()) {
-//                        currentAllMyAnswer.get(position).setContent("");
+//                        currentAllMyAnswer.get(position).setBtmContent("");
 //                    }
                     realm.executeTransaction(new Realm.Transaction() {
                         @Override
@@ -293,7 +293,7 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
                     });
                 }else{
 //                    if (isNeedAnswer()) {
-//                        currentStarMyAnswer.get(position).setContent("");
+//                        currentStarMyAnswer.get(position).setBtmContent("");
 //                    }
                     realm.executeTransaction(new Realm.Transaction() {
                         @Override
