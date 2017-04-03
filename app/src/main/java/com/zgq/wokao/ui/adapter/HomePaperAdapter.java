@@ -106,13 +106,6 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
         if (info.getTitle() != null) {
             holder1.paperName.setText(info.getTitle());
         }
-        if (info.getCreateDate() != null && !info.getCreateDate().equals("")){
-            try {
-                holder1.createDate.setText(DateUtil.getYYYY_MM_DD(info.getCreateDate()));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
 
         //recyclerView item长按事件
         holder1.item.setOnLongClickListener(new View.OnLongClickListener() {
@@ -162,8 +155,6 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
             frontLayout.setOnClickListener(this);
             backLayout = (RelativeLayout) itemView.findViewById(R.id.back_layout);
             paperName = (TextView) itemView.findViewById(R.id.paper_name);
-            createDate = (TextView) itemView.findViewById(R.id.create_date);
-            //addSchedule = (Button) itemView.findViewById(R.id.add_schedule);
         }
 
         public void bind(int pos){

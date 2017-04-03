@@ -68,6 +68,9 @@
 
     //papersfragment
     <color name="color_paperitem_parent_yellow">#DACE2B</color>
+    <color name="color_paperitem_title_text">#e5ffffff</color>
+    <color name="color_paperitem_qsttype_text">#9bffffff</color>
+    <color name="color_paperitem_qsttype_back">#3fffffff</color>
 
 
     //homeactivity
