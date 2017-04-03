@@ -150,7 +150,7 @@ public class HomeActivity extends BaseActivity implements
     public void goQuestionsList(String paperId) {
         Bundle bundle = new Bundle();
         bundle.putString("paperId",paperId);
-        openActivity(PaperInfoActivity.class,bundle);
+//        openActivity(PaperInfoActivity.class,bundle);
     }
 
     @Override

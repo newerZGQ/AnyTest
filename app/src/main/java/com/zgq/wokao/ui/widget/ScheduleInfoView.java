@@ -92,10 +92,6 @@ public class ScheduleInfoView extends RelativeLayout {
         accuracyView.setProgress(progress);
     }
 
-//    public void setTopContent(final String todayNum, final String dailyCount){
-//        topIsCompletedTv.setText(studyDayCount);
-//    }
-
     public void changeContent(final String accuracy,final String todayNum, final String dailyCount){
         switch (status){
             case BOTTOM:

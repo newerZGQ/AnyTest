@@ -487,11 +487,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             holder1.item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent();
-                    intent.setClass(MainActivity.this, PaperInfoActivity.class);
-                    intent.putExtra("paperTitle", info.getTitle());
-                    intent.putExtra("paperAuthor", info.getAuthor());
-                    startActivity(intent);
+//                    Intent intent = new Intent();
+//                    intent.setClass(MainActivity.this, PaperInfoActivity.class);
+//                    intent.putExtra("paperTitle", info.getTitle());
+//                    intent.putExtra("paperAuthor", info.getAuthor());
+//                    startActivity(intent);
                 }
             });
             //recyclerView item长按事件

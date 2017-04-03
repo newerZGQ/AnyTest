@@ -85,7 +85,6 @@ public class DataTxt2XmlParser {
             fileWriter.write("<"+examPaperNode+">"+"\n");
 
             while ((line = br.readLine()) != null) {
-                Log.d("----------->>", line);
                 if (count > 10) return;
                 if (!line.contains("%%") && !line.contains("&&")) {
                     count++;

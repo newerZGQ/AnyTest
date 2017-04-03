@@ -23,21 +23,19 @@ public class PapersPresenter implements IPapersPresenter {
 
     public PapersPresenter(IPapersView papersView) {
         this.papersView = papersView;
-
+        getPaperInfos(false);
     }
 
     public ArrayList<IPaperInfo> getPaperInfos(boolean needUpdate) {
         if (needUpdate || paperInfos == null || paperInfos.size() == 0){
-            Log.d("----->>",TAG+" getpaperinfos in");
             paperInfos = (ArrayList<IPaperInfo>) paperAction.getAllPaperInfo();
-            Log.d("----->>",TAG+" paperinfo size"+paperInfos.size());
         }
         return paperInfos;
     }
 
     @Override
     public void setPaperList() {
-        papersView.setPaperList(getPaperInfos(false));
+        papersView.setPaperList(paperInfos);
     }
 
     @Override

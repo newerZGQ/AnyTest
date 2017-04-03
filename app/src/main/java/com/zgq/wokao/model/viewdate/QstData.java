@@ -2,7 +2,6 @@ package com.zgq.wokao.model.viewdate;
 
 import android.util.Log;
 
-import com.zgq.wokao.Util.LogUtil;
 import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.paper.info.IPaperInfo;
 import com.zgq.wokao.model.paper.question.IQuestion;
@@ -119,7 +118,6 @@ public class QstData implements ViewData{
             }
 
             Collections.sort(questions,new SortQstByAccuracy());
-            Log.d(LogUtil.PREFIX+TAG,"----->>" + paperInfo.getId());
             data.setPaperId(paperInfo.getId());
             data.setStudyNum(studyCount);
             data.setStarCount(starCount);
