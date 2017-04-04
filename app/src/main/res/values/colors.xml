@@ -66,6 +66,9 @@
     <color name="color_4">#D81B60</color>
     <color name="color_5">#880E4F</color>
 
+    //papersfragment
+    <color name="color_paperitem_parent_yellow">#DACE2B</color>
+
 
     //homeactivity
     <color name="color_home_activity_background">#031027</color>
