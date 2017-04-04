@@ -5,11 +5,11 @@
     tools:context="com.zgq.wokao.ui.fragment.impl.PapersFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <android.support.v7.widget.RecyclerView
+    <com.marshalchen.ultimaterecyclerview.UltimateRecyclerView
         android:id="@+id/paper_list"
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </android.support.v7.widget.RecyclerView>
+    </com.marshalchen.ultimaterecyclerview.UltimateRecyclerView>
 
 </FrameLayout>

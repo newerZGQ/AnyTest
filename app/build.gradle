@@ -5,7 +5,7 @@ apply plugin: 'android-apt'
 //apply plugin: 'com.neenbedankt.android-apt'
 
 android {
-    compileSdkVersion 23
+    compileSdkVersion 25
     buildToolsVersion "25.0.0"
 
     defaultConfig {
@@ -46,6 +46,7 @@ android {
 }
 
 
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     //Retrofit2所需要的包
@@ -63,14 +64,14 @@ dependencies {
     //    apt 'com.google.dagger:dagger-compiler:2.4'
     //    compile 'org.glassfish:javax.annotation:10.0-b28'
     //tabtrip
-    compile 'com.android.support:appcompat-v7:23.4.0'
-    compile 'com.android.support:support-v4:23.4.0'
-    compile 'com.android.support:recyclerview-v7:23.4.0'
+    compile 'com.android.support:appcompat-v7:25.0.1'
+    compile 'com.android.support:support-v4:25.0.1'
+    compile 'com.android.support:recyclerview-v7:25.0.1'
     compile 'cn.qqtheme.framework:FilePicker:1.1.3'
     compile 'com.yqritc:recyclerview-flexibledivider:1.2.9'
     compile 'com.jakewharton:butterknife:8.1.0'
     compile 'jp.wasabeef:recyclerview-animators:1.3.0'
-    compile 'com.android.support:design:23.4.0'
+    compile 'com.android.support:design:25.0.1'
     compile 'com.github.frank-zhu:pullzoomview:1.0.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.nbsp:library:1.09'
@@ -85,5 +86,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.loopeer.library:cardstack:1.0.2'
     apt 'com.jakewharton:butterknife-compiler:8.1.0'
+    //ultimaterecyclerview
+    compile 'com.marshalchen.ultimaterecyclerview:library:0.7.0'
     compile project(':lib')
 }

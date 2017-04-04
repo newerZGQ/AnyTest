@@ -45,4 +45,9 @@ public class PapersPresenter implements IPapersPresenter {
         getPaperInfos(true);
         papersView.notifyDataChanged();
     }
+
+    @Override
+    public void initPapersList() {
+        papersView.initPaperList(paperInfos);
+    }
 }
