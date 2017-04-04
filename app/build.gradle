@@ -94,5 +94,5 @@ dependencies {
     apt 'com.jakewharton:butterknife-compiler:8.1.0'
     //ultimaterecyclerview
     compile 'com.marshalchen.ultimaterecyclerview:library:0.7.0'
-    compile project(':lib')
+    compile project(':stackoverview')
 }
