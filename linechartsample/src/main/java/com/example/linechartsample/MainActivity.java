@@ -23,12 +23,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         chartView = (ChartView) findViewById(R.id.line_chart);
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 9; i++) {
+            if (i == 0 || i == 1){
+                xValue.add((i + 1) + "月");
+                value.put((i + 1) + "月", (int) (181));//60--240
+                continue;
+            }
+            if (i == 7 || i == 8){
+                xValue.add((i + 1) + "月");
+                value.put((i + 1) + "月", (int) (160));//60--240
+                continue;
+            }
             xValue.add((i + 1) + "月");
             value.put((i + 1) + "月", (int) (Math.random() * 181 + 60));//60--240
         }
 
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 9; i++) {
             yValue.add(i * 60);
         }
         chartView.setValue(value, xValue, yValue);

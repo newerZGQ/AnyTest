@@ -10,7 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:bgcolor="#FF031027"
-        app:linecolor="#d4ffffff"
-        app:interval="55dp">
+        app:linecolor="#d4ffffff">
     </com.zgq.linechart.ChartView>
 </RelativeLayout>

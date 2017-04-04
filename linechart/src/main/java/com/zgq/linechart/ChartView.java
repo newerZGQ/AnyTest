@@ -31,8 +31,12 @@ import com.zgq.linechart.R;
 /**
  * 自定义折线图
  * Created by xiaoyunfei on 16/11/29.
+ * 一共需要九组数据，其中第一个和第九个不用来展示，只是为了好看，并且第0个与第一个和第八个与第九个间隔为space，
+ * 为了显示好看，建议第0个和最后一个小一点
  */
 public class ChartView extends View {
+    //一共七组数据，将屏幕x方向均分为7部分，每部分宽度为space，其中最左边和最右边各为二分之一space
+    private int space;
     //xy坐标轴颜色
     private int xylinecolor = 0xffe2e2e2;
     //xy坐标轴宽度
@@ -146,9 +150,6 @@ public class ChartView extends View {
             } else if (attr == R.styleable.chartView_linecolor) {
                 linecolor = array.getColor(attr, linecolor);
 
-            } else if (attr == R.styleable.chartView_interval) {
-                interval = (int) array.getDimension(attr, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, interval, getResources().getDisplayMetrics()));
-
             } else if (attr == R.styleable.chartView_bgcolor) {
                 bgcolor = array.getColor(attr, bgcolor);
 
@@ -167,6 +168,10 @@ public class ChartView extends View {
             //这里需要确定几个基本点，只有确定了xy轴原点坐标，第一个点的X坐标值及其最大最小值
             width = getWidth();
             height = getHeight();
+            //计算space
+            space = width/7;
+            //计算interval
+            interval = width/7;
             //Y轴文本最大宽度
             float textYWdith = getTextBounds("000", xyTextPaint).width();
             for (int i = 0; i < yValue.size(); i++) {//求取y轴文本最大的宽度
@@ -191,7 +196,8 @@ public class ChartView extends View {
             yOri = (int) (height - dp2 - textXHeight - dp3 - xylinewidth);//dp3是x轴文本距离底边，dp2是x轴文本距离x轴的距离
             //xInit = interval + xOri;
             xInit = xOri;
-            minXInit = width - (width - xOri) * 0.1f - interval * (xValue.size() - 1);//减去0.1f是因为最后一个X周刻度距离右边的长度为X轴可见长度的10%
+//            minXInit = width - (width - xOri) * 0.1f - interval * (xValue.size() - 1);//减去0.1f是因为最后一个X周刻度距离右边的长度为X轴可见长度的10%
+            minXInit = width - interval * (xValue.size() - 1);
             maxXInit = xInit;
         }
         super.onLayout(changed, left, top, right, bottom);
@@ -241,8 +247,11 @@ public class ChartView extends View {
         float dp7 = dpToPx(7);
         //绘制节点对应的原点
         for (int i = 0; i < xValue.size(); i++) {
-            float x = xInit + interval * i;
+            float x = xInit + space/2 + interval * (i-1);
             float y = yOri - yOri * (1 - 0.1f) * value.get(xValue.get(i)) / yValue.get(yValue.size() - 1);
+            if (i == 8){
+                continue;
+            }
             //绘制选中的点
             if (i == selectIndex - 1) {
                 linePaint.setStyle(Paint.Style.FILL);
@@ -312,7 +321,19 @@ public class ChartView extends View {
         float y = yOri - yOri * (1 - 0.1f) * value.get(xValue.get(0)) / yValue.get(yValue.size() - 1);
         path.moveTo(x, y);
         for (int i = 1; i < xValue.size(); i++) {
-            x = xInit + interval * i;
+            if (i == 1){
+                x = xInit + space/2;
+                y = yOri - yOri * (1 - 0.1f) * value.get(xValue.get(i)) / yValue.get(yValue.size() - 1);
+                path.lineTo(x, y);
+                continue;
+            }
+            if (i == 8){
+                x = xInit + space + interval * (i-2);
+                y = yOri - yOri * (1 - 0.1f) * value.get(xValue.get(i)) / yValue.get(yValue.size() - 1);
+                path.lineTo(x, y);
+                continue;
+            }
+            x = xInit + space/2 + interval * (i-1);
             y = yOri - yOri * (1 - 0.1f) * value.get(xValue.get(i)) / yValue.get(yValue.size() - 1);
             path.lineTo(x, y);
         }
@@ -387,34 +408,34 @@ public class ChartView extends View {
         if (isScrolling)
             return super.onTouchEvent(event);
         this.getParent().requestDisallowInterceptTouchEvent(true);//当该view获得点击事件，就请求父控件不拦截事件
-        obtainVelocityTracker(event);
+//        obtainVelocityTracker(event);
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 startX = event.getX();
                 break;
             case MotionEvent.ACTION_MOVE:
-                if (interval * xValue.size() > width - xOri) {//当期的宽度不足以呈现全部数据
-                    float dis = event.getX() - startX;
-                    startX = event.getX();
-                    if (xInit + dis < minXInit) {
-                        xInit = minXInit;
-                    } else if (xInit + dis > maxXInit) {
-                        xInit = maxXInit;
-                    } else {
-                        xInit = xInit + dis;
-                    }
-                    invalidate();
-                }
+//                if (interval * xValue.size() > width - xOri) {//当期的宽度不足以呈现全部数据
+//                    float dis = event.getX() - startX;
+//                    startX = event.getX();
+//                    if (xInit + dis < minXInit) {
+//                        xInit = minXInit;
+//                    } else if (xInit + dis > maxXInit) {
+//                        xInit = maxXInit;
+//                    } else {
+//                        xInit = xInit + dis;
+//                    }
+//                    invalidate();
+//                }
                 break;
             case MotionEvent.ACTION_UP:
                 clickAction(event);
-                scrollAfterActionUp();
+//                scrollAfterActionUp();
                 this.getParent().requestDisallowInterceptTouchEvent(false);
-                recycleVelocityTracker();
+//                recycleVelocityTracker();
                 break;
             case MotionEvent.ACTION_CANCEL:
                 this.getParent().requestDisallowInterceptTouchEvent(false);
-                recycleVelocityTracker();
+//                recycleVelocityTracker();
                 break;
         }
         return true;
@@ -503,7 +524,7 @@ public class ChartView extends View {
         float eventY = event.getY();
         for (int i = 0; i < xValue.size(); i++) {
             //节点
-            float x = xInit + interval * i;
+            float x = xInit + space/2 + interval * (i-1);
             float y = yOri - yOri * (1 - 0.1f) * value.get(xValue.get(i)) / yValue.get(yValue.size() - 1);
             if (eventX >= x - dp8 && eventX <= x + dp8 &&
                     eventY >= y - dp8 && eventY <= y + dp8 && selectIndex != i + 1) {//每个节点周围8dp都是可点击区域
