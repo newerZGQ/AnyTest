@@ -1,10 +1,12 @@
 package com.zgq.wokao.model.paper.info;
 
+import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.schedule.Schedule;
 import com.zgq.wokao.model.search.Searchable;
 
 import java.io.Serializable;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
 
 /**
@@ -19,6 +21,8 @@ public class ExamPaperInfo extends RealmObject implements IPaperInfo, Serializab
     private boolean stared = false;
     private boolean parseRight;
     private int studyCount;
+
+    private RealmList<QuestionType> questionTypes = new RealmList<>();
     //是否加入日程学习
     private boolean isInSchedule;
     private Schedule schedule = new Schedule();
@@ -102,6 +106,20 @@ public class ExamPaperInfo extends RealmObject implements IPaperInfo, Serializab
     public boolean isInSchedule() {
         return isInSchedule;
     }
+
+    @Override
+    public RealmList<QuestionType> getQuestionTypes() {
+        return questionTypes;
+    }
+
+    @Override
+    public void addQuestionType(QuestionType type) {
+        for (QuestionType typeTmp: questionTypes){
+            if (typeTmp.getIndex() == type.getIndex()) return;
+        }
+        questionTypes.add(type);
+    }
+
     @Override
     public void setInSchedule(boolean inSchedule) {
         isInSchedule = inSchedule;

@@ -103,15 +103,11 @@ public class ParserAction implements IParserAction {
     public class ParseBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.d("---->>","receiver");
             String action = intent.getAction();
             String result = intent.getStringExtra("parse_result");
+            String paperId = intent.getStringExtra("paperId");
             if (action != null && result != null && action.equals("parse_action") && result.equals("success")){
-                Log.d("---->>","receiver in");
-                if (LoginAction.getInstance().isFirstTimeLogin()){
-                    PaperAction.getInstance().setAllPaperInSche();
-                }
-                String paperId = intent.getStringExtra("paperId");
+                PaperAction.getInstance().addToSchedule(paperId);
                 listener.onParseSuccess(paperId);
             }else{
                 listener.onParseError("parse error");

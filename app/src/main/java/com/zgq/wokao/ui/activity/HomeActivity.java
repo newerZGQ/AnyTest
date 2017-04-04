@@ -71,7 +71,7 @@ public class HomeActivity extends BaseActivity implements
         homePresenter.showScheduleFragment();
         if (LoginAction.getInstance().isFirstTimeLogin()) {
             homePresenter.parseFromFile(FileUtil.getOrInitAppStoragePath()+"/default_1.txt");
-            LoginAction.getInstance().setFirstTimeLoginFalse();
+            //LoginAction.getInstance().setFirstTimeLoginFalse();
         }
     }
 

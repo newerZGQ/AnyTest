@@ -1,7 +1,10 @@
 package com.zgq.wokao.model.paper.info;
 
+import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.schedule.ISchedule;
 import com.zgq.wokao.model.schedule.Schedule;
+
+import io.realm.RealmList;
 
 /**
  * Created by zgq on 2017/2/28.
@@ -41,5 +44,9 @@ public interface IPaperInfo {
     public void setStudyCount(int studyCount);
 
     public boolean isInSchedule();
+
+    public RealmList<QuestionType> getQuestionTypes();
+
+    public void addQuestionType(QuestionType type);
 
 }

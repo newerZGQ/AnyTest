@@ -5,6 +5,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -12,11 +14,15 @@ import com.zgq.wokao.R;
 import com.zgq.wokao.Util.ContextUtil;
 import com.zgq.wokao.Util.DateUtil;
 import com.zgq.wokao.Util.RandomUtil;
+import com.zgq.wokao.action.paper.impl.PaperAction;
+import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.paper.info.IPaperInfo;
 import com.zgq.wokao.ui.widget.exprecyclerview.ExpandableViewHoldersUtil;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+
+import io.realm.RealmList;
 
 /**
  * Created by zgq on 2017/2/24.
@@ -28,9 +34,8 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
     private ArrayList<IPaperInfo> paperInfos = null;
 
     private PaperAdapterListener listener;
-    private int[] backgrounds = new int[4];
-    private Drawable[] backgrounds_1 = new Drawable[4];
-    private int lastColor = 0;
+    private int lastBackground = 0;
+    private PaperAction paperAction = PaperAction.getInstance();
 
     ExpandableViewHoldersUtil.KeepOneH<MyViewHolder> keepOne = new ExpandableViewHoldersUtil.KeepOneH<MyViewHolder>();
 
@@ -39,43 +44,24 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
         this.paperInfos = paperInfos;
     }
 
-    public HomePaperAdapter setData(ArrayList<IPaperInfo> paperInfos){
+    public HomePaperAdapter setData(ArrayList<IPaperInfo> paperInfos) {
         this.paperInfos = paperInfos;
-        setBackgrounds();
         return this;
     }
 
-    private void setBackgrounds(){
-        backgrounds[0] = R.drawable.rectangle_blue;
-        backgrounds[1] = R.drawable.rectangle_red;
-        backgrounds[2] = R.drawable.rectangle_yellow;
-        backgrounds[3] = R.drawable.rectangle_gree;
-
-        backgrounds_1[0] = context.getResources().getDrawable(R.drawable.rectangle_blue);
-        backgrounds_1[1] = context.getResources().getDrawable(R.drawable.rectangle_red);
-        backgrounds_1[2] = context.getResources().getDrawable(R.drawable.rectangle_yellow);
-        backgrounds_1[3] = context.getResources().getDrawable(R.drawable.rectangle_gree);
-    }
-
-    private int getNewBackgroundId(){
-        int nextBack = RandomUtil.getRandom(0,4);
-        if (nextBack == lastColor){
-            if (nextBack == 3){
-                lastColor = 0;
-                return 0;
-            }
-            lastColor = ++nextBack;
-            return nextBack;
+    private int getNewBackgroundId() {
+        lastBackground++;
+        if (lastBackground == 4){
+            lastBackground = 0;
         }
-        lastColor = nextBack;
-        return nextBack;
+        return lastBackground;
     }
 
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        if (paperInfos == null || paperInfos.size() == 0 ) return;
+        if (paperInfos == null || paperInfos.size() == 0) return;
 
         final int positionTmp = position;
 
@@ -83,7 +69,7 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
         final IPaperInfo info = paperInfos.get(position);
         //front background
         int backIndex = getNewBackgroundId();
-        switch (backIndex){
+        switch (backIndex) {
             case 0:
                 ((MyViewHolder) holder).frontLayout.setBackground(context.getResources()
                         .getDrawable(R.drawable.rectangle_blue));
@@ -107,15 +93,40 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
             holder1.paperName.setText(info.getTitle());
         }
 
+        //设置问题类型
+        RealmList<QuestionType> qstList = paperInfos.get(position).getQuestionTypes();
+        LinearLayout qstTypes = ((MyViewHolder) holder).qstTypes;
+        for (int i = 0; i< qstTypes.getChildCount(); i++){
+            if (i < qstList.size()) {
+                qstTypes.getChildAt(i).setVisibility(View.VISIBLE);
+                ((TextView) qstTypes.getChildAt(i)).setText(qstList.get(i).getName());
+            }else{
+                qstTypes.getChildAt(i).setVisibility(View.INVISIBLE);
+            }
+        }
+
+        //根据学习状态设置View
+        if (paperInfos.get(position).isInSchedule()){
+            ((MyViewHolder) holder).statusIcon.setVisibility(View.VISIBLE);
+            ((MyViewHolder) holder).exitBtn.setVisibility(View.VISIBLE);
+            ((MyViewHolder) holder).studyStatus.setVisibility(View.VISIBLE);
+            ((MyViewHolder) holder).scheduleOpt.setVisibility(View.GONE);
+        }else{
+            ((MyViewHolder) holder).statusIcon.setVisibility(View.INVISIBLE);
+            ((MyViewHolder) holder).exitBtn.setVisibility(View.GONE);
+            ((MyViewHolder) holder).studyStatus.setVisibility(View.INVISIBLE);
+            ((MyViewHolder) holder).scheduleOpt.setVisibility(View.VISIBLE);
+        }
+
         //recyclerView item长按事件
         holder1.item.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                listener.onItemLongClick(positionTmp,paperInfos.get(positionTmp));
+                listener.onItemLongClick(positionTmp, paperInfos.get(positionTmp));
                 return true;
             }
         });
-
+        //item backlayout 动画
         ((MyViewHolder) holder).bind(position);
 
     }
@@ -133,55 +144,83 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.fragment_papers_recyclerview_item, parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.fragment_papers_recyclerview_item, parent, false);
         return new MyViewHolder(view);
+    }
+
+    private RecyclerView.Adapter getMyAdapter(){
+        return this;
     }
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, ExpandableViewHoldersUtil.Expandable {
-
-        public boolean isExpanded = false;
+        public Button exitBtn;
+        public LinearLayout scheduleOpt;
+        public Button startBtn;
+        public Button deleteBtn;
+        public LinearLayout qstTypes;
+        public TextView studyStatus;
+        public View statusIcon;
         public TextView paperName;
-        public TextView createDate;
         public RelativeLayout item;
         public RelativeLayout frontLayout;
         public RelativeLayout backLayout;
-        //public Button addSchedule;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             item = (RelativeLayout) itemView.findViewById(R.id.list_item);
+            exitBtn = (Button) itemView.findViewById(R.id.exit_schedule_btn);
+            scheduleOpt = (LinearLayout) itemView.findViewById(R.id.schedule_opt_layout);
+            startBtn = (Button) itemView.findViewById(R.id.start_schedule_btn);
+            deleteBtn = (Button) itemView.findViewById(R.id.delete_paper_btn);
+            qstTypes = (LinearLayout) itemView.findViewById(R.id.qst_types);
+            studyStatus = (TextView) itemView.findViewById(R.id.study_status);
+            statusIcon = itemView.findViewById(R.id.schedule_status_icon);
             frontLayout = (RelativeLayout) itemView.findViewById(R.id.front_layout);
-            frontLayout.setOnClickListener(this);
             backLayout = (RelativeLayout) itemView.findViewById(R.id.back_layout);
             paperName = (TextView) itemView.findViewById(R.id.paper_name);
+            frontLayout.setOnClickListener(this);
+            exitBtn.setOnClickListener(this);
+            startBtn.setOnClickListener(this);
+            deleteBtn.setOnClickListener(this);
         }
 
-        public void bind(int pos){
-            keepOne.bind(this,pos);
+        public void bind(int pos) {
+            keepOne.bind(this, pos);
         }
 
         @Override
         public void onClick(View view) {
-            keepOne.toggle(this);
+            int position = this.getLayoutPosition();
+            switch (view.getId()) {
+                case R.id.front_layout:
+                    keepOne.toggle(this);
+                    break;
+                case R.id.exit_schedule_btn:
+                    paperAction.removeFromSchedule(paperInfos.get(position).getId());
+                    paperInfos = (ArrayList<IPaperInfo>) paperAction.getAllPaperInfo();
+                    getMyAdapter().notifyItemChanged(position);
+                    //notifyDataSetChanged();
+                    break;
+                case R.id.delete_paper_btn:
+                    break;
+                case R.id.start_schedule_btn:
+                    paperAction.addToSchedule(paperInfos.get(position).getId());
+                    paperInfos = (ArrayList<IPaperInfo>) paperAction.getAllPaperInfo();
+                    getMyAdapter().notifyItemChanged(position);
+                    break;
+            }
         }
 
         @Override
         public View getExpandView() {
             return backLayout;
         }
-
-        public boolean isExpanded() {
-            return isExpanded;
-        }
-
-        public void setExpanded(boolean expanded) {
-            isExpanded = expanded;
-        }
     }
 
-    public interface PaperAdapterListener{
+    public interface PaperAdapterListener {
         public void onItemClick(int position, IPaperInfo info);
+
         public void onItemLongClick(int position, IPaperInfo info);
     }
 

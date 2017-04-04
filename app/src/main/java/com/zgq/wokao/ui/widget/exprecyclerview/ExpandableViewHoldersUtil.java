@@ -18,7 +18,7 @@ import com.zgq.wokao.ui.adapter.HomePaperAdapter;
 public class ExpandableViewHoldersUtil {
     private static final String TAG = ExpandableViewHoldersUtil.class.getSimpleName();
 
-    private static final int slipDistance = 200;
+    private static final int slipDistance = 180;
     private static final float itemHeightInDp = 120f;
     private static final int duration = 200;
 
@@ -34,34 +34,12 @@ public class ExpandableViewHoldersUtil {
                     holder.itemView.setLayoutParams(lp);
                 }
             });
-            animator.addListener(new Animator.AnimatorListener() {
-                @Override
-                public void onAnimationStart(Animator animator) {
-
-                }
-
-                @Override
-                public void onAnimationEnd(Animator animator) {
-                    holder.setExpanded(true);
-                }
-
-                @Override
-                public void onAnimationCancel(Animator animator) {
-
-                }
-
-                @Override
-                public void onAnimationRepeat(Animator animator) {
-
-                }
-            });
             animator.start();
         } else {
             expandView.setTranslationY(slipDistance);
             final ViewGroup.LayoutParams lp = holder.itemView.getLayoutParams();
             lp.height = slipDistance + DensityUtil.dip2px(ContextUtil.getContext(), itemHeightInDp);
             holder.itemView.setLayoutParams(lp);
-            holder.setExpanded(true);
         }
     }
 
@@ -77,34 +55,12 @@ public class ExpandableViewHoldersUtil {
                     expandView.setTranslationY(Float.valueOf("" + valueAnimator.getAnimatedValue()));
                 }
             });
-            animator.addListener(new Animator.AnimatorListener() {
-                @Override
-                public void onAnimationStart(Animator animator) {
-
-                }
-
-                @Override
-                public void onAnimationEnd(Animator animator) {
-                    holder.setExpanded(false);
-                }
-
-                @Override
-                public void onAnimationCancel(Animator animator) {
-
-                }
-
-                @Override
-                public void onAnimationRepeat(Animator animator) {
-
-                }
-            });
             animator.start();
         } else {
             expandView.setTranslationY(0f);
             final ViewGroup.LayoutParams lp = holder.itemView.getLayoutParams();
             lp.height = DensityUtil.dip2px(ContextUtil.getContext(), itemHeightInDp);
             holder.itemView.setLayoutParams(lp);
-            holder.setExpanded(false);
         }
     }
 

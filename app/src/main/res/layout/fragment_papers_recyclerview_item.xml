@@ -16,6 +16,7 @@
         android:background="@drawable/rectangle_transparent">
 
         <Button
+            android:id="@+id/exit_schedule_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -28,6 +29,7 @@
             android:textSize="13sp" />
 
         <LinearLayout
+            android:id="@+id/schedule_opt_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -38,7 +40,8 @@
             android:visibility="invisible">
 
             <Button
-                android:layout_width="wrap_content"
+                android:id="@+id/start_schedule_btn"
+                android:layout_width="72dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:background="@color/transparent"
@@ -47,7 +50,8 @@
                 android:textSize="13sp" />
 
             <Button
-                android:layout_width="wrap_content"
+                android:id="@+id/delete_paper_btn"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:background="@color/transparent"
@@ -88,6 +92,7 @@
                 android:textColor="@color/color_paperitem_qsttype_text"
                 android:textSize="12sp"
                 android:gravity="center"
+                android:visibility="invisible"
                 android:layout_width="40dp"
                 android:layout_height="25dp" />
             <TextView
@@ -96,6 +101,7 @@
                 android:textColor="@color/color_paperitem_qsttype_text"
                 android:layout_marginLeft="5dp"
                 android:gravity="center"
+                android:visibility="invisible"
                 android:textSize="12sp"
                 android:layout_width="40dp"
                 android:layout_height="25dp" />
@@ -104,6 +110,7 @@
                 android:background="@drawable/shape_radius_rectange_white_transparent"
                 android:textColor="@color/color_paperitem_qsttype_text"
                 android:gravity="center"
+                android:visibility="invisible"
                 android:layout_marginLeft="5dp"
                 android:textSize="12sp"
                 android:layout_width="40dp"
@@ -113,6 +120,17 @@
                 android:background="@drawable/shape_radius_rectange_white_transparent"
                 android:textColor="@color/color_paperitem_qsttype_text"
                 android:gravity="center"
+                android:visibility="invisible"
+                android:layout_marginLeft="5dp"
+                android:textSize="12sp"
+                android:layout_width="40dp"
+                android:layout_height="25dp" />
+            <TextView
+                android:text="简答"
+                android:background="@drawable/shape_radius_rectange_white_transparent"
+                android:textColor="@color/color_paperitem_qsttype_text"
+                android:gravity="center"
+                android:visibility="invisible"
                 android:layout_marginLeft="5dp"
                 android:textSize="12sp"
                 android:layout_width="40dp"
@@ -131,6 +149,7 @@
             android:textSize="12sp" />
 
         <View
+            android:id="@+id/schedule_status_icon"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="1dp"

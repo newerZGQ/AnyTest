@@ -19,5 +19,7 @@ public interface IPaperInfoAction {
     public void setTitle(IExamPaper paper,String title);
     public void addToSchedule(IExamPaper paper);
     public void removeFromSchedule(IExamPaper paper);
+    public void addToSchedule(String paperId);
+    public void removeFromSchedule(String paperId);
     public void setLastStudyDate(IExamPaper paper);
 }

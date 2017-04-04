@@ -3,7 +3,9 @@ package com.zgq.wokao.parser;
 import com.zgq.wokao.Util.DateUtil;
 import com.zgq.wokao.Util.UUIDUtil;
 import com.zgq.wokao.exception.ParseException;
+import com.zgq.wokao.model.paper.IExamPaper;
 import com.zgq.wokao.model.paper.NormalIExamPaper;
+import com.zgq.wokao.model.paper.info.IPaperInfo;
 import com.zgq.wokao.model.paper.question.impl.DiscussQuestion;
 import com.zgq.wokao.model.paper.question.impl.FillInQuestion;
 import com.zgq.wokao.model.paper.question.impl.MultChoQuestion;
@@ -83,7 +85,26 @@ public class ParserHelper {
         }
         paper.getPaperInfo().setCreateDate(DateUtil.getCurrentDate());
         paper.getPaperInfo().setId(UUIDUtil.getID());
+        initPaperData(paper);
         return paper;
+    }
+
+    private void initPaperData(IExamPaper paper){
+        //设置当前包含哪些题型
+        IPaperInfo info = paper.getPaperInfo();
+        if (paper.getFillInQuestions().size() != 0)
+            info.addQuestionType(QuestionType.fillin);
+        if (paper.getTfQuestions().size() != 0)
+            info.addQuestionType(QuestionType.tf);
+        if (paper.getSglChoQuestions().size() != 0)
+            info.addQuestionType(QuestionType.sglc);
+        if (paper.getMultChoQuestions().size() != 0)
+            info.addQuestionType(QuestionType.mtlc);
+        if (paper.getDiscussQuestions().size() != 0)
+            info.addQuestionType(QuestionType.disc);
+        //默认加入学习计划
+        paper.getPaperInfo().setInSchedule(true);
+
     }
 
     private <T extends IQuestion> ArrayList<T> parseQuestion(QuestionType type, PaperParser.Topic resource){

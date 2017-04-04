@@ -140,6 +140,18 @@ public class PaperAction extends BaseAction implements IPaperAction,IQuestionAct
     }
 
     @Override
+    public void addToSchedule(String paperId) {
+        IExamPaper paper = queryById(paperId);
+        addToSchedule(paper);
+    }
+
+    @Override
+    public void removeFromSchedule(String paperId) {
+        IExamPaper paper = queryById(paperId);
+        removeFromSchedule(paper);
+    }
+
+    @Override
     public void setLastStudyDate(IExamPaper paper) {
         paperDao.setLastStudyDate(paper);
     }

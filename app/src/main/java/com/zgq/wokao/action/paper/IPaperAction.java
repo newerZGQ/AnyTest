@@ -23,4 +23,6 @@ public interface IPaperAction extends IPaperInfoAction,IPaperSchdlAction{
     public IExamPaper parseAndSave(String filePath) throws FileNotFoundException, ParseException;
     public IExamPaper parseAndSave(InputStream inputStream) throws ParseException;
     public float getTotalAccuracy(IExamPaper paper);
+    // 更新某一个试卷的所有非直接解析出来的数据，包括学习进度，
+//
 }
