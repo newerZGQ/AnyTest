@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gigamole.navigationtabstrip.NavigationTabStrip;
+import com.zgq.linechart.ChartView;
 import com.zgq.wokao.R;
 import com.zgq.wokao.Util.FileUtil;
 import com.zgq.wokao.action.login.LoginAction;
@@ -25,6 +26,9 @@ import com.zgq.wokao.ui.view.IHomeView;
 import com.zgq.wokao.ui.widget.SlideUp;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,6 +60,8 @@ public class HomeActivity extends BaseActivity implements
     NavigationTabStrip tabStrip;
     @BindView(R.id.viewpaper)
     ViewPager viewPager;
+    @BindView(R.id.line_chart)
+    ChartView lineChart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +77,7 @@ public class HomeActivity extends BaseActivity implements
         homePresenter.showScheduleFragment();
         if (LoginAction.getInstance().isFirstTimeLogin()) {
             homePresenter.parseFromFile(FileUtil.getOrInitAppStoragePath()+"/default_1.txt");
-            //LoginAction.getInstance().setFirstTimeLoginFalse();
+            LoginAction.getInstance().setFirstTimeLoginFalse();
         }
     }
 
@@ -80,6 +86,7 @@ public class HomeActivity extends BaseActivity implements
         initViewPager();
         setListener();
         initTabStrip();
+        initLineChart();
     }
 
     private void initTabStrip(){
@@ -128,6 +135,34 @@ public class HomeActivity extends BaseActivity implements
         fragments.add(schedlFragment);
         fragments.add(papersFragment);
         viewPager.setAdapter(new HomeFragmentPagerAdapter(getSupportFragmentManager(),fragments));
+    }
+
+    private void initLineChart(){
+        //x轴坐标对应的数据
+        List<String> xValue = new ArrayList<>();
+        //y轴坐标对应的数据
+        List<Integer> yValue = new ArrayList<>();
+        //折线对应的数据
+        Map<String, Integer> value = new HashMap<>();
+        for (int i = 0; i < 9; i++) {
+            if (i == 0 || i == 1){
+                xValue.add((i + 1) + "月");
+                value.put((i + 1) + "月", (int) (181));//60--240
+                continue;
+            }
+            if (i == 7 || i == 8){
+                xValue.add((i + 1) + "月");
+                value.put((i + 1) + "月", (int) (160));//60--240
+                continue;
+            }
+            xValue.add((i + 1) + "月");
+            value.put((i + 1) + "月", (int) (Math.random() * 181 + 60));//60--240
+        }
+
+        for (int i = 0; i < 9; i++) {
+            yValue.add(i * 60);
+        }
+        lineChart.setValue(value, xValue, yValue);
     }
 
     private void setListener(){
@@ -202,6 +237,15 @@ public class HomeActivity extends BaseActivity implements
                 homePresenter.goSearch();
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (slideUp.isVisible()){
+            slideUp.hide();
+            return;
+        }
+        super.onBackPressed();
     }
 
     public class HomeFragmentPagerAdapter extends FragmentPagerAdapter {

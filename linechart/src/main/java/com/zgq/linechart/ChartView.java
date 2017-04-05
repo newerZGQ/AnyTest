@@ -6,15 +6,18 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.Shader;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
@@ -40,7 +43,7 @@ public class ChartView extends View {
     //xy坐标轴颜色
     private int xylinecolor = 0xffe2e2e2;
     //xy坐标轴宽度
-    private int xylinewidth = dpToPx(1);
+    private int xylinewidth = dpToPx(2);
     //xy坐标轴文字颜色
     private int xytextcolor = 0xff7e7e7e;
     //xy坐标轴文字大小
@@ -78,11 +81,13 @@ public class ChartView extends View {
     //折线对应的数据
     private Map<String, Integer> value = new HashMap<>();
     //点击的点对应的X轴的第几个点，默认1
-    private int selectIndex = 1;
+    private int[] selectIndex = new int[2];
     //X轴刻度文本对应的最大矩形，为了选中时，在x轴文本画的框框大小一致
     private Rect xValueRect;
     //速度检测器
     private VelocityTracker velocityTracker;
+
+    private Context context;
 
     public ChartView(Context context) {
         this(context, null);
@@ -95,6 +100,7 @@ public class ChartView extends View {
     public ChartView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs, defStyleAttr);
+        this.context = context;
         initPaint();
     }
 
@@ -116,11 +122,15 @@ public class ChartView extends View {
         xyTextPaint.setStyle(Paint.Style.STROKE);
 
         linePaint = new Paint();
+        initLinePaint();
+    }
+
+    private void initLinePaint(){
         linePaint.setAntiAlias(true);
         linePaint.setStrokeWidth(xylinewidth);
         linePaint.setStrokeCap(Paint.Cap.ROUND);
         linePaint.setColor(linecolor);
-        linePaint.setStyle(Paint.Style.STROKE);
+        linePaint.setStyle(Paint.Style.FILL);
     }
 
     /**
@@ -193,7 +203,7 @@ public class ChartView extends View {
                 if (rect.width() > xValueRect.width())
                     xValueRect = rect;
             }
-            yOri = (int) (height - dp2 - textXHeight - dp3 - xylinewidth);//dp3是x轴文本距离底边，dp2是x轴文本距离x轴的距离
+            yOri = (int) (height - dp2 - textXHeight - dp3 - xylinewidth-dpToPx(140));//dp3是x轴文本距离底边，dp2是x轴文本距离x轴的距离
             //xInit = interval + xOri;
             xInit = xOri;
 //            minXInit = width - (width - xOri) * 0.1f - interval * (xValue.size() - 1);//减去0.1f是因为最后一个X周刻度距离右边的长度为X轴可见长度的10%
@@ -242,6 +252,7 @@ public class ChartView extends View {
      * @param canvas
      */
     private void drawBrokenPoint(Canvas canvas) {
+        linePaint.reset();
         float dp2 = dpToPx(2);
         float dp4 = dpToPx(4);
         float dp7 = dpToPx(7);
@@ -253,7 +264,7 @@ public class ChartView extends View {
                 continue;
             }
             //绘制选中的点
-            if (i == selectIndex - 1) {
+            if ((i == (selectIndex[0] - 1)) || (i==(selectIndex[1] -1))) {
                 linePaint.setStyle(Paint.Style.FILL);
                 linePaint.setColor(0xffd0f3f2);
                 canvas.drawCircle(x, y, dp7, linePaint);
@@ -313,31 +324,51 @@ public class ChartView extends View {
      * @param canvas
      */
     private void drawBrokenLine(Canvas canvas) {
+        initLinePaint();
         linePaint.setStyle(Paint.Style.STROKE);
         linePaint.setColor(linecolor);
         //绘制折线
-        Path path = new Path();
+        Path backPath = new Path();
+        Path linePath = new Path();
         float x = xInit + interval * 0;
         float y = yOri - yOri * (1 - 0.1f) * value.get(xValue.get(0)) / yValue.get(yValue.size() - 1);
-        path.moveTo(x, y);
+        backPath.moveTo(x,y);
+        linePath.moveTo(x,y);
         for (int i = 1; i < xValue.size(); i++) {
             if (i == 1){
                 x = xInit + space/2;
                 y = yOri - yOri * (1 - 0.1f) * value.get(xValue.get(i)) / yValue.get(yValue.size() - 1);
-                path.lineTo(x, y);
+                backPath.lineTo(x, y);
+                linePath.lineTo(x, y);
                 continue;
             }
             if (i == 8){
                 x = xInit + space + interval * (i-2);
                 y = yOri - yOri * (1 - 0.1f) * value.get(xValue.get(i)) / yValue.get(yValue.size() - 1);
-                path.lineTo(x, y);
+                backPath.lineTo(x, y);
+                linePath.lineTo(x, y);
                 continue;
             }
             x = xInit + space/2 + interval * (i-1);
             y = yOri - yOri * (1 - 0.1f) * value.get(xValue.get(i)) / yValue.get(yValue.size() - 1);
-            path.lineTo(x, y);
+            backPath.lineTo(x, y);
+            linePath.lineTo(x, y);
         }
-        canvas.drawPath(path, linePaint);
+        backPath.lineTo(x,getHeight());
+        backPath.lineTo(0,getHeight());
+        backPath.close();
+        canvas.drawPath(linePath,linePaint);
+        canvas.drawPath(backPath, getShadeColorPaint(linePaint));
+    }
+
+    // 修改笔的颜色
+    private Paint getShadeColorPaint(Paint paint) {
+        paint.setStyle(Paint.Style.FILL);
+        Shader mShader = new LinearGradient(getWidth()/2, 0, getWidth()/2, getHeight()-dpToPx(50),
+                new int[] { context.getResources().getColor(R.color.colorWhiteTransparent), android.R.color.transparent}, null, Shader.TileMode.CLAMP);
+        // 新建一个线性渐变，前两个参数是渐变开始的点坐标，第三四个参数是渐变结束的点的坐标。连接这2个点就拉出一条渐变线了，玩过PS的都懂。然后那个数组是渐变的颜色。下一个参数是渐变颜色的分布，如果为空，每个颜色就是均匀分布的。最后是模式，这里设置的是循环渐变
+        paint.setShader(mShader);
+        return paint;
     }
 
     /**
@@ -390,7 +421,7 @@ public class ChartView extends View {
                 //绘制X轴文本
                 String text = xValue.get(i);
                 Rect rect = getTextBounds(text, xyTextPaint);
-                if (i == selectIndex - 1) {
+                if ((i == selectIndex[0] - 1) || (i == selectIndex[1] - 1) ){
                     xyTextPaint.setColor(linecolor);
                     canvas.drawText(text, 0, text.length(), x - rect.width() / 2, yOri + xylinewidth + dpToPx(2) + rect.height(), xyTextPaint);
                     canvas.drawRoundRect(x - xValueRect.width() / 2 - dpToPx(3), yOri + xylinewidth + dpToPx(1), x + xValueRect.width() / 2 + dpToPx(3), yOri + xylinewidth + dpToPx(2) + xValueRect.height() + dpToPx(2), dpToPx(2), dpToPx(2), xyTextPaint);
@@ -401,181 +432,11 @@ public class ChartView extends View {
         }
     }
 
-    private float startX;
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (isScrolling)
-            return super.onTouchEvent(event);
-        this.getParent().requestDisallowInterceptTouchEvent(true);//当该view获得点击事件，就请求父控件不拦截事件
-//        obtainVelocityTracker(event);
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                startX = event.getX();
-                break;
-            case MotionEvent.ACTION_MOVE:
-//                if (interval * xValue.size() > width - xOri) {//当期的宽度不足以呈现全部数据
-//                    float dis = event.getX() - startX;
-//                    startX = event.getX();
-//                    if (xInit + dis < minXInit) {
-//                        xInit = minXInit;
-//                    } else if (xInit + dis > maxXInit) {
-//                        xInit = maxXInit;
-//                    } else {
-//                        xInit = xInit + dis;
-//                    }
-//                    invalidate();
-//                }
-                break;
-            case MotionEvent.ACTION_UP:
-                clickAction(event);
-//                scrollAfterActionUp();
-                this.getParent().requestDisallowInterceptTouchEvent(false);
-//                recycleVelocityTracker();
-                break;
-            case MotionEvent.ACTION_CANCEL:
-                this.getParent().requestDisallowInterceptTouchEvent(false);
-//                recycleVelocityTracker();
-                break;
-        }
-        return true;
-    }
-
-    //是否正在滑动
-    private boolean isScrolling = false;
-
-    /**
-     * 手指抬起后的滑动处理
-     */
-    private void scrollAfterActionUp() {
-        if (!isScroll)
-            return;
-        final float velocity = getVelocity();
-        float scrollLength = maxXInit - minXInit;
-        if (Math.abs(velocity) < 10000)//10000是一个速度临界值，如果速度达到10000，最大可以滑动(maxXInit - minXInit)
-            scrollLength = (maxXInit - minXInit) * Math.abs(velocity) / 10000;
-        ValueAnimator animator = ValueAnimator.ofFloat(0, scrollLength);
-        animator.setDuration((long) (scrollLength / (maxXInit - minXInit) * 1000));//时间最大为1000毫秒，此处使用比例进行换算
-        animator.setInterpolator(new DecelerateInterpolator());
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator valueAnimator) {
-                float value = (float) valueAnimator.getAnimatedValue();
-                if (velocity < 0 && xInit > minXInit) {//向左滑动
-                    if (xInit - value <= minXInit)
-                        xInit = minXInit;
-                    else
-                        xInit = xInit - value;
-                } else if (velocity > 0 && xInit < maxXInit) {//向右滑动
-                    if (xInit + value >= maxXInit)
-                        xInit = maxXInit;
-                    else
-                        xInit = xInit + value;
-                }
-                invalidate();
-            }
-        });
-        animator.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animator) {
-                isScrolling = true;
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animator) {
-                isScrolling = false;
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animator) {
-                isScrolling = false;
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animator) {
-
-            }
-        });
-        animator.start();
-
-    }
-
-    /**
-     * 获取速度
-     *
-     * @return
-     */
-    private float getVelocity() {
-        if (velocityTracker != null) {
-            velocityTracker.computeCurrentVelocity(1000);
-            return velocityTracker.getXVelocity();
-        }
-        return 0;
-    }
-
-    /**
-     * 点击X轴坐标或者折线节点
-     *
-     * @param event
-     */
-    private void clickAction(MotionEvent event) {
-        int dp8 = dpToPx(8);
-        float eventX = event.getX();
-        float eventY = event.getY();
-        for (int i = 0; i < xValue.size(); i++) {
-            //节点
-            float x = xInit + space/2 + interval * (i-1);
-            float y = yOri - yOri * (1 - 0.1f) * value.get(xValue.get(i)) / yValue.get(yValue.size() - 1);
-            if (eventX >= x - dp8 && eventX <= x + dp8 &&
-                    eventY >= y - dp8 && eventY <= y + dp8 && selectIndex != i + 1) {//每个节点周围8dp都是可点击区域
-                selectIndex = i + 1;
-                invalidate();
-                return;
-            }
-            //X轴刻度
-            String text = xValue.get(i);
-            Rect rect = getTextBounds(text, xyTextPaint);
-            x = xInit + interval * i;
-            y = yOri + xylinewidth + dpToPx(2);
-            if (eventX >= x - rect.width() / 2 - dp8 && eventX <= x + rect.width() + dp8 / 2 &&
-                    eventY >= y - dp8 && eventY <= y + rect.height() + dp8 && selectIndex != i + 1) {
-                selectIndex = i + 1;
-                invalidate();
-                return;
-            }
-        }
-    }
-
-
-    /**
-     * 获取速度跟踪器
-     *
-     * @param event
-     */
-    private void obtainVelocityTracker(MotionEvent event) {
-        if (!isScroll)
-            return;
-        if (velocityTracker == null) {
-            velocityTracker = VelocityTracker.obtain();
-        }
-        velocityTracker.addMovement(event);
-    }
-
-    /**
-     * 回收速度跟踪器
-     */
-    private void recycleVelocityTracker() {
-        if (velocityTracker != null) {
-            velocityTracker.recycle();
-            velocityTracker = null;
-        }
-    }
-
-    public int getSelectIndex() {
+    public int[] getSelectIndex() {
         return selectIndex;
     }
 
-    public void setSelectIndex(int selectIndex) {
+    public void setSelectIndex(int[] selectIndex) {
         this.selectIndex = selectIndex;
         invalidate();
     }
@@ -598,6 +459,18 @@ public class ChartView extends View {
         this.value = value;
         this.xValue = xValue;
         this.yValue = yValue;
+        int indexMax = 0;
+        int tmp = 0;
+        for(int i = 0; i< xValue.size();i++){
+            if (value.get(xValue.get(i)) > tmp){
+                tmp = value.get(xValue.get(i));
+                indexMax = i;
+            }
+        }
+        int[] selected = new int[2];
+        selected[0] = indexMax+1;
+        selected[1] = 8;
+        setSelectIndex(selected);
         invalidate();
     }
 
