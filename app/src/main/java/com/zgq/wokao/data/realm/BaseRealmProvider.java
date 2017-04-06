@@ -1,6 +1,7 @@
 package com.zgq.wokao.data.realm;
 
 import io.realm.Realm;
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
@@ -30,8 +31,11 @@ public abstract class BaseRealmProvider<T extends RealmObject> implements DataPr
     }
 
     @Override
+    @Deprecated
     public void delete(T entity) {
-        entity.deleteFromRealm();
+//        realm.beginTransaction();
+//        entity.deleteFromRealm();
+//        realm.commitTransaction();
     }
 
     @Override

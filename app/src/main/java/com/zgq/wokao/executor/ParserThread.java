@@ -2,9 +2,8 @@ package com.zgq.wokao.executor;
 
 import android.util.Log;
 
-import com.zgq.wokao.Util.FileUtil;
 import com.zgq.wokao.exception.ParseException;
-import com.zgq.wokao.model.paper.NormalIExamPaper;
+import com.zgq.wokao.model.paper.NormalExamPaper;
 import com.zgq.wokao.parser.ParserHelper;
 
 import java.io.FileNotFoundException;
@@ -30,7 +29,7 @@ public class ParserThread extends Thread {
         super.run();
         try {
             Realm realm  = Realm.getDefaultInstance();
-            final NormalIExamPaper paper = ParserHelper.getInstance().parse(filePath);
+            final NormalExamPaper paper = ParserHelper.getInstance().parse(filePath);
             realm.executeTransaction(new Realm.Transaction() {
                 @Override
                 public void execute(Realm realm) {
@@ -49,6 +48,6 @@ public class ParserThread extends Thread {
     }
 
     public interface OnCompletedListener{
-        public void onCompleted(NormalIExamPaper paper);
+        public void onCompleted(NormalExamPaper paper);
     }
 }

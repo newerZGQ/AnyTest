@@ -10,9 +10,8 @@ import com.zgq.wokao.Util.ListUtil;
 import com.zgq.wokao.Util.UUIDUtil;
 import com.zgq.wokao.data.realm.BaseRealmProvider;
 import com.zgq.wokao.data.realm.Paper.IPaperDao;
-import com.zgq.wokao.data.realm.Paper.IQuestionDao;
 import com.zgq.wokao.model.paper.IExamPaper;
-import com.zgq.wokao.model.paper.NormalIExamPaper;
+import com.zgq.wokao.model.paper.NormalExamPaper;
 import com.zgq.wokao.model.paper.info.ExamPaperInfo;
 import com.zgq.wokao.model.paper.info.IPaperInfo;
 import com.zgq.wokao.model.paper.question.IQuestion;
@@ -27,7 +26,6 @@ import com.zgq.wokao.parser.DataXml2ObjParser;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -43,12 +41,12 @@ import io.realm.RealmResults;
 /**
  * Created by zgq on 16-6-20.
  */
-public class PaperDaoImpl extends BaseRealmProvider<NormalIExamPaper> implements IPaperDao {
+public class PaperDaoImpl extends BaseRealmProvider<NormalExamPaper> implements IPaperDao {
 
     Realm realm = getRealm();
 
     private PaperDaoImpl() {
-        setClass(NormalIExamPaper.class);
+        setClass(NormalExamPaper.class);
     }
 
     public static final PaperDaoImpl getInstance() {
@@ -146,7 +144,7 @@ public class PaperDaoImpl extends BaseRealmProvider<NormalIExamPaper> implements
      * @param entity
      */
     @Override
-    public void save(NormalIExamPaper entity) {
+    public void save(NormalExamPaper entity) {
         if (examPaperIsExist(entity)) {
             return;
         }
@@ -159,14 +157,14 @@ public class PaperDaoImpl extends BaseRealmProvider<NormalIExamPaper> implements
      * @return
      */
     @Override
-    public List<NormalIExamPaper> getAllPaper() {
-        RealmResults<NormalIExamPaper> results = realm.where(NormalIExamPaper.class).findAll();
+    public List<NormalExamPaper> getAllPaper() {
+        RealmResults<NormalExamPaper> results = realm.where(NormalExamPaper.class).findAll();
         return changeRealmListToList(results);
     }
 
     @Override
-    public List<NormalIExamPaper> getAllPaperInSchdl() {
-        RealmResults<NormalIExamPaper> results = realm.where(NormalIExamPaper.class)
+    public List<NormalExamPaper> getAllPaperInSchdl() {
+        RealmResults<NormalExamPaper> results = realm.where(NormalExamPaper.class)
                 .equalTo("paperInfo.isInSchedule", true)
                 .findAll();
         return changeRealmListToList(results);
@@ -226,6 +224,29 @@ public class PaperDaoImpl extends BaseRealmProvider<NormalIExamPaper> implements
         return changeRealmListToList(results);
     }
 
+    @Override
+    public void deleteById(String id) {
+        realm.beginTransaction();
+        RealmResults<NormalExamPaper> results = realm
+                .where(NormalExamPaper.class)
+                .equalTo("paperInfo.id", id)
+                .findAll();
+        results.
+        realm.commitTransaction();
+    }
+
+    @Override
+    public NormalExamPaper query(String id) {
+        RealmResults<NormalExamPaper> results = realm
+                .where(NormalExamPaper.class)
+                .equalTo("paperInfo.id", id)
+                .findAll();
+        if (results == null || results.size() == 0){
+            return null;
+        }
+        return changeRealmListToList(results).get(0);
+    }
+
     /**
      * 搜索满足条件的SearchInfoItem,仅匹配试卷标题
      *
@@ -255,8 +276,8 @@ public class PaperDaoImpl extends BaseRealmProvider<NormalIExamPaper> implements
      */
     public List<SearchQstItem> searchQstItemList(String query) {
         List<SearchQstItem> results = new ArrayList<>();
-        List<NormalIExamPaper> papers = getAllPaper();
-        for (NormalIExamPaper tmp : papers) {
+        List<NormalExamPaper> papers = getAllPaper();
+        for (NormalExamPaper tmp : papers) {
             results = ListUtil.assem(results, searchQstFromPaper(query, tmp));
         }
 //        Log.d("---->>searchQstItemList",""+results.size());
@@ -264,7 +285,7 @@ public class PaperDaoImpl extends BaseRealmProvider<NormalIExamPaper> implements
     }
 
 
-    private List<SearchQstItem> searchQstFromPaper(String query, NormalIExamPaper paper) {
+    private List<SearchQstItem> searchQstFromPaper(String query, NormalExamPaper paper) {
         List<SearchQstItem> results = new ArrayList<>();
         results = ListUtil.assem(
                 searchQstFromList(
@@ -344,12 +365,12 @@ public class PaperDaoImpl extends BaseRealmProvider<NormalIExamPaper> implements
      * @param paper
      * @return
      */
-    public boolean examPaperIsExist(NormalIExamPaper paper) {
+    public boolean examPaperIsExist(NormalExamPaper paper) {
         if (paper == null) {
             return false;
         }
 
-        if (realm.where(NormalIExamPaper.class)
+        if (realm.where(NormalExamPaper.class)
                 .equalTo("paperInfo.id", paper.getPaperInfo().getId())
                 .findAll()
                 .size() == 0) {
@@ -370,11 +391,11 @@ public class PaperDaoImpl extends BaseRealmProvider<NormalIExamPaper> implements
         if (txtFile == null || xmlFile == null || !FileUtil.isTxtFile(txtFile) || !FileUtil.isXmlFile(xmlFile)) {
             return;
         }
-        NormalIExamPaper paper = null;
+        NormalExamPaper paper = null;
         Callable callable = new ParseTxt2Realm(txtFile, xmlFile);
         Future future = pool.submit(callable);
         try {
-            paper = (NormalIExamPaper) future.get();
+            paper = (NormalExamPaper) future.get();
         } catch (Exception e) {
             Message message = Message.obtain();
             message.what = 0X1113;
@@ -404,10 +425,10 @@ public class PaperDaoImpl extends BaseRealmProvider<NormalIExamPaper> implements
         }
 
         @Override
-        public NormalIExamPaper call() {
+        public NormalExamPaper call() {
             DataTxt2XmlParser dataTxt2XmlParser = DataTxt2XmlParser.getInstance();
             DataXml2ObjParser dataXml2ObjParser = DataXml2ObjParser.getInstance();
-            NormalIExamPaper normalExamPaper = null;
+            NormalExamPaper normalExamPaper = null;
             try {
                 if (xmlFile.exists()) {
                     xmlFile.delete();

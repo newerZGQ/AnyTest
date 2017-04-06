@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.zgq.wokao.R;
 import com.zgq.wokao.model.paper.info.IPaperInfo;
@@ -31,6 +33,8 @@ public class PapersFragment extends BaseFragment implements IPapersView{
     @BindView(R.id.paper_list)
     RecyclerView paperList;
 
+    private FrameLayout rootView;
+
     private PapersPresenter papersPresenter = new PapersPresenter(this);
 
     public PapersFragment() {}
@@ -49,7 +53,7 @@ public class PapersFragment extends BaseFragment implements IPapersView{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView =  inflater.inflate(R.layout.fragment_papers, container, false);
+        rootView =  (FrameLayout) inflater.inflate(R.layout.fragment_papers, container, false);
         ButterKnife.bind(this,rootView);
         papersPresenter.initPapersList();
         return rootView;
@@ -89,10 +93,9 @@ public class PapersFragment extends BaseFragment implements IPapersView{
     }
 
     @Override
-    public void initPaperList(ArrayList<IPaperInfo> paperInfos) {
+    public void initPaperList(final ArrayList<IPaperInfo> paperInfos) {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         paperList.setLayoutManager(layoutManager);
-//        paperList.setItemAnimator(new FadeInAnimator());
         paperList.setAdapter(new HomePaperAdapter(paperInfos, new HomePaperAdapter.PaperAdapterListener() {
             @Override
             public void onItemClick(int position, IPaperInfo info) {
@@ -103,6 +106,39 @@ public class PapersFragment extends BaseFragment implements IPapersView{
             public void onItemLongClick(int position, IPaperInfo info) {
 
             }
+
+            @Override
+            public void onDeleteClick(final int position, final IPaperInfo info) {
+                Snackbar.make(rootView,"确定要删除么",Snackbar.LENGTH_LONG).setAction("确定", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        papersPresenter.deletePaper(info.getId());
+                        paperList.getAdapter().notifyItemChanged(position);
+                    }
+                }).setActionTextColor(0xfff44336).show();
+            }
+
+            @Override
+            public void onExitClick(final int position, final IPaperInfo info) {
+                Snackbar.make(rootView,"确定退出学习该试卷么",Snackbar.LENGTH_LONG).setAction("确定", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        papersPresenter.removeFromSchedule(info.getId());
+                        paperList.getAdapter().notifyItemChanged(position);
+                    }
+                }).show();
+            }
+
+            @Override
+            public void onStartClick(final int position, final IPaperInfo info) {
+                Snackbar.make(rootView,"确定开始学习么",Snackbar.LENGTH_LONG).setAction("确定", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        papersPresenter.addToSchedule(info.getId());
+                        paperList.getAdapter().notifyItemChanged(position);
+                    }
+                }).show();
+            }
         }));
         paperList.setItemViewCacheSize(1);
     }
@@ -110,7 +146,7 @@ public class PapersFragment extends BaseFragment implements IPapersView{
 
     @Override
     public void notifyDataChanged(ArrayList<IPaperInfo> paperInfos) {
-        ((HomePaperAdapter)paperList.getAdapter()).setData(paperInfos);
+        //((HomePaperAdapter)paperList.getAdapter()).setData(paperInfos);
         paperList.getAdapter().notifyDataSetChanged();
     }
 

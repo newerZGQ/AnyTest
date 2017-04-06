@@ -3,7 +3,7 @@ package com.zgq.wokao.parser;
 import android.util.Xml;
 
 import com.zgq.wokao.Util.UUIDUtil;
-import com.zgq.wokao.model.paper.NormalIExamPaper;
+import com.zgq.wokao.model.paper.NormalExamPaper;
 import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.paper.question.impl.DiscussQuestion;
 import com.zgq.wokao.model.paper.question.impl.FillInQuestion;
@@ -37,13 +37,13 @@ public class DataXml2ObjParser {
         return dataXml2ObjParser;
     }
 
-    public NormalIExamPaper parse(File xmlFile) throws Exception,ParseException {
+    public NormalExamPaper parse(File xmlFile) throws Exception,ParseException {
 
         if (!xmlFile.exists() || xmlFile == null) return null;
 
         FileInputStream fileInputStream = new FileInputStream(xmlFile);
 
-        NormalIExamPaper normalExamPaper = new NormalIExamPaper();
+        NormalExamPaper normalExamPaper = new NormalExamPaper();
         RealmList<FillInQuestion> fillInQuestions = new RealmList<>();
         RealmList<TFQuestion> tfQuestions = new RealmList<>();
         RealmList<SglChoQuestion> sglChoQuestions = new RealmList<>();

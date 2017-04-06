@@ -1,7 +1,5 @@
 package com.zgq.wokao.action.paper.impl;
 
-import android.support.v4.view.PagerAdapter;
-
 import com.zgq.wokao.action.BaseAction;
 import com.zgq.wokao.action.paper.IPaperAction;
 import com.zgq.wokao.action.paper.IQuestionAction;
@@ -9,7 +7,7 @@ import com.zgq.wokao.data.realm.Paper.impl.PaperDaoImpl;
 import com.zgq.wokao.data.realm.Paper.impl.QuestionDaoImpl;
 import com.zgq.wokao.exception.ParseException;
 import com.zgq.wokao.model.paper.IExamPaper;
-import com.zgq.wokao.model.paper.NormalIExamPaper;
+import com.zgq.wokao.model.paper.NormalExamPaper;
 import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.paper.info.IPaperInfo;
 import com.zgq.wokao.model.paper.question.IQuestion;
@@ -24,8 +22,6 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-
-import io.realm.Realm;
 
 /**
  * Created by zgq on 2017/2/28.
@@ -85,8 +81,8 @@ public class PaperAction extends BaseAction implements IPaperAction,IQuestionAct
     }
 
     public void setAllPaperInSche(){
-        List<NormalIExamPaper> papers = getAllPaper();
-        for (NormalIExamPaper paper: papers){
+        List<NormalExamPaper> papers = getAllPaper();
+        for (NormalExamPaper paper: papers){
             paperDao.addToSchedule(paper);
             paperDao.openSchedule(paper);
         }
@@ -109,7 +105,7 @@ public class PaperAction extends BaseAction implements IPaperAction,IQuestionAct
 
     @Override
     public void star(String paperId) {
-        NormalIExamPaper paper = paperDao.query(paperId);
+        NormalExamPaper paper = paperDao.query(paperId);
         star(paper);
     }
 
@@ -120,7 +116,7 @@ public class PaperAction extends BaseAction implements IPaperAction,IQuestionAct
 
     @Override
     public void unstar(String paperId) {
-        NormalIExamPaper paper = paperDao.query(paperId);
+        NormalExamPaper paper = paperDao.query(paperId);
         unStar(paper);
     }
 
@@ -177,23 +173,28 @@ public class PaperAction extends BaseAction implements IPaperAction,IQuestionAct
     }
 
     @Override
-    public List<NormalIExamPaper> getAllPaper() {
+    public List<NormalExamPaper> getAllPaper() {
         return paperDao.getAllPaper();
     }
 
     @Override
-    public List<NormalIExamPaper> getAllPaperInSchdl() {
+    public List<NormalExamPaper> getAllPaperInSchdl() {
         return paperDao.getAllPaperInSchdl();
     }
 
     @Override
     public void addExamPaper(IExamPaper paper) {
-        paperDao.save((NormalIExamPaper) paper);
+        paperDao.save((NormalExamPaper) paper);
     }
 
     @Override
     public void deleteExamPaper(IExamPaper paper) {
-        paperDao.delete((NormalIExamPaper) paper);
+        paperDao.deleteById(paper.getPaperInfo().getId());
+    }
+
+    @Override
+    public void deleteExamPaper(String paperId) {
+        paperDao.deleteById(paperId);
     }
 
     @Override
@@ -203,14 +204,14 @@ public class PaperAction extends BaseAction implements IPaperAction,IQuestionAct
 
     @Override
     public IExamPaper parseAndSave(String filePath) throws FileNotFoundException, ParseException {
-        NormalIExamPaper paper =  parserHelper.parse(filePath);
+        NormalExamPaper paper =  parserHelper.parse(filePath);
         addExamPaper(paper);
         return paper;
     }
 
     @Override
     public IExamPaper parseAndSave(InputStream inputStream) throws ParseException {
-        NormalIExamPaper paper =  parserHelper.parse(inputStream);
+        NormalExamPaper paper =  parserHelper.parse(inputStream);
         addExamPaper(paper);
         return paper;
     }

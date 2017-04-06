@@ -7,7 +7,7 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.zgq.wokao.model.paper.NormalIExamPaper;
+import com.zgq.wokao.model.paper.NormalExamPaper;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -53,7 +53,7 @@ public class ParserService extends Service {
         ParserThread thread = new ParserThread(filePath);
         thread.setListener(new ParserThread.OnCompletedListener() {
             @Override
-            public void onCompleted(final NormalIExamPaper paper) {
+            public void onCompleted(final NormalExamPaper paper) {
                 if (paper == null){
                     Log.d("---->>paper null","");
                     return;

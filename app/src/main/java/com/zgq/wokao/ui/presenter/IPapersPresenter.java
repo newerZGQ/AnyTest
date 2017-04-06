@@ -7,4 +7,7 @@ package com.zgq.wokao.ui.presenter;
 public interface IPapersPresenter {
     public void notifyDataChanged();
     public void initPapersList();
+    public void deletePaper(String paperId);
+    public void addToSchedule(String paperId);
+    public void removeFromSchedule(String paperId);
 }

@@ -204,6 +204,13 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     /**
+     *
+     */
+    protected void showSnakeBar(){
+
+    }
+
+    /**
      * Activity跳转
      *
      * @param pClass

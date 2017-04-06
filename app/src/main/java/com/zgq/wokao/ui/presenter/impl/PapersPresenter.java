@@ -4,11 +4,14 @@ import android.util.Log;
 
 import com.zgq.wokao.action.paper.IPaperAction;
 import com.zgq.wokao.action.paper.impl.PaperAction;
+import com.zgq.wokao.model.paper.IExamPaper;
+import com.zgq.wokao.model.paper.NormalExamPaper;
 import com.zgq.wokao.model.paper.info.IPaperInfo;
 import com.zgq.wokao.ui.presenter.IPapersPresenter;
 import com.zgq.wokao.ui.view.IPapersView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by zgq on 2017/3/5.
@@ -30,6 +33,9 @@ public class PapersPresenter implements IPapersPresenter {
         if (needUpdate || paperInfos == null || paperInfos.size() == 0){
             paperInfos = (ArrayList<IPaperInfo>) paperAction.getAllPaperInfo();
         }
+        Log.d("paperspresenter infos ",""+paperInfos.size());
+        List<NormalExamPaper> papers = paperAction.getAllPaper();
+        Log.d("paperspresenter papers ",""+papers.size());
         return paperInfos;
     }
 
@@ -42,5 +48,23 @@ public class PapersPresenter implements IPapersPresenter {
     @Override
     public void initPapersList() {
         papersView.initPaperList(paperInfos);
+    }
+
+    @Override
+    public void deletePaper(String paperId) {
+        paperAction.deleteExamPaper(paperId);
+        getPaperInfos(true);
+    }
+
+    @Override
+    public void addToSchedule(String paperId) {
+        paperAction.addToSchedule(paperId);
+        getPaperInfos(true);
+    }
+
+    @Override
+    public void removeFromSchedule(String paperId) {
+        paperAction.removeFromSchedule(paperId);
+        getPaperInfos(true);
     }
 }

@@ -1,8 +1,7 @@
 package com.zgq.wokao.data.realm.Paper;
 
-import com.zgq.wokao.model.paper.IExamPaper;
 import com.zgq.wokao.model.paper.info.ExamPaperInfo;
-import com.zgq.wokao.model.paper.NormalIExamPaper;
+import com.zgq.wokao.model.paper.NormalExamPaper;
 import com.zgq.wokao.model.search.Searchable;
 
 import java.util.List;
@@ -12,8 +11,9 @@ import java.util.List;
  */
 
 public interface IPaperDao extends IPaperInfoDao,IPaperSchdlDao{
-    public List<NormalIExamPaper> getAllPaper();
-    public List<NormalIExamPaper> getAllPaperInSchdl();
+    public List<NormalExamPaper> getAllPaper();
+    public List<NormalExamPaper> getAllPaperInSchdl();
     public List<Searchable> search(String query);
     public List<ExamPaperInfo> getSchedulePapers();
+    public void deleteById(String id);
 }

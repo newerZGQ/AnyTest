@@ -85,8 +85,8 @@ public class HomeActivity extends BaseActivity implements
         super.onStart();
         homePresenter.showScheduleFragment();
         if (LoginAction.getInstance().isFirstTimeLogin()) {
-//            homePresenter.parseFromFile(FileUtil.getOrInitAppStoragePath()+"/default_1.txt");
-//            LoginAction.getInstance().setFirstTimeLoginFalse();
+            homePresenter.parseFromFile(FileUtil.getOrInitAppStoragePath()+"/default_1.txt");
+            LoginAction.getInstance().setFirstTimeLoginFalse();
         }
     }
 

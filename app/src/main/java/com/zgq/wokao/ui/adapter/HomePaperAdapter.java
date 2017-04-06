@@ -1,7 +1,9 @@
 package com.zgq.wokao.ui.adapter;
 
 import android.graphics.drawable.Drawable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -197,17 +199,13 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
                     keepOne.toggle(this);
                     break;
                 case R.id.exit_schedule_btn:
-                    paperAction.removeFromSchedule(paperInfos.get(position).getId());
-                    paperInfos = (ArrayList<IPaperInfo>) paperAction.getAllPaperInfo();
-                    getMyAdapter().notifyItemChanged(position);
-                    //notifyDataSetChanged();
+                    listener.onExitClick(position,paperInfos.get(position));
                     break;
                 case R.id.delete_paper_btn:
+                    listener.onDeleteClick(position,paperInfos.get(position));
                     break;
                 case R.id.start_schedule_btn:
-                    paperAction.addToSchedule(paperInfos.get(position).getId());
-                    paperInfos = (ArrayList<IPaperInfo>) paperAction.getAllPaperInfo();
-                    getMyAdapter().notifyItemChanged(position);
+                    listener.onStartClick(position,paperInfos.get(position));
                     break;
             }
         }
@@ -222,6 +220,12 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
         public void onItemClick(int position, IPaperInfo info);
 
         public void onItemLongClick(int position, IPaperInfo info);
+
+        public void onDeleteClick(int position, IPaperInfo info);
+
+        public void onExitClick(int position, IPaperInfo info);
+
+        public void onStartClick(int position, IPaperInfo info);
     }
 
 }

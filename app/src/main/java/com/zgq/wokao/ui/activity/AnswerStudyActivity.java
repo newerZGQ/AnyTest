@@ -19,9 +19,8 @@ import android.widget.TextView;
 
 import com.umeng.analytics.MobclickAgent;
 import com.zgq.wokao.R;
-import com.zgq.wokao.Util.DateUtil;
 import com.zgq.wokao.action.paper.impl.PaperAction;
-import com.zgq.wokao.model.paper.NormalIExamPaper;
+import com.zgq.wokao.model.paper.NormalExamPaper;
 import com.zgq.wokao.model.paper.question.answer.IAnswer;
 import com.zgq.wokao.model.paper.question.impl.DiscussQuestion;
 import com.zgq.wokao.model.paper.question.impl.FillInQuestion;
@@ -44,7 +43,6 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.Realm;
-import io.realm.RealmResults;
 
 public class AnswerStudyActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -95,7 +93,7 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
     RelativeLayout rootView;
 
     private Realm realm = Realm.getDefaultInstance();
-    private NormalIExamPaper normalExamPaper;
+    private NormalExamPaper normalExamPaper;
 
     private int currentQuestionType = Constant.FILLINQUESTIONTYPE;
 
@@ -160,8 +158,8 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
         String paperId = intent.getStringExtra("paperId");
         currentQuestionType = intent.getIntExtra("qstType", Constant.FILLINQUESTIONTYPE);
         //int initQstNum = intent.getIntExtra("qstNum",0);
-        normalExamPaper = (NormalIExamPaper) PaperAction.getInstance().queryById(paperId);
-//        RealmResults<NormalIExamPaper> papers = realm.where(NormalIExamPaper.class).
+        normalExamPaper = (NormalExamPaper) PaperAction.getInstance().queryById(paperId);
+//        RealmResults<NormalExamPaper> papers = realm.where(NormalExamPaper.class).
 //                equalTo("paperInfo.title", title).
 //                equalTo("paperInfo.author", author).
 //                findAll();

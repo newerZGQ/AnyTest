@@ -84,13 +84,6 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
         rootView =  inflater.inflate(R.layout.fragment_schedule, container, false);
         ButterKnife.bind(this,rootView);
         presenter.setViewPager();
-        viewPager.post(new Runnable() {
-            @Override
-            public void run() {
-                slipDistance = rootView.findViewById(R.id.qst_datial_cards).getHeight();
-                hideDetail();
-            }
-        });
         return rootView;
     }
 
@@ -140,6 +133,9 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
     @Override
     public void setViewPager(ArrayList<ScheduleData> scheduleDatas, ArrayList<ArrayList<QstData>> qstDataLists) {
         Log.d(TAG , ""+qstDataLists.size());
+        if (scheduleDatas == null || scheduleDatas.size() == 0){
+            return;
+        }
         //Log.d(TAG , " position 0 "+qstDataLists.get(0).size());
         if (viewPager.getAdapter() == null) {
             viewPager.setAdapter(new SchedulePagerAdapter(getContext(),scheduleDatas, qstDataLists,
@@ -159,6 +155,19 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
         }
         viewPager.getAdapter().notifyDataSetChanged();
         viewPager.addOnPageChangeListener(new SchedulePageChangeListener());
+
+        viewPager.post(new Runnable() {
+            @Override
+            public void run() {
+                View tmp = viewPager.findViewById(R.id.qst_datial_cards);
+                if (tmp == null){
+                    slipDistance = 0;
+                }else {
+                    slipDistance = tmp.getHeight();
+                }
+                hideDetail();
+            }
+        });
     }
 
     @Override

@@ -1,10 +1,8 @@
 package com.zgq.wokao.action.paper;
 
-import android.renderscript.ScriptGroup;
-
 import com.zgq.wokao.exception.ParseException;
 import com.zgq.wokao.model.paper.IExamPaper;
-import com.zgq.wokao.model.paper.NormalIExamPaper;
+import com.zgq.wokao.model.paper.NormalExamPaper;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -15,10 +13,11 @@ import java.util.List;
  */
 
 public interface IPaperAction extends IPaperInfoAction,IPaperSchdlAction{
-    public List<NormalIExamPaper> getAllPaper();
-    public List<NormalIExamPaper> getAllPaperInSchdl();
+    public List<NormalExamPaper> getAllPaper();
+    public List<NormalExamPaper> getAllPaperInSchdl();
     public void addExamPaper(IExamPaper paper);
     public void deleteExamPaper(IExamPaper paper);
+    public void deleteExamPaper(String paperId);
     public IExamPaper queryById(String id);
     public IExamPaper parseAndSave(String filePath) throws FileNotFoundException, ParseException;
     public IExamPaper parseAndSave(InputStream inputStream) throws ParseException;

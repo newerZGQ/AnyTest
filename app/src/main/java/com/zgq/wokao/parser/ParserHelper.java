@@ -4,7 +4,7 @@ import com.zgq.wokao.Util.DateUtil;
 import com.zgq.wokao.Util.UUIDUtil;
 import com.zgq.wokao.exception.ParseException;
 import com.zgq.wokao.model.paper.IExamPaper;
-import com.zgq.wokao.model.paper.NormalIExamPaper;
+import com.zgq.wokao.model.paper.NormalExamPaper;
 import com.zgq.wokao.model.paper.info.IPaperInfo;
 import com.zgq.wokao.model.paper.question.impl.DiscussQuestion;
 import com.zgq.wokao.model.paper.question.impl.FillInQuestion;
@@ -66,7 +66,7 @@ public class ParserHelper {
         return FileFormat.ERRORFORMAT;
     }
 
-    public NormalIExamPaper parse(String fileStr) throws FileNotFoundException, com.zgq.wokao.exception.ParseException {
+    public NormalExamPaper parse(String fileStr) throws FileNotFoundException, com.zgq.wokao.exception.ParseException {
         this.fileString = fileStr;
         switch (checkFile(fileString)){
             case TXT:
@@ -81,11 +81,11 @@ public class ParserHelper {
         return null;
     }
 
-    public NormalIExamPaper parse(InputStream inputStream) throws ParseException {
+    public NormalExamPaper parse(InputStream inputStream) throws ParseException {
         if (inputStream == null){
             throw new com.zgq.wokao.exception.ParseException("请检查是否为空文件");
         }
-        NormalIExamPaper paper = new NormalIExamPaper();
+        NormalExamPaper paper = new NormalExamPaper();
         PaperParser paperParser = new PaperParser();
         ArrayList<PaperParser.Topic> topics = paperParser.parse(inputStream);
         paper.setPaperInfo(paperParser.getInfo());

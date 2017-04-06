@@ -17,7 +17,7 @@ import com.umeng.analytics.MobclickAgent;
 import com.zgq.wokao.R;
 import com.zgq.wokao.Util.DateUtil;
 import com.zgq.wokao.model.paper.Constant;
-import com.zgq.wokao.model.paper.NormalIExamPaper;
+import com.zgq.wokao.model.paper.NormalExamPaper;
 import com.zgq.wokao.model.paper.info.ExamPaperInfo;
 import com.zgq.wokao.model.paper.question.impl.DiscussQuestion;
 import com.zgq.wokao.model.paper.question.impl.FillInQuestion;
@@ -64,7 +64,7 @@ public class PaperInfoActivity extends AppCompatActivity implements View.OnClick
 
     private int[] background = new int[3];
 
-    private NormalIExamPaper normalExamPaper;
+    private NormalExamPaper normalExamPaper;
     private ExamPaperInfo info;
 
     private int toolbarLayoutHeight;
@@ -128,7 +128,7 @@ public class PaperInfoActivity extends AppCompatActivity implements View.OnClick
         background[2] = R.drawable.scrollview_head_background;
 
         String paperId = getIntent().getStringExtra("paperId");
-        RealmResults<NormalIExamPaper> papers = realm.where(NormalIExamPaper.class).
+        RealmResults<NormalExamPaper> papers = realm.where(NormalExamPaper.class).
                 equalTo("paperInfo.id", paperId).
                 findAll();
 
@@ -323,7 +323,7 @@ public class PaperInfoActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
-    public int getStudiedCount(final NormalIExamPaper normalExamPaper) {
+    public int getStudiedCount(final NormalExamPaper normalExamPaper) {
         RealmList<FillInQuestion> fillInQuestions = normalExamPaper.getFillInQuestions();
         RealmList<TFQuestion> tfQuestions = normalExamPaper.getTfQuestions();
         RealmList<SglChoQuestion> sglChoQuestions = normalExamPaper.getSglChoQuestions();
@@ -360,7 +360,7 @@ public class PaperInfoActivity extends AppCompatActivity implements View.OnClick
         return normalExamPaper.getPaperInfo().getStudyCount();
     }
 
-    private void setAllQuestionUnstudied(NormalIExamPaper normalExamPaper) {
+    private void setAllQuestionUnstudied(NormalExamPaper normalExamPaper) {
         final RealmList<FillInQuestion> fillInQuestions = normalExamPaper.getFillInQuestions();
         final RealmList<TFQuestion> tfQuestions = normalExamPaper.getTfQuestions();
         final RealmList<SglChoQuestion> sglChoQuestions = normalExamPaper.getSglChoQuestions();
