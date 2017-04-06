@@ -10,6 +10,5 @@ import java.util.ArrayList;
 
 public interface IPapersView {
     public void initPaperList(ArrayList<IPaperInfo> paperInfos);
-    public void setPaperList(ArrayList<IPaperInfo> paperInfos);
-    public void notifyDataChanged();
+    public void notifyDataChanged(ArrayList<IPaperInfo> paperInfos);
 }

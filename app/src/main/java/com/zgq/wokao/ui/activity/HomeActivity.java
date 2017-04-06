@@ -1,6 +1,7 @@
 package com.zgq.wokao.ui.activity;
 
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,18 +14,23 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gigamole.navigationtabstrip.NavigationTabStrip;
+import com.nbsp.materialfilepicker.MaterialFilePicker;
+import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 import com.zgq.linechart.ChartView;
 import com.zgq.wokao.R;
 import com.zgq.wokao.Util.FileUtil;
 import com.zgq.wokao.action.login.LoginAction;
+import com.zgq.wokao.data.realm.Paper.impl.PaperDaoImpl;
 import com.zgq.wokao.ui.fragment.impl.PapersFragment;
 import com.zgq.wokao.ui.fragment.impl.ScheduleFragment;
 import com.zgq.wokao.ui.presenter.impl.HomePresenterImpl;
 import com.zgq.wokao.ui.view.IHomeView;
 import com.zgq.wokao.ui.widget.SlideUp;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +38,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qqtheme.framework.util.StorageUtils;
 
 public class HomeActivity extends BaseActivity implements
         ScheduleFragment.OnScheduleFragmentListener,
@@ -62,6 +69,8 @@ public class HomeActivity extends BaseActivity implements
     ViewPager viewPager;
     @BindView(R.id.line_chart)
     ChartView lineChart;
+    @BindView(R.id.parse_paper_btn)
+    Button parseBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,8 +85,8 @@ public class HomeActivity extends BaseActivity implements
         super.onStart();
         homePresenter.showScheduleFragment();
         if (LoginAction.getInstance().isFirstTimeLogin()) {
-            homePresenter.parseFromFile(FileUtil.getOrInitAppStoragePath()+"/default_1.txt");
-            LoginAction.getInstance().setFirstTimeLoginFalse();
+//            homePresenter.parseFromFile(FileUtil.getOrInitAppStoragePath()+"/default_1.txt");
+//            LoginAction.getInstance().setFirstTimeLoginFalse();
         }
     }
 
@@ -135,6 +144,22 @@ public class HomeActivity extends BaseActivity implements
         fragments.add(schedlFragment);
         fragments.add(papersFragment);
         viewPager.setAdapter(new HomeFragmentPagerAdapter(getSupportFragmentManager(),fragments));
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     private void initLineChart(){
@@ -168,6 +193,7 @@ public class HomeActivity extends BaseActivity implements
     private void setListener(){
         menuBtn.setOnClickListener(this);
         searchBtn.setOnClickListener(this);
+        parseBtn.setOnClickListener(this);
     }
 
 
@@ -225,6 +251,7 @@ public class HomeActivity extends BaseActivity implements
     @Override
     public void notifyDataChanged() {
         ((ScheduleFragment)fragments.get(0)).notifyDataChanged();
+        ((PapersFragment)fragments.get(1)).getPapersPresenter().notifyDataChanged();
     }
 
     @Override
@@ -235,6 +262,12 @@ public class HomeActivity extends BaseActivity implements
                 break;
             case R.id.toolbar_search:
                 homePresenter.goSearch();
+                break;
+            case R.id.parse_paper_btn:
+                new MaterialFilePicker()
+                        .withActivity(this)
+                        .withRequestCode(1)
+                        .start();
                 break;
         }
     }
@@ -264,6 +297,19 @@ public class HomeActivity extends BaseActivity implements
         @Override
         public Fragment getItem(int position) {
             return fragments.get(position);
+        }
+
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            String filePath = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
+            // Do anything with file
+            homePresenter.parseFromFile(filePath);
         }
     }
 }

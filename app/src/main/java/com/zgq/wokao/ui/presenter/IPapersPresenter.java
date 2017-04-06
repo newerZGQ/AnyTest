@@ -5,7 +5,6 @@ package com.zgq.wokao.ui.presenter;
  */
 
 public interface IPapersPresenter {
-    public void setPaperList();
     public void notifyDataChanged();
     public void initPapersList();
 }

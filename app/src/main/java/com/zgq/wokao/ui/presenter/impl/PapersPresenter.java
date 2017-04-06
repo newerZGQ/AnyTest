@@ -34,14 +34,9 @@ public class PapersPresenter implements IPapersPresenter {
     }
 
     @Override
-    public void setPaperList() {
-        papersView.setPaperList(paperInfos);
-    }
-
-    @Override
     public void notifyDataChanged() {
         getPaperInfos(true);
-        papersView.notifyDataChanged();
+        papersView.notifyDataChanged(paperInfos);
     }
 
     @Override

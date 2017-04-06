@@ -13,7 +13,9 @@ import com.zgq.wokao.model.paper.question.impl.SglChoQuestion;
 import com.zgq.wokao.model.paper.question.impl.TFQuestion;
 import com.zgq.wokao.model.paper.question.IQuestion;
 import com.zgq.wokao.model.paper.QuestionType;
+import com.zgq.wokao.parser.formater.impl.MSDocFormater;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -37,18 +39,46 @@ public class ParserHelper {
     private static class InstanceHolder{
         private static ParserHelper helper = new ParserHelper();
     }
-    public NormalIExamPaper parse(String fileStr) throws FileNotFoundException, com.zgq.wokao.exception.ParseException {
-        NormalIExamPaper paper = new NormalIExamPaper();
-        this.fileString = fileStr;
-        if (fileString == null || fileString.equals("")){
+
+    private enum FileFormat{
+        TXT,WORD,ERRORFORMAT;
+    }
+
+    private FileFormat checkFile(String filePath) throws FileNotFoundException, com.zgq.wokao.exception.ParseException {
+        if (filePath == null || filePath.equals("")){
             throw new com.zgq.wokao.exception.ParseException("路径不存在");
         }
-        File file = new File(fileString);
+        String lowerCase = filePath.toLowerCase();
+        if (lowerCase.endsWith(".txt")){
+            return FileFormat.TXT;
+        }else if (lowerCase.endsWith(".doc") || lowerCase.endsWith(".docx")){
+            return FileFormat.WORD;
+        }
+
+        if (!lowerCase.endsWith(".txt") && !lowerCase.endsWith(".doc") && !lowerCase.endsWith(".docx")){
+            throw new com.zgq.wokao.exception.ParseException("文件格式错误");
+        }
+        File file = new File(filePath);
         if (!file.exists()){
             throw new com.zgq.wokao.exception.ParseException("文件不存在");
         }
-//        PaperParser paperParser = new PaperParser();
-        return parse(new FileInputStream(file));
+
+        return FileFormat.ERRORFORMAT;
+    }
+
+    public NormalIExamPaper parse(String fileStr) throws FileNotFoundException, com.zgq.wokao.exception.ParseException {
+        this.fileString = fileStr;
+        switch (checkFile(fileString)){
+            case TXT:
+                File txtFile = new File(fileString);
+                return parse(new FileInputStream(txtFile));
+            case WORD:
+                String wordStr = MSDocFormater.getInstance().getContent(fileString);
+                return parse(new ByteArrayInputStream(wordStr.getBytes()));
+            default:
+                break;
+        }
+        return null;
     }
 
     public NormalIExamPaper parse(InputStream inputStream) throws ParseException {

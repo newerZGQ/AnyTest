@@ -107,33 +107,18 @@ public class PapersFragment extends BaseFragment implements IPapersView{
         paperList.setItemViewCacheSize(1);
     }
 
-    @Override
-    public void setPaperList(ArrayList<IPaperInfo> paperInfos) {
-//        Log.d("----->>",TAG+" setPaperlist");
-//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-//        paperList.setLayoutManager(layoutManager);
-//        paperList.setItemAnimator(new FadeInAnimator());
-//        paperList.setAdapter(new HomePaperAdapter(paperInfos, new HomePaperAdapter.PaperAdapterListener() {
-//            @Override
-//            public void onItemClick(int position, IPaperInfo info) {
-//                Intent intent = new Intent(getActivity(), PaperInfoActivity.class);
-//                intent.putExtra("paperId",info.getId());
-//                startActivity(intent);
-//            }
-//
-//            @Override
-//            public void onItemLongClick(int position, IPaperInfo info) {
-//
-//            }
-//        }));
-    }
 
     @Override
-    public void notifyDataChanged() {
+    public void notifyDataChanged(ArrayList<IPaperInfo> paperInfos) {
+        ((HomePaperAdapter)paperList.getAdapter()).setData(paperInfos);
         paperList.getAdapter().notifyDataSetChanged();
     }
 
     public interface OnPaperFragmentListener {
 
+    }
+
+    public PapersPresenter getPapersPresenter() {
+        return papersPresenter;
     }
 }
