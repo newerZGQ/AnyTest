@@ -33,9 +33,7 @@ public class PapersPresenter implements IPapersPresenter {
         if (needUpdate || paperInfos == null || paperInfos.size() == 0){
             paperInfos = (ArrayList<IPaperInfo>) paperAction.getAllPaperInfo();
         }
-        Log.d("paperspresenter infos ",""+paperInfos.size());
         List<NormalExamPaper> papers = paperAction.getAllPaper();
-        Log.d("paperspresenter papers ",""+papers.size());
         return paperInfos;
     }
 
@@ -53,7 +51,7 @@ public class PapersPresenter implements IPapersPresenter {
     @Override
     public void deletePaper(String paperId) {
         paperAction.deleteExamPaper(paperId);
-        getPaperInfos(true);
+        papersView.notifyDataChanged(paperInfos);
     }
 
     @Override

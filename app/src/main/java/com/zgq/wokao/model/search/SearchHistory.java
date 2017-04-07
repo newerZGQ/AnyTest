@@ -1,12 +1,14 @@
 package com.zgq.wokao.model.search;
 
+import com.zgq.wokao.model.CascadeDeleteable;
+
 import io.realm.RealmObject;
 
 /**
  * Created by zgq on 2017/2/15.
  */
 
-public class SearchHistory extends RealmObject implements Searchable{
+public class SearchHistory extends RealmObject implements Searchable, CascadeDeleteable{
     private String content;
     private String date;
     private int count;
@@ -34,5 +36,10 @@ public class SearchHistory extends RealmObject implements Searchable{
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    @Override
+    public void cascadeDelete() {
+
     }
 }

@@ -139,8 +139,8 @@ public class HomeActivity extends BaseActivity implements
     }
 
     private void initViewPager(){
-        ScheduleFragment schedlFragment = ScheduleFragment.newInstance("","");
-        PapersFragment papersFragment = PapersFragment.newInstance();
+        final ScheduleFragment schedlFragment = ScheduleFragment.newInstance("","");
+        final PapersFragment papersFragment = PapersFragment.newInstance();
         fragments.add(schedlFragment);
         fragments.add(papersFragment);
         viewPager.setAdapter(new HomeFragmentPagerAdapter(getSupportFragmentManager(),fragments));
@@ -152,7 +152,14 @@ public class HomeActivity extends BaseActivity implements
 
             @Override
             public void onPageSelected(int position) {
-
+                switch (position){
+                    case 0:
+                        schedlFragment.notifyDataChanged();
+                        break;
+                    case 1:
+                        papersFragment.getPapersPresenter().notifyDataChanged();
+                        break;
+                }
             }
 
             @Override

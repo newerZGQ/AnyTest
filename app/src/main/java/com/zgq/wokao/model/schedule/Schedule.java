@@ -2,6 +2,7 @@ package com.zgq.wokao.model.schedule;
 
 import com.zgq.wokao.Util.DateUtil;
 import com.zgq.wokao.data.realm.Paper.impl.PaperDaoImpl;
+import com.zgq.wokao.model.CascadeDeleteable;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
@@ -10,7 +11,7 @@ import io.realm.RealmObject;
  * Created by zgq on 2017/2/25.
  */
 
-public class Schedule extends RealmObject implements ISchedule {
+public class Schedule extends RealmObject implements ISchedule, CascadeDeleteable {
     //是否开启学习计划
     private boolean isOpened;
     private int dailyCount;
@@ -99,4 +100,8 @@ public class Schedule extends RealmObject implements ISchedule {
     }
 
 
+    @Override
+    public void cascadeDelete() {
+
+    }
 }

@@ -3,6 +3,7 @@ package com.zgq.wokao.model.search;
 import android.os.Parcel;
 
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
+import com.zgq.wokao.model.CascadeDeleteable;
 
 /**
  * Created by zgq on 2017/2/15.
@@ -43,4 +44,5 @@ public class HistorySuggestion implements SearchSuggestion{
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(content);
     }
+
 }

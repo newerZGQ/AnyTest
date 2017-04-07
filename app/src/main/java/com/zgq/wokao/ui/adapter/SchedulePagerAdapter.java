@@ -231,6 +231,9 @@ public class SchedulePagerAdapter extends PagerAdapter {
     }
 
     public void changeStatus(Status status){
+        if (getCurrentView() == null){
+            return;
+        }
         switch (status){
             case SHOWADDTIME:
                 getCurrentView().findViewById(R.id.start_study).setVisibility(View.GONE);

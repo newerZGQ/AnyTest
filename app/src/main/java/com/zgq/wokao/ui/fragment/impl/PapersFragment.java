@@ -146,7 +146,7 @@ public class PapersFragment extends BaseFragment implements IPapersView{
 
     @Override
     public void notifyDataChanged(ArrayList<IPaperInfo> paperInfos) {
-        //((HomePaperAdapter)paperList.getAdapter()).setData(paperInfos);
+        ((HomePaperAdapter)paperList.getAdapter()).setData(paperInfos);
         paperList.getAdapter().notifyDataSetChanged();
     }
 

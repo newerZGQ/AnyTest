@@ -1,11 +1,13 @@
 package com.zgq.wokao.model.schedule;
 
+import com.zgq.wokao.model.CascadeDeleteable;
+
 import io.realm.RealmObject;
 
 /**
  * Created by zgq on 2017/2/25.
  */
-public class DailyRecord extends RealmObject{
+public class DailyRecord extends RealmObject implements CascadeDeleteable{
     private String date;
     private int studyNumber;
     private int studyCount;
@@ -54,6 +56,11 @@ public class DailyRecord extends RealmObject{
 
     public void addStudyNumber(){
         studyNumber++;
+    }
+
+    @Override
+    public void cascadeDelete() {
+
     }
 
     public static class Builder{

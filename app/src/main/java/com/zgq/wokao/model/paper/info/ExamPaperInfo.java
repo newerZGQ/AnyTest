@@ -1,5 +1,6 @@
 package com.zgq.wokao.model.paper.info;
 
+import com.zgq.wokao.model.CascadeDeleteable;
 import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.schedule.Schedule;
 import com.zgq.wokao.model.search.Searchable;
@@ -12,7 +13,7 @@ import io.realm.RealmObject;
 /**
  * Created by zgq on 16-6-20.
  */
-public class ExamPaperInfo extends RealmObject implements IPaperInfo, Serializable ,Searchable {
+public class ExamPaperInfo extends RealmObject implements IPaperInfo, Serializable ,Searchable ,CascadeDeleteable{
     private String id;
     private String title;
     private String author;
@@ -137,5 +138,11 @@ public class ExamPaperInfo extends RealmObject implements IPaperInfo, Serializab
     @Override
     public String toString() {
         return title + author;
+    }
+
+    @Override
+    public void cascadeDelete() {
+        schedule.cascadeDelete();
+        deleteFromRealm();
     }
 }

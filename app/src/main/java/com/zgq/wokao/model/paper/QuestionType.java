@@ -1,12 +1,14 @@
 package com.zgq.wokao.model.paper;
 
+import com.zgq.wokao.model.CascadeDeleteable;
+
 import io.realm.RealmObject;
 
 /**
  * Created by zgq on 2017/2/11.
  */
 
-public class QuestionType extends RealmObject {
+public class QuestionType extends RealmObject implements CascadeDeleteable{
     public static final int noqst_index = 0;
     public static final int fillin_index = 1;
     public static final int tf_index = 2;
@@ -47,5 +49,10 @@ public class QuestionType extends RealmObject {
 
     public void setIndex(int index) {
         this.index = index;
+    }
+
+    @Override
+    public void cascadeDelete() {
+
     }
 }

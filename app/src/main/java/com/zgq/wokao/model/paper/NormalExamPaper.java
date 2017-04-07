@@ -1,5 +1,6 @@
 package com.zgq.wokao.model.paper;
 
+import com.zgq.wokao.model.CascadeDeleteable;
 import com.zgq.wokao.model.paper.info.ExamPaperInfo;
 import com.zgq.wokao.model.paper.question.IQuestion;
 import com.zgq.wokao.model.paper.question.impl.DiscussQuestion;
@@ -17,7 +18,7 @@ import io.realm.annotations.PrimaryKey;
 /**
  * Created by zgq on 16-6-18.
  */
-public class NormalExamPaper extends RealmObject implements IExamPaper {
+public class NormalExamPaper extends RealmObject implements IExamPaper ,CascadeDeleteable{
     private ExamPaperInfo paperInfo = new ExamPaperInfo();
     private RealmList<FillInQuestion> fillInQuestions;
     private RealmList<TFQuestion> tfQuestions;
@@ -94,7 +95,32 @@ public class NormalExamPaper extends RealmObject implements IExamPaper {
     }
 
     public int getQuestionsCount(){
-        return getFillInQuestions().size()+getTfQuestions().size()+getSglChoQuestions().size()+getMultChoQuestions().size()+getDiscussQuestions().size();
+        return getFillInQuestions().size()+getTfQuestions().size()
+                +getSglChoQuestions().size()+getMultChoQuestions().size()
+                +getDiscussQuestions().size();
+    }
+
+    @Override
+    public void cascadeDelete() {
+        if (paperInfo != null) {
+            paperInfo.cascadeDelete();
+        }
+        for (int i = 0; i< fillInQuestions.size(); i++){
+            fillInQuestions.get(i).cascadeDelete();
+        }
+        for (int i = 0; i< tfQuestions.size();i++){
+            tfQuestions.get(i).cascadeDelete();
+        }
+        for (int i = 0; i< sglChoQuestions.size();i++){
+            sglChoQuestions.get(i).cascadeDelete();
+        }
+        for (int i = 0; i< multChoQuestions.size();i++){
+            multChoQuestions.get(i).cascadeDelete();
+        }
+        for (int i = 0; i< discussQuestions.size();i++){
+            discussQuestions.get(i).cascadeDelete();
+        }
+        deleteFromRealm();
     }
 
     @Override

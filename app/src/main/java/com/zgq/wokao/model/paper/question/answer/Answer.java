@@ -1,12 +1,14 @@
 package com.zgq.wokao.model.paper.question.answer;
 
+import com.zgq.wokao.model.CascadeDeleteable;
+
 import io.realm.RealmObject;
 
 /**
  * Created by zgq on 2017/2/27.
  */
 
-public class Answer extends RealmObject implements IAnswer {
+public class Answer extends RealmObject implements IAnswer , CascadeDeleteable{
     private String content;
 
     @Override
@@ -25,5 +27,10 @@ public class Answer extends RealmObject implements IAnswer {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public void cascadeDelete() {
+        deleteFromRealm();
     }
 }

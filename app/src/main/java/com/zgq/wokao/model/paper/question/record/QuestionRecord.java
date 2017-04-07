@@ -1,12 +1,14 @@
 package com.zgq.wokao.model.paper.question.record;
 
+import com.zgq.wokao.model.CascadeDeleteable;
+
 import io.realm.RealmObject;
 
 /**
  * Created by zgq on 2017/2/27.
  */
 
-public class QuestionRecord extends RealmObject implements IQuestionRecord{
+public class QuestionRecord extends RealmObject implements IQuestionRecord, CascadeDeleteable{
     private int studyNumber;
     private int correctNumber;
     //表示这道题是否学习过，一旦试卷所有试题都学习完，则会重置为false;
@@ -38,5 +40,10 @@ public class QuestionRecord extends RealmObject implements IQuestionRecord{
 
     public void setStudied(boolean studied) {
         isStudied = studied;
+    }
+
+    @Override
+    public void cascadeDelete() {
+        deleteFromRealm();
     }
 }

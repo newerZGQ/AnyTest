@@ -1,11 +1,13 @@
 package com.zgq.wokao.model.paper.question.option;
 
+import com.zgq.wokao.model.CascadeDeleteable;
+
 import io.realm.RealmObject;
 
 /**
  * Created by zgq on 16-6-18.
  */
-public class Option extends RealmObject{
+public class Option extends RealmObject implements CascadeDeleteable{
     private String option;
     private String tag;
 
@@ -36,6 +38,11 @@ public class Option extends RealmObject{
     @Override
     public String toString() {
         return option;
+    }
+
+    @Override
+    public void cascadeDelete() {
+        deleteFromRealm();
     }
 
     public static class Builder{

@@ -13,8 +13,8 @@ public interface IScheduleView {
     public void setListener();
     public void setViewPager(ArrayList<ScheduleData> scheduleDatas, ArrayList<ArrayList<QstData>> qstDataLists);
     public void notifyDataChanged();
-    public void showDetail();
-    public void hideDetail();
+    public void showDetail(int duration);
+    public void hideDetail(int duration);
     public void scheduleInfoChangeData(ScheduleData data);
     public void changeViewPagerStatus(boolean showFullView);
 }

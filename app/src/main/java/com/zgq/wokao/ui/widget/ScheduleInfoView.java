@@ -208,15 +208,15 @@ public class ScheduleInfoView extends RelativeLayout {
         set.setDuration(200).start();
     }
 
-    public void showBottom(){
-        viewAnimator(btmView,1f, 1f, 0f, 1f, 500);
-        viewAnimator(topView,1f, 0f, 1f, 0f, 500);
+    public void showBottom(int duration){
+        viewAnimator(btmView,1f, 1f, 0f, 1f, duration);
+        viewAnimator(topView,1f, 0f, 1f, 0f, duration);
         status = Status.BOTTOM;
     }
 
-    public void showTop(){
-        viewAnimator(btmView,1f, 0f, 1f, 0f, 500);
-        viewAnimator(topView,1f, 1f, 0f, 1f, 500);
+    public void showTop(int duration){
+        viewAnimator(btmView,1f, 0f, 1f, 0f, duration);
+        viewAnimator(topView,1f, 1f, 0f, 1f, duration);
         status = Status.TOP;
     }
 

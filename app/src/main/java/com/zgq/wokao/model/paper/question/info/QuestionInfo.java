@@ -1,5 +1,6 @@
 package com.zgq.wokao.model.paper.question.info;
 
+import com.zgq.wokao.model.CascadeDeleteable;
 import com.zgq.wokao.model.paper.QuestionType;
 
 import io.realm.RealmObject;
@@ -8,7 +9,7 @@ import io.realm.RealmObject;
  * Created by zgq on 2017/2/27.
  */
 
-public class QuestionInfo extends RealmObject implements IQuestionInfo {
+public class QuestionInfo extends RealmObject implements IQuestionInfo ,CascadeDeleteable{
 
     private QuestionType type;
     private int id;
@@ -68,5 +69,11 @@ public class QuestionInfo extends RealmObject implements IQuestionInfo {
 
     public void setAccuracy(float accuracy) {
         this.accuracy = accuracy;
+    }
+
+    @Override
+    public void cascadeDelete() {
+        type.cascadeDelete();
+        deleteFromRealm();
     }
 }
