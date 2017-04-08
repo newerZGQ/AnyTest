@@ -50,6 +50,7 @@ public class PapersPresenter implements IPapersPresenter {
 
     @Override
     public void deletePaper(String paperId) {
+        papersView.getHomeActivity().setNeedUpdateData(true);
         paperAction.deleteExamPaper(paperId);
         getPaperInfos(true);
         papersView.notifyDataChanged(paperInfos);
@@ -57,12 +58,14 @@ public class PapersPresenter implements IPapersPresenter {
 
     @Override
     public void addToSchedule(String paperId) {
+        papersView.getHomeActivity().setNeedUpdateData(true);
         paperAction.addToSchedule(paperId);
         getPaperInfos(true);
     }
 
     @Override
     public void removeFromSchedule(String paperId) {
+        papersView.getHomeActivity().setNeedUpdateData(true);
         paperAction.removeFromSchedule(paperId);
         getPaperInfos(true);
     }

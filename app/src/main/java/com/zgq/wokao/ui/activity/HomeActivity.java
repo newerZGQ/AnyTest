@@ -143,7 +143,7 @@ public class HomeActivity extends BaseActivity implements
                         animator.addListener(new Animator.AnimatorListener() {
                             @Override
                             public void onAnimationStart(Animator animator) {
-                                loadingView.setVisibility(View.GONE);
+                                loadingView.setVisibility(View.INVISIBLE);
                             }
 
                             @Override
@@ -223,7 +223,10 @@ public class HomeActivity extends BaseActivity implements
                 switch (position) {
                     case 0:
                         if (positionOffset == 0) {
+                            showLoadingView();
                             schedlFragment.notifyDataChanged();
+                            hideLoadingView();
+                            needUpdateData = false;
                         }
                         break;
                     case 1:
@@ -289,6 +292,11 @@ public class HomeActivity extends BaseActivity implements
         parseBtn.setOnClickListener(this);
     }
 
+    @Override
+    public void setNeedUpdateData(boolean needUpdateData) {
+        this.needUpdateData = needUpdateData;
+    }
+
 
     @Override
     public void onFragmentInteraction(Uri uri) {
@@ -304,7 +312,6 @@ public class HomeActivity extends BaseActivity implements
     public void goQuestionsList(String paperId) {
         Bundle bundle = new Bundle();
         bundle.putString("paperId", paperId);
-//        openActivity(PaperInfoActivity.class,bundle);
     }
 
     @Override
@@ -352,6 +359,12 @@ public class HomeActivity extends BaseActivity implements
     public void hideLoadingView() {
         initTask();
         timer.schedule(hideLoadingTask, 1000);
+    }
+
+    @Override
+    public void showLoadingView() {
+        loadingView.setVisibility(View.VISIBLE);
+        ObjectAnimator.ofFloat(loadingView,"alpha",0,1).setDuration(500).start();
     }
 
     @Override
@@ -410,11 +423,7 @@ public class HomeActivity extends BaseActivity implements
             if (filePath == null || filePath.equals("")) {
                 return;
             }
-
-            loadingView.setVisibility(View.VISIBLE);
-            ObjectAnimator.ofFloat(loadingView,"alpha",0,1).setDuration(500).start();
-
-            // Do anything with file
+            showLoadingView();
             homePresenter.parseFromFile(filePath);
         }
     }

@@ -29,7 +29,7 @@ public class HomePresenterImpl implements IHomePrerenter{
         parserAction.setListener(new ParserAction.ParseResultListener() {
             @Override
             public void onParseSuccess(String paperId) {
-                Log.d("------>>","parsesuccess");
+                homeView.setNeedUpdateData(true);
                 homeView.notifyDataChanged();
                 homeView.hideLoadingView();
                 homeView.hideProgressBar();

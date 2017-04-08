@@ -14,4 +14,6 @@ public interface IHomeView {
     public void hideProgressBar();
     public void notifyDataChanged();
     public void hideLoadingView();
+    public void showLoadingView();
+    public void setNeedUpdateData(boolean needUpdateData);
 }
