@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -43,8 +44,8 @@ import cn.qqtheme.framework.util.StorageUtils;
 public class HomeActivity extends BaseActivity implements
         ScheduleFragment.OnScheduleFragmentListener,
         PapersFragment.OnPaperFragmentListener,
-        IHomeView ,
-        View.OnClickListener{
+        IHomeView,
+        View.OnClickListener {
 
     public static final String TAG = "HomeActivity";
 
@@ -80,17 +81,18 @@ public class HomeActivity extends BaseActivity implements
         homePresenter = new HomePresenterImpl(this);
         initView();
     }
+
     @Override
     protected void onStart() {
         super.onStart();
         homePresenter.showScheduleFragment();
         if (LoginAction.getInstance().isFirstTimeLogin()) {
-            homePresenter.parseFromFile(FileUtil.getOrInitAppStoragePath()+"/default_1.txt");
+            homePresenter.parseFromFile(FileUtil.getOrInitAppStoragePath() + "/default_1.txt");
             LoginAction.getInstance().setFirstTimeLoginFalse();
         }
     }
 
-    private void initView(){
+    private void initView() {
         initSlideUp();
         initViewPager();
         setListener();
@@ -98,7 +100,7 @@ public class HomeActivity extends BaseActivity implements
         initLineChart();
     }
 
-    private void initTabStrip(){
+    private void initTabStrip() {
         tabStrip.setTitles("日程", "试卷");
         tabStrip.setTabIndex(0, true);
         tabStrip.setTitleSize(50);
@@ -114,21 +116,21 @@ public class HomeActivity extends BaseActivity implements
         tabStrip.setViewPager(viewPager);
     }
 
-    private void initSlideUp(){
+    private void initSlideUp() {
         slideUp = new SlideUp.Builder(menuLayout)
-                .withListeners(new SlideUp.Listener(){
+                .withListeners(new SlideUp.Listener() {
                     @Override
                     public void onSlide(float percent) {
                         if (percent == 0.0) return;
-                        ObjectAnimator.ofFloat(mainLayout, "translationY", menuLayout.getHeight()*(1-percent/100)).
+                        ObjectAnimator.ofFloat(mainLayout, "translationY", menuLayout.getHeight() * (1 - percent / 100)).
                                 setDuration(0).start();
                     }
 
                     @Override
                     public void onVisibilityChanged(int visibility) {
-                        if (visibility == View.GONE){
+                        if (visibility == View.GONE) {
 
-                        }else{
+                        } else {
 
                         }
                     }
@@ -138,28 +140,32 @@ public class HomeActivity extends BaseActivity implements
                 .build();
     }
 
-    private void initViewPager(){
-        final ScheduleFragment schedlFragment = ScheduleFragment.newInstance("","");
+    private void initViewPager() {
+        final ScheduleFragment schedlFragment = ScheduleFragment.newInstance("", "");
         final PapersFragment papersFragment = PapersFragment.newInstance();
         fragments.add(schedlFragment);
         fragments.add(papersFragment);
-        viewPager.setAdapter(new HomeFragmentPagerAdapter(getSupportFragmentManager(),fragments));
+        viewPager.setAdapter(new HomeFragmentPagerAdapter(getSupportFragmentManager(), fragments));
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+                switch (position) {
+                    case 0:
+                        if (positionOffset < 0.001) {
+                            schedlFragment.notifyDataChanged();
+                        }
+                        break;
+                    case 1:
+                        if (positionOffset < 0.001) {
+                            papersFragment.getPapersPresenter().notifyDataChanged();
+                        }
+                        break;
+                }
             }
 
             @Override
             public void onPageSelected(int position) {
-                switch (position){
-                    case 0:
-                        schedlFragment.notifyDataChanged();
-                        break;
-                    case 1:
-                        papersFragment.getPapersPresenter().notifyDataChanged();
-                        break;
-                }
+
             }
 
             @Override
@@ -169,7 +175,7 @@ public class HomeActivity extends BaseActivity implements
         });
     }
 
-    private void initLineChart(){
+    private void initLineChart() {
         //x轴坐标对应的数据
         List<String> xValue = new ArrayList<>();
         //y轴坐标对应的数据
@@ -177,12 +183,12 @@ public class HomeActivity extends BaseActivity implements
         //折线对应的数据
         Map<String, Integer> value = new HashMap<>();
         for (int i = 0; i < 9; i++) {
-            if (i == 0 || i == 1){
+            if (i == 0 || i == 1) {
                 xValue.add((i + 1) + "月");
                 value.put((i + 1) + "月", (int) (181));//60--240
                 continue;
             }
-            if (i == 7 || i == 8){
+            if (i == 7 || i == 8) {
                 xValue.add((i + 1) + "月");
                 value.put((i + 1) + "月", (int) (160));//60--240
                 continue;
@@ -197,7 +203,7 @@ public class HomeActivity extends BaseActivity implements
         lineChart.setValue(value, xValue, yValue);
     }
 
-    private void setListener(){
+    private void setListener() {
         menuBtn.setOnClickListener(this);
         searchBtn.setOnClickListener(this);
         parseBtn.setOnClickListener(this);
@@ -217,7 +223,7 @@ public class HomeActivity extends BaseActivity implements
     @Override
     public void goQuestionsList(String paperId) {
         Bundle bundle = new Bundle();
-        bundle.putString("paperId",paperId);
+        bundle.putString("paperId", paperId);
 //        openActivity(PaperInfoActivity.class,bundle);
     }
 
@@ -225,7 +231,7 @@ public class HomeActivity extends BaseActivity implements
     public void updateSlideUp() {
         if (slideUp.isVisible()) {
             slideUp.hide();
-        }else {
+        } else {
             slideUp.show();
         }
     }
@@ -257,13 +263,13 @@ public class HomeActivity extends BaseActivity implements
 
     @Override
     public void notifyDataChanged() {
-        ((ScheduleFragment)fragments.get(0)).notifyDataChanged();
-        ((PapersFragment)fragments.get(1)).getPapersPresenter().notifyDataChanged();
+        ((ScheduleFragment) fragments.get(0)).notifyDataChanged();
+        ((PapersFragment) fragments.get(1)).getPapersPresenter().notifyDataChanged();
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.toolbar_menu:
                 homePresenter.updateSlideUp();
                 break;
@@ -281,7 +287,7 @@ public class HomeActivity extends BaseActivity implements
 
     @Override
     public void onBackPressed() {
-        if (slideUp.isVisible()){
+        if (slideUp.isVisible()) {
             slideUp.hide();
             return;
         }

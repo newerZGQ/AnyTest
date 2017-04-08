@@ -110,8 +110,8 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
 
     @Override
     public void onPause() {
+        Log.d("-------->>","pause");
         super.onPause();
-
     }
 
 
@@ -185,25 +185,25 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
                             }
                         }
                     }));
+
+            viewPager.addOnPageChangeListener(new SchedulePageChangeListener());
+            viewPager.post(new Runnable() {
+                @Override
+                public void run() {
+                    View tmp = viewPager.findViewById(R.id.qst_datial_cards);
+                    if (tmp == null){
+                        slipDistance = 0;
+                    }else {
+                        slipDistance = tmp.getHeight();
+                    }
+                    hideDetail(0);
+                }
+            });
         }else {
             ((SchedulePagerAdapter)viewPager.getAdapter()).setScheduleDatas(scheduleDatas);
             ((SchedulePagerAdapter)viewPager.getAdapter()).setQstDatasList(qstDataLists);
+            viewPager.getAdapter().notifyDataSetChanged();
         }
-        viewPager.getAdapter().notifyDataSetChanged();
-        viewPager.addOnPageChangeListener(new SchedulePageChangeListener());
-
-        viewPager.post(new Runnable() {
-            @Override
-            public void run() {
-                View tmp = viewPager.findViewById(R.id.qst_datial_cards);
-                if (tmp == null){
-                    slipDistance = 0;
-                }else {
-                    slipDistance = tmp.getHeight();
-                }
-                hideDetail(0);
-            }
-        });
     }
 
     @Override
