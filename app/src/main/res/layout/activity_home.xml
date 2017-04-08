@@ -31,15 +31,6 @@
             android:layout_below="@+id/app_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-        <Button
-            android:id="@+id/parse_paper_btn"
-            android:background="@drawable/icon_folder_120px"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="65dp"
-            android:layout_marginRight="32dp"
-            android:padding="10dp"
-            android:layout_width="25dp"
-            android:layout_height="25dp" />
         <com.zgq.linechart.ChartView
             android:id="@+id/line_chart"
             android:layout_below="@+id/jilu"
@@ -153,14 +144,27 @@
                     android:background="@drawable/ic_menu_white_36pt_2x"
                     android:layout_width="32dp"
                     android:layout_height="32dp" />
-                <Button
-                    android:id="@+id/toolbar_search"
+                <FrameLayout
                     android:layout_alignParentRight="true"
                     android:layout_marginEnd="24dp"
                     android:layout_centerVertical="true"
-                    android:background="@drawable/ic_search_white_72pt_2x"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <Button
+                        android:id="@+id/toolbar_search"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/ic_search_white_72pt_2x"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp" />
+                    <Button
+                        android:id="@+id/toolbar_add"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/ic_add_white_36dp"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:visibility="gone"/>
+                </FrameLayout>
+
             </RelativeLayout>
         </LinearLayout>
         <android.support.v4.view.ViewPager
@@ -170,6 +174,20 @@
             android:layout_below="@+id/toolbar_layout">
         </android.support.v4.view.ViewPager>
     </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/loadingview"
+        android:background="@color/color_home_loading_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0"
+        android:visibility="gone"
+        android:clickable="true">
+        <com.mingle.widget.LoadingView
+            android:id="@+id/loadView"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"/>
+    </RelativeLayout>
+
 
 </FrameLayout>
 

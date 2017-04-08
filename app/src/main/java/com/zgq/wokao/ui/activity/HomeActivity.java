@@ -1,5 +1,6 @@
 package com.zgq.wokao.ui.activity;
 
+import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.graphics.Color;
@@ -36,6 +37,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,8 +73,17 @@ public class HomeActivity extends BaseActivity implements
     ViewPager viewPager;
     @BindView(R.id.line_chart)
     ChartView lineChart;
-    @BindView(R.id.parse_paper_btn)
+    @BindView(R.id.toolbar_add)
     Button parseBtn;
+    @BindView(R.id.loadingview)
+    RelativeLayout loadingView;
+
+    private int currentItem = 0;
+
+    private Timer timer = new Timer();
+    private TimerTask hideLoadingTask;
+
+    public boolean needUpdateData = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +91,7 @@ public class HomeActivity extends BaseActivity implements
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
         homePresenter = new HomePresenterImpl(this);
+        initTask();
         initView();
     }
 
@@ -92,12 +105,67 @@ public class HomeActivity extends BaseActivity implements
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        switch (currentItem) {
+            case 0:
+                homePresenter.showScheduleFragment();
+                break;
+            case 1:
+                homePresenter.showPapersFragment();
+                break;
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        currentItem = viewPager.getCurrentItem();
+    }
+
     private void initView() {
         initSlideUp();
         initViewPager();
         setListener();
         initTabStrip();
         initLineChart();
+    }
+
+    private void initTask() {
+        hideLoadingTask = new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {      // UI thread
+                    @Override
+                    public void run() {
+                        ObjectAnimator animator = ObjectAnimator.ofFloat(loadingView, "alpha", 1, 0).setDuration(500);
+                        animator.addListener(new Animator.AnimatorListener() {
+                            @Override
+                            public void onAnimationStart(Animator animator) {
+                                loadingView.setVisibility(View.GONE);
+                            }
+
+                            @Override
+                            public void onAnimationEnd(Animator animator) {
+
+                            }
+
+                            @Override
+                            public void onAnimationCancel(Animator animator) {
+
+                            }
+
+                            @Override
+                            public void onAnimationRepeat(Animator animator) {
+
+                            }
+                        });
+                        animator.start();
+                    }
+                });
+            }
+        };
     }
 
     private void initTabStrip() {
@@ -149,15 +217,18 @@ public class HomeActivity extends BaseActivity implements
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                if (!needUpdateData) {
+                    return;
+                }
                 switch (position) {
                     case 0:
-                        if (positionOffset < 0.001) {
+                        if (positionOffset == 0) {
                             schedlFragment.notifyDataChanged();
                         }
                         break;
                     case 1:
-                        if (positionOffset < 0.001) {
-                            papersFragment.getPapersPresenter().notifyDataChanged();
+                        if (positionOffset == 0) {
+//                            papersFragment.getPapersPresenter().notifyDataChanged();
                         }
                         break;
                 }
@@ -165,7 +236,16 @@ public class HomeActivity extends BaseActivity implements
 
             @Override
             public void onPageSelected(int position) {
-
+                switch (position) {
+                    case 0:
+                        parseBtn.setVisibility(View.GONE);
+                        searchBtn.setVisibility(View.VISIBLE);
+                        break;
+                    case 1:
+                        parseBtn.setVisibility(View.VISIBLE);
+                        searchBtn.setVisibility(View.GONE);
+                        break;
+                }
             }
 
             @Override
@@ -267,6 +347,13 @@ public class HomeActivity extends BaseActivity implements
         ((PapersFragment) fragments.get(1)).getPapersPresenter().notifyDataChanged();
     }
 
+
+    @Override
+    public void hideLoadingView() {
+        initTask();
+        timer.schedule(hideLoadingTask, 1000);
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -276,7 +363,7 @@ public class HomeActivity extends BaseActivity implements
             case R.id.toolbar_search:
                 homePresenter.goSearch();
                 break;
-            case R.id.parse_paper_btn:
+            case R.id.toolbar_add:
                 new MaterialFilePicker()
                         .withActivity(this)
                         .withRequestCode(1)
@@ -318,9 +405,15 @@ public class HomeActivity extends BaseActivity implements
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == 1 && resultCode == RESULT_OK) {
             String filePath = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
+            if (filePath == null || filePath.equals("")) {
+                return;
+            }
+
+            loadingView.setVisibility(View.VISIBLE);
+            ObjectAnimator.ofFloat(loadingView,"alpha",0,1).setDuration(500).start();
+
             // Do anything with file
             homePresenter.parseFromFile(filePath);
         }

@@ -37,7 +37,6 @@ public class ParserAction implements IParserAction {
 
     private ParserAction(){
         init();
-        registerReceiver();
     }
 
     public static class InstanceHolder{
@@ -83,6 +82,7 @@ public class ParserAction implements IParserAction {
     };
     @Override
     public IExamPaper parseFromFile(String fileString) throws ParseException {
+        registerReceiver();
         if (listener == null) return null;
         Intent intent = new Intent(context, ParserService.class);
         intent.putExtra("filePath",fileString);
@@ -92,11 +92,13 @@ public class ParserAction implements IParserAction {
 
     @Override
     public IExamPaper parseFromIS(InputStream inputStream) {
+//        registerReceiver();
         return null;
     }
 
     @Override
     public IExamPaper parseFromString(String content) {
+//        registerReceiver();
         return null;
     }
 
@@ -113,6 +115,7 @@ public class ParserAction implements IParserAction {
                 listener.onParseError("parse error");
             }
             unRegisterReceiver();
+            context.unbindService(mServiceConnection);
         }
     }
 

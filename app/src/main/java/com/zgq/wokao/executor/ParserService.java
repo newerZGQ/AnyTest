@@ -30,7 +30,6 @@ public class ParserService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.w(TAG, "in onCreate");
     }
 
     @Override

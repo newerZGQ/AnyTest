@@ -15,6 +15,7 @@ import android.widget.FrameLayout;
 
 import com.zgq.wokao.R;
 import com.zgq.wokao.model.paper.info.IPaperInfo;
+import com.zgq.wokao.ui.activity.HomeActivity;
 import com.zgq.wokao.ui.adapter.HomePaperAdapter;
 import com.zgq.wokao.ui.fragment.BaseFragment;
 import com.zgq.wokao.ui.presenter.impl.PapersPresenter;
@@ -148,10 +149,15 @@ public class PapersFragment extends BaseFragment implements IPapersView{
     public void notifyDataChanged(ArrayList<IPaperInfo> paperInfos) {
         ((HomePaperAdapter)paperList.getAdapter()).setData(paperInfos);
         paperList.getAdapter().notifyDataSetChanged();
+
     }
 
     public interface OnPaperFragmentListener {
 
+    }
+
+    public HomeActivity getHomeActivity(){
+        return (HomeActivity)getActivity();
     }
 
     public PapersPresenter getPapersPresenter() {

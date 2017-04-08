@@ -1,5 +1,7 @@
 package com.zgq.wokao.ui.presenter.impl;
 
+import android.util.Log;
+
 import com.zgq.wokao.action.paper.IPaperAction;
 import com.zgq.wokao.action.paper.impl.PaperAction;
 import com.zgq.wokao.action.parser.IParserAction;
@@ -27,7 +29,10 @@ public class HomePresenterImpl implements IHomePrerenter{
         parserAction.setListener(new ParserAction.ParseResultListener() {
             @Override
             public void onParseSuccess(String paperId) {
+                Log.d("------>>","parsesuccess");
                 homeView.notifyDataChanged();
+                homeView.hideLoadingView();
+                homeView.hideProgressBar();
             }
 
             @Override

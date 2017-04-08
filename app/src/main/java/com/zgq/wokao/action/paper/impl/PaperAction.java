@@ -99,6 +99,11 @@ public class PaperAction extends BaseAction implements IPaperAction,IQuestionAct
     }
 
     @Override
+    public void deletePaperInfo(IPaperInfo paperInfo) {
+
+    }
+
+    @Override
     public void star(final IExamPaper paper) {
         paperDao.star(paper);
     }

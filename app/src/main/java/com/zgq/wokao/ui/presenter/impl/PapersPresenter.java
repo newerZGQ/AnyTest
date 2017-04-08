@@ -51,6 +51,7 @@ public class PapersPresenter implements IPapersPresenter {
     @Override
     public void deletePaper(String paperId) {
         paperAction.deleteExamPaper(paperId);
+        getPaperInfos(true);
         papersView.notifyDataChanged(paperInfos);
     }
 

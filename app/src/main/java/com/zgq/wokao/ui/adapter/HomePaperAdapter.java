@@ -71,24 +71,31 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
         final IPaperInfo info = paperInfos.get(position);
         //front background
         int backIndex = getNewBackgroundId();
-        switch (backIndex) {
-            case 0:
-                ((MyViewHolder) holder).frontLayout.setBackground(context.getResources()
-                        .getDrawable(R.drawable.rectangle_blue));
-                break;
-            case 1:
-                ((MyViewHolder) holder).frontLayout.setBackground(context.getResources()
-                        .getDrawable(R.drawable.rectangle_red));
-                break;
-            case 2:
-                ((MyViewHolder) holder).frontLayout.setBackground(context.getResources()
-                        .getDrawable(R.drawable.rectangle_yellow));
-                break;
-            case 3:
-                ((MyViewHolder) holder).frontLayout.setBackground(context.getResources()
-                        .getDrawable(R.drawable.rectangle_gree));
-                break;
+        if (info.isInSchedule()){
+            ((MyViewHolder) holder).frontLayout.setBackground(context.getResources()
+                    .getDrawable(R.drawable.rectangle_blue));
+        }else{
+            ((MyViewHolder) holder).frontLayout.setBackground(context.getResources()
+                    .getDrawable(R.drawable.rectangle_red));
         }
+//        switch (info.isInSchedule()) {
+//            case true:
+//                ((MyViewHolder) holder).frontLayout.setBackground(context.getResources()
+//                        .getDrawable(R.drawable.rectangle_blue));
+//                break;
+//            case false:
+//                ((MyViewHolder) holder).frontLayout.setBackground(context.getResources()
+//                        .getDrawable(R.drawable.rectangle_red));
+//                break;
+//            case 2:
+//                ((MyViewHolder) holder).frontLayout.setBackground(context.getResources()
+//                        .getDrawable(R.drawable.rectangle_yellow));
+//                break;
+//            case 3:
+//                ((MyViewHolder) holder).frontLayout.setBackground(context.getResources()
+//                        .getDrawable(R.drawable.rectangle_gree));
+//                break;
+//        }
 
         //title
         if (info.getTitle() != null) {

@@ -12,6 +12,7 @@ import java.util.List;
 public interface IPaperInfoAction {
     public List<IPaperInfo> getAllPaperInfo();
     public List<IPaperInfo> getPaperInfosInSchdl();
+    public void deletePaperInfo(IPaperInfo paperInfo);
     public void star(IExamPaper paper);
     public void star(String paperId);
     public void unStar(IExamPaper paper);

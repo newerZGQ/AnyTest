@@ -102,6 +102,6 @@ public class Schedule extends RealmObject implements ISchedule, CascadeDeleteabl
 
     @Override
     public void cascadeDelete() {
-
+        deleteFromRealm();
     }
 }

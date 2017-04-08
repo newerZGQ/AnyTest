@@ -71,11 +71,14 @@
     <color name="color_paperitem_title_text">#e5ffffff</color>
     <color name="color_paperitem_qsttype_text">#9bffffff</color>
     <color name="color_paperitem_qsttype_back">#3fffffff</color>
+    <color name="color_paper_list_cover_back_1">#031027</color>
+    <color name="color_paper_list_cover_back_2">#00031027</color>
 
 
     //homeactivity
     <color name="color_home_activity_background">#031027</color>
     <color name="color_home_activity_selected_tab">#19b99a</color>
     <color name="color_home_inactivity_selected_tab">#84acbfb9</color>
+    <color name="color_home_loading_background">#b8000000</color>
 
 </resources>
