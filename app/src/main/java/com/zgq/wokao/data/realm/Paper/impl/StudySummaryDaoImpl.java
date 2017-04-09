@@ -7,6 +7,7 @@ import com.zgq.wokao.model.total.StudySummary;
 import com.zgq.wokao.model.total.TotalDailyCount;
 
 import io.realm.Realm;
+import io.realm.RealmResults;
 
 /**
  * Created by zhangguoqiang on 2017/4/9.
@@ -44,5 +45,15 @@ public class StudySummaryDaoImpl extends BaseRealmProvider<StudySummary> impleme
         if (correct){
             studySummary.correctCountPlus_1();
         }
+    }
+
+    @Override
+    public StudySummary getStudySummary() {
+        RealmResults<StudySummary> results = realm
+                .where(StudySummary.class)
+                .findAll();
+        if (results.size() == 0)
+            return null;
+        return results.first();
     }
 }

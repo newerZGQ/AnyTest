@@ -185,7 +185,6 @@ public class PaperDaoImpl extends BaseRealmProvider<NormalExamPaper> implements 
     @Override
     public List<IPaperInfo> getPaperInfosInSchdl() {
         RealmResults<ExamPaperInfo> results = realm.where(ExamPaperInfo.class).equalTo("isInSchedule", true).findAll();
-        Log.d("---->>", "paperdaoimpl " + results.size());
         List<ExamPaperInfo> list = changeRealmListToList(results);
         return examPaperInfoToIPaperInfo(list);
     }

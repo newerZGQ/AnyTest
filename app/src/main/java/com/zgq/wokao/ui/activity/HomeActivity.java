@@ -25,7 +25,9 @@ import com.zgq.linechart.ChartView;
 import com.zgq.wokao.R;
 import com.zgq.wokao.Util.FileUtil;
 import com.zgq.wokao.action.login.LoginAction;
+import com.zgq.wokao.action.paper.impl.StudySummaryAction;
 import com.zgq.wokao.data.realm.Paper.impl.PaperDaoImpl;
+import com.zgq.wokao.model.total.StudySummary;
 import com.zgq.wokao.ui.fragment.impl.PapersFragment;
 import com.zgq.wokao.ui.fragment.impl.ScheduleFragment;
 import com.zgq.wokao.ui.presenter.impl.HomePresenterImpl;
@@ -100,7 +102,7 @@ public class HomeActivity extends BaseActivity implements
         super.onStart();
         homePresenter.showScheduleFragment();
         if (LoginAction.getInstance().isFirstTimeLogin()) {
-            homePresenter.parseFromFile(FileUtil.getOrInitAppStoragePath() + "/default_1.txt");
+            StudySummaryAction.getInstance().addStudySummary(new StudySummary());
             LoginAction.getInstance().setFirstTimeLoginFalse();
         }
     }
