@@ -61,6 +61,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
                 <TextView
+                    android:id="@+id/total_count"
                     android:text="2000"
                     android:layout_marginTop="5dp"
                     android:textColor="@color/color_accuracy_circle_2_hard"
@@ -83,6 +84,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
                 <TextView
+                    android:id="@+id/total_accuracy"
                     android:text="64%"
                     android:layout_marginTop="5dp"
                     android:textColor="@color/color_accuracy_circle_1_hard"

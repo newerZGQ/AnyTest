@@ -79,6 +79,10 @@ public class HomeActivity extends BaseActivity implements
     Button parseBtn;
     @BindView(R.id.loadingview)
     RelativeLayout loadingView;
+    @BindView(R.id.total_count)
+    TextView totalCount;
+    @BindView(R.id.total_accuracy)
+    TextView totalAccuracy;
 
     private int currentItem = 0;
 
@@ -132,6 +136,7 @@ public class HomeActivity extends BaseActivity implements
         setListener();
         initTabStrip();
         initLineChart();
+        initContent();
     }
 
     private void initTask() {
@@ -292,6 +297,18 @@ public class HomeActivity extends BaseActivity implements
         menuBtn.setOnClickListener(this);
         searchBtn.setOnClickListener(this);
         parseBtn.setOnClickListener(this);
+    }
+
+    private void initContent(){
+        StudySummary studySummary = StudySummaryAction.getInstance().getStudySummary();
+        totalCount.setText(""+studySummary.getStudyCount());
+        String accuracy = "0";
+        if (studySummary.getStudyCount() != 0){
+            accuracy = String.valueOf(studySummary.getCorrectCount()/studySummary.getStudyCount());
+        }else{
+            accuracy = "未学习";
+        }
+        totalAccuracy.setText(accuracy);
     }
 
     @Override

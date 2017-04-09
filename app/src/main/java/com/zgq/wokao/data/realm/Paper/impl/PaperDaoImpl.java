@@ -133,6 +133,27 @@ public class PaperDaoImpl extends BaseRealmProvider<NormalExamPaper> implements 
         realm.commitTransaction();
     }
 
+    @Override
+    public void setLastStudyInfo(String paperId, QuestionType questionType, int num) {
+        realm.beginTransaction();
+        IExamPaper paper = query(paperId);
+        paper.getPaperInfo().getSchedule().setLastStudyType(questionType);
+        paper.getPaperInfo().getSchedule().setLastStudyNum(num);
+        realm.commitTransaction();
+    }
+
+    @Override
+    public QuestionType getLastStudyType(String paperId) {
+        IExamPaper paper = query(paperId);
+        return paper.getPaperInfo().getSchedule().getLastStudyType();
+    }
+
+    @Override
+    public int getLastStudyNum(String paperId) {
+        IExamPaper paper = query(paperId);
+        return paper.getPaperInfo().getSchedule().getLastStudyNum();
+    }
+
 
     private static class ProviderHolder {
         private static PaperDaoImpl instance = new PaperDaoImpl();
@@ -378,12 +399,6 @@ public class PaperDaoImpl extends BaseRealmProvider<NormalExamPaper> implements 
             return false;
         }
         return true;
-//        ArrayList<IPaperInfo> infos = (ArrayList<IPaperInfo>) getAllPaperInfo();
-//        String thisInfo = paper.getPaperInfo().getId();
-//        for (int i = 0; i < infos.size(); i++) {
-//            if (thisInfo.equals(infos.get(i).getId())) return true;
-//        }
-//        return false;
     }
 
     private static ExecutorService pool = Executors.newFixedThreadPool(4);

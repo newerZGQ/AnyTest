@@ -74,10 +74,8 @@ public class ExpandableViewHoldersUtil {
 
         public void bind(HomePaperAdapter.MyViewHolder holder, int pos) {
             if (pos == _opened) {
-                Log.d("------>>bind",""+pos+" open");
                 ExpandableViewHoldersUtil.openH(holder, holder.getExpandView(), false);
             } else {
-                Log.d("------>>bind",""+pos+" close");
                 ExpandableViewHoldersUtil.closeH(holder, holder.getExpandView(), false);
             }
         }
@@ -91,11 +89,9 @@ public class ExpandableViewHoldersUtil {
                 int previous = _opened;
                 _opened = holder.getPosition();
                 ExpandableViewHoldersUtil.openH(holder, holder.getExpandView(), true);
-                Log.d("------>>","find pos " +previous+" to close");
                 final HomePaperAdapter.MyViewHolder oldHolder = (HomePaperAdapter.MyViewHolder) ((RecyclerView) holder
                         .itemView.getParent()).findViewHolderForLayoutPosition(previous);
                 if (oldHolder != null) {
-                    Log.d("------>>",""+oldHolder.getPosition()+" close");
                     ExpandableViewHoldersUtil.closeH(oldHolder, oldHolder.getExpandView(), true);
                 }
             }

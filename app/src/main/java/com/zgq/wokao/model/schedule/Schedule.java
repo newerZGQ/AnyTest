@@ -3,6 +3,7 @@ package com.zgq.wokao.model.schedule;
 import com.zgq.wokao.Util.DateUtil;
 import com.zgq.wokao.data.realm.Paper.impl.PaperDaoImpl;
 import com.zgq.wokao.model.CascadeDeleteable;
+import com.zgq.wokao.model.paper.QuestionType;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
@@ -15,6 +16,8 @@ public class Schedule extends RealmObject implements ISchedule, CascadeDeleteabl
     //是否开启学习计划
     private boolean isOpened;
     private int dailyCount;
+    private QuestionType lastStudyType;
+    private int lastStudyNum;
     private RealmList<DailyRecord> dailyRecords = new RealmList<>();
 
     public Schedule(){
@@ -56,6 +59,22 @@ public class Schedule extends RealmObject implements ISchedule, CascadeDeleteabl
     @Override
     public void setDailyCount(int count) {
         this.dailyCount = count;
+    }
+    @Override
+    public QuestionType getLastStudyType() {
+        return lastStudyType;
+    }
+    @Override
+    public void setLastStudyType(QuestionType lastStudyType) {
+        this.lastStudyType = lastStudyType;
+    }
+    @Override
+    public int getLastStudyNum() {
+        return lastStudyNum;
+    }
+    @Override
+    public void setLastStudyNum(int lastStudyNum) {
+        this.lastStudyNum = lastStudyNum;
     }
 
     @Override

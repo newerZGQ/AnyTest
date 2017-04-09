@@ -110,7 +110,6 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
 
     @Override
     public void onPause() {
-        Log.d("-------->>","pause");
         super.onPause();
     }
 
