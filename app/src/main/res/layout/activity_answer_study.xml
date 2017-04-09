@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.zgq.wokao.ui.activity.AnswerStudyActivity">
+
     <View
         android:layout_width="match_parent"
         android:layout_height="48dp"
@@ -19,6 +20,16 @@
         android:layout_above="@+id/view"
         android:layout_below="@+id/toolbar_layout">
     </android.support.v4.view.ViewPager>
+    <TextView
+        android:id="@+id/study_info"
+        android:textSize="12sp"
+        android:text="共学习12次，答对10次"
+        android:gravity="right"
+        android:paddingRight="16dp"
+        android:paddingBottom="3dp"
+        android:layout_above="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
     <LinearLayout
         android:id="@+id/background"
         android:visibility="gone"

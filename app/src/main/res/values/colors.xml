@@ -9,7 +9,7 @@
     <color name="colorGreen">#aed581</color>
     <color name="colorBlue">#7baaf7</color>
     <color name="colorYellow">#fdd835</color>
-    <color name="colorTeal">#009688</color>
+    <color name="colorTeal">#031027</color>
     <color name="colorCyan">#00bcd4</color>
     <color name="colorLime">#cddc39</color>
     <color name="colorIndigo">#3f51b5</color>
@@ -27,7 +27,7 @@
 
 
     //状态栏
-    <color name="colorStatusBar">#01cac4c4</color>
+    <color name="colorStatusBar">#031027</color>
     <color name="colorTransparent">#00000000</color>
 
     //acrivity_questionlist
@@ -80,5 +80,8 @@
     <color name="color_home_activity_selected_tab">#19b99a</color>
     <color name="color_home_inactivity_selected_tab">#84acbfb9</color>
     <color name="color_home_loading_background">#b8000000</color>
+
+    //studyactivity
+    <color name="color_study_activity_tip_text">#000000</color>
 
 </resources>

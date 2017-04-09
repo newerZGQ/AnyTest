@@ -143,28 +143,13 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
             initCurrentMyStarAnswer();
         }
         PaperAction.getInstance().setLastStudyDate(normalExamPaper);
-//        realm.executeTransaction(new Realm.Transaction() {
-//            @Override
-//            public void execute(Realm realm) {
-////                currentAllQuestions.get(0).getRecord().updateRecord(true);
-//                normalExamPaper.getPaperInfo().setLastStudyDate(DateUtil.getCurrentDate());
-////                Log.d("----->>last",DateUtil.getCurrentDate());
-//            }
-//        });
     }
 
     private void initPaperData(){
         Intent intent = getIntent();
         String paperId = intent.getStringExtra("paperId");
         currentQuestionType = intent.getIntExtra("qstType", Constant.FILLINQUESTIONTYPE);
-        //int initQstNum = intent.getIntExtra("qstNum",0);
         normalExamPaper = (NormalExamPaper) PaperAction.getInstance().queryById(paperId);
-//        RealmResults<NormalExamPaper> papers = realm.where(NormalExamPaper.class).
-//                equalTo("paperInfo.title", title).
-//                equalTo("paperInfo.author", author).
-//                findAll();
-
-        //normalExamPaper = papers.get(0);
     }
 
     //初始化当前的问题
@@ -280,23 +265,18 @@ public class AnswerStudyActivity extends AppCompatActivity implements View.OnCli
                 upDateBottomMenu(position);
                 //设置已经学习过了这个问题 //重置该位置的myAnswer
                 if (currentMode == ALLQUESTIONMODE){
-//                    if (isNeedAnswer()) {
-//                        currentAllMyAnswer.get(position).setBtmContent("");
-//                    }
                     realm.executeTransaction(new Realm.Transaction() {
                         @Override
                         public void execute(Realm realm) {
-//                            currentAllQuestions.get(p).getInfo().setStudied(true);
+
                         }
                     });
                 }else{
-//                    if (isNeedAnswer()) {
-//                        currentStarMyAnswer.get(position).setBtmContent("");
-//                    }
+
                     realm.executeTransaction(new Realm.Transaction() {
                         @Override
                         public void execute(Realm realm) {
-//                            currentStarQuestions.get(p).setStudied(true);
+
                         }
                     });
                 }

@@ -302,7 +302,6 @@ public class PaperDaoImpl extends BaseRealmProvider<NormalExamPaper> implements 
         for (NormalExamPaper tmp : papers) {
             results = ListUtil.assem(results, searchQstFromPaper(query, tmp));
         }
-//        Log.d("---->>searchQstItemList",""+results.size());
         return results;
     }
 
@@ -335,7 +334,6 @@ public class PaperDaoImpl extends BaseRealmProvider<NormalExamPaper> implements 
                         paper.getPaperInfo(),
                         QuestionType.disc.getIndex())
         );
-//        Log.d("---->>searchQstFromPape",""+results.size());
         return results;
     }
 
@@ -352,7 +350,6 @@ public class PaperDaoImpl extends BaseRealmProvider<NormalExamPaper> implements 
         List<SearchQstItem> results = new ArrayList<>();
         for (IQuestion tmp : list) {
             if (tmp.getBody().getContent().contains(query)) {
-//                Log.d("---->>searchQstFromList",tmp.getBody());
                 SearchQstItem item = new SearchQstItem();
                 item.setInfo(info);
                 item.setQstType(qstType);
@@ -361,7 +358,6 @@ public class PaperDaoImpl extends BaseRealmProvider<NormalExamPaper> implements 
                 results.add(item);
             }
         }
-//        Log.d("---->>searchQstFromList",""+results.size());
         return results;
     }
 
@@ -460,7 +456,7 @@ public class PaperDaoImpl extends BaseRealmProvider<NormalExamPaper> implements 
                 normalExamPaper = dataXml2ObjParser.parse(xmlFile);
                 normalExamPaper.getPaperInfo().setId(UUIDUtil.getID());
             } catch (Exception e) {
-//                Log.d("----normal", "exception");
+
             }
             return normalExamPaper;
         }

@@ -96,6 +96,10 @@ public class HomeActivity extends BaseActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
+        if (LoginAction.getInstance().isFirstTimeLogin()) {
+            StudySummaryAction.getInstance().addStudySummary(new StudySummary());
+            LoginAction.getInstance().setFirstTimeLoginFalse();
+        }
         homePresenter = new HomePresenterImpl(this);
         initTask();
         initView();
@@ -105,10 +109,6 @@ public class HomeActivity extends BaseActivity implements
     protected void onStart() {
         super.onStart();
         homePresenter.showScheduleFragment();
-        if (LoginAction.getInstance().isFirstTimeLogin()) {
-            StudySummaryAction.getInstance().addStudySummary(new StudySummary());
-            LoginAction.getInstance().setFirstTimeLoginFalse();
-        }
     }
 
     @Override
