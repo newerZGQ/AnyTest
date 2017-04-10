@@ -22,7 +22,6 @@ import java.util.Random;
 
 public class CardViewAdapter extends OverviewAdapter<CardViewHolder, QstData> {
     private static final String TAG = CardViewAdapter.class.getSimpleName();
-    Random random = new Random();
 
     private int position = 0;
 
@@ -57,23 +56,12 @@ public class CardViewAdapter extends OverviewAdapter<CardViewHolder, QstData> {
             cardViewHolder.view.setBackground(context.getResources().getDrawable(R.drawable.qst_card_background_4));
         }
         final QstData qstData = cardViewHolder.model;
-        switch (qstData.getType().getIndex()){
-            case QuestionType.fillin_index:
-                cardViewHolder.view.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        startStudy(qstData.getPaperId(),qstData.getType().getIndex(),0);
-                    }
-                });
-                break;
-        }
-//        cardViewHolder.btn.setText("testbtn");
-//        cardViewHolder.btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                cardViewHolder.btn.setText("test");
-//            }
-//        });
+        cardViewHolder.view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startStudy(qstData.getPaperId(),qstData.getType().getIndex(),0);
+            }
+        });
     }
     private void startStudy(String paperId, int type, int qstNum){
         Log.d(LogUtil.PREFIX+TAG,"----->>"+paperId + " "+ type + " "+ qstNum);

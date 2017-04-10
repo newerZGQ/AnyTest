@@ -2,6 +2,7 @@ package com.zgq.wokao.ui.adapter;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,6 +88,7 @@ public class SglChoQuestionAdapter extends PagerAdapter implements BaseStudySyst
         holder = sglChoQuestionViewHolder;
         //显示题干
         sglChoQuestionViewHolder.questionBody.setText(""+(position+1)+". "+datas.get(position).getBody().getContent());
+        Log.d("------->>body",datas.get(position).getAnswer().getContent());
         //初始化选项View
         LinearLayout layout = sglChoQuestionViewHolder.optionLayout;
         layout.removeAllViewsInLayout();
