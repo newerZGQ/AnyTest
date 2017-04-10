@@ -90,7 +90,7 @@ public class SglChoQuestion extends RealmObject implements IQuestion ,CascadeDel
 
     @Override
     public String toString() {
-        return info.getId()+" "+info.getType()+" "+body.getContent()+" "+answer.getContent();
+        return info.getQstId()+" "+info.getType()+" "+body.getContent()+" "+answer.getContent();
     }
 
     @Override

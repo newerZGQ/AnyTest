@@ -1,6 +1,7 @@
 package com.zgq.wokao.parser.adapter.impl;
 
 import com.zgq.wokao.Util.ListUtil;
+import com.zgq.wokao.Util.UUIDUtil;
 import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.paper.question.impl.TFQuestion;
 import com.zgq.wokao.parser.adapter.BaseAdapter;
@@ -89,7 +90,8 @@ public class TFAdapter extends BaseAdapter implements ITFAdapter {
     private TFQuestion parseSingle(int number, String questionRes) {
 //        System.out.println("---->>single" + questionRes);
         TFQuestion question = new TFQuestion.Builder().build();
-        question.getInfo().setId(number);
+        question.getInfo().setQstId(number);
+        question.getInfo().setId(UUIDUtil.getID());
         inContext(QuestionItemType.number);
         String[] resArray = trimNum(questionRes).split("\n");
         StringBuilder builder = new StringBuilder();

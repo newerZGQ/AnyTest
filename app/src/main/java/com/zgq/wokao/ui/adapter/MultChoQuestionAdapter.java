@@ -94,7 +94,7 @@ public class MultChoQuestionAdapter extends PagerAdapter implements BaseStudySys
         }
         holder = multiChoQuestionViewHolder;
         //显示题干
-        multiChoQuestionViewHolder.questionBody.setText("" + (position + 1) + ". " + datas.get(position).getBody());
+        multiChoQuestionViewHolder.questionBody.setText("" + (position + 1) + ". " + datas.get(position).getBody().getContent());
         //初始化选项View
         LinearLayout layout = multiChoQuestionViewHolder.optionLayout;
         layout.removeAllViewsInLayout();

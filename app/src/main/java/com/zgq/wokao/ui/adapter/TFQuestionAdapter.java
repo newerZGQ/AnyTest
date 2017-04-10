@@ -82,7 +82,7 @@ public class TFQuestionAdapter extends PagerAdapter implements BaseStudySystemAd
             tfQuestionViewHolder = (TFQuestionViewHolder)convertView.getTag();
         }
         holder = tfQuestionViewHolder;
-        tfQuestionViewHolder.questionBody.setText(""+(position+1)+". "+datas.get(position).getBody());
+        tfQuestionViewHolder.questionBody.setText(""+(position+1)+". "+datas.get(position).getBody().getContent());
         tfQuestionViewHolder.optionFalse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

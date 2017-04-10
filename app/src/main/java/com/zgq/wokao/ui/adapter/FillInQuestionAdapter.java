@@ -75,7 +75,7 @@ public class FillInQuestionAdapter extends PagerAdapter implements BaseStudySyst
             fillInQuestionViewHolder = (FillInQuestionViewHolder)convertView.getTag();
         }
         holder = fillInQuestionViewHolder;
-        fillInQuestionViewHolder.questionBody.setText(""+(position+1)+". "+datas.get(position).getBody());
+        fillInQuestionViewHolder.questionBody.setText(""+(position+1)+". "+datas.get(position).getBody().getContent());
         if (hasShowAnswer.get(position)) {
             fillInQuestionViewHolder.questionAnswer.setText(datas.get(position).getAnswer().getContent());
         }else {

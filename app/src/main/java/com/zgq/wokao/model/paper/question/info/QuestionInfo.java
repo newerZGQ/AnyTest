@@ -11,8 +11,9 @@ import io.realm.RealmObject;
 
 public class QuestionInfo extends RealmObject implements IQuestionInfo ,CascadeDeleteable{
 
+    private String id;
     private QuestionType type;
-    private int id;
+    private int qstId;
     private boolean isStared;
     private int studyCount;
     private int correctCount;
@@ -23,6 +24,14 @@ public class QuestionInfo extends RealmObject implements IQuestionInfo ,CascadeD
         this.type = type;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public QuestionType getType() {
         return type;
     }
@@ -31,12 +40,12 @@ public class QuestionInfo extends RealmObject implements IQuestionInfo ,CascadeD
         this.type = type;
     }
 
-    public int getId() {
-        return id;
+    public int getQstId() {
+        return qstId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setQstId(int qstId) {
+        this.qstId = qstId;
     }
 
     public boolean isStared() {

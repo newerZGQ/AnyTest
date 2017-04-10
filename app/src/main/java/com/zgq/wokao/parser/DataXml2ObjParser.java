@@ -105,7 +105,7 @@ public class DataXml2ObjParser {
                     case XmlNodeInfo.idNode:
 //                        String s = pullParser.nextText();
 //                        Log.d("-------id",s);
-                        fillInQuestion.getInfo().setId(Integer.parseInt(pullParser.nextText()));
+                        fillInQuestion.getInfo().setQstId(Integer.parseInt(pullParser.nextText()));
                         continue;
                     case XmlNodeInfo.typeNode:
 //                        String ss = pullParser.nextText();
@@ -142,7 +142,7 @@ public class DataXml2ObjParser {
                     case XmlNodeInfo.idNode:
 //                        String s = pullParser.nextText();
 //                        Log.d("-------id",s);
-                        tfQuestion.getInfo().setId(Integer.parseInt(pullParser.nextText()));
+                        tfQuestion.getInfo().setQstId(Integer.parseInt(pullParser.nextText()));
                         continue;
                     case XmlNodeInfo.typeNode:
 //                        String ss = pullParser.nextText();
@@ -175,7 +175,7 @@ public class DataXml2ObjParser {
             if (event == XmlPullParser.START_TAG) {
                 switch (pullParser.getName()) {
                     case XmlNodeInfo.idNode:
-                        sglChoQuestion.getInfo().setId(Integer.parseInt(pullParser.nextText()));
+                        sglChoQuestion.getInfo().setQstId(Integer.parseInt(pullParser.nextText()));
                         continue;
                     case XmlNodeInfo.typeNode:
                         sglChoQuestion.getInfo().setType(changeIntToType(pullParser.nextText()));
@@ -207,7 +207,7 @@ public class DataXml2ObjParser {
             if (event == XmlPullParser.START_TAG) {
                 switch (pullParser.getName()) {
                     case XmlNodeInfo.idNode:
-                        multChoQuestion.getInfo().setId(Integer.parseInt(pullParser.nextText()));
+                        multChoQuestion.getInfo().setQstId(Integer.parseInt(pullParser.nextText()));
                         continue;
                     case XmlNodeInfo.typeNode:
                         multChoQuestion.getInfo().setType(changeIntToType(pullParser.nextText()));
@@ -239,7 +239,7 @@ public class DataXml2ObjParser {
             if (event == XmlPullParser.START_TAG) {
                 switch (pullParser.getName()) {
                     case XmlNodeInfo.idNode:
-                        discussQuestion.getInfo().setId(Integer.parseInt(pullParser.nextText()));
+                        discussQuestion.getInfo().setQstId(Integer.parseInt(pullParser.nextText()));
                         continue;
                     case XmlNodeInfo.typeNode:
                         discussQuestion.getInfo().setType(changeIntToType(pullParser.nextText()));

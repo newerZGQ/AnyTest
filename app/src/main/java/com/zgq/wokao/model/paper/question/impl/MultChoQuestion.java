@@ -89,7 +89,7 @@ public class MultChoQuestion extends RealmObject implements IQuestion ,CascadeDe
 
     @Override
     public String toString() {
-        return info.getId()+" "+info.getType()+" "+body.getContent()+" "+answer.getContent();
+        return info.getQstId()+" "+info.getType()+" "+body.getContent()+" "+answer.getContent();
     }
 
     @Override

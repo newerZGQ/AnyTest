@@ -86,7 +86,7 @@ public class SglChoQuestionAdapter extends PagerAdapter implements BaseStudySyst
         }
         holder = sglChoQuestionViewHolder;
         //显示题干
-        sglChoQuestionViewHolder.questionBody.setText(""+(position+1)+". "+datas.get(position).getBody());
+        sglChoQuestionViewHolder.questionBody.setText(""+(position+1)+". "+datas.get(position).getBody().getContent());
         //初始化选项View
         LinearLayout layout = sglChoQuestionViewHolder.optionLayout;
         layout.removeAllViewsInLayout();

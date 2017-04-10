@@ -35,7 +35,7 @@ public class TFAdapterTest {
         ArrayList<TFQuestion> results = adapter.parse(test);
         System.out.println("--->>size"+results.size());
         for (TFQuestion tmp: results){
-//            System.out.println("---->>"+tmp.getId());
+//            System.out.println("---->>"+tmp.getQstId());
 //            System.out.println("---->>"+tmp.getBody());
 //            System.out.println("---->>"+tmp.getAnswer());
         }

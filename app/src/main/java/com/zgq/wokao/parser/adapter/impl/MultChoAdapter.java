@@ -2,6 +2,7 @@ package com.zgq.wokao.parser.adapter.impl;
 
 import com.zgq.wokao.Util.ListUtil;
 import com.zgq.wokao.Util.StringUtil;
+import com.zgq.wokao.Util.UUIDUtil;
 import com.zgq.wokao.model.paper.question.impl.MultChoQuestion;
 import com.zgq.wokao.model.paper.question.option.Option;
 import com.zgq.wokao.model.paper.QuestionType;
@@ -89,7 +90,8 @@ public class MultChoAdapter extends BaseAdapter implements IMultChoAdapter {
     private MultChoQuestion parseSingle(int number, String questionRes) {
 //        System.out.println("---->>single" + questionRes);
         MultChoQuestion question = new MultChoQuestion.Builder().build();
-        question.getInfo().setId(number);
+        question.getInfo().setQstId(number);
+        question.getInfo().setId(UUIDUtil.getID());
         inContext(QuestionItemType.number);
         String[] resArray = trimNum(questionRes).split("\n");
         StringBuilder builder = new StringBuilder();

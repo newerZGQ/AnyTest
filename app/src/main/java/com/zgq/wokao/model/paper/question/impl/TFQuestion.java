@@ -80,7 +80,7 @@ public class TFQuestion extends RealmObject implements IQuestion ,CascadeDeletea
 
     @Override
     public String toString() {
-        return info.getId()+" "+info.getType()+" "+body.getContent()+" "+answer.getContent();
+        return info.getQstId()+" "+info.getType()+" "+body.getContent()+" "+answer.getContent();
     }
 
     @Override

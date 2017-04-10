@@ -42,7 +42,7 @@ public class SglChoAdapterTest {
         ArrayList<SglChoQuestion> results = adapter.parse(test);
         System.out.println("--->>size"+results.size());
         for (SglChoQuestion tmp: results){
-//            System.out.println("---->>id "+tmp.getId());
+//            System.out.println("---->>id "+tmp.getQstId());
 //            System.out.println("---->>body "+tmp.getBody());
 //            for (Option option : tmp.getOptionList()){
 //                System.out.println("---->>option "+ option.getOption());

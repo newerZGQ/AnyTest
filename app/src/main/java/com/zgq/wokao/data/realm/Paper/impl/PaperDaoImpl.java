@@ -2,7 +2,6 @@ package com.zgq.wokao.data.realm.Paper.impl;
 
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
 import com.zgq.wokao.Util.DateUtil;
 import com.zgq.wokao.Util.FileUtil;
@@ -354,7 +353,7 @@ public class PaperDaoImpl extends BaseRealmProvider<NormalExamPaper> implements 
                 item.setInfo(info);
                 item.setQstType(qstType);
                 item.setQst(tmp);
-                item.setQstId(tmp.getInfo().getId());
+                item.setQstId(tmp.getInfo().getQstId());
                 results.add(item);
             }
         }

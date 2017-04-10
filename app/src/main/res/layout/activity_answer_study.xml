@@ -20,6 +20,14 @@
         android:layout_above="@+id/view"
         android:layout_below="@+id/toolbar_layout">
     </android.support.v4.view.ViewPager>
+    <ViewStub
+        android:id="@+id/edit_fillin"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/view"
+        android:layout_below="@+id/toolbar_layout"
+        android:layout="@layout/edit_fillinquestion_layout"/>
     <TextView
         android:id="@+id/study_info"
         android:textSize="12sp"
@@ -65,6 +73,21 @@
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 android:background="@drawable/toolbar_back_background"/>
+            <TextView
+                android:id="@+id/toolbar_edit"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/toolbar_edit_background"/>
+            <TextView
+                android:id="@+id/toolbar_done"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/toolbar_done_background"
+                android:visibility="gone"/>
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="130dp"
@@ -92,6 +115,7 @@
                     android:textColor="@color/colorWhite"
                     android:gravity="center_vertical|center_horizontal"/>
             </LinearLayout>
+
         </RelativeLayout>
     </LinearLayout>
 </RelativeLayout>
