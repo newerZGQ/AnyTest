@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zgq.wokao.R;
+import com.zgq.wokao.Util.DensityUtil;
 import com.zgq.wokao.model.paper.question.answer.IAnswer;
 import com.zgq.wokao.model.paper.question.answer.MyAnswer;
 import com.zgq.wokao.model.paper.question.impl.SglChoQuestion;
@@ -88,7 +89,6 @@ public class SglChoQuestionAdapter extends PagerAdapter implements BaseStudySyst
         holder = sglChoQuestionViewHolder;
         //显示题干
         sglChoQuestionViewHolder.questionBody.setText(""+(position+1)+". "+datas.get(position).getBody().getContent());
-        Log.d("------->>body",datas.get(position).getAnswer().getContent());
         //初始化选项View
         LinearLayout layout = sglChoQuestionViewHolder.optionLayout;
         layout.removeAllViewsInLayout();
@@ -100,7 +100,10 @@ public class SglChoQuestionAdapter extends PagerAdapter implements BaseStudySyst
             //setTag 标识位置
             optionView.setTag(i);
             optionViews.add(optionView);
-            layout.addView(optionView);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.setMargins(0,DensityUtil.dip2px(mContext,16f),0,0);
+            layout.addView(optionView,params);
         }
         for (QuestionOptionView view:optionViews){
             view.setOnClickListener(this);

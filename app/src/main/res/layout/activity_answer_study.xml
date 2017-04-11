@@ -31,12 +31,17 @@
     <TextView
         android:id="@+id/study_info"
         android:textSize="12sp"
-        android:text="共学习12次，答对10次"
+        android:text="正确10／12"
+        android:background="@drawable/activity_answer_study_qstinfo_background"
         android:gravity="right"
-        android:paddingRight="16dp"
+        android:layout_alignParentRight="true"
+        android:paddingTop="5dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
         android:paddingBottom="3dp"
+        android:layout_marginRight="16dp"
         android:layout_above="@+id/view"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <LinearLayout
         android:id="@+id/background"
@@ -85,7 +90,7 @@
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="16dp"
+                android:layout_marginRight="0dp"
                 android:background="@drawable/toolbar_done_background"
                 android:visibility="gone"/>
             <LinearLayout

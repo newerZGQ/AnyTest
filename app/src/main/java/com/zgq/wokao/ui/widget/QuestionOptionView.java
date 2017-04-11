@@ -36,7 +36,8 @@ public class QuestionOptionView extends LinearLayout {
         init();
     }
     private void init(){
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,DensityUtil.dip2px(context,48f));
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
         layoutParams.setMargins(0,DensityUtil.dip2px(context,8),0,0);
         this.setLayoutParams(layoutParams);
         this.setOrientation(HORIZONTAL);
@@ -48,15 +49,16 @@ public class QuestionOptionView extends LinearLayout {
         optionLabel.setBackground(context.getResources().getDrawable(R.drawable.circle_background_option_unselected));
 
         LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(dimen,dimen);
-        params1.setMarginStart(DensityUtil.dip2px(context,13f));
+//        params1.setMarginStart(DensityUtil.dip2px(context,13f));
+        params1.setMargins(DensityUtil.dip2px(context,13f),DensityUtil.dip2px(context,1f),0,0);
         this.addView(optionLabel,params1);
 
         optionText = new TextView(context);
         optionText.setGravity(View.TEXT_ALIGNMENT_CENTER);
-        optionText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-        optionText.setText("55555");
+        optionText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+        optionText.setText("");
         optionText.setTextColor(context.getResources().getColor(R.color.colorBlack));
-        optionLabel.setGravity(Gravity.CENTER);
+        optionText.setGravity(Gravity.START);
         LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params2.setMarginStart(DensityUtil.dip2px(context,16f));
         this.addView(optionText,params2);

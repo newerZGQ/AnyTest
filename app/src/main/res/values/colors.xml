@@ -83,5 +83,6 @@
 
     //studyactivity
     <color name="color_study_activity_tip_text">#000000</color>
+    <color name="color_study_activity_qstinfo_back">#40031027</color>
 
 </resources>

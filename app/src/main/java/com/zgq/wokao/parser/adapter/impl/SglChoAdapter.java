@@ -1,5 +1,7 @@
 package com.zgq.wokao.parser.adapter.impl;
 
+import android.util.Log;
+
 import com.zgq.wokao.Util.ListUtil;
 import com.zgq.wokao.Util.StringUtil;
 import com.zgq.wokao.Util.UUIDUtil;
@@ -53,6 +55,7 @@ public class SglChoAdapter extends BaseAdapter implements ISglChoAdapter {
 //        System.out.println("---->>content"+content.size());
         for (int i = 0; i < content.size(); i++) {
             String tmp = content.get(i);
+            Log.d("-------->>sglcontent",tmp);
             //如果这一行为空，则继续，不做任何操作
             if (tmp.equals("")) {
                 continue;
@@ -63,6 +66,7 @@ public class SglChoAdapter extends BaseAdapter implements ISglChoAdapter {
                 //把上一次循环的题干和答案提取出来
                 bodyString = builder.toString();
                 if (!bodyString.equals("")){
+                    Log.d("------->>bodystring",bodyString);
                     SglChoQuestion question = parseSingle(number, bodyString);
                     if (question != null) {
                         results.add(question);
@@ -88,7 +92,7 @@ public class SglChoAdapter extends BaseAdapter implements ISglChoAdapter {
     }
 
     private SglChoQuestion parseSingle(int number, String questionRes) {
-//        System.out.println("---->>single" + questionRes);
+        Log.d("---->>single sglcho",questionRes);
         SglChoQuestion question = new SglChoQuestion.Builder().build();
         question.getInfo().setQstId(number);
         question.getInfo().setId(UUIDUtil.getID());
@@ -100,7 +104,7 @@ public class SglChoAdapter extends BaseAdapter implements ISglChoAdapter {
             tmp = tmp.trim();
             int head = tmp.substring(0,1).toUpperCase().charAt(0);
 //            System.out.println("---->>"+head);
-            if (head == 65 && !startWithWord(tmp)){
+            if (head == 65){
                 String body = builder.toString();
                 builder.delete(0,builder.length());
                 question.getBody().setContent(body);
@@ -108,7 +112,7 @@ public class SglChoAdapter extends BaseAdapter implements ISglChoAdapter {
                 builder.append(getOptionContent(tmp));
                 continue;
             }
-            if (head > 65 && head <= 77 && !startWithWord(tmp)){
+            if (head > 65 && head <= 77){
                 String optionContent = builder.toString();
                 String tag = StringUtil.char2String((char)(head-1));
                 headBack = head;
