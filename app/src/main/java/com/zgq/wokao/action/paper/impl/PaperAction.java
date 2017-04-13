@@ -71,6 +71,16 @@ public class PaperAction extends BaseAction implements IPaperAction,IQuestionAct
         return results;
     }
 
+    @Override
+    public void updateQuestion(String questionId, IQuestion question) {
+        questionDao.updateQuestion(questionId,question);
+    }
+
+    @Override
+    public IQuestion queryQuestionById(String questionId,QuestionType type) {
+        return questionDao.queryQuestionById(questionId,type);
+    }
+
 
     public static class InstanceHolder{
         public static PaperAction instance = new PaperAction();

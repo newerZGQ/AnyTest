@@ -23,7 +23,9 @@ import com.umeng.analytics.MobclickAgent;
 import com.zgq.wokao.R;
 import com.zgq.wokao.action.paper.impl.PaperAction;
 import com.zgq.wokao.model.paper.NormalExamPaper;
+import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.paper.question.answer.IAnswer;
+import com.zgq.wokao.model.paper.question.body.QuestionBody;
 import com.zgq.wokao.model.paper.question.impl.DiscussQuestion;
 import com.zgq.wokao.model.paper.question.impl.FillInQuestion;
 import com.zgq.wokao.model.paper.question.impl.MultChoQuestion;
@@ -38,6 +40,7 @@ import com.zgq.wokao.ui.adapter.SglChoQuestionAdapter;
 import com.zgq.wokao.ui.adapter.TFQuestionAdapter;
 import com.zgq.wokao.model.paper.Constant;
 import com.zgq.wokao.model.paper.question.answer.MyAnswer;
+import com.zgq.wokao.ui.presenter.impl.AnswerStudyPresenter;
 import com.zgq.wokao.ui.view.IStudyAnswerView;
 
 
@@ -125,6 +128,8 @@ public class AnswerStudyActivity extends AppCompatActivity implements IStudyAnsw
     private PagerAdapter currentStarQstAdapter;
     private ArrayList<IAnswer> currentStarMyAnswer = new ArrayList<>();
 
+    private AnswerStudyPresenter presenter;
+
     private final int ALLQUESTIONMODE = 1;
     private final int STARQUESTIONMODE = 2;
 
@@ -137,6 +142,7 @@ public class AnswerStudyActivity extends AppCompatActivity implements IStudyAnsw
         ButterKnife.bind(this);
         initData();
         initView();
+        presenter = new AnswerStudyPresenter(this);
     }
 
     public void onResume() {
@@ -540,6 +546,7 @@ public class AnswerStudyActivity extends AppCompatActivity implements IStudyAnsw
                 startEditMode();
                 break;
             case R.id.toolbar_done:
+
                 stopEditMode();
                 break;
         }
@@ -551,14 +558,15 @@ public class AnswerStudyActivity extends AppCompatActivity implements IStudyAnsw
         toolbarDone.setVisibility(View.VISIBLE);
         viewPager.setVisibility(View.INVISIBLE);
         bottomMenu.setVisibility(View.INVISIBLE);
-        if (editLayout == null) {
-            editStub = (ViewStub) findViewById(R.id.edit_fillin);
-            editStub.inflate();
-            editLayout = findViewById(R.id.edit_fillin_layout);
-        }
-        editLayout.setVisibility(View.VISIBLE);
+
         switch (currentQuestionType){
             case Constant.FILLINQUESTIONTYPE:
+                if (editLayout == null) {
+                    editStub = (ViewStub) findViewById(R.id.edit_fillin);
+                    editStub.inflate();
+                    editLayout = findViewById(R.id.edit_fillin_layout);
+                }
+                editLayout.setVisibility(View.VISIBLE);
                 EditText body = (EditText) editLayout.findViewById(R.id.edit_fillin_body);
                 EditText answer = (EditText) editLayout.findViewById(R.id.edit_fillin_answer);
                 FillInQuestion question = null;
@@ -572,6 +580,8 @@ public class AnswerStudyActivity extends AppCompatActivity implements IStudyAnsw
                 body.setText(question.getBody().getContent());
                 answer.setText(question.getAnswer().getContent());
                 break;
+            case Constant.TFQUESTIONTYPE:
+
         }
     }
 
@@ -582,6 +592,30 @@ public class AnswerStudyActivity extends AppCompatActivity implements IStudyAnsw
         editLayout.setVisibility(View.GONE);
         viewPager.setVisibility(View.VISIBLE);
         bottomMenu.setVisibility(View.VISIBLE);
+    }
+
+    private IQuestion getEditedQuestion(QuestionType type){
+        IQuestion question = null;
+        switch (type.getIndex()){
+            case QuestionType.fillin_index:
+                String bodyStr = ((EditText)editLayout.findViewById(R.id.edit_fillin_body)).getText().toString();
+                String answerStr = ((EditText)editLayout.findViewById(R.id.edit_fillin_answer)).getText().toString();
+                FillInQuestion fillInQuestion = new FillInQuestion.Builder().build();
+                fillInQuestion.getBody().setContent(bodyStr);
+                fillInQuestion.getAnswer().setContent(answerStr);
+                question = fillInQuestion;
+                break;
+            case QuestionType.tf_index:
+
+                break;
+            case QuestionType.sglc_index:
+                break;
+            case QuestionType.mtlc_index:
+                break;
+            case QuestionType.disc_index:
+                break;
+        }
+        return question;
     }
 
     public class QuestionPositionAdapter extends BaseAdapter {
