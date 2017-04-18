@@ -23,6 +23,7 @@ import com.wirelesspienetwork.overview.views.Overview;
 import com.zgq.wokao.R;
 import com.zgq.wokao.Util.ContextUtil;
 import com.zgq.wokao.Util.FontsUtil;
+import com.zgq.wokao.Util.LogUtil;
 import com.zgq.wokao.model.viewdate.QstData;
 import com.zgq.wokao.model.viewdate.ScheduleData;
 import com.zgq.wokao.ui.fragment.impl.ScheduleFragment;
@@ -145,7 +146,6 @@ public class SchedulePagerAdapter extends PagerAdapter {
         holder.topLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "toplayout click in");
                 listener.onClickTopLayout(position);
             }
         });
@@ -175,21 +175,8 @@ public class SchedulePagerAdapter extends PagerAdapter {
             models.add(color);
         }
 
-//        final OverviewAdapter stack = new OverviewAdapter<com.wirelesspienetwork.overview.model.ViewHolder<View, Integer>, Integer>(models)
-//        {
-//            @Override
-//            public com.wirelesspienetwork.overview.model.ViewHolder onCreateViewHolder(Context context, ViewGroup parent) {
-//                View v = View.inflate(context, R.layout.recents_dummy, null);
-//                return new com.wirelesspienetwork.overview.model.ViewHolder<View, Integer>(v);
-//            }
-//
-//            @Override
-//            public void onBindViewHolder(com.wirelesspienetwork.overview.model.ViewHolder<View, Integer> viewHolder) {
-//                viewHolder.itemView.setBackgroundColor(viewHolder.model);
-//            }
-//        };
         final CardViewAdapter adapter = new CardViewAdapter(qstDatasList.get(position),context);
-
+        Log.d(LogUtil.PREFIX,""+qstDatasList.get(position).get(0).getAccuracy());
         holder.qstList.setTaskStack(adapter);
 
 

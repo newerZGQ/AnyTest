@@ -58,7 +58,6 @@ public class FillInAdapter extends BaseAdapter implements IFillInAdapter {
             }
             //如果这一行是题目开始的地方
             if (isQstNumber(tmp)) {
-//                System.out.println("---->>is number"+tmp);
                 //把上一次循环的题干和答案提取出来
                 bodyString = builder.toString();
                 if (bodyString.equals("")){
@@ -89,12 +88,6 @@ public class FillInAdapter extends BaseAdapter implements IFillInAdapter {
 
     private FillInQuestion parseSingle(int number, String questionRes) {
         FillInQuestion question = new FillInQuestion.Builder().build();
-        if (question == null){
-            Log.d("---->>","question null");
-        }
-        if (question.getInfo() == null){
-            Log.d("---->>","questioninfo null");
-        }
         question.getInfo().setQstId(number);
         question.getInfo().setId(UUIDUtil.getID());
         inContext(QuestionItemType.number);

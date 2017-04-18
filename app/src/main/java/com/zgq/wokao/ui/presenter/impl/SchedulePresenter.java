@@ -56,6 +56,7 @@ public class SchedulePresenter implements ISchedulePresenter {
         for (IExamPaper paper: schedulePapers){
             qstDatasList.add(ViewDataAction.getInstance().getQstData(paper));
         }
+
     }
 
     @Override

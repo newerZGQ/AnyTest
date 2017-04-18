@@ -50,7 +50,6 @@ public class MultChoAdapter extends BaseAdapter implements IMultChoAdapter {
         int number = 1;
         String bodyString = "";
         StringBuilder builder = new StringBuilder();
-//        System.out.println("---->>content"+content.size());
         for (int i = 0; i < content.size(); i++) {
             String tmp = content.get(i);
             //如果这一行为空，则继续，不做任何操作
@@ -59,7 +58,6 @@ public class MultChoAdapter extends BaseAdapter implements IMultChoAdapter {
             }
             //如果这一行是题目开始的地方
             if (isQstNumber(tmp)) {
-//                System.out.println("---->>is number"+tmp);
                 //把上一次循环的题干和答案提取出来
                 bodyString = builder.toString();
                 if (!bodyString.equals("")){
@@ -75,7 +73,6 @@ public class MultChoAdapter extends BaseAdapter implements IMultChoAdapter {
                 String contentTmp = trimNum(tmp);
                 builder.append(contentTmp);
             } else {
-//                System.out.println("---->>not number"+tmp);
                 builder.append("\n" + tmp);
             }
         }
@@ -88,7 +85,6 @@ public class MultChoAdapter extends BaseAdapter implements IMultChoAdapter {
     }
 
     private MultChoQuestion parseSingle(int number, String questionRes) {
-//        System.out.println("---->>single" + questionRes);
         MultChoQuestion question = new MultChoQuestion.Builder().build();
         question.getInfo().setQstId(number);
         question.getInfo().setId(UUIDUtil.getID());
@@ -99,7 +95,6 @@ public class MultChoAdapter extends BaseAdapter implements IMultChoAdapter {
         for (String tmp : resArray) {
             tmp = tmp.trim();
             int head = tmp.substring(0,1).toUpperCase().charAt(0);
-//            System.out.println("---->>"+head);
             if (head == 65 && !startWithWord(tmp)){
                 String body = builder.toString();
                 builder.delete(0,builder.length());

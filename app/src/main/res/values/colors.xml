@@ -60,6 +60,14 @@
     <color name="color_daily_count_uncompleted">#E50041</color>
     <color name="color_daily_count_completed">#1e8b1c</color>
 
+    <color name="color_cardview_title_dis">#7E6918</color>
+    <color name="color_cardview_title_mlc">#1E3A7E</color>
+    <color name="color_cardview_title_sgl">#9D5E00</color>
+    <color name="color_cardview_title_tf">#7C0924</color>
+    <color name="color_cardview_title_fillin">#0A2F69</color>
+
+    <color name="color_cardview_qstinfo">#5cffffff</color>
+
     <color name="color_1">#EF9A9A</color>
     <color name="color_2">#E53935</color>
     <color name="color_3">#F8BBD0</color>

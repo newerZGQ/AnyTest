@@ -49,7 +49,6 @@ public class DiscussAdapter extends BaseAdapter implements IDiscussAdapter {
         int number = 1;
         String bodyString = "";
         StringBuilder builder = new StringBuilder();
-//        System.out.println("---->>content"+content.size());
         for (int i = 0; i < content.size(); i++) {
             String tmp = content.get(i);
             //如果这一行为空，则继续，不做任何操作
@@ -58,7 +57,6 @@ public class DiscussAdapter extends BaseAdapter implements IDiscussAdapter {
             }
             //如果这一行是题目开始的地方
             if (isQstNumber(tmp)) {
-//                System.out.println("---->>is number"+tmp);
                 //把上一次循环的题干和答案提取出来
                 bodyString = builder.toString();
                 if (bodyString.equals("")){
@@ -76,7 +74,6 @@ public class DiscussAdapter extends BaseAdapter implements IDiscussAdapter {
                 String contentTmp = trimNum(tmp);
                 builder.append(contentTmp);
             } else {
-//                System.out.println("---->>not number"+tmp);
                 builder.append("\n" + tmp);
             }
         }
@@ -89,7 +86,6 @@ public class DiscussAdapter extends BaseAdapter implements IDiscussAdapter {
     }
 
     private DiscussQuestion parseSingle(int number, String questionRes) {
-//        System.out.println("---->>single" + questionRes);
         DiscussQuestion question = new DiscussQuestion.Builder().build();
         question.getInfo().setQstId(number);
         question.getInfo().setId(UUIDUtil.getID());

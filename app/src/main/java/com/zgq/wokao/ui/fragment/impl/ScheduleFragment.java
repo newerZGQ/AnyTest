@@ -105,7 +105,7 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
     @Override
     public void onResume() {
         super.onResume();
-        //hideDetail();
+        presenter.notifyDataChanged();
     }
 
     @Override

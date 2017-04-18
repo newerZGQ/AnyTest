@@ -57,7 +57,6 @@ public class TFAdapter extends BaseAdapter implements ITFAdapter {
             }
             //如果这一行是题目开始的地方
             if (isQstNumber(tmp)) {
-//                System.out.println("---->>is number"+tmp);
                 //把上一次循环的题干和答案提取出来
                 bodyString = builder.toString();
                 if (bodyString.equals("")){
@@ -75,7 +74,6 @@ public class TFAdapter extends BaseAdapter implements ITFAdapter {
                 String contentTmp = trimNum(tmp);
                 builder.append(contentTmp);
             } else {
-//                System.out.println("---->>not number"+tmp);
                 builder.append("\n" + tmp);
             }
         }
@@ -88,7 +86,6 @@ public class TFAdapter extends BaseAdapter implements ITFAdapter {
     }
 
     private TFQuestion parseSingle(int number, String questionRes) {
-//        System.out.println("---->>single" + questionRes);
         TFQuestion question = new TFQuestion.Builder().build();
         question.getInfo().setQstId(number);
         question.getInfo().setId(UUIDUtil.getID());

@@ -27,6 +27,8 @@ public class QstData implements ViewData{
     private String paperId;
     //题目类型
     private QuestionType type = QuestionType.fillin;
+    //回答正确次数
+    private int correctNum;
     //学习次数
     private int studyNum;
     //正确率
@@ -77,6 +79,15 @@ public class QstData implements ViewData{
         this.fallibleQsts = fallibleQsts;
     }
 
+
+    public int getCorrectNum() {
+        return correctNum;
+    }
+
+    public void setCorrectNum(int correctNum) {
+        this.correctNum = correctNum;
+    }
+
     public int getQstCount() {
         return qstCount;
     }
@@ -120,7 +131,9 @@ public class QstData implements ViewData{
             Collections.sort(questions,new SortQstByAccuracy());
             data.setPaperId(paperInfo.getId());
             data.setStudyNum(studyCount);
+            data.setCorrectNum(correctCount);
             data.setStarCount(starCount);
+            data.setQstCount(questions.size());
             data.setAccuracy(studyCount == 0 ? 1f : correctCount/studyCount);
             data.setType(questions.get(0).getInfo().getType());
             if (questions.size() >= 3) {
@@ -140,5 +153,18 @@ public class QstData implements ViewData{
             IQuestion right = (IQuestion)rhs;
             return left.getInfo().getAccuracy() >= right.getInfo().getAccuracy() ? 1 : 0;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "QstData{" +
+                "paperId='" + paperId + '\'' +
+                ", type=" + type +
+                ", studyNum=" + studyNum +
+                ", accuracy=" + accuracy +
+                ", fallibleQsts=" + fallibleQsts +
+                ", qstCount=" + qstCount +
+                ", starCount=" + starCount +
+                '}';
     }
 }
