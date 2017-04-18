@@ -25,11 +25,11 @@ public class ViewDataAction extends BaseAction implements IViewDataAction{
     @Override
     public ArrayList<QstData> getQstData(IExamPaper paper) {
         ArrayList<QstData> qstDatas = new ArrayList<>();
-        qstDatas.add(QstData.Formator.format(PaperAction.getInstance().getQuestins(paper, QuestionType.fillin),paper.getPaperInfo()));
-        qstDatas.add(QstData.Formator.format(PaperAction.getInstance().getQuestins(paper, QuestionType.tf),paper.getPaperInfo()));
-        qstDatas.add(QstData.Formator.format(PaperAction.getInstance().getQuestins(paper, QuestionType.sglc),paper.getPaperInfo()));
-        qstDatas.add(QstData.Formator.format(PaperAction.getInstance().getQuestins(paper, QuestionType.mtlc),paper.getPaperInfo()));
         qstDatas.add(QstData.Formator.format(PaperAction.getInstance().getQuestins(paper, QuestionType.disc),paper.getPaperInfo()));
+        qstDatas.add(QstData.Formator.format(PaperAction.getInstance().getQuestins(paper, QuestionType.mtlc),paper.getPaperInfo()));
+        qstDatas.add(QstData.Formator.format(PaperAction.getInstance().getQuestins(paper, QuestionType.sglc),paper.getPaperInfo()));
+        qstDatas.add(QstData.Formator.format(PaperAction.getInstance().getQuestins(paper, QuestionType.tf),paper.getPaperInfo()));
+        qstDatas.add(QstData.Formator.format(PaperAction.getInstance().getQuestins(paper, QuestionType.fillin),paper.getPaperInfo()));
         return qstDatas;
     }
 }

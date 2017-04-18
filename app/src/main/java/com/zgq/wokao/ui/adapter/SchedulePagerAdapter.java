@@ -1,11 +1,8 @@
 package com.zgq.wokao.ui.adapter;
 
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.view.PagerAdapter;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,11 +11,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.loopeer.cardstack.CardStackView;
-import com.loopeer.cardstack.UpDownAnimatorAdapter;
-import com.loopeer.cardstack.UpDownStackAnimatorAdapter;
-import com.wirelesspienetwork.overview.model.OverviewAdapter;
-import com.wirelesspienetwork.overview.model.ViewHolder;
 import com.wirelesspienetwork.overview.views.Overview;
 import com.zgq.wokao.R;
 import com.zgq.wokao.Util.ContextUtil;
@@ -26,10 +18,8 @@ import com.zgq.wokao.Util.FontsUtil;
 import com.zgq.wokao.Util.LogUtil;
 import com.zgq.wokao.model.viewdate.QstData;
 import com.zgq.wokao.model.viewdate.ScheduleData;
-import com.zgq.wokao.ui.fragment.impl.ScheduleFragment;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -39,13 +29,6 @@ import java.util.Random;
  */
 
 public class SchedulePagerAdapter extends PagerAdapter {
-    public static Integer[] TEST_DATAS = new Integer[]{
-            R.color.color_1,
-            R.color.color_2,
-            R.color.color_3,
-            R.color.color_4,
-            R.color.color_5,
-    };
 
     public static final String TAG = "SchedulePagerAdapter";
 
@@ -109,6 +92,7 @@ public class SchedulePagerAdapter extends PagerAdapter {
     @Override
     public void notifyDataSetChanged() {
         super.notifyDataSetChanged();
+
     }
 
     @Override
@@ -176,7 +160,6 @@ public class SchedulePagerAdapter extends PagerAdapter {
         }
 
         final CardViewAdapter adapter = new CardViewAdapter(qstDatasList.get(position),context);
-        Log.d(LogUtil.PREFIX,""+qstDatasList.get(position).get(0).getAccuracy());
         holder.qstList.setTaskStack(adapter);
 
 
@@ -216,6 +199,8 @@ public class SchedulePagerAdapter extends PagerAdapter {
     public View getNextView(){
         return nextView;
     }
+
+
 
     public void changeStatus(Status status){
         if (getCurrentView() == null){

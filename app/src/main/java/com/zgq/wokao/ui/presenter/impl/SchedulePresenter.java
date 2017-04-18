@@ -14,6 +14,7 @@ import com.zgq.wokao.ui.presenter.ISchedulePresenter;
 import com.zgq.wokao.ui.view.IScheduleView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by zgq on 2017/3/5.
@@ -57,6 +58,10 @@ public class SchedulePresenter implements ISchedulePresenter {
             qstDatasList.add(ViewDataAction.getInstance().getQstData(paper));
         }
 
+    }
+
+    public List<QstData> getQstDataByPosition(int position){
+        return qstDatasList.get(position);
     }
 
     @Override

@@ -29,20 +29,6 @@ public class CardViewAdapter extends OverviewAdapter<CardViewHolder, QstData> {
         super(qstDatas);
         this.context = context;
         this.qstDatas = qstDatas;
-        reverseData(qstDatas);
-        for (QstData data: qstDatas) {
-            Log.d(LogUtil.PREFIX + " " + TAG, "index "+data.getType().getIndex());
-        }
-    }
-
-    private void reverseData(List<QstData> qstDatas){
-        int N = qstDatas.size() - 1;
-        Log.d(LogUtil.PREFIX + " " + TAG, " N= "+ N);
-        for (int i = 0; i< N/2; i++){
-            QstData tmp = qstDatas.get(i);
-            qstDatas.set(i,qstDatas.get(N-i));
-            qstDatas.set(N-i,tmp);
-        }
     }
 
     @Override
@@ -53,6 +39,7 @@ public class CardViewAdapter extends OverviewAdapter<CardViewHolder, QstData> {
 
     @Override
     public void onBindViewHolder(final CardViewHolder cardViewHolder) {
+        int position = cardViewHolder.getPosition();
         if (position == 4) {
             cardViewHolder.view.setBackground(context.getResources().getDrawable(R.drawable.qst_card_background_fillin));
             cardViewHolder.title.setText("填空题");
@@ -134,7 +121,6 @@ public class CardViewAdapter extends OverviewAdapter<CardViewHolder, QstData> {
         cardViewHolder.fallable_2.setText(""+qstDatas.get(position).getFallibleQsts().get(1).getInfo().getQstId());
         cardViewHolder.fallable_3.setText(""+qstDatas.get(position).getFallibleQsts().get(2).getInfo().getQstId());
 
-        cardViewHolder.qstInfo.setText("共"+qstDatas.get(position).getQstCount()+ "题，收藏"+qstDatas.get(position).getStarCount()+"题");
     }
     private void startStudy(String paperId, int type, int qstNum){
         Intent intent = new Intent(context,AnswerStudyActivity.class);
@@ -150,6 +136,8 @@ public class CardViewAdapter extends OverviewAdapter<CardViewHolder, QstData> {
 
     public void bindViewHolder(CardViewHolder vh, final int position) {
         this.position = position;
+
+        vh.qstInfo.setText("共"+qstDatas.get(position).getQstCount()+ "题，收藏"+qstDatas.get(position).getStarCount()+"题");
 
         vh.view.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -90,6 +90,10 @@ public class Overview extends FrameLayout implements OverviewStackView.Callbacks
         addView(mStackView);
     }
 
+    public OverviewAdapter getTaskStack(){
+        return mAdapter;
+    }
+
     /**
      * This is called with the full size of the window since we are handling our own insets.
      */

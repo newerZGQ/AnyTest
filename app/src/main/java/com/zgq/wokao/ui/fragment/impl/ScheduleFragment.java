@@ -10,11 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.wirelesspienetwork.overview.views.Overview;
 import com.zgq.wokao.R;
 import com.zgq.wokao.Util.DensityUtil;
 import com.zgq.wokao.Util.LogUtil;
 import com.zgq.wokao.model.viewdate.QstData;
 import com.zgq.wokao.model.viewdate.ScheduleData;
+import com.zgq.wokao.ui.adapter.CardViewAdapter;
 import com.zgq.wokao.ui.adapter.SchedulePagerAdapter;
 import com.zgq.wokao.ui.fragment.BaseFragment;
 import com.zgq.wokao.ui.presenter.impl.SchedulePresenter;
@@ -113,8 +115,6 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
         super.onPause();
     }
 
-
-
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -168,7 +168,6 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
 
     @Override
     public void setViewPager(ArrayList<ScheduleData> scheduleDatas, ArrayList<ArrayList<QstData>> qstDataLists) {
-        Log.d(TAG , ""+qstDataLists.size());
         if (scheduleDatas == null){
             return;
         }
@@ -253,6 +252,21 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
 
     }
 
+    //调整viewpager前后两页的qstlist数据显示
+    private void adjustQstList(){
+        int position = viewPager.getCurrentItem();
+        View tmp = null;
+        if ((tmp = viewPager.getChildAt(position+1)) != null){
+            ((Overview)tmp.findViewById(R.id.qst_datial_cards)).getTaskStack()
+                    .notifyDataSetChanged(presenter.getQstDataByPosition(position + 1 ));
+        }
+        if ((tmp = viewPager.getChildAt(position-1)) != null){
+            ((Overview)tmp.findViewById(R.id.qst_datial_cards)).getTaskStack()
+                    .notifyDataSetChanged(presenter.getQstDataByPosition(position - 1));
+        }
+
+    }
+
     @Override
     public void scheduleInfoChangeData(ScheduleData data) {
         scheduleInfoView.changeContent(data.getAccuracy(),String.valueOf(data.getCountToday())
@@ -290,6 +304,7 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
         public void onPageSelected(int position) {
             presenter.scheduleInfoChangeData(position);
             ((SchedulePagerAdapter)viewPager.getAdapter()).changeStatus(((SchedulePagerAdapter) viewPager.getAdapter()).getStatus());
+            adjustQstList();
         }
 
         @Override
