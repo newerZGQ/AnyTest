@@ -172,7 +172,7 @@ public class TFQuestionAdapter extends BaseViewPagerAdapter {
                     trueLabel.setText("");
                 }
             },200);
-            updateQstStudyInfo(getPaperId(),datas.get(currentPosition),true);
+            getCorrectAnswer(getPaperId(),datas.get(currentPosition));
         }else {
             holder.optionFalse.postDelayed(new Runnable() {
                 @Override
@@ -183,7 +183,7 @@ public class TFQuestionAdapter extends BaseViewPagerAdapter {
                     falseLabel.setText("");
                 }
             },200);
-            updateQstStudyInfo(getPaperId(),datas.get(currentPosition),false);
+            getFalseAnswer(getPaperId(),datas.get(currentPosition));
         }
     }
     public void onSelectedFalseOption(View view,int position){
@@ -205,7 +205,7 @@ public class TFQuestionAdapter extends BaseViewPagerAdapter {
                     falseLabel.setText("");
                 }
             },200);
-            updateQstStudyInfo(getPaperId(),datas.get(currentPosition),true);
+            getCorrectAnswer(getPaperId(),datas.get(currentPosition));
         }else {
             holder.optionFalse.postDelayed(new Runnable() {
                 @Override
@@ -218,7 +218,7 @@ public class TFQuestionAdapter extends BaseViewPagerAdapter {
                     falseLabel.setText("");
                 }
             },200);
-            updateQstStudyInfo(getPaperId(),datas.get(currentPosition),false);
+            getFalseAnswer(getPaperId(),datas.get(currentPosition));
         }
     }
 

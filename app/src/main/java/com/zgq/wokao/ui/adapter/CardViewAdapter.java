@@ -39,7 +39,7 @@ public class CardViewAdapter extends OverviewAdapter<CardViewHolder, QstData> {
 
     @Override
     public void onBindViewHolder(final CardViewHolder cardViewHolder) {
-        int position = cardViewHolder.getPosition();
+        final int position = cardViewHolder.getPosition();
         if (position == 4) {
             cardViewHolder.view.setBackground(context.getResources().getDrawable(R.drawable.qst_card_background_fillin));
             cardViewHolder.title.setText("填空题");
@@ -49,7 +49,6 @@ public class CardViewAdapter extends OverviewAdapter<CardViewHolder, QstData> {
             cardViewHolder.accuracy.setText("答题次数");
 
             cardViewHolder.fallables.setVisibility(View.GONE);
-
             cardViewHolder.fallable_1.setVisibility(View.GONE);
             cardViewHolder.fallable_2.setVisibility(View.GONE);
             cardViewHolder.fallable_3.setVisibility(View.GONE);
@@ -64,11 +63,9 @@ public class CardViewAdapter extends OverviewAdapter<CardViewHolder, QstData> {
             cardViewHolder.accuracy.setTextColor(context.getResources().getColor(R.color.color_cardview_title_tf));
             cardViewHolder.fallables.setTextColor(context.getResources().getColor(R.color.color_cardview_title_tf));
             cardViewHolder.accuracy.setText("正确率");
-            cardViewHolder.fallable_1.setVisibility(View.VISIBLE);
-            cardViewHolder.fallable_2.setVisibility(View.VISIBLE);
-            cardViewHolder.fallable_3.setVisibility(View.VISIBLE);
 
             cardViewHolder.fallables.setVisibility(View.VISIBLE);
+            setFallablesVisible(cardViewHolder,position);
 
             cardViewHolder.accuracyTv.setText("" + qstDatas.get(position).getCorrectNum() + "/" + qstDatas.get(position).getStudyNum());
         } else if (position == 2){
@@ -78,10 +75,9 @@ public class CardViewAdapter extends OverviewAdapter<CardViewHolder, QstData> {
             cardViewHolder.accuracy.setTextColor(context.getResources().getColor(R.color.color_cardview_title_sgl));
             cardViewHolder.fallables.setTextColor(context.getResources().getColor(R.color.color_cardview_title_sgl));
             cardViewHolder.accuracy.setText("正确率");
-            cardViewHolder.fallable_1.setVisibility(View.VISIBLE);
-            cardViewHolder.fallable_2.setVisibility(View.VISIBLE);
-            cardViewHolder.fallable_3.setVisibility(View.VISIBLE);
+
             cardViewHolder.fallables.setVisibility(View.VISIBLE);
+            setFallablesVisible(cardViewHolder,position);
 
             cardViewHolder.accuracyTv.setText("" + qstDatas.get(position).getCorrectNum() + "/" + qstDatas.get(position).getStudyNum());
         }
@@ -92,10 +88,9 @@ public class CardViewAdapter extends OverviewAdapter<CardViewHolder, QstData> {
             cardViewHolder.accuracy.setTextColor(context.getResources().getColor(R.color.color_cardview_title_mlc));
             cardViewHolder.fallables.setTextColor(context.getResources().getColor(R.color.color_cardview_title_mlc));
             cardViewHolder.accuracy.setText("正确率");
-            cardViewHolder.fallable_1.setVisibility(View.VISIBLE);
-            cardViewHolder.fallable_2.setVisibility(View.VISIBLE);
-            cardViewHolder.fallable_3.setVisibility(View.VISIBLE);
+
             cardViewHolder.fallables.setVisibility(View.VISIBLE);
+            setFallablesVisible(cardViewHolder,position);
 
             cardViewHolder.accuracyTv.setText("" + qstDatas.get(position).getCorrectNum() + "/" + qstDatas.get(position).getStudyNum());
         }
@@ -108,7 +103,6 @@ public class CardViewAdapter extends OverviewAdapter<CardViewHolder, QstData> {
             cardViewHolder.accuracy.setText("答题次数");
 
             cardViewHolder.fallables.setVisibility(View.GONE);
-
             cardViewHolder.fallable_1.setVisibility(View.GONE);
             cardViewHolder.fallable_2.setVisibility(View.GONE);
             cardViewHolder.fallable_3.setVisibility(View.GONE);
@@ -117,11 +111,63 @@ public class CardViewAdapter extends OverviewAdapter<CardViewHolder, QstData> {
         }
 
 
-        cardViewHolder.fallable_1.setText(""+qstDatas.get(position).getFallibleQsts().get(0).getInfo().getQstId());
-        cardViewHolder.fallable_2.setText(""+qstDatas.get(position).getFallibleQsts().get(1).getInfo().getQstId());
-        cardViewHolder.fallable_3.setText(""+qstDatas.get(position).getFallibleQsts().get(2).getInfo().getQstId());
+        cardViewHolder.fallable_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startStudy(qstDatas.get(position).getPaperId(),
+                        qstDatas.get(position).getType().getIndex(),
+                        Integer.valueOf(cardViewHolder.fallable_1.getText().toString())-1);
+            }
+        });
+        cardViewHolder.fallable_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startStudy(qstDatas.get(position).getPaperId(),
+                        qstDatas.get(position).getType().getIndex(),
+                        Integer.valueOf(cardViewHolder.fallable_2.getText().toString())-1);
+            }
+        });
+        cardViewHolder.fallable_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startStudy(qstDatas.get(position).getPaperId(),
+                        qstDatas.get(position).getType().getIndex(),
+                        Integer.valueOf(cardViewHolder.fallable_3.getText().toString())-1);
+            }
+        });
 
     }
+
+    private void setFallablesVisible(CardViewHolder cardViewHolder, int position){
+        switch (qstDatas.get(position).getFallibleQsts().size()){
+            case 0:
+                break;
+            case 1:
+                cardViewHolder.fallable_1.setVisibility(View.VISIBLE);
+                cardViewHolder.fallable_2.setVisibility(View.GONE);
+                cardViewHolder.fallable_3.setVisibility(View.GONE);
+                cardViewHolder.fallable_1.setText(""+qstDatas.get(position).getFallibleQsts().get(0).getInfo().getQstId());
+                break;
+            case 2:
+                cardViewHolder.fallable_1.setVisibility(View.VISIBLE);
+                cardViewHolder.fallable_2.setVisibility(View.VISIBLE);
+                cardViewHolder.fallable_3.setVisibility(View.GONE);
+                cardViewHolder.fallable_1.setText(""+qstDatas.get(position).getFallibleQsts().get(0).getInfo().getQstId());
+                cardViewHolder.fallable_2.setText(""+qstDatas.get(position).getFallibleQsts().get(1).getInfo().getQstId());
+                break;
+            case 3:
+                cardViewHolder.fallable_1.setVisibility(View.VISIBLE);
+                cardViewHolder.fallable_2.setVisibility(View.VISIBLE);
+                cardViewHolder.fallable_3.setVisibility(View.VISIBLE);
+                cardViewHolder.fallable_1.setText(""+qstDatas.get(position).getFallibleQsts().get(0).getInfo().getQstId());
+                cardViewHolder.fallable_2.setText(""+qstDatas.get(position).getFallibleQsts().get(1).getInfo().getQstId());
+                cardViewHolder.fallable_3.setText(""+qstDatas.get(position).getFallibleQsts().get(2).getInfo().getQstId());
+                break;
+            default:
+                break;
+        }
+    }
+
     private void startStudy(String paperId, int type, int qstNum){
         Intent intent = new Intent(context,AnswerStudyActivity.class);
         if (paperId != null && !paperId.equals("")) {

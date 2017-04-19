@@ -139,6 +139,8 @@ public class AnswerStudyActivity extends AppCompatActivity implements IStudyAnsw
 
     private AnswerStudyPresenter presenter;
 
+    private BaseViewPagerAdapter.OnStudiedListener onStudiedListener;
+
     private final int ALLQUESTIONMODE = 1;
     private final int STARQUESTIONMODE = 2;
 
@@ -156,6 +158,7 @@ public class AnswerStudyActivity extends AppCompatActivity implements IStudyAnsw
 
     public void onResume() {
         super.onResume();
+        setQuestionStudyInfo(0);
         MobclickAgent.onResume(this);
     }
 
@@ -166,6 +169,7 @@ public class AnswerStudyActivity extends AppCompatActivity implements IStudyAnsw
 
     private void initData() {
         initPaperData();
+        initStudiedListener();
         initCurrentQuestionList();
         initAnsweredList();
         initCurrentStaredQuestion();
@@ -185,6 +189,21 @@ public class AnswerStudyActivity extends AppCompatActivity implements IStudyAnsw
         currentQuestionType = intent.getIntExtra("qstType", Constant.FILLINQUESTIONTYPE);
         normalExamPaper = (NormalExamPaper) PaperAction.getInstance().queryById(paperId);
     }
+
+    //初始化监听器
+     private void initStudiedListener(){
+         onStudiedListener = new BaseViewPagerAdapter.OnStudiedListener() {
+             @Override
+             public void onFalse() {
+                 setQuestionStudyInfo(viewPager.getCurrentItem());
+             }
+
+             @Override
+             public void onCorrect() {
+                 setQuestionStudyInfo(viewPager.getCurrentItem());
+             }
+         };
+     }
 
     //初始化当前的问题
     private void initCurrentQuestionList() {
@@ -299,19 +318,7 @@ public class AnswerStudyActivity extends AppCompatActivity implements IStudyAnsw
             public void onPageSelected(int position) {
                 final int p = position;
                 upDateBottomMenu(position);
-
-                //设置已经学习过了这个问题 //重置该位置的myAnswer
-                if (currentMode == ALLQUESTIONMODE) {
-                    Log.d(LogUtil.PREFIX,TAG +" " + currentAllQuestions.get(position).getRecord().getStudyNumber());
-                    String info = "正确"+currentAllQuestions.get(position).getRecord().getCorrectNumber() + "/"
-                            + currentAllQuestions.get(position).getRecord().getStudyNumber();
-                    studyInfo.setText(info);
-                } else {
-                    String info = "正确"+currentStarQuestions.get(position).getRecord().getCorrectNumber() + "/"
-                            + currentAllQuestions.get(position).getRecord().getStudyNumber();
-                    studyInfo.setText(info);
-                }
-
+                setQuestionStudyInfo(position);
             }
 
             @Override
@@ -320,6 +327,19 @@ public class AnswerStudyActivity extends AppCompatActivity implements IStudyAnsw
             }
         });
         upDateBottomMenu(getCurrentQstAdapter().getCurrentPosition());
+    }
+
+    private void setQuestionStudyInfo(int position){
+        if (currentMode == ALLQUESTIONMODE) {
+            Log.d(LogUtil.PREFIX,TAG +" " + currentAllQuestions.get(position).getRecord().getStudyNumber());
+            String info = "正确"+currentAllQuestions.get(position).getRecord().getCorrectNumber() + "/"
+                    + currentAllQuestions.get(position).getRecord().getStudyNumber();
+            studyInfo.setText(info);
+        } else {
+            String info = "正确"+currentStarQuestions.get(position).getRecord().getCorrectNumber() + "/"
+                    + currentAllQuestions.get(position).getRecord().getStudyNumber();
+            studyInfo.setText(info);
+        }
     }
 
     private void initQstPstGridView() {
@@ -476,6 +496,7 @@ public class AnswerStudyActivity extends AppCompatActivity implements IStudyAnsw
                 break;
         }
         currentAllQstAdapter.setPaperId(normalExamPaper.getPaperInfo().getId());
+        currentAllQstAdapter.setStudiedListener(onStudiedListener);
         return currentAllQstAdapter;
     }
 
@@ -499,6 +520,7 @@ public class AnswerStudyActivity extends AppCompatActivity implements IStudyAnsw
                 break;
         }
         currentStarQstAdapter.setPaperId(normalExamPaper.getPaperInfo().getId());
+        currentStarQstAdapter.setStudiedListener(onStudiedListener);
         return currentStarQstAdapter;
     }
 

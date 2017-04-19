@@ -2,11 +2,13 @@ package com.zgq.wokao.model.viewdate;
 
 import android.util.Log;
 
+import com.zgq.wokao.Util.LogUtil;
 import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.paper.info.IPaperInfo;
 import com.zgq.wokao.model.paper.question.IQuestion;
 import com.zgq.wokao.model.paper.question.info.IQuestionInfo;
 import com.zgq.wokao.model.paper.question.info.QuestionInfo;
+import com.zgq.wokao.model.paper.question.record.QuestionRecord;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -110,22 +112,14 @@ public class QstData implements ViewData{
             if (questions.size() == 0){
                 return data;
             }
-            List<QuestionInfo> infos = new ArrayList<>();
-            for (IQuestion question : questions){
-                infos.add(question.getInfo());
-            }
 
             int studyCount = 0;
             int correctCount = 0;
             int starCount = 0;
-            for (IQuestionInfo info: infos){
-                studyCount += info.getStudyCount();
-                correctCount += info.getCorrectCount();
-                Realm realm = Realm.getDefaultInstance();
-                realm.beginTransaction();
-                info.setAccuracy(info.getStudyCount() == 0? 1f :info.getCorrectCount()/info.getStudyCount());
-                realm.commitTransaction();
-                if (info.isStared()) starCount++;
+            for (int i = 0; i< questions.size(); i++){
+                studyCount += questions.get(i).getRecord().getStudyNumber();
+                correctCount += questions.get(i).getRecord().getCorrectNumber();
+                if (questions.get(i).getInfo().isStared()) starCount++;
             }
 
             Collections.sort(questions,new SortQstByAccuracy());
@@ -151,7 +145,13 @@ public class QstData implements ViewData{
         public int compare(Object lhs, Object rhs) {
             IQuestion left = (IQuestion)lhs;
             IQuestion right = (IQuestion)rhs;
-            return left.getInfo().getAccuracy() >= right.getInfo().getAccuracy() ? 1 : 0;
+            if (left.getRecord().getAccuracy() > right.getRecord().getAccuracy()){
+                return 1;
+            }else if (left.getRecord().getAccuracy() == right.getRecord().getAccuracy()){
+                return 0;
+            }else {
+                return -1;
+            }
         }
     }
 

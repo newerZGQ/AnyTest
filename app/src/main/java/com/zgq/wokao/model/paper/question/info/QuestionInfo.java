@@ -15,9 +15,6 @@ public class QuestionInfo extends RealmObject implements IQuestionInfo ,CascadeD
     private QuestionType type;
     private int qstId;
     private boolean isStared;
-    private int studyCount;
-    private int correctCount;
-    private float accuracy;
 
     public QuestionInfo(){}
     public QuestionInfo(QuestionType type){
@@ -54,30 +51,6 @@ public class QuestionInfo extends RealmObject implements IQuestionInfo ,CascadeD
 
     public void setStared(boolean stared) {
         isStared = stared;
-    }
-
-    public int getStudyCount() {
-        return studyCount;
-    }
-
-    public void setStudyCount(int studyCount) {
-        this.studyCount = studyCount;
-    }
-
-    public int getCorrectCount() {
-        return correctCount;
-    }
-
-    public void setCorrectCount(int correctCount) {
-        this.correctCount = correctCount;
-    }
-
-    public float getAccuracy() {
-        return accuracy;
-    }
-
-    public void setAccuracy(float accuracy) {
-        this.accuracy = accuracy;
     }
 
     @Override

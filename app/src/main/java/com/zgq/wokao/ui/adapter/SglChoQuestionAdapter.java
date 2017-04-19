@@ -156,13 +156,13 @@ public class SglChoQuestionAdapter extends BaseViewPagerAdapter implements View.
             for (int i = 0; i<optionViews.size();i++){
                 if (i == selectedOption) optionViews.get(i).setToCorrect();
             }
-            updateQstStudyInfo(getPaperId(),datas.get(currentPosition),true);
+            getCorrectAnswer(getPaperId(),datas.get(currentPosition));
         }else{
             for (int i = 0; i<optionViews.size();i++){
                 if (i == selectedOption) optionViews.get(i).setToWrong();
                 if (i == rightOption) optionViews.get(i).setToCorrect();
             }
-            updateQstStudyInfo(getPaperId(),datas.get(currentPosition),false);
+            getFalseAnswer(getPaperId(),datas.get(currentPosition));
         }
     }
 

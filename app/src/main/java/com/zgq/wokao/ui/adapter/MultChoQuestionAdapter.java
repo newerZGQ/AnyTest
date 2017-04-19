@@ -173,7 +173,11 @@ public class MultChoQuestionAdapter extends BaseViewPagerAdapter implements View
                 }
             }
         }
-        updateQstStudyInfo(getPaperId(),datas.get(currentPosition),isCorrect);
+        if (isCorrect){
+            getCorrectAnswer(getPaperId(),datas.get(currentPosition));
+        }else {
+            getFalseAnswer(getPaperId(),datas.get(currentPosition));
+        }
         return isCorrect;
     }
 

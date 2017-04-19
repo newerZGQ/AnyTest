@@ -11,4 +11,7 @@ public interface IQuestionRecord {
      * @param isCorrect 表示这道题是否答对
      */
     public void updateRecord(boolean isCorrect);
+
+    public float getAccuracy();
+    public void setAccuracy(float accuracy);
 }
