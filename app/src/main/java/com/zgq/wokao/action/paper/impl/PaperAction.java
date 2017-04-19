@@ -1,5 +1,8 @@
 package com.zgq.wokao.action.paper.impl;
 
+import android.util.Log;
+
+import com.zgq.wokao.Util.LogUtil;
 import com.zgq.wokao.action.BaseAction;
 import com.zgq.wokao.action.paper.IPaperAction;
 import com.zgq.wokao.action.paper.IQuestionAction;
@@ -29,9 +32,12 @@ import java.util.List;
 
 public class PaperAction extends BaseAction implements IPaperAction,IQuestionAction {
 
+    private static final String TAG = PaperAction.class.getSimpleName();
+
     private PaperDaoImpl paperDao = PaperDaoImpl.getInstance();
     private QuestionDaoImpl questionDao = QuestionDaoImpl.getInstance();
     private ParserHelper parserHelper = ParserHelper.getInstance();
+    private StudySummaryAction summaryAction = StudySummaryAction.getInstance();
 
     private PaperAction(){}
 
@@ -258,6 +264,18 @@ public class PaperAction extends BaseAction implements IPaperAction,IQuestionAct
         }
         if (studyCount == 0) return 0f;
         return correctCount/studyCount;
+    }
+
+    @Override
+    public void updateAllStudyInfo(String paperId, IQuestion question, boolean isCorrect) {
+        Log.d(LogUtil.PREFIX,TAG+" "+ paperId);
+        //更新某一题的记录
+        updateQuestionRecord(question,isCorrect);
+        //更新试卷的记录
+        IExamPaper paper = queryById(paperId);
+        updateDailyRecord(paper);
+        //更新学习记录总结
+        summaryAction.updateSummary(summaryAction.getStudySummary(),isCorrect);
     }
 
     @Override

@@ -7,6 +7,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 
 import com.umeng.analytics.MobclickAgent;
 import com.zgq.wokao.R;
+import com.zgq.wokao.Util.LogUtil;
 import com.zgq.wokao.action.paper.impl.PaperAction;
 import com.zgq.wokao.model.paper.NormalExamPaper;
 import com.zgq.wokao.model.paper.QuestionType;
@@ -33,6 +35,7 @@ import com.zgq.wokao.model.paper.question.impl.SglChoQuestion;
 import com.zgq.wokao.model.paper.question.impl.TFQuestion;
 import com.zgq.wokao.model.paper.question.IQuestion;
 import com.zgq.wokao.ui.adapter.BaseStudySystemAdapter;
+import com.zgq.wokao.ui.adapter.BaseViewPagerAdapter;
 import com.zgq.wokao.ui.adapter.DiscussQuestionAdapter;
 import com.zgq.wokao.ui.adapter.FillInQuestionAdapter;
 import com.zgq.wokao.ui.adapter.MultChoQuestionAdapter;
@@ -51,6 +54,8 @@ import butterknife.ButterKnife;
 import io.realm.Realm;
 
 public class AnswerStudyActivity extends AppCompatActivity implements IStudyAnswerView, View.OnClickListener {
+
+    private static final String TAG = AnswerStudyActivity.class.getSimpleName();
 
     //返回
     @BindView(R.id.toolbar_back)
@@ -96,6 +101,10 @@ public class AnswerStudyActivity extends AppCompatActivity implements IStudyAnsw
     @BindView(R.id.question_num_list)
     GridView questionListGv;
 
+    //学习记录
+    @BindView(R.id.study_info)
+    TextView studyInfo;
+
     //底部menu
     @BindView(R.id.activity_study_bottom_menu)
     RelativeLayout bottomMenu;
@@ -120,12 +129,12 @@ public class AnswerStudyActivity extends AppCompatActivity implements IStudyAnsw
 
     private ArrayList<IQuestion> currentAllQuestions = new ArrayList<>();
     private ArrayList<Boolean> allAnsweredList = new ArrayList<>();
-    private PagerAdapter currentAllQstAdapter;
+    private BaseViewPagerAdapter currentAllQstAdapter;
     private ArrayList<IAnswer> currentAllMyAnswer = new ArrayList<>();
 
     private ArrayList<IQuestion> currentStarQuestions = new ArrayList<>();
     private ArrayList<Boolean> starAnsweredList = new ArrayList<>();
-    private PagerAdapter currentStarQstAdapter;
+    private BaseViewPagerAdapter currentStarQstAdapter;
     private ArrayList<IAnswer> currentStarMyAnswer = new ArrayList<>();
 
     private AnswerStudyPresenter presenter;
@@ -290,23 +299,19 @@ public class AnswerStudyActivity extends AppCompatActivity implements IStudyAnsw
             public void onPageSelected(int position) {
                 final int p = position;
                 upDateBottomMenu(position);
+
                 //设置已经学习过了这个问题 //重置该位置的myAnswer
                 if (currentMode == ALLQUESTIONMODE) {
-                    realm.executeTransaction(new Realm.Transaction() {
-                        @Override
-                        public void execute(Realm realm) {
-
-                        }
-                    });
+                    Log.d(LogUtil.PREFIX,TAG +" " + currentAllQuestions.get(position).getRecord().getStudyNumber());
+                    String info = "正确"+currentAllQuestions.get(position).getRecord().getCorrectNumber() + "/"
+                            + currentAllQuestions.get(position).getRecord().getStudyNumber();
+                    studyInfo.setText(info);
                 } else {
-
-                    realm.executeTransaction(new Realm.Transaction() {
-                        @Override
-                        public void execute(Realm realm) {
-
-                        }
-                    });
+                    String info = "正确"+currentStarQuestions.get(position).getRecord().getCorrectNumber() + "/"
+                            + currentAllQuestions.get(position).getRecord().getStudyNumber();
+                    studyInfo.setText(info);
                 }
+
             }
 
             @Override
@@ -439,6 +444,7 @@ public class AnswerStudyActivity extends AppCompatActivity implements IStudyAnsw
                 answerLabel.setBackground(getResources().getDrawable(R.drawable.active_light));
         }
 
+
     }
 
     private void showQuestionList() {
@@ -455,42 +461,45 @@ public class AnswerStudyActivity extends AppCompatActivity implements IStudyAnsw
         switch (currentQuestionType) {
             case Constant.FILLINQUESTIONTYPE:
                 currentAllQstAdapter = new FillInQuestionAdapter(currentAllQuestions, allAnsweredList, this);
-                return currentAllQstAdapter;
+                break;
             case Constant.DISCUSSQUESTIONTYPE:
                 currentAllQstAdapter = new DiscussQuestionAdapter(currentAllQuestions, allAnsweredList, this);
-                return currentAllQstAdapter;
+                break;
             case Constant.TFQUESTIONTYPE:
                 currentAllQstAdapter = new TFQuestionAdapter(currentAllQuestions, allAnsweredList, currentAllMyAnswer, this);
-                return currentAllQstAdapter;
+                break;
             case Constant.SGLCHOQUESTIONTYPE:
                 currentAllQstAdapter = new SglChoQuestionAdapter(currentAllQuestions, allAnsweredList, currentAllMyAnswer, this);
-                return currentAllQstAdapter;
+                break;
             case Constant.MULTCHOQUESTIONTYPE:
                 currentAllQstAdapter = new MultChoQuestionAdapter(currentAllQuestions, allAnsweredList, currentAllMyAnswer, this);
-                return currentAllQstAdapter;
+                break;
         }
-        return null;
+        currentAllQstAdapter.setPaperId(normalExamPaper.getPaperInfo().getId());
+        return currentAllQstAdapter;
     }
 
     private PagerAdapter initCurrentStarQstAdapter() {
+
         switch (currentQuestionType) {
             case Constant.FILLINQUESTIONTYPE:
                 currentStarQstAdapter = new FillInQuestionAdapter(currentStarQuestions, starAnsweredList, this);
-                return currentStarQstAdapter;
+                break;
             case Constant.DISCUSSQUESTIONTYPE:
                 currentStarQstAdapter = new DiscussQuestionAdapter(currentStarQuestions, starAnsweredList, this);
-                return currentStarQstAdapter;
+                break;
             case Constant.TFQUESTIONTYPE:
                 currentStarQstAdapter = new TFQuestionAdapter(currentStarQuestions, starAnsweredList, currentStarMyAnswer, this);
-                return currentStarQstAdapter;
+                break;
             case Constant.SGLCHOQUESTIONTYPE:
                 currentStarQstAdapter = new SglChoQuestionAdapter(currentStarQuestions, starAnsweredList, currentStarMyAnswer, this);
-                return currentStarQstAdapter;
+                break;
             case Constant.MULTCHOQUESTIONTYPE:
                 currentStarQstAdapter = new MultChoQuestionAdapter(currentStarQuestions, starAnsweredList, currentStarMyAnswer, this);
-                return currentStarQstAdapter;
+                break;
         }
-        return null;
+        currentStarQstAdapter.setPaperId(normalExamPaper.getPaperInfo().getId());
+        return currentStarQstAdapter;
     }
 
     @Override
@@ -617,6 +626,7 @@ public class AnswerStudyActivity extends AppCompatActivity implements IStudyAnsw
         }
         return question;
     }
+
 
     public class QuestionPositionAdapter extends BaseAdapter {
 

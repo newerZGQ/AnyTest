@@ -71,7 +71,13 @@ public class StudySummary extends RealmObject implements IStudySummary{
 
     //判断最后一次记录是不是今天的
     private boolean lastRecordIsCurrent() {
-        if (dailyCountRecords.size() == 0) return false;
+        if (dailyCountRecords.size() == 0) {
+            TotalDailyCount totalDailyCount = new TotalDailyCount();
+            totalDailyCount.setDailyCount(0);
+            totalDailyCount.setDate(DateUtil.getFormatData("yyyy-MM-dd"));
+            dailyCountRecords.add(totalDailyCount);
+            return true;
+        }
         TotalDailyCount last = dailyCountRecords.get(dailyCountRecords.size() - 1);
         String currentData = DateUtil.getYYYY_MM_DD();
         if (last.getDate().equals(currentData)) {

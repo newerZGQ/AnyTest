@@ -1,5 +1,7 @@
 package com.zgq.wokao.ui.view;
 
+import com.zgq.wokao.model.total.StudySummary;
+
 /**
  * Created by zgq on 2017/3/4.
  */
@@ -16,4 +18,5 @@ public interface IHomeView {
     public void hideLoadingView();
     public void showLoadingView();
     public void setNeedUpdateData(boolean needUpdateData);
+    public void setSlideaMenuLayout(StudySummary studySummary);
 }

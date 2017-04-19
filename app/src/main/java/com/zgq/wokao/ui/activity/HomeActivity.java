@@ -316,6 +316,11 @@ public class HomeActivity extends BaseActivity implements
         this.needUpdateData = needUpdateData;
     }
 
+    @Override
+    public void setSlideaMenuLayout(StudySummary studySummary) {
+
+    }
+
 
     @Override
     public void onFragmentInteraction(Uri uri) {

@@ -22,7 +22,7 @@ import java.util.LinkedList;
 /**
  * Created by zgq on 16-7-18.
  */
-public class MultChoQuestionAdapter extends PagerAdapter implements BaseStudySystemAdapter, View.OnClickListener {
+public class MultChoQuestionAdapter extends BaseViewPagerAdapter implements View.OnClickListener {
     private ArrayList<IQuestion> datas = null;
     private LinkedList<ViewGroup> mViewCache = null;
     private Context mContext;
@@ -150,7 +150,8 @@ public class MultChoQuestionAdapter extends PagerAdapter implements BaseStudySys
     }
 
     @Override
-    public void showCurrentAnswer() {
+    public boolean showCurrentAnswer() {
+        boolean isCorrect = false;
         int currentPosition = getCurrentPosition();
         int[] correctAnswer = getRealAnswerPosition(getRealAnswer(datas.get(currentPosition).getAnswer().getContent()));
         View view = getCurrentView();
@@ -161,6 +162,19 @@ public class MultChoQuestionAdapter extends PagerAdapter implements BaseStudySys
         }
         holder.myAnswerTv.setText(myAnswer.get(currentPosition).getContent());
         hasShowAnswer.set(currentPosition,true);
+
+        int[] thisAnswer = getRealAnswerPosition(getRealAnswer(myAnswer.get(currentPosition).getContent()));
+        if (thisAnswer.length == correctAnswer.length){
+            for (int i = 0; i< thisAnswer.length; i++){
+                if (thisAnswer[i] != correctAnswer[i]){
+                    isCorrect = false;
+                }else {
+                    isCorrect = true;
+                }
+            }
+        }
+        updateQstStudyInfo(getPaperId(),datas.get(currentPosition),isCorrect);
+        return isCorrect;
     }
 
     @Override
@@ -170,16 +184,11 @@ public class MultChoQuestionAdapter extends PagerAdapter implements BaseStudySys
 
     @Override
     public void onClick(View v) {
-//        for (int i = 0;i<myAnswer.size();i++){
-//            Log.d("--------->>>",""+myAnswer.get(i).getContent());
-//        }
         int currentPosition = getCurrentPosition();
         if (hasShowAnswer.get(currentPosition)) return;
-//        Log.d("------position",""+currentPosition);
         MyAnswer answer = (MyAnswer) myAnswer.get(currentPosition);
 
         String answerContent = answer.getContent();
-//        Log.d("------content",""+answerContent);
 
         QuestionOptionView view = (QuestionOptionView) v;
         int optionPostion = (int) view.getTag();
@@ -196,9 +205,6 @@ public class MultChoQuestionAdapter extends PagerAdapter implements BaseStudySys
         }
         answer.setContent(getRealAnswer(answerContent));
         myAnswer.set(currentPosition,answer);
-//        for (int i = 0;i<myAnswer.size();i++){
-//            Log.d("--------->>>",""+myAnswer.get(i).getContent());
-//        }
     }
 
     private String getLabelFromPosition(int optionPosition) {
@@ -215,7 +221,6 @@ public class MultChoQuestionAdapter extends PagerAdapter implements BaseStudySys
         int[] result = new int[chars.length];
         for (int i = 0; i < chars.length; i++) {
             result[i] = chars[i] - 65;
-//            Log.d("------answerposition>",""+result[i]);
         }
         return result;
     }
@@ -229,7 +234,6 @@ public class MultChoQuestionAdapter extends PagerAdapter implements BaseStudySys
             if (c >= 65 && c <= 90)
                 result = result + String.valueOf(c);
         }
-//        Log.d("--------->>",result);
         return result;
     }
 

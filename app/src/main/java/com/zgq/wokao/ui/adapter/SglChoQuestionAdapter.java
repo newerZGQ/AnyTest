@@ -23,7 +23,7 @@ import java.util.LinkedList;
 /**
  * Created by zgq on 16-7-6.
  */
-public class SglChoQuestionAdapter extends PagerAdapter implements BaseStudySystemAdapter,View.OnClickListener{
+public class SglChoQuestionAdapter extends BaseViewPagerAdapter implements View.OnClickListener{
     private ArrayList<IQuestion> datas = null;
     private LinkedList<ViewGroup> mViewCache = null;
     private Context mContext ;
@@ -142,8 +142,8 @@ public class SglChoQuestionAdapter extends PagerAdapter implements BaseStudySyst
     }
 
     @Override
-    public void showCurrentAnswer(){
-
+    public boolean showCurrentAnswer(){
+        return false;
     }
 
     /*
@@ -156,11 +156,13 @@ public class SglChoQuestionAdapter extends PagerAdapter implements BaseStudySyst
             for (int i = 0; i<optionViews.size();i++){
                 if (i == selectedOption) optionViews.get(i).setToCorrect();
             }
+            updateQstStudyInfo(getPaperId(),datas.get(currentPosition),true);
         }else{
             for (int i = 0; i<optionViews.size();i++){
                 if (i == selectedOption) optionViews.get(i).setToWrong();
                 if (i == rightOption) optionViews.get(i).setToCorrect();
             }
+            updateQstStudyInfo(getPaperId(),datas.get(currentPosition),false);
         }
     }
 

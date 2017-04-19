@@ -8,6 +8,8 @@ import android.view.View;
 public interface BaseStudySystemAdapter {
     public abstract View getCurrentView();
     public abstract int getCurrentPosition();
-    public abstract void showCurrentAnswer();
+    public abstract boolean showCurrentAnswer();
     public abstract void hideCurrentAnswer();
+    public abstract void setPaperId(String paperId);
+    public abstract String getPaperId();
 }

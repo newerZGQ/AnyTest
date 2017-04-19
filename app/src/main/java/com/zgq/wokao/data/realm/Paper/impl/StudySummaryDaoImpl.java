@@ -34,7 +34,9 @@ public class StudySummaryDaoImpl extends BaseRealmProvider<StudySummary> impleme
 
     @Override
     public void addStudySummary(StudySummary studySummary) {
-        super.save(studySummary);
+        if (getStudySummary() == null) {
+            super.save(studySummary);
+        }
     }
 
     @Override
@@ -45,6 +47,7 @@ public class StudySummaryDaoImpl extends BaseRealmProvider<StudySummary> impleme
         if (correct){
             studySummary.correctCountPlus_1();
         }
+        realm.commitTransaction();
     }
 
     @Override

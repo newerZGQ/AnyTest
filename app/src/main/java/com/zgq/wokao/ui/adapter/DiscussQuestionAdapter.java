@@ -14,7 +14,7 @@ import com.zgq.wokao.model.paper.question.IQuestion;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class DiscussQuestionAdapter extends PagerAdapter implements BaseStudySystemAdapter{
+public class DiscussQuestionAdapter extends BaseViewPagerAdapter {
     //显示的数据
     private ArrayList<IQuestion> datas = null;
     private LinkedList<View> mViewCache = null;
@@ -102,10 +102,12 @@ public class DiscussQuestionAdapter extends PagerAdapter implements BaseStudySys
         return currentPosition;
     }
     @Override
-    public void showCurrentAnswer(){
-        if (hasShowAnswer.get(currentPosition)) return;
+    public boolean showCurrentAnswer(){
+        if (hasShowAnswer.get(currentPosition)) return false;
         ((DiscussQuestionViewHolder)(currentView.getTag())).questionAnswer.setText(datas.get(currentPosition).getAnswer().getContent());
         hasShowAnswer.set(currentPosition,true);
+        updateQstStudyInfo(getPaperId(),datas.get(currentPosition),true);
+        return true;
     }
 
     @Override

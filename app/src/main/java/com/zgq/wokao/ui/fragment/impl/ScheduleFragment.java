@@ -107,7 +107,7 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
     @Override
     public void onResume() {
         super.onResume();
-        presenter.notifyDataChanged();
+
     }
 
     @Override
@@ -267,6 +267,11 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
 
     }
 
+    //重新设置当前viewpager中的qstlist
+    private void setCurrentQstList(){
+
+    }
+
     @Override
     public void scheduleInfoChangeData(ScheduleData data) {
         scheduleInfoView.changeContent(data.getAccuracy(),String.valueOf(data.getCountToday())
@@ -304,7 +309,7 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
         public void onPageSelected(int position) {
             presenter.scheduleInfoChangeData(position);
             ((SchedulePagerAdapter)viewPager.getAdapter()).changeStatus(((SchedulePagerAdapter) viewPager.getAdapter()).getStatus());
-            adjustQstList();
+            //adjustQstList();
         }
 
         @Override

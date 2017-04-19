@@ -27,4 +27,6 @@ public interface IQuestionAction extends IQuestionInfoAction, IQuestionRecordAct
      * @return
      */
     public IQuestion queryQuestionById(String questionId, QuestionType type);
+
+    public void updateQuestionRecord(IQuestion question, boolean isCorrect);
 }

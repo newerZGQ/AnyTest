@@ -19,7 +19,7 @@ import java.util.LinkedList;
 /**
  * Created by zgq on 16-7-6.
  */
-public class TFQuestionAdapter extends PagerAdapter implements BaseStudySystemAdapter{
+public class TFQuestionAdapter extends BaseViewPagerAdapter {
     private ArrayList<IQuestion> datas = null;
     private LinkedList<View> mViewCache = null;
     private Context mContext ;
@@ -172,6 +172,7 @@ public class TFQuestionAdapter extends PagerAdapter implements BaseStudySystemAd
                     trueLabel.setText("");
                 }
             },200);
+            updateQstStudyInfo(getPaperId(),datas.get(currentPosition),true);
         }else {
             holder.optionFalse.postDelayed(new Runnable() {
                 @Override
@@ -182,6 +183,7 @@ public class TFQuestionAdapter extends PagerAdapter implements BaseStudySystemAd
                     falseLabel.setText("");
                 }
             },200);
+            updateQstStudyInfo(getPaperId(),datas.get(currentPosition),false);
         }
     }
     public void onSelectedFalseOption(View view,int position){
@@ -203,6 +205,7 @@ public class TFQuestionAdapter extends PagerAdapter implements BaseStudySystemAd
                     falseLabel.setText("");
                 }
             },200);
+            updateQstStudyInfo(getPaperId(),datas.get(currentPosition),true);
         }else {
             holder.optionFalse.postDelayed(new Runnable() {
                 @Override
@@ -215,6 +218,7 @@ public class TFQuestionAdapter extends PagerAdapter implements BaseStudySystemAd
                     falseLabel.setText("");
                 }
             },200);
+            updateQstStudyInfo(getPaperId(),datas.get(currentPosition),false);
         }
     }
 
@@ -226,8 +230,8 @@ public class TFQuestionAdapter extends PagerAdapter implements BaseStudySystemAd
         }
     }
 
-    public void showCurrentAnswer(){
-
+    public boolean showCurrentAnswer(){
+        return false;
     }
     @Override
     public void hideCurrentAnswer() {

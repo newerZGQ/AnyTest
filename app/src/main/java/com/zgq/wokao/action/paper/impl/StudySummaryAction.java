@@ -21,7 +21,6 @@ public class StudySummaryAction implements IStudySummaryAction {
     }
     @Override
     public void addStudySummary(StudySummary studySummary) {
-
         studySummaryDao.addStudySummary(studySummary);
     }
 
