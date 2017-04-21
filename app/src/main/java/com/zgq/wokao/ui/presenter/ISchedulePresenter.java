@@ -12,4 +12,5 @@ public interface ISchedulePresenter {
     public void setViewPager();
     public void notifyDataChanged();
     public void scheduleInfoChangeData(int position);
+    public int checkSchedulesSize();
 }

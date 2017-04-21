@@ -13,4 +13,6 @@ public interface IPapersView {
     public void initPaperList(ArrayList<IPaperInfo> paperInfos);
     public void notifyDataChanged(ArrayList<IPaperInfo> paperInfos);
     public HomeActivity getHomeActivity();
+    public void onEmptyPapers();
+    public void onNoneEmptyPapers();
 }

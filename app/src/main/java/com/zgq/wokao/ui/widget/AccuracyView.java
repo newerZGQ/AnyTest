@@ -683,7 +683,7 @@ public class AccuracyView extends View {
      * @param progressBar the progress bar
      */
     private void animate(AccuracyView progressBar,float mProgress) {
-        int duration = 2000;
+        int duration = 500;
         animate(progressBar, mProgress, duration);
     }
 

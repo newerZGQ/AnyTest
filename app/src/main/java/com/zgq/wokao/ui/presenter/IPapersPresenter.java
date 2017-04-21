@@ -10,4 +10,5 @@ public interface IPapersPresenter {
     public void deletePaper(String paperId);
     public void addToSchedule(String paperId);
     public void removeFromSchedule(String paperId);
+    public int checkPapersSize();
 }

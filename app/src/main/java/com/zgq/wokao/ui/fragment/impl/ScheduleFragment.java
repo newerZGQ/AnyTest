@@ -9,14 +9,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStub;
+import android.widget.LinearLayout;
 
 import com.wirelesspienetwork.overview.views.Overview;
 import com.zgq.wokao.R;
-import com.zgq.wokao.Util.DensityUtil;
 import com.zgq.wokao.Util.LogUtil;
 import com.zgq.wokao.model.viewdate.QstData;
 import com.zgq.wokao.model.viewdate.ScheduleData;
-import com.zgq.wokao.ui.adapter.CardViewAdapter;
 import com.zgq.wokao.ui.adapter.SchedulePagerAdapter;
 import com.zgq.wokao.ui.fragment.BaseFragment;
 import com.zgq.wokao.ui.presenter.impl.SchedulePresenter;
@@ -39,17 +39,23 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
     private View rootView;
     @BindView(R.id.schedule_info)
     ScheduleInfoView scheduleInfoView;
+    @BindView(R.id.no_schedule_layout)
+    ViewStub noContentStub;
+
+    LinearLayout noContentLayout;
 
     private String mParam1;
     private String mParam2;
 
     private OnScheduleFragmentListener mListener;
 
-    private SchedulePresenter presenter = new SchedulePresenter(this,getContext());
+    private SchedulePresenter presenter;
 
     private Status status = Status.SURVEY;
 
     private int slipDistance;
+
+    private int currentPosition;
 
     public ScheduleFragment() {}
 
@@ -78,6 +84,7 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        presenter = new SchedulePresenter(this,getContext());
     }
 
     @Override
@@ -85,7 +92,6 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
                              Bundle savedInstanceState) {
         rootView =  inflater.inflate(R.layout.fragment_schedule, container, false);
         ButterKnife.bind(this,rootView);
-        int position = 0;
         if (savedInstanceState != null){
             switch (savedInstanceState.getString("status")){
                 case "SURVEY":
@@ -97,17 +103,18 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
                 default:
                     break;
             }
-            position = savedInstanceState.getInt("PagerPosition");
+            currentPosition = savedInstanceState.getInt("PagerPosition");
         }
+        scheduleInfoView.setOnClickListener(this);
         presenter.setViewPager();
-        viewPager.setCurrentItem(position);
+        presenter.checkSchedulesSize();
         return rootView;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
+        viewPager.setCurrentItem(currentPosition);
     }
 
     @Override
@@ -171,6 +178,18 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
         if (scheduleDatas == null){
             return;
         }
+        viewPager.post(new Runnable() {
+            @Override
+            public void run() {
+                View tmp = viewPager.findViewById(R.id.qst_datial_cards);
+                if (tmp == null){
+                    slipDistance = 0;
+                }else {
+                    slipDistance = tmp.getHeight();
+                }
+                hideDetail(0);
+            }
+        });
         if (viewPager.getAdapter() == null) {
             viewPager.setAdapter(new SchedulePagerAdapter(getContext(),scheduleDatas, qstDataLists,
                     new SchedulePagerAdapter.OnViewClickListener() {
@@ -185,18 +204,6 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
                     }));
 
             viewPager.addOnPageChangeListener(new SchedulePageChangeListener());
-            viewPager.post(new Runnable() {
-                @Override
-                public void run() {
-                    View tmp = viewPager.findViewById(R.id.qst_datial_cards);
-                    if (tmp == null){
-                        slipDistance = 0;
-                    }else {
-                        slipDistance = tmp.getHeight();
-                    }
-                    hideDetail(0);
-                }
-            });
         }else {
             ((SchedulePagerAdapter)viewPager.getAdapter()).setScheduleDatas(scheduleDatas);
             ((SchedulePagerAdapter)viewPager.getAdapter()).setQstDatasList(qstDataLists);
@@ -207,6 +214,7 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
     @Override
     public void notifyDataChanged() {
         presenter.notifyDataChanged();
+        presenter.checkSchedulesSize();
     }
 
     @Override
@@ -274,6 +282,9 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
 
     @Override
     public void scheduleInfoChangeData(ScheduleData data) {
+        Log.d(LogUtil.PREFIX,TAG + " "+ data.getAccuracy());
+        Log.d(LogUtil.PREFIX,TAG + " "+ data.getCountEveryday());
+        Log.d(LogUtil.PREFIX,TAG + " "+ data.getCountToday());
         scheduleInfoView.changeContent(data.getAccuracy(),String.valueOf(data.getCountToday())
                 ,String.valueOf(data.getCountEveryday()));
     }
@@ -284,8 +295,33 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
     }
 
     @Override
+    public void onEmptyPapers() {
+        viewPager.setVisibility(View.GONE);
+        scheduleInfoView.setVisibility(View.GONE);
+        if (noContentLayout == null){
+            noContentStub.inflate();
+            noContentLayout = (LinearLayout) rootView.findViewById(R.id.no_schedule_layout);
+        }else{
+            noContentLayout.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void onNoneEmptyPapers() {
+        viewPager.setVisibility(View.VISIBLE);
+        scheduleInfoView.setVisibility(View.VISIBLE);
+        if (noContentLayout != null){
+            noContentLayout.setVisibility(View.GONE);
+        }
+    }
+
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.schedule_info:
+                Log.d(LogUtil.PREFIX,TAG+ " click schedule info view");
+                break;
             default:
                 break;
         }

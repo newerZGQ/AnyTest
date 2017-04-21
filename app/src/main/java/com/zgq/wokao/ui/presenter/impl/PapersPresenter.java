@@ -69,4 +69,14 @@ public class PapersPresenter implements IPapersPresenter {
         paperAction.removeFromSchedule(paperId);
         getPaperInfos(true);
     }
+
+    @Override
+    public int checkPapersSize() {
+        if (paperInfos.size() == 0){
+            papersView.onEmptyPapers();
+        }else{
+            papersView.onNoneEmptyPapers();
+        }
+        return paperInfos.size();
+    }
 }

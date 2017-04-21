@@ -37,34 +37,33 @@ public class SchedulePresenter implements ISchedulePresenter {
         getData();
     }
 
-    private void getData(){
-        Log.d(LogUtil.PREFIX,TAG + " getData in");
-        getSchedulePaper();
-        getScheduleData();
-        getQstData();
-        Log.d(LogUtil.PREFIX,TAG + " getData out");
+    public void getData(){
+        schedulePapers.clear();
+        schedulePapers = getSchedulePaper();
+
+        scheduleDatas.clear();
+        scheduleDatas = getScheduleData(schedulePapers);
+
+        qstDatasList.clear();
+        qstDatasList = getQstData(schedulePapers);
     }
 
-    private void getSchedulePaper(){
-        schedulePapers.clear();
-        schedulePapers = (ArrayList) paperAction.getAllPaperInSchdl();
+    private ArrayList<IExamPaper> getSchedulePaper(){
+        return (ArrayList) paperAction.getAllPaperInSchdl();
     }
-    private void getScheduleData(){
-        scheduleDatas.clear();
-        for (IExamPaper paper: schedulePapers){
-            scheduleDatas.add(ScheduleData.Formator.format(paper));
+    private ArrayList<ScheduleData> getScheduleData(ArrayList<IExamPaper> papers){
+        ArrayList<ScheduleData> results = new ArrayList<>();
+        for (IExamPaper paper: papers){
+            results.add(ScheduleData.Formator.format(paper));
         }
+        return results;
     }
-    private void getQstData(){
-        qstDatasList.clear();
-        for (IExamPaper paper: schedulePapers){
-            qstDatasList.add(ViewDataAction.getInstance().getQstData(paper));
+    private ArrayList<ArrayList<QstData>> getQstData(ArrayList<IExamPaper> papers){
+        ArrayList<ArrayList<QstData>> results = new ArrayList<>();
+        for (IExamPaper paper: papers){
+            results.add(ViewDataAction.getInstance().getQstData(paper));
         }
-//        Log.d(LogUtil.PREFIX,TAG+qstDatasList.get(0).get(0).getStudyNum());
-//        Log.d(LogUtil.PREFIX,TAG+qstDatasList.get(0).get(1).getStudyNum());
-//        Log.d(LogUtil.PREFIX,TAG+qstDatasList.get(0).get(2).getStudyNum());
-//        Log.d(LogUtil.PREFIX,TAG+qstDatasList.get(0).get(3).getStudyNum());
-//        Log.d(LogUtil.PREFIX,TAG+qstDatasList.get(0).get(4).getStudyNum());
+        return results;
     }
 
     public List<QstData> getQstDataByPosition(int position){
@@ -85,5 +84,15 @@ public class SchedulePresenter implements ISchedulePresenter {
     @Override
     public void scheduleInfoChangeData(int position) {
         scheduleView.scheduleInfoChangeData(scheduleDatas.get(position));
+    }
+
+    @Override
+    public int checkSchedulesSize() {
+        if (schedulePapers.size() == 0){
+            scheduleView.onEmptyPapers();
+        }else{
+            scheduleView.onNoneEmptyPapers();
+        }
+        return schedulePapers.size();
     }
 }

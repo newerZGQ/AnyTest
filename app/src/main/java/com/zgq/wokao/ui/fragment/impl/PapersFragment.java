@@ -1,8 +1,6 @@
 package com.zgq.wokao.ui.fragment.impl;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -11,7 +9,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStub;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import com.zgq.wokao.R;
 import com.zgq.wokao.model.paper.info.IPaperInfo;
@@ -33,6 +33,12 @@ public class PapersFragment extends BaseFragment implements IPapersView{
     private OnPaperFragmentListener mListener;
     @BindView(R.id.paper_list)
     RecyclerView paperList;
+    @BindView(R.id.cover_view)
+    View coverView;
+    @BindView(R.id.no_paper_stub)
+    ViewStub noPaperStub;
+
+    LinearLayout noContentLayout;
 
     private FrameLayout rootView;
 
@@ -57,6 +63,7 @@ public class PapersFragment extends BaseFragment implements IPapersView{
         rootView =  (FrameLayout) inflater.inflate(R.layout.fragment_papers, container, false);
         ButterKnife.bind(this,rootView);
         papersPresenter.initPapersList();
+        papersPresenter.checkPapersSize();
         return rootView;
     }
 
@@ -149,7 +156,7 @@ public class PapersFragment extends BaseFragment implements IPapersView{
     public void notifyDataChanged(ArrayList<IPaperInfo> paperInfos) {
         ((HomePaperAdapter)paperList.getAdapter()).setData(paperInfos);
         paperList.getAdapter().notifyDataSetChanged();
-
+        papersPresenter.checkPapersSize();
     }
 
     public interface OnPaperFragmentListener {
@@ -158,6 +165,27 @@ public class PapersFragment extends BaseFragment implements IPapersView{
 
     public HomeActivity getHomeActivity(){
         return (HomeActivity)getActivity();
+    }
+
+    @Override
+    public void onEmptyPapers() {
+        paperList.setVisibility(View.GONE);
+        coverView.setVisibility(View.GONE);
+        if (noContentLayout == null){
+            noPaperStub.inflate();
+            noContentLayout = (LinearLayout) rootView.findViewById(R.id.no_paper_layout);
+        }else{
+            noContentLayout.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void onNoneEmptyPapers() {
+        paperList.setVisibility(View.VISIBLE);
+        coverView.setVisibility(View.VISIBLE);
+        if (noContentLayout != null){
+            noContentLayout.setVisibility(View.GONE);
+        }
     }
 
     public PapersPresenter getPapersPresenter() {

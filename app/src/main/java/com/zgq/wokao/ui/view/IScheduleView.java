@@ -17,4 +17,6 @@ public interface IScheduleView {
     public void hideDetail(int duration);
     public void scheduleInfoChangeData(ScheduleData data);
     public void changeViewPagerStatus(boolean showFullView);
+    public void onEmptyPapers();
+    public void onNoneEmptyPapers();
 }

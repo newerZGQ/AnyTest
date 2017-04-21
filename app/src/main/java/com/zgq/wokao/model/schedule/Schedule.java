@@ -15,7 +15,8 @@ import io.realm.RealmObject;
 public class Schedule extends RealmObject implements ISchedule, CascadeDeleteable {
     //是否开启学习计划
     private boolean isOpened;
-    private int dailyCount;
+    //默认每天学习任务20题
+    private int dailyCount = 20;
     private QuestionType lastStudyType;
     private int lastStudyNum;
     private RealmList<DailyRecord> dailyRecords = new RealmList<>();
