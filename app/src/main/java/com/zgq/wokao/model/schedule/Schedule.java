@@ -21,6 +21,10 @@ public class Schedule extends RealmObject implements ISchedule, CascadeDeleteabl
     private int lastStudyNum;
     private RealmList<DailyRecord> dailyRecords = new RealmList<>();
 
+    private int studyNumber;
+    private int correctNumber;
+    private float accuracy;
+
     public Schedule(){
         DailyRecord dailyRecord = new DailyRecord.Builder().date(DateUtil.getFormatData("yyyy-MM-dd"))
                 .isCompleted(false)
@@ -45,6 +49,30 @@ public class Schedule extends RealmObject implements ISchedule, CascadeDeleteabl
 
     public void setDailyRecords(RealmList<DailyRecord> dailyRecords) {
         this.dailyRecords = dailyRecords;
+    }
+
+    public int getStudyNumber() {
+        return studyNumber;
+    }
+
+
+    public int getCorrectNumber() {
+        return correctNumber;
+    }
+
+    public void updateStudyInfo(boolean isCorrect){
+        studyNumber++;
+        if (isCorrect) correctNumber++;
+        if (studyNumber == 0){
+            accuracy = 0;
+        }else {
+            accuracy = (float) correctNumber / (float) studyNumber;
+        }
+
+    }
+
+    public float getAccuracy() {
+        return accuracy;
     }
 
     @Override

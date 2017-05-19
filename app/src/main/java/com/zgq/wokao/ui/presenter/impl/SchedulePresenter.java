@@ -83,6 +83,7 @@ public class SchedulePresenter implements ISchedulePresenter {
 
     @Override
     public void scheduleInfoChangeData(int position) {
+        if (position > scheduleDatas.size()-1) return;
         scheduleView.scheduleInfoChangeData(scheduleDatas.get(position));
     }
 

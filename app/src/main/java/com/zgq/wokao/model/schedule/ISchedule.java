@@ -18,4 +18,6 @@ public interface ISchedule {
     public void setLastStudyType(QuestionType lastStudyType);
     public int getLastStudyNum();
     public void setLastStudyNum(int lastStudyNum);
+    public void updateStudyInfo(boolean isCorrect);
+    public float getAccuracy();
 }

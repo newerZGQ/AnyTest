@@ -3,32 +3,36 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <LinearLayout
         android:id="@+id/top_view"
 
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
         <TextView
-            android:text="今日任务未完成"
-            android:textColor="@color/color_accuracy_circle_1_hard"
-            android:gravity="center_horizontal"
-            android:textSize="15sp"
             android:id="@+id/is_completed_day_count"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="今日任务未完成"
+            android:textColor="@color/color_accuracy_circle_1_hard"
+            android:textSize="15sp" />
     </LinearLayout>
+
     <RelativeLayout
         android:id="@+id/btm_view"
-        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
         <LinearLayout
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_horizontal">
 
             <com.zgq.wokao.ui.widget.AccuracyView
                 android:id="@+id/accuracy_view"
@@ -36,16 +40,17 @@
                 android:layout_height="280dp"
                 app:marker_progress="0.3"
                 app:progress="0.4"
-                app:progress_color="@color/color_accuracy_circle_1_hard"
                 app:progress_background_color="@color/color_accuracy_circle_1_light"
-                app:stroke_width="15dp"/>
+                app:progress_color="@color/color_accuracy_circle_1_hard"
+                app:stroke_width="15dp" />
         </LinearLayout>
+
         <LinearLayout
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_horizontal">
 
             <com.zgq.wokao.ui.widget.AccuracyView
                 android:id="@+id/schedule_view"
@@ -53,87 +58,104 @@
                 android:layout_height="248dp"
                 app:marker_progress="0.3"
                 app:progress="0.4"
-                app:progress_color="@color/color_accuracy_circle_2_hard"
                 app:progress_background_color="@color/color_accuracy_circle_2_light"
-                app:stroke_width="15dp"/>
+                app:progress_color="@color/color_accuracy_circle_2_hard"
+                app:stroke_width="15dp" />
         </LinearLayout>
+
         <LinearLayout
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:orientation="vertical"
             android:layout_width="260dp"
-            android:layout_height="260dp">
+            android:layout_height="260dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:orientation="vertical">
+
             <LinearLayout
-                android:orientation="horizontal"
-                android:gravity="center_horizontal"
-                android:layout_marginTop="35dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+                android:orientation="horizontal">
+
                 <TextView
+                    android:id="@+id/btm_accuracy"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal"
+                    android:layout_marginLeft="50dp"
                     android:text="65"
                     android:textColor="@color/color_accuracy_circle_1_hard"
-                    android:textSize="50sp"
-                    android:layout_gravity="center_horizontal"
-                    android:id="@+id/btm_accuracy"
+                    android:textSize="65sp" />
+
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:text="%"
-                    android:textColor="@color/colorWhite"
-                    android:layout_gravity="bottom"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="65dp"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="30dp"
+                        android:layout_height="17dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/accuracy_icon" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center_horizontal"
+                        android:text="正确率%"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="10sp" />
+                </LinearLayout>
             </LinearLayout>
 
-            <TextView
-                android:text="正确率"
-                android:textColor="@color/colorWhite"
-                android:layout_marginTop="6dp"
-                android:textSize="10sp"
-                android:layout_gravity="center_horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+
             <LinearLayout
-                android:layout_marginTop="20dp"
-                android:orientation="horizontal"
-                android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
                 <TextView
                     android:id="@+id/btm_today_num"
-                    android:text="45"
-                    android:textSize="30sp"
-                    android:textColor="@color/color_accuracy_circle_2_hard"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:text="45"
+                    android:textColor="@color/color_accuracy_circle_2_hard"
+                    android:textSize="25sp" />
+
                 <TextView
-                    android:text="|"
-                    android:textSize="30dp"
-                    android:textColor="@color/colorWhite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:text="|"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="25dp" />
 
                 <TextView
                     android:id="@+id/btm_daily_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="65"
                     android:textColor="@color/color_accuracy_circle_2_hard"
-                    android:textSize="20sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:textSize="15sp" />
             </LinearLayout>
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="6dp"
                 android:text="今日进度"
                 android:textColor="@color/colorWhite"
-                android:layout_marginTop="6dp"
-                android:textSize="10sp"
-                android:layout_gravity="center_horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:textSize="10sp" />
         </LinearLayout>
     </RelativeLayout>
 

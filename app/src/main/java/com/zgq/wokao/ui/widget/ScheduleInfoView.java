@@ -155,7 +155,7 @@ public class ScheduleInfoView extends RelativeLayout {
     private void changeBtmAnimator(final String accuracy, final String todayNum,
                                    final String dailyCount, final TextView accuracyTv,
                                    final TextView todayNumTv, final TextView dailyCountTv){
-        float accuracyF = Float.valueOf(accuracy);
+        final float accuracyF = Float.valueOf(accuracy);
         int todayNumI = Integer.valueOf(todayNum);
         int dailyCountI = Integer.valueOf(dailyCount);
         float scheduleF = 0f;
@@ -184,10 +184,10 @@ public class ScheduleInfoView extends RelativeLayout {
 
             @Override
             public void onAnimationEnd(Animator animator) {
-                accuracyTv.setText(""+Float.valueOf(accuracy)*100);
+                accuracyTv.setText(""+ (int)(accuracyF * 100));
                 todayNumTv.setText(todayNum);
                 dailyCountTv.setText(dailyCount);
-                setBtmContent(accuracy,progress,todayNum,dailyCount);
+//                setBtmContent(accuracy,progress,todayNum,dailyCount);
                 AnimatorSet set_1 = new AnimatorSet();
                 set_1.playTogether(
                         ObjectAnimator.ofFloat(accuracyTv,"scaleX",0.8f,1f),
@@ -239,58 +239,6 @@ public class ScheduleInfoView extends RelativeLayout {
         set.setDuration(duration).start();
     }
 
-//    /**
-//     * Animate.
-//     *
-//     * @param progressBar the progress bar
-//     * @param listener    the listener
-//     */
-//    private void animate(final AccuracyView progressBar,
-//                         final Animator.AnimatorListener listener) {
-//        final float progress = (float) (Math.random() * 2);
-//        int duration = 3000;
-//        animate(progressBar, listener, progress, duration);
-//    }
-//
-//    private void animate(final AccuracyView mAccuracyView, final Animator.AnimatorListener listener,
-//                         final float progress, final int duration) {
-//
-//        accuracyAnimator = ObjectAnimator.ofFloat(mAccuracyView, "progress", progress);
-//        accuracyAnimator.setDuration(duration);
-//
-//        accuracyAnimator.addListener(new Animator.AnimatorListener() {
-//
-//            @Override
-//            public void onAnimationCancel(final Animator animation) {
-//            }
-//
-//            @Override
-//            public void onAnimationEnd(final Animator animation) {
-//                mAccuracyView.setProgress(progress);
-//            }
-//
-//            @Override
-//            public void onAnimationRepeat(final Animator animation) {
-//            }
-//
-//            @Override
-//            public void onAnimationStart(final Animator animation) {
-//            }
-//        });
-//        if (listener != null) {
-//            accuracyAnimator.addListener(listener);
-//        }
-//        accuracyAnimator.reverse();
-//        accuracyAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-//
-//            @Override
-//            public void onAnimationUpdate(final ValueAnimator animation) {
-//                mAccuracyView.setProgress((Float) animation.getAnimatedValue());
-//            }
-//        });
-//        mAccuracyView.setMarkerProgress(progress);
-//        accuracyAnimator.start();
-//    }
 
     public enum Status{
         TOP,BOTTOM;

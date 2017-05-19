@@ -115,6 +115,13 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
     public void onResume() {
         super.onResume();
         viewPager.setCurrentItem(currentPosition);
+        presenter.scheduleInfoChangeData(currentPosition);
+//        scheduleInfoView.post(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//            }
+//        });
     }
 
     @Override
@@ -282,9 +289,6 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
 
     @Override
     public void scheduleInfoChangeData(ScheduleData data) {
-        Log.d(LogUtil.PREFIX,TAG + " "+ data.getAccuracy());
-        Log.d(LogUtil.PREFIX,TAG + " "+ data.getCountEveryday());
-        Log.d(LogUtil.PREFIX,TAG + " "+ data.getCountToday());
         scheduleInfoView.changeContent(data.getAccuracy(),String.valueOf(data.getCountToday())
                 ,String.valueOf(data.getCountEveryday()));
     }

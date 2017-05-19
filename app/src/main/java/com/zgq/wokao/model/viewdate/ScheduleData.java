@@ -79,13 +79,12 @@ public class ScheduleData implements ViewData{
         public static ScheduleData format(IExamPaper paper){
             ScheduleData data = new ScheduleData();
             data.setPaperTitle(paper.getPaperInfo().getTitle());
-            ExamPaperInfo info = (ExamPaperInfo)paper.getPaperInfo();
             data.setCountToday(paper.getPaperInfo().getSchedule().getcurrentRecord().getStudyNumber());
             data.setCountEveryday(((ExamPaperInfo)paper.getPaperInfo()).getSchedule().getDailyCount());
             data.setCountAllQuestions(34);
             data.setPaperId(paper.getPaperInfo().getId());
             data.setAddTime(paper.getPaperInfo().getCreateDate());
-            data.setAccuracy(String.valueOf(PaperAction.getInstance().getTotalAccuracy(paper)));
+            data.setAccuracy(String.valueOf(paper.getPaperInfo().getSchedule().getAccuracy()));
             return data;
         }
     }

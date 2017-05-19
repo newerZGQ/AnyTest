@@ -1,5 +1,6 @@
 package com.zgq.wokao.data.realm.Paper;
 
+import com.zgq.wokao.model.paper.IExamPaper;
 import com.zgq.wokao.model.paper.info.ExamPaperInfo;
 import com.zgq.wokao.model.paper.NormalExamPaper;
 import com.zgq.wokao.model.search.Searchable;
@@ -16,4 +17,5 @@ public interface IPaperDao extends IPaperInfoDao,IPaperSchdlDao{
     public List<Searchable> search(String query);
     public List<ExamPaperInfo> getSchedulePapers();
     public void deleteById(String id);
+    public void updateStudyInfo(IExamPaper paper, boolean isCorrect);
 }

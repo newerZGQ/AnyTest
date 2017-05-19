@@ -257,6 +257,13 @@ public class PaperDaoImpl extends BaseRealmProvider<NormalExamPaper> implements 
     }
 
     @Override
+    public void updateStudyInfo(IExamPaper paper, boolean isCorrect) {
+        realm.beginTransaction();
+        paper.getPaperInfo().getSchedule().updateStudyInfo(isCorrect);
+        realm.commitTransaction();
+    }
+
+    @Override
     public NormalExamPaper query(String id) {
         RealmResults<NormalExamPaper> results = realm
                 .where(NormalExamPaper.class)

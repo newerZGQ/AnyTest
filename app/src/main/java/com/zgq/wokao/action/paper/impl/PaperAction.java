@@ -271,10 +271,12 @@ public class PaperAction extends BaseAction implements IPaperAction,IQuestionAct
         Log.d(LogUtil.PREFIX,TAG+" "+ paperId);
         //更新某一题的记录
         updateQuestionRecord(question,isCorrect);
-        //更新试卷的记录
+        //更新试卷每日的记录
         IExamPaper paper = queryById(paperId);
         updateDailyRecord(paper);
-        //更新学习记录总结
+        //更新该试卷总的记录
+        paperDao.updateStudyInfo(paper,isCorrect);
+        //更新所有试卷学习记录总结
         summaryAction.updateSummary(summaryAction.getStudySummary(),isCorrect);
     }
 
