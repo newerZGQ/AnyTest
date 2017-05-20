@@ -64,6 +64,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/schedule_info_layout"
             android:layout_width="260dp"
             android:layout_height="260dp"
             android:layout_centerHorizontal="true"

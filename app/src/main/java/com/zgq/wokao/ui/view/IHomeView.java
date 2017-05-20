@@ -19,4 +19,5 @@ public interface IHomeView {
     public void showLoadingView();
     public void setNeedUpdateData(boolean needUpdateData);
     public void setSlideaMenuLayout(StudySummary studySummary);
+    public void setViewPagerScrollble(boolean scrollble);
 }

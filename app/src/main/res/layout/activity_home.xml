@@ -169,12 +169,12 @@
 
             </RelativeLayout>
         </LinearLayout>
-        <android.support.v4.view.ViewPager
+        <com.zgq.wokao.ui.widget.CustomViewPager
             android:id="@+id/viewpaper"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/toolbar_layout">
-        </android.support.v4.view.ViewPager>
+        </com.zgq.wokao.ui.widget.CustomViewPager>
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/loadingview"

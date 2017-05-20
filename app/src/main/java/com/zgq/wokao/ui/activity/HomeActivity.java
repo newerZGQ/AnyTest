@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +33,7 @@ import com.zgq.wokao.ui.fragment.impl.PapersFragment;
 import com.zgq.wokao.ui.fragment.impl.ScheduleFragment;
 import com.zgq.wokao.ui.presenter.impl.HomePresenterImpl;
 import com.zgq.wokao.ui.view.IHomeView;
+import com.zgq.wokao.ui.widget.CustomViewPager;
 import com.zgq.wokao.ui.widget.SlideUp;
 
 import java.io.File;
@@ -72,7 +74,7 @@ public class HomeActivity extends BaseActivity implements
     @BindView(R.id.home_tab)
     NavigationTabStrip tabStrip;
     @BindView(R.id.viewpaper)
-    ViewPager viewPager;
+    CustomViewPager viewPager;
     @BindView(R.id.line_chart)
     ChartView lineChart;
     @BindView(R.id.toolbar_add)
@@ -319,6 +321,11 @@ public class HomeActivity extends BaseActivity implements
     @Override
     public void setSlideaMenuLayout(StudySummary studySummary) {
 
+    }
+
+    @Override
+    public void setViewPagerScrollble(boolean scrollble) {
+        viewPager.setScrollble(scrollble);
     }
 
 

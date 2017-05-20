@@ -95,4 +95,6 @@ dependencies {
     compile project(':stackoverview')
     compile project(':linechart')
     compile project(':shapeloading')
+    //bubble seekbar
+    compile 'com.xw.repo:bubbleseekbar:3.4-lite'
 }

@@ -68,6 +68,8 @@
 
     <color name="color_cardview_qstinfo">#5cffffff</color>
 
+    <color name="color_task_setting_backgroung">#c2000000</color>
+
     <color name="color_1">#EF9A9A</color>
     <color name="color_2">#E53935</color>
     <color name="color_3">#F8BBD0</color>
