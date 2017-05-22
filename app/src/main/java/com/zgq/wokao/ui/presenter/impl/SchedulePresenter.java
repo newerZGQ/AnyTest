@@ -1,6 +1,7 @@
 package com.zgq.wokao.ui.presenter.impl;
 
 import android.content.Context;
+import android.text.LoginFilter;
 import android.util.Log;
 
 import com.zgq.wokao.Util.LogUtil;
@@ -95,5 +96,13 @@ public class SchedulePresenter implements ISchedulePresenter {
             scheduleView.onNoneEmptyPapers();
         }
         return schedulePapers.size();
+    }
+
+    @Override
+    public void setDailyCount(int position, int count) {
+        String paperId = schedulePapers.get(position).getPaperInfo().getId();
+        paperAction.setDailyCount(paperAction.queryById(paperId),count);
+        schedulePapers = getSchedulePaper();
+        scheduleDatas = getScheduleData(schedulePapers);
     }
 }

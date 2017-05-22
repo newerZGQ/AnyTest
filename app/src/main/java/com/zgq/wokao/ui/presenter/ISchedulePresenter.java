@@ -13,4 +13,5 @@ public interface ISchedulePresenter {
     public void notifyDataChanged();
     public void scheduleInfoChangeData(int position);
     public int checkSchedulesSize();
+    public void setDailyCount(int position, int count);
 }

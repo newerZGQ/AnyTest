@@ -22,23 +22,19 @@ public class ScheduleInfoView extends RelativeLayout {
 
     private View rootView;
 
+    private int currentDailyCount;
+
     private LinearLayout topView;
     private TextView topIsCompletedTv;
 
     private RelativeLayout btmView;
     private AccuracyView accuracyView;
     private AccuracyView scheduleView;
-    private TextView btmAccuracy;
+    private NumberAniTextView btmAccuracy;
     private TextView btmTodayNum;
-    private TextView btmDailyCount;
-
-    private boolean isExpanded = true;
-
-    private float progress = 0;
+    private NumberAniTextView btmDailyCount;
 
     private Context context;
-
-    private ObjectAnimator accuracyAnimator;
 
     private Status status = Status.TOP;
 
@@ -77,19 +73,19 @@ public class ScheduleInfoView extends RelativeLayout {
         btmView = (RelativeLayout) rootView.findViewById(R.id.btm_view);
         accuracyView = (AccuracyView) rootView.findViewById(R.id.accuracy_view);
         scheduleView = (AccuracyView) rootView.findViewById(R.id.schedule_view);
-        btmAccuracy = (TextView) rootView.findViewById(R.id.btm_accuracy);
+        btmAccuracy = (NumberAniTextView) rootView.findViewById(R.id.btm_accuracy);
         btmTodayNum = (TextView) rootView.findViewById(R.id.btm_today_num);
-        btmDailyCount = (TextView) rootView.findViewById(R.id.btm_daily_count);
+        btmDailyCount = (NumberAniTextView) rootView.findViewById(R.id.btm_daily_count);
 
         viewAnimator(btmView,0f, 0f, 0f, 0f, 0);
         viewAnimator(topView,0f, 1f, 0f, 1f, 0);
     }
 
-    public void setBtmContent(String accuracy, float progress, String todayNum, String dailyCount){
-        btmTodayNum.setText(todayNum);
-        btmDailyCount.setText(dailyCount);
-        btmAccuracy.setText(accuracy);
-    }
+//    public void setBtmContent(String accuracy, float progress, String todayNum, String dailyCount){
+//        btmTodayNum.setText(todayNum);
+//        btmDailyCount.setText(dailyCount);
+//        btmAccuracy.setText(accuracy);
+//    }
 
     public void changeContent(final String accuracy,final String todayNum, final String dailyCount){
         switch (status){
@@ -102,6 +98,11 @@ public class ScheduleInfoView extends RelativeLayout {
             default:
                 break;
         }
+    }
+
+    public void changDailyCount(int end, int duration){
+        if (duration == 0) duration = 200;
+        btmDailyCount.runInt(currentDailyCount,end,duration);
     }
 
     private void changeTopAnimator(final String todayNum, final String dailyCount,
@@ -153,8 +154,8 @@ public class ScheduleInfoView extends RelativeLayout {
     }
 
     private void changeBtmAnimator(final String accuracy, final String todayNum,
-                                   final String dailyCount, final TextView accuracyTv,
-                                   final TextView todayNumTv, final TextView dailyCountTv){
+                                   final String dailyCount, final NumberAniTextView accuracyTv,
+                                   final TextView todayNumTv, final NumberAniTextView dailyCountTv){
         final float accuracyF = Float.valueOf(accuracy);
         int todayNumI = Integer.valueOf(todayNum);
         int dailyCountI = Integer.valueOf(dailyCount);
@@ -164,11 +165,14 @@ public class ScheduleInfoView extends RelativeLayout {
         }
         accuracyView.setProgress(accuracyF);
         scheduleView.setProgress(scheduleF);
+
+        accuracyTv.runInt(0,(int)(accuracyF * 100),200);
+
         AnimatorSet set = new AnimatorSet();
         set.playTogether(
-                ObjectAnimator.ofFloat(accuracyTv,"scaleX",1f,0.8f),
-                ObjectAnimator.ofFloat(accuracyTv,"scaleY",1f,0.8f),
-                ObjectAnimator.ofFloat(accuracyTv,"alpha",1f,0f),
+//                ObjectAnimator.ofFloat(accuracyTv,"scaleX",1f,0.8f),
+//                ObjectAnimator.ofFloat(accuracyTv,"scaleY",1f,0.8f),
+//                ObjectAnimator.ofFloat(accuracyTv,"alpha",1f,0f),
                 ObjectAnimator.ofFloat(todayNumTv,"scaleX",1f,0.8f),
                 ObjectAnimator.ofFloat(todayNumTv,"scaleY",1f,0.8f),
                 ObjectAnimator.ofFloat(todayNumTv,"alpha",1f,0f),
@@ -184,15 +188,15 @@ public class ScheduleInfoView extends RelativeLayout {
 
             @Override
             public void onAnimationEnd(Animator animator) {
-                accuracyTv.setText(""+ (int)(accuracyF * 100));
+//                accuracyTv.setText(""+ (int)(accuracyF * 100));
                 todayNumTv.setText(todayNum);
                 dailyCountTv.setText(dailyCount);
 //                setBtmContent(accuracy,progress,todayNum,dailyCount);
                 AnimatorSet set_1 = new AnimatorSet();
                 set_1.playTogether(
-                        ObjectAnimator.ofFloat(accuracyTv,"scaleX",0.8f,1f),
-                        ObjectAnimator.ofFloat(accuracyTv,"scaleY",0.8f,1f),
-                        ObjectAnimator.ofFloat(accuracyTv,"alpha",0f,1f),
+//                        ObjectAnimator.ofFloat(accuracyTv,"scaleX",0.8f,1f),
+//                        ObjectAnimator.ofFloat(accuracyTv,"scaleY",0.8f,1f),
+//                        ObjectAnimator.ofFloat(accuracyTv,"alpha",0f,1f),
                         ObjectAnimator.ofFloat(todayNumTv,"scaleX",0.8f,1f),
                         ObjectAnimator.ofFloat(todayNumTv,"scaleY",0.8f,1f),
                         ObjectAnimator.ofFloat(todayNumTv,"alpha",0f,1f),

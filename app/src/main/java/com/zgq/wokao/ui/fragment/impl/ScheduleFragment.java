@@ -359,6 +359,8 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
     @Override
     public void onTaskSelected(int task) {
         Log.d(TAG,"task = " + task);
+        scheduleInfoView.changDailyCount(task,200);
+        presenter.setDailyCount(currentPosition,task);
     }
 
     /**
@@ -378,6 +380,7 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
 
         @Override
         public void onPageSelected(int position) {
+            currentPosition = position;
             presenter.scheduleInfoChangeData(position);
             ((SchedulePagerAdapter) viewPager.getAdapter()).changeStatus(((SchedulePagerAdapter) viewPager.getAdapter()).getStatus());
             //adjustQstList();
