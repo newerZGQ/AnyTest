@@ -6,4 +6,5 @@ package com.zgq.wokao.Util;
 
 public class LogUtil {
     public static final String PREFIX = "zgq_wokao";
+    public static final boolean isDebug = true;
 }

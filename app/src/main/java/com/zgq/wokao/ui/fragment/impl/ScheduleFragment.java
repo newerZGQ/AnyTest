@@ -2,6 +2,7 @@ package com.zgq.wokao.ui.fragment.impl;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -15,8 +16,10 @@ import android.widget.LinearLayout;
 import com.wirelesspienetwork.overview.views.Overview;
 import com.zgq.wokao.R;
 import com.zgq.wokao.Util.LogUtil;
+import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.viewdate.QstData;
 import com.zgq.wokao.model.viewdate.ScheduleData;
+import com.zgq.wokao.ui.activity.AnswerStudyActivity;
 import com.zgq.wokao.ui.adapter.SchedulePagerAdapter;
 import com.zgq.wokao.ui.fragment.BaseFragment;
 import com.zgq.wokao.ui.presenter.impl.SchedulePresenter;
@@ -219,6 +222,16 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
                                 hideDetail(300);
                             }
                         }
+
+                        @Override
+                        public void onClickQuestionType(String paperId, QuestionType type) {
+                            startStudy(paperId,type.getIndex(),0);
+                        }
+
+                        @Override
+                        public void onClickSpeQuestion(String paperId, QuestionType type, int questionIndex) {
+                            startStudy(paperId,type.getIndex(),questionIndex);
+                        }
                     }));
 
             viewPager.addOnPageChangeListener(new SchedulePageChangeListener());
@@ -297,6 +310,18 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
     //重新设置当前viewpager中的qstlist
     private void setCurrentQstList() {
 
+    }
+
+    private void startStudy(String paperId, int type, int qstNum){
+        Intent intent = new Intent(getActivity(),AnswerStudyActivity.class);
+        if (paperId != null && !paperId.equals("")) {
+            intent.putExtra("paperId", paperId);
+            intent.putExtra("qstType", type);
+            intent.putExtra("qstNum",qstNum);
+        }else {
+            return;
+        }
+        getActivity().startActivity(intent);
     }
 
     @Override

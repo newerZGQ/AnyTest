@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.wirelesspienetwork.overview.model.OverviewAdapter;
 import com.zgq.wokao.R;
 import com.zgq.wokao.Util.LogUtil;
+import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.viewdate.QstData;
 import com.zgq.wokao.ui.activity.AnswerStudyActivity;
 
@@ -25,10 +26,13 @@ public class CardViewAdapter extends OverviewAdapter<CardViewHolder, QstData> {
 
     private Context context;
     private List<QstData> qstDatas;
-    public CardViewAdapter(List<QstData> qstDatas,Context context) {
+
+    private OnCardViewClickListener listener;
+    public CardViewAdapter(List<QstData> qstDatas,Context context, OnCardViewClickListener listener) {
         super(qstDatas);
         this.context = context;
         this.qstDatas = qstDatas;
+        this.listener = listener;
     }
 
     @Override
@@ -114,25 +118,40 @@ public class CardViewAdapter extends OverviewAdapter<CardViewHolder, QstData> {
         cardViewHolder.fallable_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startStudy(qstDatas.get(position).getPaperId(),
-                        qstDatas.get(position).getType().getIndex(),
-                        Integer.valueOf(cardViewHolder.fallable_1.getText().toString())-1);
+                if (listener != null){
+                    listener.onSelectedSpeQuestion(qstDatas.get(position).getPaperId(),
+                            qstDatas.get(position).getType(),
+                            Integer.valueOf(cardViewHolder.fallable_1.getText().toString())-1);
+                }
+//                startStudy(qstDatas.get(position).getPaperId(),
+//                        qstDatas.get(position).getType().getIndex(),
+//                        Integer.valueOf(cardViewHolder.fallable_1.getText().toString())-1);
             }
         });
         cardViewHolder.fallable_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startStudy(qstDatas.get(position).getPaperId(),
-                        qstDatas.get(position).getType().getIndex(),
-                        Integer.valueOf(cardViewHolder.fallable_2.getText().toString())-1);
+                if (listener != null){
+                    listener.onSelectedSpeQuestion(qstDatas.get(position).getPaperId(),
+                            qstDatas.get(position).getType(),
+                            Integer.valueOf(cardViewHolder.fallable_2.getText().toString())-1);
+                }
+//                startStudy(qstDatas.get(position).getPaperId(),
+//                        qstDatas.get(position).getType().getIndex(),
+//                        Integer.valueOf(cardViewHolder.fallable_2.getText().toString())-1);
             }
         });
         cardViewHolder.fallable_3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startStudy(qstDatas.get(position).getPaperId(),
-                        qstDatas.get(position).getType().getIndex(),
-                        Integer.valueOf(cardViewHolder.fallable_3.getText().toString())-1);
+                if (listener != null){
+                    listener.onSelectedSpeQuestion(qstDatas.get(position).getPaperId(),
+                            qstDatas.get(position).getType(),
+                            Integer.valueOf(cardViewHolder.fallable_3.getText().toString())-1);
+                }
+//                startStudy(qstDatas.get(position).getPaperId(),
+//                        qstDatas.get(position).getType().getIndex(),
+//                        Integer.valueOf(cardViewHolder.fallable_3.getText().toString())-1);
             }
         });
 
@@ -188,13 +207,31 @@ public class CardViewAdapter extends OverviewAdapter<CardViewHolder, QstData> {
         vh.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(LogUtil.PREFIX," type index "+qstDatas.get(position).getType().getIndex());
-                Log.d(LogUtil.PREFIX," position"+position);
-                Log.d(LogUtil.PREFIX," view"+view);
-                startStudy(qstDatas.get(position).getPaperId(), qstDatas.get(position).getType().getIndex(),0);
+                if (LogUtil.isDebug) {
+                    Log.d(LogUtil.PREFIX, " type index " + qstDatas.get(position).getType().getIndex());
+                    Log.d(LogUtil.PREFIX, " position" + position);
+                    Log.d(LogUtil.PREFIX, " view" + view);
+                }
+                if (listener != null){
+                    listener.onSelectedQuestionType(qstDatas.get(position).getPaperId(), qstDatas.get(position).getType());
+                }
+//                startStudy(qstDatas.get(position).getPaperId(), qstDatas.get(position).getType().getIndex(),0);
             }
         });
         onBindViewHolder(vh);
+    }
+
+    public OnCardViewClickListener getListener() {
+        return listener;
+    }
+
+    public void setListener(OnCardViewClickListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OnCardViewClickListener{
+        public void onSelectedQuestionType(String paperId, QuestionType type);
+        public void onSelectedSpeQuestion(String paperId, QuestionType type, int questionIndex);
     }
 
 }

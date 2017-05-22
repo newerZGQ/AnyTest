@@ -16,6 +16,7 @@ import com.zgq.wokao.R;
 import com.zgq.wokao.Util.ContextUtil;
 import com.zgq.wokao.Util.FontsUtil;
 import com.zgq.wokao.Util.LogUtil;
+import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.viewdate.QstData;
 import com.zgq.wokao.model.viewdate.ScheduleData;
 
@@ -28,7 +29,7 @@ import java.util.Random;
  * Created by zgq on 2017/3/5.
  */
 
-public class SchedulePagerAdapter extends PagerAdapter {
+public class SchedulePagerAdapter extends PagerAdapter implements CardViewAdapter.OnCardViewClickListener{
 
     public static final String TAG = "SchedulePagerAdapter";
 
@@ -159,7 +160,7 @@ public class SchedulePagerAdapter extends PagerAdapter {
             models.add(color);
         }
 
-        final CardViewAdapter adapter = new CardViewAdapter(qstDatasList.get(position),context);
+        final CardViewAdapter adapter = new CardViewAdapter(qstDatasList.get(position),context,this);
         holder.qstList.setTaskStack(adapter);
 
 
@@ -227,6 +228,20 @@ public class SchedulePagerAdapter extends PagerAdapter {
         }
     }
 
+    @Override
+    public void onSelectedQuestionType(String paperId, QuestionType type) {
+        if (listener != null){
+            listener.onClickQuestionType(paperId, type);
+        }
+    }
+
+    @Override
+    public void onSelectedSpeQuestion(String paperId, QuestionType type, int questionIndex) {
+        if (listener != null){
+            listener.onClickSpeQuestion(paperId,type,questionIndex);
+        }
+    }
+
     public final class ViewHolder {
         public LinearLayout topLayout;
         public TextView title;
@@ -237,6 +252,8 @@ public class SchedulePagerAdapter extends PagerAdapter {
 
     public interface OnViewClickListener{
         public void onClickTopLayout(int position);
+        public void onClickQuestionType(String paperId, QuestionType type);
+        public void onClickSpeQuestion(String paperId, QuestionType type, int questionIndex);
     }
 
     public enum Status{
