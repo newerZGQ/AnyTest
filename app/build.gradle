@@ -97,4 +97,5 @@ dependencies {
     compile project(':shapeloading')
     //bubble seekbar
     compile 'com.xw.repo:bubbleseekbar:3.4-lite'
+    compile project(':cardview')
 }

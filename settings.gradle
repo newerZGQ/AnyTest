@@ -1,1 +1,1 @@
-include ':app', ':stackoverview', ':linechart', ':linechartsample', ':shapeloading'
+include ':app', ':stackoverview', ':linechart', ':linechartsample', ':shapeloading', ':cardviewdemo', ':cardview'
