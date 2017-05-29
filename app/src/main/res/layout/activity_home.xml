@@ -117,6 +117,7 @@
                 android:background="@color/colorTransparent"/>
 
             <RelativeLayout
+                android:id="@+id/toolbar_opt_layout"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:gravity="center_vertical">

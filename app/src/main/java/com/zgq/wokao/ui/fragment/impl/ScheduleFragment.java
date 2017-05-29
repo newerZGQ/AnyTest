@@ -216,9 +216,20 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
                     new SchedulePagerAdapter.OnViewClickListener() {
                         @Override
                         public void onClickTopLayout(int position) {
+                            System.out.println("ttt");
+
                             if (status == Status.SURVEY) {
+                                if (mListener != null){
+                                    Log.d(TAG,"mListener not null");
+                                    mListener.onShowQuestionDetail();
+                                }else{
+                                    Log.d(TAG,"mListener null");
+                                }
                                 showDetail(300);
                             } else {
+                                if (mListener != null){
+                                    mListener.onHideQuestionDetail();
+                                }
                                 hideDetail(300);
                             }
                         }
@@ -252,7 +263,7 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
     public void showDetail(int duration) {
         scheduleInfoView.showTop(duration);
         ((SchedulePagerAdapter) viewPager.getAdapter()).changeStatus(SchedulePagerAdapter.Status.SHOWSTARTBTN);
-        ObjectAnimator.ofFloat(viewPager, "translationY", 0).setDuration(duration).start();
+        ObjectAnimator.ofFloat(viewPager, "translationY", slipDistance, slipDistance*1/5).setDuration(duration).start();
         adjustViewPager();
         status = Status.DETAIL;
     }
@@ -393,8 +404,9 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
      */
     public interface OnScheduleFragmentListener {
         void onFragmentInteraction(Uri uri);
-
         void goQuestionsList(String paperId);
+        void onShowQuestionDetail();
+        void onHideQuestionDetail();
     }
 
     public class SchedulePageChangeListener implements ViewPager.OnPageChangeListener {

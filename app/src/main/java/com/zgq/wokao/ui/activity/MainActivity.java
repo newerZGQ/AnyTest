@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @BindView(R.id.recy_exam_paper)
     RecyclerView examListView;
     PaperInfoAdapter adapter;
-    @BindView(R.id.toolbar_layout)
+    @BindView(R.id.toolbar_opt_layout)
     LinearLayout toolbarLayout;
     @BindView(R.id.toolbar_add)
     TextView toolbarAdd;

@@ -14,20 +14,16 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gigamole.navigationtabstrip.NavigationTabStrip;
 import com.nbsp.materialfilepicker.MaterialFilePicker;
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 import com.zgq.linechart.ChartView;
 import com.zgq.wokao.R;
-import com.zgq.wokao.Util.FileUtil;
 import com.zgq.wokao.action.login.LoginAction;
 import com.zgq.wokao.action.paper.impl.StudySummaryAction;
-import com.zgq.wokao.data.realm.Paper.impl.PaperDaoImpl;
 import com.zgq.wokao.model.total.StudySummary;
 import com.zgq.wokao.ui.fragment.impl.PapersFragment;
 import com.zgq.wokao.ui.fragment.impl.ScheduleFragment;
@@ -36,7 +32,6 @@ import com.zgq.wokao.ui.view.IHomeView;
 import com.zgq.wokao.ui.widget.CustomViewPager;
 import com.zgq.wokao.ui.widget.SlideUp;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,7 +41,6 @@ import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qqtheme.framework.util.StorageUtils;
 
 public class HomeActivity extends BaseActivity implements
         ScheduleFragment.OnScheduleFragmentListener,
@@ -70,6 +64,8 @@ public class HomeActivity extends BaseActivity implements
     Button menuBtn;
     @BindView(R.id.toolbar_search)
     Button searchBtn;
+    @BindView(R.id.toolbar_opt_layout)
+    RelativeLayout toolbarLayout;
     SlideUp slideUp;
     @BindView(R.id.home_tab)
     NavigationTabStrip tabStrip;
@@ -328,6 +324,11 @@ public class HomeActivity extends BaseActivity implements
         viewPager.setScrollble(scrollble);
     }
 
+    @Override
+    public void hideToolBar() {
+
+    }
+
 
     @Override
     public void onFragmentInteraction(Uri uri) {
@@ -343,6 +344,18 @@ public class HomeActivity extends BaseActivity implements
     public void goQuestionsList(String paperId) {
         Bundle bundle = new Bundle();
         bundle.putString("paperId", paperId);
+    }
+
+    @Override
+    public void onShowQuestionDetail() {
+        toolbarLayout.setVisibility(View.GONE);
+        setViewPagerScrollble(false);
+    }
+
+    @Override
+    public void onHideQuestionDetail() {
+        toolbarLayout.setVisibility(View.VISIBLE);
+        setViewPagerScrollble(true);
     }
 
     @Override

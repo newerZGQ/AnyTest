@@ -12,10 +12,10 @@
         android:background="@color/colorWhite"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar_layout">
+        android:layout_below="@+id/toolbar_opt_layout">
     </android.support.v7.widget.RecyclerView>
     <LinearLayout
-        android:id="@+id/toolbar_layout"
+        android:id="@+id/toolbar_opt_layout"
         android:elevation="4dp"
         android:orientation="vertical"
         android:layout_width="match_parent"

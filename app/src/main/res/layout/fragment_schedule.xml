@@ -8,7 +8,7 @@
 
     <com.zgq.wokao.ui.widget.ScheduleInfoView
         android:id="@+id/schedule_info_view"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="50dp"
         android:layout_width="400dp"
         android:layout_height="400dp" />
     <android.support.v4.view.ViewPager

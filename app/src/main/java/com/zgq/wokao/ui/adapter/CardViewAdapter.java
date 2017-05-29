@@ -199,7 +199,7 @@ public class CardViewAdapter extends OverviewAdapter<CardViewHolder, QstData> {
         context.startActivity(intent);
     }
 
-    public void bindViewHolder(CardViewHolder vh, final int position) {
+    public void bindViewHolder(final CardViewHolder vh, final int position) {
         this.position = position;
 
         vh.qstInfo.setText("共"+qstDatas.get(position).getQstCount()+ "题，收藏"+qstDatas.get(position).getStarCount()+"题");
@@ -212,10 +212,10 @@ public class CardViewAdapter extends OverviewAdapter<CardViewHolder, QstData> {
                     Log.d(LogUtil.PREFIX, " position" + position);
                     Log.d(LogUtil.PREFIX, " view" + view);
                 }
+                vh.view.scrollBy(0,400);
                 if (listener != null){
                     listener.onSelectedQuestionType(qstDatas.get(position).getPaperId(), qstDatas.get(position).getType());
                 }
-//                startStudy(qstDatas.get(position).getPaperId(), qstDatas.get(position).getType().getIndex(),0);
             }
         });
         onBindViewHolder(vh);

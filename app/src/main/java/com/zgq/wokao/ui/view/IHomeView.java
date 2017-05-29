@@ -20,4 +20,5 @@ public interface IHomeView {
     public void setNeedUpdateData(boolean needUpdateData);
     public void setSlideaMenuLayout(StudySummary studySummary);
     public void setViewPagerScrollble(boolean scrollble);
+    public void hideToolBar();
 }

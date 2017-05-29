@@ -44,7 +44,7 @@ public class PaperInfoActivity extends AppCompatActivity implements View.OnClick
     private TextView setStarLabel;
     @BindView(R.id.toolbar_back)
     TextView toolbarBack;
-    @BindView(R.id.toolbar_layout)
+    @BindView(R.id.toolbar_opt_layout)
     LinearLayout toolbarLayout;
 
     private RelativeLayout fiQstTypeInfo;
