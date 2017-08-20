@@ -3,7 +3,7 @@ package com.zgq.wokao.ui.adapter;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.view.PagerAdapter;
-import android.util.Log;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,14 +11,15 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.wirelesspienetwork.overview.views.Overview;
 import com.zgq.wokao.R;
 import com.zgq.wokao.Util.ContextUtil;
 import com.zgq.wokao.Util.FontsUtil;
-import com.zgq.wokao.Util.LogUtil;
 import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.viewdate.QstData;
 import com.zgq.wokao.model.viewdate.ScheduleData;
+import com.zgq.wokao.ui.widget.cardview.CardItem;
+import com.zgq.wokao.ui.widget.cardview.CardPagerAdapter;
+import com.zgq.wokao.ui.widget.cardview.ShadowTransformer;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -116,7 +117,7 @@ public class SchedulePagerAdapter extends PagerAdapter implements CardViewAdapte
             title.setTypeface(FontsUtil.getSans_serif_thin());
             TextView addTime = (TextView)convertView.findViewById(R.id.add_time);
             Button startBtn = (Button) convertView.findViewById(R.id.start_study);
-            Overview qstList = (Overview) convertView.findViewById(R.id.qst_datial_cards);
+            ViewPager qstList = (ViewPager) convertView.findViewById(R.id.qst_datial_cards);
             holder = new ViewHolder();
             holder.topLayout = topLayout;
             holder.title = title;
@@ -137,16 +138,6 @@ public class SchedulePagerAdapter extends PagerAdapter implements CardViewAdapte
         holder.title.setText(scheduleDatas.get(position).getPaperTitle());
         holder.addTime.setText(scheduleDatas.get(position).getAddTime());
 
-        holder.qstList.setCallbacks(new Overview.RecentsViewCallbacks(){
-            @Override
-            public void onAllCardsDismissed() {
-            }
-
-            @Override
-            public void onCardDismissed(int position) {
-
-            }
-        });
         holder.qstList.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
                 View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
                 View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
@@ -160,9 +151,16 @@ public class SchedulePagerAdapter extends PagerAdapter implements CardViewAdapte
             models.add(color);
         }
 
-        final CardViewAdapter adapter = new CardViewAdapter(qstDatasList.get(position),context,this);
-        holder.qstList.setTaskStack(adapter);
+        final CardPagerAdapter mCardAdapter = new CardPagerAdapter();
+        mCardAdapter.addCardItem(new CardItem("rr", "rr"));
+        mCardAdapter.addCardItem(new CardItem("rr", "rr"));
+        mCardAdapter.addCardItem(new CardItem("rr", "rr"));
+        mCardAdapter.addCardItem(new CardItem("rr", "rr"));
 
+        ShadowTransformer mCardShadowTransformer = new ShadowTransformer(holder.qstList, mCardAdapter);
+        holder.qstList.setAdapter(mCardAdapter);
+        holder.qstList.setPageTransformer(false, mCardShadowTransformer);
+        holder.qstList.setOffscreenPageLimit(3);
 
         switch (status){
             case SHOWADDTIME:
@@ -247,7 +245,7 @@ public class SchedulePagerAdapter extends PagerAdapter implements CardViewAdapte
         public TextView title;
         public TextView addTime;
         public Button startBtn;
-        public Overview qstList;
+        public ViewPager qstList;
     }
 
     public interface OnViewClickListener{

@@ -1,10 +1,10 @@
 package com.zgq.wokao.ui.adapter;
 
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.wirelesspienetwork.overview.model.ViewHolder;
 import com.zgq.cardview.CardView;
 import com.zgq.wokao.R;
 import com.zgq.wokao.model.viewdate.QstData;
@@ -13,7 +13,7 @@ import com.zgq.wokao.model.viewdate.QstData;
  * Created by zgq on 2017/3/31.
  */
 
-public class CardViewHolder extends ViewHolder {
+public class CardViewHolder extends RecyclerView.ViewHolder {
     public View view;
     public CardView cardView;
 //    public TextView title;

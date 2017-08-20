@@ -7,18 +7,19 @@ import com.zgq.wokao.model.total.StudySummary;
  */
 
 public interface IHomeView {
-    public void updateSlideUp();
-    public void goSearch();
-    public void showScheduleFragment();
-    public void showPapersFragment();
-    public void showFragment(String fragmentTag);
-    public void showProgressBar();
-    public void hideProgressBar();
-    public void notifyDataChanged();
-    public void hideLoadingView();
-    public void showLoadingView();
-    public void setNeedUpdateData(boolean needUpdateData);
-    public void setSlideaMenuLayout(StudySummary studySummary);
-    public void setViewPagerScrollble(boolean scrollble);
-    public void hideToolBar();
+    void updateSlideUp();
+    void goSearch();
+    void showScheduleFragment();
+    void showPapersFragment();
+    void showQuestionsFragment();
+    void showFragment(String fragmentTag);
+    void showProgressBar();
+    void hideProgressBar();
+    void notifyDataChanged();
+    void hideLoadingView();
+    void showLoadingView();
+    void setNeedUpdateData(boolean needUpdateData);
+    void setSlideaMenuLayout(StudySummary studySummary);
+    void setViewPagerScrollble(boolean scrollble);
+    void hideToolBar();
 }

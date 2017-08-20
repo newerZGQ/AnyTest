@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Gravity;
@@ -26,6 +27,7 @@ import com.zgq.wokao.action.login.LoginAction;
 import com.zgq.wokao.action.paper.impl.StudySummaryAction;
 import com.zgq.wokao.model.total.StudySummary;
 import com.zgq.wokao.ui.fragment.impl.PapersFragment;
+import com.zgq.wokao.ui.fragment.impl.QuestionsFragment;
 import com.zgq.wokao.ui.fragment.impl.ScheduleFragment;
 import com.zgq.wokao.ui.presenter.impl.HomePresenterImpl;
 import com.zgq.wokao.ui.view.IHomeView;
@@ -45,10 +47,15 @@ import butterknife.ButterKnife;
 public class HomeActivity extends BaseActivity implements
         ScheduleFragment.OnScheduleFragmentListener,
         PapersFragment.OnPaperFragmentListener,
+        QuestionsFragment.OnFragmentInteractionListener,
         IHomeView,
         View.OnClickListener {
 
     public static final String TAG = "HomeActivity";
+
+    private static final String ScheduleFragmentTag = "schedule";
+    private static final String PapersFragmentTag = "papers";
+    private static final String QuestionsFragmentTag = "questions";
 
     private HomePresenterImpl homePresenter;
 
@@ -88,6 +95,10 @@ public class HomeActivity extends BaseActivity implements
     private TimerTask hideLoadingTask;
 
     public boolean needUpdateData = false;
+
+    private ScheduleFragment scheduleFragment;
+    private PapersFragment papersFragment;
+    private QuestionsFragment questionsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,6 +141,7 @@ public class HomeActivity extends BaseActivity implements
 
     private void initView() {
         initSlideUp();
+        initFragments();
         initViewPager();
         setListener();
         initTabStrip();
@@ -213,10 +225,19 @@ public class HomeActivity extends BaseActivity implements
                 .build();
     }
 
+    private void initFragments(){
+        scheduleFragment = ScheduleFragment.newInstance("", "");
+        papersFragment = PapersFragment.newInstance();
+        questionsFragment = QuestionsFragment.newInstance("","");
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//        transaction.add(papersFragment,PapersFragmentTag);
+//        transaction.add(scheduleFragment,ScheduleFragmentTag);
+        transaction.add(questionsFragment,QuestionsFragmentTag);
+        transaction.commit();
+    }
+
     private void initViewPager() {
-        final ScheduleFragment schedlFragment = ScheduleFragment.newInstance("", "");
-        final PapersFragment papersFragment = PapersFragment.newInstance();
-        fragments.add(schedlFragment);
+        fragments.add(scheduleFragment);
         fragments.add(papersFragment);
         viewPager.setAdapter(new HomeFragmentPagerAdapter(getSupportFragmentManager(), fragments));
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -229,7 +250,7 @@ public class HomeActivity extends BaseActivity implements
                     case 0:
                         if (positionOffset == 0) {
                             showLoadingView();
-                            schedlFragment.notifyDataChanged();
+                            scheduleFragment.notifyDataChanged();
                             hideLoadingView();
                             needUpdateData = false;
                         }
@@ -342,14 +363,16 @@ public class HomeActivity extends BaseActivity implements
 
     @Override
     public void goQuestionsList(String paperId) {
-        Bundle bundle = new Bundle();
-        bundle.putString("paperId", paperId);
+        showQuestionsFragment();
+//        Bundle bundle = new Bundle();
+//        bundle.putString("paperId", paperId);
     }
 
     @Override
     public void onShowQuestionDetail() {
         toolbarLayout.setVisibility(View.GONE);
         setViewPagerScrollble(false);
+        showQuestionsFragment();
     }
 
     @Override
@@ -375,6 +398,14 @@ public class HomeActivity extends BaseActivity implements
     @Override
     public void showPapersFragment() {
         viewPager.setCurrentItem(1);
+    }
+
+    @Override
+    public void showQuestionsFragment() {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.viewpaper,getSupportFragmentManager().findFragmentByTag(QuestionsFragmentTag));
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     @Override

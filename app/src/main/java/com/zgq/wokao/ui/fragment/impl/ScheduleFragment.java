@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.LinearLayout;
 
-import com.wirelesspienetwork.overview.views.Overview;
 import com.zgq.wokao.R;
 import com.zgq.wokao.Util.LogUtil;
 import com.zgq.wokao.model.paper.QuestionType;
@@ -216,22 +215,21 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
                     new SchedulePagerAdapter.OnViewClickListener() {
                         @Override
                         public void onClickTopLayout(int position) {
-                            System.out.println("ttt");
-
-                            if (status == Status.SURVEY) {
-                                if (mListener != null){
-                                    Log.d(TAG,"mListener not null");
-                                    mListener.onShowQuestionDetail();
-                                }else{
-                                    Log.d(TAG,"mListener null");
-                                }
-                                showDetail(300);
-                            } else {
-                                if (mListener != null){
-                                    mListener.onHideQuestionDetail();
-                                }
-                                hideDetail(300);
-                            }
+                                mListener.goQuestionsList("");
+//                            if (status == Status.SURVEY) {
+//                                if (mListener != null){
+//                                    Log.d(TAG,"mListener not null");
+//                                    mListener.onShowQuestionDetail();
+//                                }else{
+//                                    Log.d(TAG,"mListener null");
+//                                }
+//                                showDetail(300);
+//                            } else {
+//                                if (mListener != null){
+//                                    mListener.onHideQuestionDetail();
+//                                }
+//                                hideDetail(300);
+//                            }
                         }
 
                         @Override
@@ -304,19 +302,19 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
     }
 
     //调整viewpager前后两页的qstlist数据显示
-    private void adjustQstList() {
-        int position = viewPager.getCurrentItem();
-        View tmp = null;
-        if ((tmp = viewPager.getChildAt(position + 1)) != null) {
-            ((Overview) tmp.findViewById(R.id.qst_datial_cards)).getTaskStack()
-                    .notifyDataSetChanged(presenter.getQstDataByPosition(position + 1));
-        }
-        if ((tmp = viewPager.getChildAt(position - 1)) != null) {
-            ((Overview) tmp.findViewById(R.id.qst_datial_cards)).getTaskStack()
-                    .notifyDataSetChanged(presenter.getQstDataByPosition(position - 1));
-        }
-
-    }
+//    private void adjustQstList() {
+//        int position = viewPager.getCurrentItem();
+//        View tmp = null;
+//        if ((tmp = viewPager.getChildAt(position + 1)) != null) {
+//            ((Overview) tmp.findViewById(R.id.qst_datial_cards)).getTaskStack()
+//                    .notifyDataSetChanged(presenter.getQstDataByPosition(position + 1));
+//        }
+//        if ((tmp = viewPager.getChildAt(position - 1)) != null) {
+//            ((Overview) tmp.findViewById(R.id.qst_datial_cards)).getTaskStack()
+//                    .notifyDataSetChanged(presenter.getQstDataByPosition(position - 1));
+//        }
+//
+//    }
 
     //重新设置当前viewpager中的qstlist
     private void setCurrentQstList() {
