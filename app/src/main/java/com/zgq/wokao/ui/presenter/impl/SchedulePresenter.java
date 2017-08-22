@@ -1,22 +1,16 @@
 package com.zgq.wokao.ui.presenter.impl;
 
 import android.content.Context;
-import android.text.LoginFilter;
-import android.util.Log;
 
-import com.zgq.wokao.Util.LogUtil;
 import com.zgq.wokao.action.paper.impl.PaperAction;
-import com.zgq.wokao.action.parser.ParserAction;
 import com.zgq.wokao.action.viewdata.ViewDataAction;
 import com.zgq.wokao.model.paper.IExamPaper;
-import com.zgq.wokao.model.paper.info.IPaperInfo;
 import com.zgq.wokao.model.viewdate.QstData;
 import com.zgq.wokao.model.viewdate.ScheduleData;
 import com.zgq.wokao.ui.presenter.ISchedulePresenter;
 import com.zgq.wokao.ui.view.IScheduleView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by zgq on 2017/3/5.

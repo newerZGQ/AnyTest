@@ -47,7 +47,7 @@ import butterknife.ButterKnife;
 public class HomeActivity extends BaseActivity implements
         ScheduleFragment.OnScheduleFragmentListener,
         PapersFragment.OnPaperFragmentListener,
-        QuestionsFragment.OnFragmentInteractionListener,
+        QuestionsFragment.QuestionsFragmentListener,
         IHomeView,
         View.OnClickListener {
 
@@ -225,10 +225,6 @@ public class HomeActivity extends BaseActivity implements
     private void initFragments(){
         scheduleFragment = ScheduleFragment.newInstance("", "");
         papersFragment = PapersFragment.newInstance();
-        questionsFragment = QuestionsFragment.newInstance("","");
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(questionsFragment,QuestionsFragmentTag);
-        transaction.commit();
     }
 
     private void initViewPager() {
@@ -345,12 +341,6 @@ public class HomeActivity extends BaseActivity implements
 
     }
 
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
-    }
-
     @Override
     public void goSearch() {
         openActivity(SearchActivity.class);
@@ -358,7 +348,7 @@ public class HomeActivity extends BaseActivity implements
 
     @Override
     public void goQuestionsList(String paperId) {
-        showQuestionsFragment();
+        showQuestionsFragment(paperId);
     }
 
     @Override
@@ -380,10 +370,13 @@ public class HomeActivity extends BaseActivity implements
         viewPager.setCurrentItem(1);
     }
 
+
     @Override
-    public void showQuestionsFragment() {
+    public void showQuestionsFragment(String paperId) {
+        Log.d(TAG,"showquestion");
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.viewpaper,getSupportFragmentManager().findFragmentByTag(QuestionsFragmentTag));
+        questionsFragment = QuestionsFragment.newInstance(paperId);
+        transaction.replace(R.id.questions_frag,questionsFragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }

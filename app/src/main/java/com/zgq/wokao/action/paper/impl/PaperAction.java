@@ -47,26 +47,41 @@ public class PaperAction extends BaseAction implements IPaperAction,IQuestionAct
         ArrayList<IQuestion> results = new ArrayList<>();
         switch (typeIndex){
             case QuestionType.fillin_index:
+                if (paper.getFillInQuestions() == null){
+                    break;
+                }
                 for (FillInQuestion question : paper.getFillInQuestions()){
                     results.add((IQuestion)question);
                 }
                 break;
             case QuestionType.tf_index:
+                if (paper.getTfQuestions() == null){
+                    break;
+                }
                 for (TFQuestion question : paper.getTfQuestions()){
                     results.add((IQuestion)question);
                 }
                 break;
             case QuestionType.sglc_index:
+                if (paper.getSglChoQuestions() == null){
+                    break;
+                }
                 for (SglChoQuestion question : paper.getSglChoQuestions()){
                     results.add((IQuestion)question);
                 }
                 break;
             case QuestionType.mtlc_index:
+                if (paper.getMultChoQuestions() == null){
+                    break;
+                }
                 for (MultChoQuestion question : paper.getMultChoQuestions()){
                     results.add((IQuestion)question);
                 }
                 break;
             case QuestionType.disc_index:
+                if (paper.getDiscussQuestions() == null){
+                    break;
+                }
                 for (DiscussQuestion question : paper.getDiscussQuestions()){
                     results.add((IQuestion)question);
                 }

@@ -14,8 +14,6 @@ import android.widget.TextView;
 import com.zgq.wokao.R;
 import com.zgq.wokao.Util.ContextUtil;
 import com.zgq.wokao.Util.FontsUtil;
-import com.zgq.wokao.model.paper.QuestionType;
-import com.zgq.wokao.model.viewdate.QstData;
 import com.zgq.wokao.model.viewdate.ScheduleData;
 
 import java.util.ArrayList;
@@ -27,7 +25,7 @@ import java.util.Random;
  * Created by zgq on 2017/3/5.
  */
 
-public class SchedulePagerAdapter extends PagerAdapter implements CardViewAdapter.OnCardViewClickListener{
+public class SchedulePagerAdapter extends PagerAdapter {
 
     public static final String TAG = "SchedulePagerAdapter";
 
@@ -40,16 +38,6 @@ public class SchedulePagerAdapter extends PagerAdapter implements CardViewAdapte
     private LayoutInflater layoutInflater = LayoutInflater.from(ContextUtil.getContext());
 
     private OnViewClickListener listener;
-
-    private View currentView;
-    private View preView;
-    private View nextView;
-
-    public Status getStatus() {
-        return status;
-    }
-
-    private Status status = Status.SHOWADDTIME;
 
     private SchedulePagerAdapter(){}
 
@@ -134,83 +122,10 @@ public class SchedulePagerAdapter extends PagerAdapter implements CardViewAdapte
             models.add(color);
         }
 
-        switch (status){
-            case SHOWADDTIME:
-                holder.startBtn.setVisibility(View.GONE);
-                holder.addTime.setVisibility(View.VISIBLE);
-                holder.topLayout.setBackgroundColor(ContextUtil.getContext().getResources().getColor(R.color.color_top_layout_background));
-                break;
-            case SHOWSTARTBTN:
-                holder.startBtn.setVisibility(View.VISIBLE);
-                holder.addTime.setVisibility(View.GONE);
-                holder.topLayout.setBackgroundColor(ContextUtil.getContext().getResources().getColor(R.color.transparent));
-                break;
-            default:
-                break;
-        }
         container.addView(convertView ,ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT );
         return convertView;
     }
 
-    @Override
-    public void setPrimaryItem(ViewGroup container, int position, Object object) {
-        currentView = (View) object;
-        nextView = container.getChildAt(position+1);
-        super.setPrimaryItem(container, position, object);
-    }
-
-    public View getCurrentView() {
-        return currentView;
-    }
-
-    public View getPreView(){
-        return preView;
-    }
-
-    public View getNextView(){
-        return nextView;
-    }
-
-
-
-    public void changeStatus(Status status){
-        if (getCurrentView() == null){
-            return;
-        }
-        switch (status){
-            case SHOWADDTIME:
-                getCurrentView().findViewById(R.id.start_study).setVisibility(View.GONE);
-                getCurrentView().findViewById(R.id.add_time).setVisibility(View.VISIBLE);
-                getCurrentView().findViewById(R.id.top_layout).
-                        setBackgroundColor(ContextUtil.getContext().getResources().getColor(R.color.color_top_layout_background));
-
-                this.status = status;
-                break;
-            case SHOWSTARTBTN:
-                getCurrentView().findViewById(R.id.start_study).setVisibility(View.VISIBLE);
-                getCurrentView().findViewById(R.id.add_time).setVisibility(View.GONE);
-                getCurrentView().findViewById(R.id.top_layout).
-                        setBackgroundColor(ContextUtil.getContext().getResources().getColor(R.color.transparent));
-                this.status = status;
-                break;
-            default:
-                break;
-        }
-    }
-
-    @Override
-    public void onSelectedQuestionType(String paperId, QuestionType type) {
-        if (listener != null){
-            listener.onClickQuestionType(paperId, type);
-        }
-    }
-
-    @Override
-    public void onSelectedSpeQuestion(String paperId, QuestionType type, int questionIndex) {
-        if (listener != null){
-            listener.onClickSpeQuestion(paperId,type,questionIndex);
-        }
-    }
 
     public final class ViewHolder {
         public LinearLayout topLayout;
@@ -220,13 +135,7 @@ public class SchedulePagerAdapter extends PagerAdapter implements CardViewAdapte
     }
 
     public interface OnViewClickListener{
-        public void onClickTopLayout(int position);
-        public void onClickQuestionType(String paperId, QuestionType type);
-        public void onClickSpeQuestion(String paperId, QuestionType type, int questionIndex);
-    }
-
-    public enum Status{
-        SHOWSTARTBTN,SHOWADDTIME;
+        void onClickTopLayout(int position);
     }
 
 }

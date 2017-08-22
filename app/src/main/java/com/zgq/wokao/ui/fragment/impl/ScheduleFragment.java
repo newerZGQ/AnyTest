@@ -1,9 +1,7 @@
 package com.zgq.wokao.ui.fragment.impl;
 
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -14,9 +12,6 @@ import android.view.ViewStub;
 import android.widget.LinearLayout;
 
 import com.zgq.wokao.R;
-import com.zgq.wokao.Util.LogUtil;
-import com.zgq.wokao.model.paper.QuestionType;
-import com.zgq.wokao.model.viewdate.QstData;
 import com.zgq.wokao.model.viewdate.ScheduleData;
 import com.zgq.wokao.ui.activity.AnswerStudyActivity;
 import com.zgq.wokao.ui.adapter.SchedulePagerAdapter;
@@ -153,7 +148,6 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
             @Override
             public void run() {
                 scheduleInfoView.showBottom(0);
-                ((SchedulePagerAdapter) viewPager.getAdapter()).changeStatus(SchedulePagerAdapter.Status.SHOWADDTIME);
             }
         });
         if (viewPager.getAdapter() == null) {
@@ -161,17 +155,7 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
                     new SchedulePagerAdapter.OnViewClickListener() {
                         @Override
                         public void onClickTopLayout(int position) {
-                                mListener.goQuestionsList("");
-                        }
-
-                        @Override
-                        public void onClickQuestionType(String paperId, QuestionType type) {
-                            startStudy(paperId,type.getIndex(),0);
-                        }
-
-                        @Override
-                        public void onClickSpeQuestion(String paperId, QuestionType type, int questionIndex) {
-                            startStudy(paperId,type.getIndex(),questionIndex);
+                                mListener.goQuestionsList(presenter.getScheduleDatas().get(position).getPaperId());
                         }
                     }));
 
@@ -232,10 +216,8 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.schedule_info_view:
-                Log.d(LogUtil.PREFIX, TAG + " click schedule info view");
                 break;
             case R.id.schedule_info_layout:
-                Log.d(TAG,"click inof layo");
                 taskSettingLayout.show();
             default:
                 break;
@@ -254,7 +236,6 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
 
     @Override
     public void onTaskSelected(int task) {
-        Log.d(TAG,"task = " + task);
         scheduleInfoView.changDailyCount(task,200);
         presenter.setDailyCount(currentPosition,task);
     }
@@ -276,7 +257,6 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
         public void onPageSelected(int position) {
             currentPosition = position;
             presenter.scheduleInfoChangeData(position);
-            ((SchedulePagerAdapter) viewPager.getAdapter()).changeStatus(((SchedulePagerAdapter) viewPager.getAdapter()).getStatus());
         }
 
         @Override

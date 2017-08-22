@@ -176,6 +176,12 @@
             android:layout_height="match_parent"
             android:layout_below="@+id/toolbar_layout">
         </com.zgq.wokao.ui.widget.CustomViewPager>
+        <FrameLayout
+            android:id="@+id/questions_frag"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar_layout">
+        </FrameLayout>
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/loadingview"

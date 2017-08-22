@@ -11,7 +11,7 @@ public interface IHomeView {
     void goSearch();
     void showScheduleFragment();
     void showPapersFragment();
-    void showQuestionsFragment();
+    void showQuestionsFragment(String paperId);
     void showFragment(String fragmentTag);
     void showProgressBar();
     void hideProgressBar();
