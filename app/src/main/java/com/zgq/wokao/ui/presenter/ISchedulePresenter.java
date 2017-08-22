@@ -9,9 +9,9 @@ import java.util.ArrayList;
  */
 
 public interface ISchedulePresenter {
-    public void setViewPager();
-    public void notifyDataChanged();
-    public void scheduleInfoChangeData(int position);
-    public int checkSchedulesSize();
-    public void setDailyCount(int position, int count);
+    ArrayList<ScheduleData> getScheduleDatas();
+    void notifyDataChanged();
+    void scheduleInfoChangeData(int position);
+    int checkSchedulesSize();
+    void setDailyCount(int position, int count);
 }

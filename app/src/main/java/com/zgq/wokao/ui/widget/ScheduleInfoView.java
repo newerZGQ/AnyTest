@@ -81,11 +81,6 @@ public class ScheduleInfoView extends RelativeLayout {
         viewAnimator(topView,0f, 1f, 0f, 1f, 0);
     }
 
-//    public void setBtmContent(String accuracy, float progress, String todayNum, String dailyCount){
-//        btmTodayNum.setText(todayNum);
-//        btmDailyCount.setText(dailyCount);
-//        btmAccuracy.setText(accuracy);
-//    }
 
     public void changeContent(final String accuracy,final String todayNum, final String dailyCount){
         switch (status){

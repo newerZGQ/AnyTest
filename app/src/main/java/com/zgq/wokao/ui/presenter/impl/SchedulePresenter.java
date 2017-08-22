@@ -38,7 +38,7 @@ public class SchedulePresenter implements ISchedulePresenter {
         getData();
     }
 
-    public void getData(){
+    private void getData(){
         schedulePapers.clear();
         schedulePapers = getSchedulePaper();
 
@@ -67,19 +67,14 @@ public class SchedulePresenter implements ISchedulePresenter {
         return results;
     }
 
-    public List<QstData> getQstDataByPosition(int position){
-        return qstDatasList.get(position);
-    }
-
     @Override
-    public void setViewPager() {
-        scheduleView.setViewPager(scheduleDatas,qstDatasList);
+    public ArrayList<ScheduleData> getScheduleDatas(){
+        return scheduleDatas;
     }
 
     @Override
     public void notifyDataChanged() {
         getData();
-        setViewPager();
     }
 
     @Override

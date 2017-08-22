@@ -60,10 +60,6 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
 
     private SchedulePresenter presenter;
 
-    private Status status = Status.SURVEY;
-
-    private int slipDistance;
-
     private int currentPosition;
 
     public ScheduleFragment() {
@@ -102,23 +98,10 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_schedule, container, false);
         ButterKnife.bind(this, rootView);
-        if (savedInstanceState != null) {
-            switch (savedInstanceState.getString("status")) {
-                case "SURVEY":
-                    status = Status.SURVEY;
-                    break;
-                case "DETAIL":
-                    status = Status.DETAIL;
-                    break;
-                default:
-                    break;
-            }
-            currentPosition = savedInstanceState.getInt("PagerPosition");
-        }
         scheduleInfoView.setOnClickListener(this);
         infoLayout.setOnClickListener(this);
         taskSettingLayout.setOnTaskSettingListener(this);
-        presenter.setViewPager();
+        setViewPager(presenter.getScheduleDatas());
         presenter.checkSchedulesSize();
         return rootView;
     }
@@ -128,12 +111,6 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
         super.onResume();
         viewPager.setCurrentItem(currentPosition);
         presenter.scheduleInfoChangeData(currentPosition);
-//        scheduleInfoView.post(new Runnable() {
-//            @Override
-//            public void run() {
-//
-//            }
-//        });
     }
 
     @Override
@@ -144,28 +121,8 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        switch (status) {
-            case SURVEY:
-                outState.putString("status", "SURVEY");
-                break;
-            case DETAIL:
-                outState.putString("status", "DETAIL");
-                break;
-        }
-        outState.putInt("PagerPosition", viewPager.getCurrentItem());
     }
 
-    private void initViewPager() {
-
-    }
-
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
 
     @Override
     protected void onAttachToContext(Context context) {
@@ -188,48 +145,23 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
         return false;
     }
 
-    @Override
-    public void setListener() {
-
-    }
-
-    @Override
-    public void setViewPager(ArrayList<ScheduleData> scheduleDatas, ArrayList<ArrayList<QstData>> qstDataLists) {
+    public void setViewPager(ArrayList<ScheduleData> scheduleDatas) {
         if (scheduleDatas == null) {
             return;
         }
         viewPager.post(new Runnable() {
             @Override
             public void run() {
-                View tmp = viewPager.findViewById(R.id.qst_datial_cards);
-                if (tmp == null) {
-                    slipDistance = 0;
-                } else {
-                    slipDistance = tmp.getHeight();
-                }
-                hideDetail(0);
+                scheduleInfoView.showBottom(0);
+                ((SchedulePagerAdapter) viewPager.getAdapter()).changeStatus(SchedulePagerAdapter.Status.SHOWADDTIME);
             }
         });
         if (viewPager.getAdapter() == null) {
-            viewPager.setAdapter(new SchedulePagerAdapter(getContext(), scheduleDatas, qstDataLists,
+            viewPager.setAdapter(new SchedulePagerAdapter(getContext(), scheduleDatas,
                     new SchedulePagerAdapter.OnViewClickListener() {
                         @Override
                         public void onClickTopLayout(int position) {
                                 mListener.goQuestionsList("");
-//                            if (status == Status.SURVEY) {
-//                                if (mListener != null){
-//                                    Log.d(TAG,"mListener not null");
-//                                    mListener.onShowQuestionDetail();
-//                                }else{
-//                                    Log.d(TAG,"mListener null");
-//                                }
-//                                showDetail(300);
-//                            } else {
-//                                if (mListener != null){
-//                                    mListener.onHideQuestionDetail();
-//                                }
-//                                hideDetail(300);
-//                            }
                         }
 
                         @Override
@@ -246,7 +178,6 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
             viewPager.addOnPageChangeListener(new SchedulePageChangeListener());
         } else {
             ((SchedulePagerAdapter) viewPager.getAdapter()).setScheduleDatas(scheduleDatas);
-            ((SchedulePagerAdapter) viewPager.getAdapter()).setQstDatasList(qstDataLists);
             viewPager.getAdapter().notifyDataSetChanged();
         }
     }
@@ -255,70 +186,6 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
     public void notifyDataChanged() {
         presenter.notifyDataChanged();
         presenter.checkSchedulesSize();
-    }
-
-    @Override
-    public void showDetail(int duration) {
-        scheduleInfoView.showTop(duration);
-        ((SchedulePagerAdapter) viewPager.getAdapter()).changeStatus(SchedulePagerAdapter.Status.SHOWSTARTBTN);
-        ObjectAnimator.ofFloat(viewPager, "translationY", slipDistance, slipDistance*1/5).setDuration(duration).start();
-        adjustViewPager();
-        status = Status.DETAIL;
-    }
-
-    @Override
-    public void hideDetail(int duration) {
-        scheduleInfoView.showBottom(duration);
-        ((SchedulePagerAdapter) viewPager.getAdapter()).changeStatus(SchedulePagerAdapter.Status.SHOWADDTIME);
-        ObjectAnimator.ofFloat(viewPager, "translationY", 0, slipDistance).setDuration(duration).start();
-        adjustViewPager();
-        status = Status.SURVEY;
-    }
-
-    //调整viewpager前一夜后一页的状态为正确的
-    private void adjustViewPager() {
-        View tmpView = null;
-        for (int i = 0; i < viewPager.getChildCount(); i++) {
-            if ((tmpView = viewPager.getChildAt(i)) != null) {
-                switch (((SchedulePagerAdapter) viewPager.getAdapter()).getStatus()) {
-                    case SHOWSTARTBTN:
-                        tmpView.findViewById(R.id.start_study).setVisibility(View.VISIBLE);
-                        tmpView.findViewById(R.id.add_time).setVisibility(View.GONE);
-                        tmpView.findViewById(R.id.top_layout).
-                                setBackgroundColor(getContext().getResources().getColor(R.color.transparent));
-                        break;
-                    case SHOWADDTIME:
-                        tmpView.findViewById(R.id.start_study).setVisibility(View.GONE);
-                        tmpView.findViewById(R.id.add_time).setVisibility(View.VISIBLE);
-                        tmpView.findViewById(R.id.top_layout).
-                                setBackgroundColor(getContext().getResources().getColor(R.color.color_top_layout_background));
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-    }
-
-    //调整viewpager前后两页的qstlist数据显示
-//    private void adjustQstList() {
-//        int position = viewPager.getCurrentItem();
-//        View tmp = null;
-//        if ((tmp = viewPager.getChildAt(position + 1)) != null) {
-//            ((Overview) tmp.findViewById(R.id.qst_datial_cards)).getTaskStack()
-//                    .notifyDataSetChanged(presenter.getQstDataByPosition(position + 1));
-//        }
-//        if ((tmp = viewPager.getChildAt(position - 1)) != null) {
-//            ((Overview) tmp.findViewById(R.id.qst_datial_cards)).getTaskStack()
-//                    .notifyDataSetChanged(presenter.getQstDataByPosition(position - 1));
-//        }
-//
-//    }
-
-    //重新设置当前viewpager中的qstlist
-    private void setCurrentQstList() {
-
     }
 
     private void startStudy(String paperId, int type, int qstNum){
@@ -337,11 +204,6 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
     public void scheduleInfoChangeData(ScheduleData data) {
         scheduleInfoView.changeContent(data.getAccuracy(), String.valueOf(data.getCountToday())
                 , String.valueOf(data.getCountEveryday()));
-    }
-
-    @Override
-    public void changeViewPagerStatus(boolean showFullView) {
-
     }
 
     @Override
@@ -401,10 +263,7 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
      * This interface must be implemented by activities that contain this
      */
     public interface OnScheduleFragmentListener {
-        void onFragmentInteraction(Uri uri);
         void goQuestionsList(String paperId);
-        void onShowQuestionDetail();
-        void onHideQuestionDetail();
     }
 
     public class SchedulePageChangeListener implements ViewPager.OnPageChangeListener {
@@ -418,16 +277,11 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
             currentPosition = position;
             presenter.scheduleInfoChangeData(position);
             ((SchedulePagerAdapter) viewPager.getAdapter()).changeStatus(((SchedulePagerAdapter) viewPager.getAdapter()).getStatus());
-            //adjustQstList();
         }
 
         @Override
         public void onPageScrollStateChanged(int state) {
 
         }
-    }
-
-    public enum Status {
-        SURVEY, DETAIL;
     }
 }

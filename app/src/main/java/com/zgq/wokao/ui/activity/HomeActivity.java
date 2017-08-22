@@ -53,8 +53,6 @@ public class HomeActivity extends BaseActivity implements
 
     public static final String TAG = "HomeActivity";
 
-    private static final String ScheduleFragmentTag = "schedule";
-    private static final String PapersFragmentTag = "papers";
     private static final String QuestionsFragmentTag = "questions";
 
     private HomePresenterImpl homePresenter;
@@ -193,7 +191,6 @@ public class HomeActivity extends BaseActivity implements
         tabStrip.setStripWeight(10);
         tabStrip.setStripFactor(5f);
         tabStrip.setStripGravity(NavigationTabStrip.StripGravity.BOTTOM);
-        //tabStrip.setTypeface("fonts/typeface.ttf");
         tabStrip.setCornersRadius(3);
         tabStrip.setAnimationDuration(200);
         tabStrip.setInactiveColor(getResources().getColor(R.color.color_home_inactivity_selected_tab));
@@ -230,8 +227,6 @@ public class HomeActivity extends BaseActivity implements
         papersFragment = PapersFragment.newInstance();
         questionsFragment = QuestionsFragment.newInstance("","");
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//        transaction.add(papersFragment,PapersFragmentTag);
-//        transaction.add(scheduleFragment,ScheduleFragmentTag);
         transaction.add(questionsFragment,QuestionsFragmentTag);
         transaction.commit();
     }
@@ -364,21 +359,6 @@ public class HomeActivity extends BaseActivity implements
     @Override
     public void goQuestionsList(String paperId) {
         showQuestionsFragment();
-//        Bundle bundle = new Bundle();
-//        bundle.putString("paperId", paperId);
-    }
-
-    @Override
-    public void onShowQuestionDetail() {
-        toolbarLayout.setVisibility(View.GONE);
-        setViewPagerScrollble(false);
-        showQuestionsFragment();
-    }
-
-    @Override
-    public void onHideQuestionDetail() {
-        toolbarLayout.setVisibility(View.VISIBLE);
-        setViewPagerScrollble(true);
     }
 
     @Override

@@ -17,9 +17,6 @@ import com.zgq.wokao.Util.FontsUtil;
 import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.viewdate.QstData;
 import com.zgq.wokao.model.viewdate.ScheduleData;
-import com.zgq.wokao.ui.widget.cardview.CardItem;
-import com.zgq.wokao.ui.widget.cardview.CardPagerAdapter;
-import com.zgq.wokao.ui.widget.cardview.ShadowTransformer;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -37,8 +34,6 @@ public class SchedulePagerAdapter extends PagerAdapter implements CardViewAdapte
     private Context context;
 
     private ArrayList<ScheduleData> scheduleDatas;
-
-    private ArrayList<ArrayList<QstData>> qstDatasList = new ArrayList<>();
 
     //缓存 复用
     private LinkedList<View> mViewCache = new LinkedList<>();
@@ -59,10 +54,8 @@ public class SchedulePagerAdapter extends PagerAdapter implements CardViewAdapte
     private SchedulePagerAdapter(){}
 
     public SchedulePagerAdapter(Context context,ArrayList<ScheduleData> scheduleDatas,
-                                ArrayList<ArrayList<QstData>> qstDatasList,
                                 OnViewClickListener listener){
         this.scheduleDatas = scheduleDatas;
-        this.qstDatasList = qstDatasList;
         this.listener = listener;
         this.context = context;
     }
@@ -73,10 +66,6 @@ public class SchedulePagerAdapter extends PagerAdapter implements CardViewAdapte
 
     public void setScheduleDatas(ArrayList<ScheduleData> scheduleDatas) {
         this.scheduleDatas = scheduleDatas;
-    }
-
-    public void setQstDatasList(ArrayList<ArrayList<QstData>> qstDatasList){
-        this.qstDatasList = qstDatasList;
     }
 
     @Override
@@ -117,13 +106,11 @@ public class SchedulePagerAdapter extends PagerAdapter implements CardViewAdapte
             title.setTypeface(FontsUtil.getSans_serif_thin());
             TextView addTime = (TextView)convertView.findViewById(R.id.add_time);
             Button startBtn = (Button) convertView.findViewById(R.id.start_study);
-            ViewPager qstList = (ViewPager) convertView.findViewById(R.id.qst_datial_cards);
             holder = new ViewHolder();
             holder.topLayout = topLayout;
             holder.title = title;
             holder.addTime = addTime;
             holder.startBtn = startBtn;
-            holder.qstList = qstList;
             convertView.setTag(holder);
         }else {
             convertView = mViewCache.removeFirst();
@@ -138,10 +125,6 @@ public class SchedulePagerAdapter extends PagerAdapter implements CardViewAdapte
         holder.title.setText(scheduleDatas.get(position).getPaperTitle());
         holder.addTime.setText(scheduleDatas.get(position).getAddTime());
 
-        holder.qstList.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
-                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
-                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
-
         ArrayList<Integer> models = new ArrayList<>();
         for(int i = 0; i < 5; ++i)
         {
@@ -150,17 +133,6 @@ public class SchedulePagerAdapter extends PagerAdapter implements CardViewAdapte
             int color = Color.argb(255, random.nextInt(255), random.nextInt(255), random.nextInt(255));
             models.add(color);
         }
-
-        final CardPagerAdapter mCardAdapter = new CardPagerAdapter();
-        mCardAdapter.addCardItem(new CardItem("rr", "rr"));
-        mCardAdapter.addCardItem(new CardItem("rr", "rr"));
-        mCardAdapter.addCardItem(new CardItem("rr", "rr"));
-        mCardAdapter.addCardItem(new CardItem("rr", "rr"));
-
-        ShadowTransformer mCardShadowTransformer = new ShadowTransformer(holder.qstList, mCardAdapter);
-        holder.qstList.setAdapter(mCardAdapter);
-        holder.qstList.setPageTransformer(false, mCardShadowTransformer);
-        holder.qstList.setOffscreenPageLimit(3);
 
         switch (status){
             case SHOWADDTIME:
@@ -245,7 +217,6 @@ public class SchedulePagerAdapter extends PagerAdapter implements CardViewAdapte
         public TextView title;
         public TextView addTime;
         public Button startBtn;
-        public ViewPager qstList;
     }
 
     public interface OnViewClickListener{
