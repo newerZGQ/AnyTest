@@ -1,14 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:background="@color/black"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/question_type"
-        android:textColor="@color/cardview_light_background"
-        android:text="55555"/>
+    android:layout_height="200dp">
 
-</LinearLayout>
+    <RelativeLayout
+        android:background="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/question_type_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="108dp"
+            android:layout_marginLeft="16dp"
+            android:background="@drawable/qst_icon_fillin"
+            android:textColor="@color/cardview_light_background" />
+
+        <TextView
+            android:id="@+id/question_type_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="108dp"
+            android:layout_marginLeft="64dp"
+            android:text="填空题"
+            android:textColor="@color/cardview_light_background" />
+    </RelativeLayout>
+
+
+</FrameLayout>

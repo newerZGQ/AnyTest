@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.zgq.wokao.R;
 import com.zgq.wokao.ui.adapter.QuestionsInfoAdapter;
@@ -68,7 +69,7 @@ public class QuestionsFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_questions_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_questions_layout, container, false);
         initQstList(view);
         return view;
     }
@@ -114,6 +115,9 @@ public class QuestionsFragment extends BaseFragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),
                 OrientationHelper.VERTICAL, false);
         qstPager.setLayoutManager(layoutManager);
+        LinearLayout.LayoutParams lp = new LinearLayout.
+                LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        qstPager.setLayoutParams(lp);
         qstPager.setAdapter(new QuestionsInfoAdapter());
     }
 
