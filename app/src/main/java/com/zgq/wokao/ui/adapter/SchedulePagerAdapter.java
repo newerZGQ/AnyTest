@@ -3,7 +3,6 @@ package com.zgq.wokao.ui.adapter;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -90,7 +89,7 @@ public class SchedulePagerAdapter extends PagerAdapter {
         if(mViewCache.size() == 0){
             convertView = this.layoutInflater.inflate(R.layout.viewpager_schedule_item , null ,false);
             LinearLayout topLayout = (LinearLayout) convertView.findViewById(R.id.top_layout);
-            TextView title = (TextView)convertView.findViewById(R.id.paper_title);
+            TextView title = (TextView)convertView.findViewById(R.id.question_type);
             title.setTypeface(FontsUtil.getSans_serif_thin());
             TextView addTime = (TextView)convertView.findViewById(R.id.add_time);
             Button startBtn = (Button) convertView.findViewById(R.id.start_study);

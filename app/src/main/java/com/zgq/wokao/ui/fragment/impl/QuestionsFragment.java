@@ -3,14 +3,15 @@ package com.zgq.wokao.ui.fragment.impl;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.util.Log;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.OrientationHelper;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.zgq.wokao.R;
-import com.zgq.wokao.ui.adapter.QuestionsPagerAdapter;
+import com.zgq.wokao.ui.adapter.QuestionsInfoAdapter;
 import com.zgq.wokao.ui.fragment.BaseFragment;
 import com.zgq.wokao.ui.presenter.impl.QuestionsPresenterImpl;
 
@@ -31,7 +32,7 @@ public class QuestionsFragment extends BaseFragment {
 
     private QuestionsFragmentListener mListener;
 
-    private ViewPager qstPager;
+    private RecyclerView qstPager;
 
     private QuestionsPresenterImpl presenter;
 
@@ -68,7 +69,7 @@ public class QuestionsFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_questions_fragment, container, false);
-        initQstPager(view);
+        initQstList(view);
         return view;
     }
 
@@ -108,15 +109,12 @@ public class QuestionsFragment extends BaseFragment {
 
     }
 
-    private void initQstPager(View parent){
-        qstPager = (ViewPager) parent.findViewById(R.id.qst_pager);
-        qstPager.setAdapter(new QuestionsPagerAdapter(getContext(), presenter.getQstLists(),
-                new QuestionsPagerAdapter.OnViewClickListener() {
-            @Override
-            public void onClickTopLayout(int position) {
-
-            }
-        }));
+    private void initQstList(View parent){
+        qstPager = (RecyclerView) parent.findViewById(R.id.questions_list);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),
+                OrientationHelper.VERTICAL, false);
+        qstPager.setLayoutManager(layoutManager);
+        qstPager.setAdapter(new QuestionsInfoAdapter());
     }
 
 }

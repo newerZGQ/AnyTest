@@ -17,7 +17,7 @@
         android:layout_marginBottom="100dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/paper_title" />
+        android:id="@+id/question_type" />
 
     <TextView
         android:id="@+id/activity_questionlist_paper_author_label"

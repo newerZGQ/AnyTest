@@ -154,7 +154,7 @@ public class PaperInfoActivity extends AppCompatActivity implements View.OnClick
         RealmList<MultChoQuestion> mcQstList = normalExamPaper.getMultChoQuestions();
         RealmList<DiscussQuestion> dsQstList = normalExamPaper.getDiscussQuestions();
 
-        ((TextView) obsscrollView.getPullRootView().findViewById(R.id.paper_title)).setText(paperTitle);
+        ((TextView) obsscrollView.getPullRootView().findViewById(R.id.question_type)).setText(paperTitle);
         ((TextView) obsscrollView.getPullRootView().findViewById(R.id.paper_author)).setText(paperAuthor);
         ((TextView) obsscrollView.getPullRootView().findViewById(R.id.study_count)).setText("" + paperStudyCount);
         ((TextView) obsscrollView.getPullRootView().findViewById(R.id.laststudy_date)).setText(lastStudyDate);
