@@ -1,33 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="200dp">
+    android:layout_height="wrap_content"
+    android:background="@color/black">
 
-    <RelativeLayout
-        android:background="@color/black"
+    <TextView
+        android:id="@+id/out_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="150dp"
+        android:background="@color/colorOrange" />
 
-        <TextView
-            android:id="@+id/question_type_label"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="108dp"
-            android:layout_marginLeft="16dp"
-            android:background="@drawable/qst_icon_fillin"
-            android:textColor="@color/cardview_light_background" />
+    <TextView
+        android:id="@+id/question_type_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="64dp"
+        android:layout_marginTop="40dp"
+        android:text="填空题"
+        android:textColor="@color/cardview_light_background"
+        android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/question_type_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="108dp"
-            android:layout_marginLeft="64dp"
-            android:text="填空题"
-            android:textColor="@color/cardview_light_background" />
-    </RelativeLayout>
+    <TextView
+        android:id="@+id/qst_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="64dp"
+        android:layout_marginTop="100dp"
+        android:text="共45题，收藏34题"
+        android:textColor="@color/cardview_light_background"
+        android:textSize="12sp" />
 
 
-</FrameLayout>
+</RelativeLayout>

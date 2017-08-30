@@ -118,7 +118,7 @@ public class QuestionsFragment extends BaseFragment {
         LinearLayout.LayoutParams lp = new LinearLayout.
                 LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         qstPager.setLayoutParams(lp);
-        qstPager.setAdapter(new QuestionsInfoAdapter());
+        qstPager.setAdapter(new QuestionsInfoAdapter(presenter.getQstLists()));
     }
 
 }

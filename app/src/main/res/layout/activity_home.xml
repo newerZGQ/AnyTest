@@ -177,12 +177,19 @@
             android:layout_below="@+id/toolbar_layout">
         </com.zgq.wokao.ui.widget.CustomViewPager>
         <FrameLayout
-            android:id="@+id/questions_frag"
+            android:id="@+id/questions_frag_1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/toolbar_layout">
         </FrameLayout>
     </RelativeLayout>
+    <FrameLayout
+        android:id="@+id/questions_frag_2"
+        android:paddingTop="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar_layout">
+    </FrameLayout>
     <RelativeLayout
         android:id="@+id/loadingview"
         android:background="@color/color_home_loading_background"

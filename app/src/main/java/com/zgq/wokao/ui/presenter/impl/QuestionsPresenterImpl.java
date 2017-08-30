@@ -1,5 +1,6 @@
 package com.zgq.wokao.ui.presenter.impl;
 
+import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 
 import com.zgq.wokao.action.paper.impl.PaperAction;
@@ -15,12 +16,13 @@ import java.util.ArrayList;
  */
 
 public class QuestionsPresenterImpl implements IQuestionsPresenter {
+    private static String TAG = QuestionsPresenterImpl.class.getSimpleName();
 
     private String paperId;
 
     private ArrayList<QstData> qstLists;
 
-    public QuestionsPresenterImpl(){
+    private QuestionsPresenterImpl(){
 
     }
 
@@ -32,6 +34,9 @@ public class QuestionsPresenterImpl implements IQuestionsPresenter {
 
     @Override
     public ArrayList<QstData> getQstLists() {
+        if (qstLists == null){
+            Log.d(TAG,"null qstlist");
+        }
         return qstLists;
     }
 }

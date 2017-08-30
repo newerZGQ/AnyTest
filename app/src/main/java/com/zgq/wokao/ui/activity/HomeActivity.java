@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -338,7 +337,12 @@ public class HomeActivity extends BaseActivity implements
 
     @Override
     public void hideToolBar() {
+        toolbarLayout.setVisibility(View.INVISIBLE);
+    }
 
+    @Override
+    public void showToolBar() {
+        toolbarLayout.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -376,9 +380,10 @@ public class HomeActivity extends BaseActivity implements
         Log.d(TAG,"showquestion");
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         questionsFragment = QuestionsFragment.newInstance(paperId);
-        transaction.replace(R.id.questions_frag,questionsFragment);
+        transaction.replace(R.id.questions_frag_2,questionsFragment);
         transaction.addToBackStack(null);
         transaction.commit();
+        hideToolBar();
     }
 
     @Override
@@ -430,6 +435,8 @@ public class HomeActivity extends BaseActivity implements
                         .withRequestCode(1)
                         .start();
                 break;
+            default:
+                break;
         }
     }
 
@@ -439,6 +446,8 @@ public class HomeActivity extends BaseActivity implements
             slideUp.hide();
             return;
         }
+
+        showToolBar();
         super.onBackPressed();
     }
 

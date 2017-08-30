@@ -12,6 +12,7 @@ import android.view.ViewStub;
 import android.widget.LinearLayout;
 
 import com.zgq.wokao.R;
+import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.viewdate.ScheduleData;
 import com.zgq.wokao.ui.activity.AnswerStudyActivity;
 import com.zgq.wokao.ui.adapter.SchedulePagerAdapter;
@@ -155,7 +156,12 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
                     new SchedulePagerAdapter.OnViewClickListener() {
                         @Override
                         public void onClickTopLayout(int position) {
-                                mListener.goQuestionsList(presenter.getScheduleDatas().get(position).getPaperId());
+                            mListener.goQuestionsList(presenter.getScheduleDatas().get(position).getPaperId());
+                        }
+
+                        @Override
+                        public void onClickStartBtn(int position, String paperId) {
+                            startStudy(paperId, QuestionType.fillin.getIndex(), 0);
                         }
                     }));
 

@@ -111,6 +111,12 @@ public class SchedulePagerAdapter extends PagerAdapter {
         });
         holder.title.setText(scheduleDatas.get(position).getPaperTitle());
         holder.addTime.setText(scheduleDatas.get(position).getAddTime());
+        holder.startBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onClickStartBtn(position, scheduleDatas.get(position).getPaperId());
+            }
+        });
 
         ArrayList<Integer> models = new ArrayList<>();
         for(int i = 0; i < 5; ++i)
@@ -135,6 +141,7 @@ public class SchedulePagerAdapter extends PagerAdapter {
 
     public interface OnViewClickListener{
         void onClickTopLayout(int position);
+        void onClickStartBtn(int position, String paperId);
     }
 
 }
