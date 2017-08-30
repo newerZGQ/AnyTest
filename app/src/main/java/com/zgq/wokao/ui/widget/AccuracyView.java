@@ -89,7 +89,7 @@ public class AccuracyView extends View {
     /**
      * The stroke width used to paint the circle.
      */
-    private int mCircleStrokeWidth = 50;
+    private int mCircleStrokeWidth = 10;
 
     /**
      * The gravity of the view. Where should the Circle be drawn within the given bounds
@@ -186,7 +186,7 @@ public class AccuracyView extends View {
     /**
      * The pointer width (in pixels).
      */
-    private int mThumbRadius = 20;
+    private int mThumbRadius = 10;
 
     /**
      * The Translation offset x which gives us the ability to use our own coordinates system.

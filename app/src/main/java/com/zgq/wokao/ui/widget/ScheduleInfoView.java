@@ -72,7 +72,11 @@ public class ScheduleInfoView extends RelativeLayout {
 
         btmView = (RelativeLayout) rootView.findViewById(R.id.btm_view);
         accuracyView = (AccuracyView) rootView.findViewById(R.id.accuracy_view);
+        accuracyView.setProgressColor(getResources().getColor(R.color.color_accuracy_circle_1_hard));
+        accuracyView.setProgressBackgroundColor(getResources().getColor(R.color.color_accuracy_circle_1_light));
         scheduleView = (AccuracyView) rootView.findViewById(R.id.schedule_view);
+        scheduleView.setProgressColor(getResources().getColor(R.color.color_accuracy_circle_2_hard));
+        scheduleView.setProgressBackgroundColor(getResources().getColor(R.color.color_accuracy_circle_2_light));
         btmAccuracy = (NumberAniTextView) rootView.findViewById(R.id.btm_accuracy);
         btmTodayNum = (TextView) rootView.findViewById(R.id.btm_today_num);
         btmDailyCount = (NumberAniTextView) rootView.findViewById(R.id.btm_daily_count);

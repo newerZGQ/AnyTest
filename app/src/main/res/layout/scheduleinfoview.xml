@@ -36,13 +36,13 @@
 
             <com.zgq.wokao.ui.widget.AccuracyView
                 android:id="@+id/accuracy_view"
-                android:layout_width="280dp"
-                android:layout_height="280dp"
+                android:layout_width="252dp"
+                android:layout_height="252dp"
                 app:marker_progress="0.3"
                 app:progress="0.4"
                 app:progress_background_color="@color/color_accuracy_circle_1_light"
                 app:progress_color="@color/color_accuracy_circle_1_hard"
-                app:stroke_width="15dp" />
+                app:stroke_width="11dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -54,66 +54,49 @@
 
             <com.zgq.wokao.ui.widget.AccuracyView
                 android:id="@+id/schedule_view"
-                android:layout_width="248dp"
-                android:layout_height="248dp"
+                android:layout_width="230dp"
+                android:layout_height="230dp"
                 app:marker_progress="0.3"
                 app:progress="0.4"
                 app:progress_background_color="@color/color_accuracy_circle_2_light"
                 app:progress_color="@color/color_accuracy_circle_2_hard"
-                app:stroke_width="15dp" />
+                app:stroke_width="11dp" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/schedule_info_layout"
-            android:layout_width="260dp"
-            android:layout_height="260dp"
+            android:layout_width="232dp"
+            android:layout_height="232dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:orientation="vertical">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="60dp">
+                android:orientation="vertical"
+                android:layout_marginTop="50dp">
 
                 <com.zgq.wokao.ui.widget.NumberAniTextView
                     android:id="@+id/btm_accuracy"
-                    android:layout_width="140dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_alignParentLeft="true"
-                    android:text="100"
-                    android:gravity="right"
+                    android:gravity="center"
                     android:singleLine="true"
+                    android:text="100"
                     android:textColor="@color/color_accuracy_circle_1_hard"
-                    android:textSize="55sp" />
+                    android:textSize="45sp" />
 
-                <LinearLayout
-                    android:layout_width="80dp"
+                <TextView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/btm_accuracy"
-                    android:layout_marginTop="25dp"
-                    android:layout_marginLeft="16dp"
-                    android:gravity="left"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="30dp"
-                        android:layout_height="17dp"
-                        android:layout_gravity="center_vertical"
-                        android:background="@drawable/accuracy_icon" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginTop="5dp"
-                        android:gravity="center_horizontal"
-                        android:text="正确率%"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="10sp" />
-                </LinearLayout>
-            </RelativeLayout>
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_horizontal"
+                    android:text="正确率%"
+                    android:textColor="@color/colorWhiteTransparent"
+                    android:textSize="10sp" />
+            </LinearLayout>
 
 
             <RelativeLayout
@@ -125,30 +108,31 @@
                     android:id="@+id/separator"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_centerHorizontal="true"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
-                    android:layout_centerHorizontal="true"
                     android:text="|"
-                    android:textColor="@color/colorWhite"
+                    android:textColor="@color/colorWhiteTransparent"
                     android:textSize="25dp" />
+
                 <TextView
                     android:id="@+id/btm_today_num"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_toLeftOf="@+id/separator"
-                    android:text="45"
                     android:gravity="right"
+                    android:text="45"
                     android:textColor="@color/color_accuracy_circle_2_hard"
-                    android:textSize="25sp" />
+                    android:textSize="20sp" />
 
                 <com.zgq.wokao.ui.widget.NumberAniTextView
                     android:id="@+id/btm_daily_count"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="65"
+                    android:layout_toEndOf="@+id/separator"
                     android:gravity="left|bottom"
-                    android:textColor="@color/color_accuracy_circle_2_hard"
-                    android:layout_toEndOf="@+id/separator" />
+                    android:text="65"
+                    android:textColor="@color/color_accuracy_text_light" />
             </RelativeLayout>
 
             <TextView
@@ -157,7 +141,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="6dp"
                 android:text="今日进度"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorWhiteTransparent"
                 android:textSize="10sp" />
         </LinearLayout>
     </RelativeLayout>
