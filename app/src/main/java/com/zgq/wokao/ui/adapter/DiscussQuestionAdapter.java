@@ -112,7 +112,7 @@ public class DiscussQuestionAdapter extends BaseViewPagerAdapter {
 
     @Override
     public int getLastPosition() {
-        return datas.get(currentPosition).getInfo().getQstId();
+        return datas.get(currentPosition).getInfo().getQstId()-1;
     }
 
     public final class DiscussQuestionViewHolder {
