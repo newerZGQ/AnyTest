@@ -102,7 +102,7 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
         for (int i = 0; i< qstTypes.getChildCount(); i++){
             if (i < qstList.size()) {
                 qstTypes.getChildAt(i).setVisibility(View.VISIBLE);
-                ((TextView) qstTypes.getChildAt(i)).setText(qstList.get(i).name());
+                ((TextView) qstTypes.getChildAt(i)).setText(qstList.get(i).getName());
             }else{
                 qstTypes.getChildAt(i).setVisibility(View.INVISIBLE);
             }
