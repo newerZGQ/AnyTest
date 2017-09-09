@@ -209,6 +209,11 @@ public class PaperAction extends BaseAction implements IPaperAction,IQuestionAct
     }
 
     @Override
+    public void updateLastStudyPosition(IExamPaper paper, QuestionType type, int position) {
+
+    }
+
+    @Override
     public List<NormalExamPaper> getAllPaper() {
         return paperDao.getAllPaper();
     }
