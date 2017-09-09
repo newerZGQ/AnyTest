@@ -1,9 +1,6 @@
 package com.zgq.wokao.ui.adapter;
 
-import android.graphics.drawable.Drawable;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,14 +11,11 @@ import android.widget.TextView;
 
 import com.zgq.wokao.R;
 import com.zgq.wokao.Util.ContextUtil;
-import com.zgq.wokao.Util.DateUtil;
-import com.zgq.wokao.Util.RandomUtil;
 import com.zgq.wokao.action.paper.impl.PaperAction;
 import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.paper.info.IPaperInfo;
 import com.zgq.wokao.ui.widget.exprecyclerview.ExpandableViewHoldersUtil;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 
 import io.realm.RealmList;
@@ -103,12 +97,12 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
         }
 
         //设置问题类型
-        RealmList<QuestionType> qstList = paperInfos.get(position).getQuestionTypes();
+        ArrayList<QuestionType> qstList = paperInfos.get(position).getQuestionTypes();
         LinearLayout qstTypes = ((MyViewHolder) holder).qstTypes;
         for (int i = 0; i< qstTypes.getChildCount(); i++){
             if (i < qstList.size()) {
                 qstTypes.getChildAt(i).setVisibility(View.VISIBLE);
-                ((TextView) qstTypes.getChildAt(i)).setText(qstList.get(i).getName());
+                ((TextView) qstTypes.getChildAt(i)).setText(qstList.get(i).name());
             }else{
                 qstTypes.getChildAt(i).setVisibility(View.INVISIBLE);
             }

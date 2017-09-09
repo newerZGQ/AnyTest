@@ -14,7 +14,7 @@ public interface ISchedule {
     public void addRecord();
     public DailyRecord getcurrentRecord();
     public void recordPlus1();
-    public QuestionType getLastStudyType();
+    public String getLastStudyType();
     public void setLastStudyType(QuestionType lastStudyType);
     public int getLastStudyNum();
     public void setLastStudyNum(int lastStudyNum);

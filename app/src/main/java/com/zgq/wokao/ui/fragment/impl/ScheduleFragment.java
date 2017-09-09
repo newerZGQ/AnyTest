@@ -3,8 +3,8 @@ package com.zgq.wokao.ui.fragment.impl;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -161,7 +161,7 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
 
                         @Override
                         public void onClickStartBtn(int position, String paperId) {
-                            startStudy(paperId, QuestionType.fillin.getIndex(), 0);
+                            startStudy(paperId, presenter.getLastStudyType(paperId), presenter.getLastStudyPos(paperId));
                         }
                     }));
 
@@ -178,11 +178,11 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
         presenter.checkSchedulesSize();
     }
 
-    private void startStudy(String paperId, int type, int qstNum){
+    private void startStudy(String paperId, QuestionType type, int qstNum){
         Intent intent = new Intent(getActivity(),AnswerStudyActivity.class);
         if (paperId != null && !paperId.equals("")) {
             intent.putExtra("paperId", paperId);
-            intent.putExtra("qstType", type);
+            intent.putExtra("qstType", (Parcelable) type);
             intent.putExtra("qstNum",qstNum);
         }else {
             return;

@@ -35,7 +35,7 @@ public class FillInQuestion extends RealmObject implements IQuestion ,CascadeDel
             this.answer = new Answer();
         }
         if (this.info == null){
-            this.info = new QuestionInfo(QuestionType.fillin);
+            this.info = new QuestionInfo(QuestionType.FILLIN);
         }
         if (this.record == null){
             this.record = new QuestionRecord();

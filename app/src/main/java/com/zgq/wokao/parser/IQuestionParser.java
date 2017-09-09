@@ -1,7 +1,7 @@
 package com.zgq.wokao.parser;
 
-import com.zgq.wokao.model.paper.question.IQuestion;
 import com.zgq.wokao.model.paper.QuestionType;
+import com.zgq.wokao.model.paper.question.IQuestion;
 
 import java.util.ArrayList;
 

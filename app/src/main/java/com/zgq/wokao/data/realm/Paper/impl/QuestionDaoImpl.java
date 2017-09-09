@@ -3,7 +3,6 @@ package com.zgq.wokao.data.realm.Paper.impl;
 import com.zgq.wokao.data.realm.BaseRealmProvider;
 import com.zgq.wokao.data.realm.Paper.IQuestionDao;
 import com.zgq.wokao.model.paper.QuestionType;
-import com.zgq.wokao.model.paper.info.ExamPaperInfo;
 import com.zgq.wokao.model.paper.question.IQuestion;
 import com.zgq.wokao.model.paper.question.impl.DiscussQuestion;
 import com.zgq.wokao.model.paper.question.impl.FillInQuestion;
@@ -13,7 +12,6 @@ import com.zgq.wokao.model.paper.question.impl.TFQuestion;
 import com.zgq.wokao.model.paper.question.info.QuestionInfo;
 
 import io.realm.Realm;
-import io.realm.RealmResults;
 
 /**
  * Created by zgq on 2017/3/19.
@@ -30,30 +28,38 @@ public class QuestionDaoImpl extends BaseRealmProvider<QuestionInfo> implements 
             return;
         }
         realm.beginTransaction();
-        switch (question.getInfo().getType().getIndex()){
-            case QuestionType.fillin_index:
+        switch (question.getInfo().getType()){
+            case FILLIN:
                 FillInQuestion fillin = (FillInQuestion) destQuestion;
                 fillin.getBody().setContent(question.getBody().getContent());
                 fillin.getAnswer().setContent(question.getAnswer().getContent());
-            case QuestionType.tf_index:
+                break;
+            case TF:
                 TFQuestion tfQuestion = (TFQuestion) destQuestion;
                 tfQuestion.getBody().setContent(question.getBody().getContent());
                 tfQuestion.getAnswer().setContent(question.getAnswer().getContent());
-            case QuestionType.sglc_index:
+                break;
+            case SINGLECHOOSE:
                 SglChoQuestion sglChoQuestion = (SglChoQuestion) destQuestion;
                 sglChoQuestion.getBody().setContent(question.getBody().getContent());
                 sglChoQuestion.getAnswer().setContent(question.getAnswer().getContent());
                 sglChoQuestion.getOptions().setOptionList(question.getOptions().getOptionList());
-            case QuestionType.mtlc_index:
+                break;
+            case MUTTICHOOSE:
                 MultChoQuestion multChoQuestion = (MultChoQuestion) destQuestion;
                 multChoQuestion.getBody().setContent(question.getBody().getContent());
                 multChoQuestion.getAnswer().setContent(question.getAnswer().getContent());
                 multChoQuestion.getOptions().setOptionList(question.getOptions().getOptionList());
-            case QuestionType.disc_index:
+                break;
+            case DISCUSS:
                 DiscussQuestion discussQuestion = (DiscussQuestion) destQuestion;
                 discussQuestion.getBody().setContent(question.getBody().getContent());
                 discussQuestion.getAnswer().setContent(question.getAnswer().getContent());
                 discussQuestion.getOptions().setOptionList(question.getOptions().getOptionList());
+                break;
+            default:
+                break;
+
         }
         realm.commitTransaction();
 
@@ -61,41 +67,42 @@ public class QuestionDaoImpl extends BaseRealmProvider<QuestionInfo> implements 
 
     @Override
     public IQuestion queryQuestionById(String questionId, QuestionType type) {
-        switch (type.getIndex()){
-            case QuestionType.fillin_index:
+        switch (type){
+            case FILLIN:
                 FillInQuestion fillin = realm
                         .where(FillInQuestion.class)
                         .equalTo("info.id", questionId)
                         .findFirst();
                 return fillin;
-            case QuestionType.tf_index:
+            case TF:
                 TFQuestion tfQuestion = realm
                         .where(TFQuestion.class)
                         .equalTo("info.id",questionId)
                         .findFirst();
                 return tfQuestion;
-            case QuestionType.sglc_index:
+            case SINGLECHOOSE:
                 SglChoQuestion sglChoQuestion = realm
                         .where(SglChoQuestion.class)
                         .equalTo("info.id",questionId)
                         .findFirst();
                 return sglChoQuestion;
-            case QuestionType.mtlc_index:
+            case MUTTICHOOSE:
                 MultChoQuestion multChoQuestion = realm
                         .where(MultChoQuestion.class)
                         .equalTo("info.id",questionId)
                         .findFirst();
                 return multChoQuestion;
-            case QuestionType.disc_index:
+            case DISCUSS:
                 DiscussQuestion discussQuestion = realm
                         .where(DiscussQuestion.class)
                         .equalTo("info.id",questionId)
                         .findFirst();
                 return discussQuestion;
+            default:
+                break;
 
         }
         return null;
-
     }
 
     public static class InstanceHolder{

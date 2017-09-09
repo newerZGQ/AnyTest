@@ -5,6 +5,7 @@ import com.zgq.wokao.Util.UUIDUtil;
 import com.zgq.wokao.exception.ParseException;
 import com.zgq.wokao.model.paper.IExamPaper;
 import com.zgq.wokao.model.paper.NormalExamPaper;
+import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.paper.info.IPaperInfo;
 import com.zgq.wokao.model.paper.question.impl.DiscussQuestion;
 import com.zgq.wokao.model.paper.question.impl.FillInQuestion;
@@ -12,7 +13,6 @@ import com.zgq.wokao.model.paper.question.impl.MultChoQuestion;
 import com.zgq.wokao.model.paper.question.impl.SglChoQuestion;
 import com.zgq.wokao.model.paper.question.impl.TFQuestion;
 import com.zgq.wokao.model.paper.question.IQuestion;
-import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.parser.formater.impl.MSDocFormater;
 
 import java.io.ByteArrayInputStream;
@@ -93,23 +93,25 @@ public class ParserHelper {
             throw new com.zgq.wokao.exception.ParseException("请检查大标题");
         }
         for (PaperParser.Topic tmp : topics){
-            switch (tmp.getType().getIndex()){
-                case QuestionType.fillin_index:
+            switch (tmp.getType()){
+                case FILLIN:
                     paper.setFillInQuestions(parseFillin(tmp));
                     break;
-                case QuestionType.tf_index:
+                case TF:
                     paper.setTfQuestions(parseTF(tmp));
                     break;
-                case QuestionType.sglc_index:
+                case SINGLECHOOSE:
                     paper.setSglChoQuestions(parseSgl(tmp));
                     break;
-                case QuestionType.mtlc_index:
+                case MUTTICHOOSE:
                     paper.setMultChoQuestions(parseMult(tmp));
                     break;
-                case QuestionType.disc_index:
+                case DISCUSS:
                     paper.setDiscussQuestions(parseDis(tmp));
                     break;
-                case QuestionType.noqst_index:
+                case NOTQUESTION:
+                    break;
+                default:
                     break;
             }
         }
@@ -123,15 +125,15 @@ public class ParserHelper {
         //设置当前包含哪些题型
         IPaperInfo info = paper.getPaperInfo();
         if (paper.getFillInQuestions().size() != 0)
-            info.addQuestionType(QuestionType.fillin);
+            info.addQuestionType(QuestionType.FILLIN);
         if (paper.getTfQuestions().size() != 0)
-            info.addQuestionType(QuestionType.tf);
+            info.addQuestionType(QuestionType.TF);
         if (paper.getSglChoQuestions().size() != 0)
-            info.addQuestionType(QuestionType.sglc);
+            info.addQuestionType(QuestionType.SINGLECHOOSE);
         if (paper.getMultChoQuestions().size() != 0)
-            info.addQuestionType(QuestionType.mtlc);
+            info.addQuestionType(QuestionType.MUTTICHOOSE);
         if (paper.getDiscussQuestions().size() != 0)
-            info.addQuestionType(QuestionType.disc);
+            info.addQuestionType(QuestionType.DISCUSS);
         //默认加入学习计划
         paper.getPaperInfo().setInSchedule(true);
 
@@ -146,7 +148,7 @@ public class ParserHelper {
 
     private RealmList<FillInQuestion> parseFillin(PaperParser.Topic resource){
         QuestionParser parser = new QuestionParser();
-        parser.setAdapter(QuestionType.fillin);
+        parser.setAdapter(QuestionType.FILLIN);
         ArrayList<IQuestion> list = parser.parse(resource);
         RealmList<FillInQuestion> results = new RealmList<>();
         for (IQuestion tmp: list){
@@ -156,7 +158,7 @@ public class ParserHelper {
     }
     private RealmList<TFQuestion> parseTF(PaperParser.Topic resource){
         QuestionParser parser = new QuestionParser();
-        parser.setAdapter(QuestionType.tf);
+        parser.setAdapter(QuestionType.TF);
         ArrayList<IQuestion> list = parser.parse(resource);
         RealmList<TFQuestion> results = new RealmList<>();
         for (IQuestion tmp: list){
@@ -166,7 +168,7 @@ public class ParserHelper {
     }
     private RealmList<SglChoQuestion> parseSgl(PaperParser.Topic resource){
         QuestionParser parser = new QuestionParser();
-        parser.setAdapter(QuestionType.sglc);
+        parser.setAdapter(QuestionType.SINGLECHOOSE);
         ArrayList<IQuestion> list = parser.parse(resource);
         RealmList<SglChoQuestion> results = new RealmList<>();
         for (IQuestion tmp: list){
@@ -176,7 +178,7 @@ public class ParserHelper {
     }
     private RealmList<MultChoQuestion> parseMult(PaperParser.Topic resource){
         QuestionParser parser = new QuestionParser();
-        parser.setAdapter(QuestionType.mtlc);
+        parser.setAdapter(QuestionType.MUTTICHOOSE);
         ArrayList<IQuestion> list = parser.parse(resource);
         RealmList<MultChoQuestion> results = new RealmList<>();
         for (IQuestion tmp: list){
@@ -186,7 +188,7 @@ public class ParserHelper {
     }
     private RealmList<DiscussQuestion> parseDis(PaperParser.Topic resource){
         QuestionParser parser = new QuestionParser();
-        parser.setAdapter(QuestionType.disc);
+        parser.setAdapter(QuestionType.DISCUSS);
         ArrayList<IQuestion> list = parser.parse(resource);
         RealmList<DiscussQuestion> results = new RealmList<>();
         for (IQuestion tmp: list){

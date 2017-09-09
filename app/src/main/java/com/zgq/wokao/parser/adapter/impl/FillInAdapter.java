@@ -1,11 +1,9 @@
 package com.zgq.wokao.parser.adapter.impl;
 
-import android.util.Log;
-
 import com.zgq.wokao.Util.ListUtil;
 import com.zgq.wokao.Util.UUIDUtil;
-import com.zgq.wokao.model.paper.question.impl.FillInQuestion;
 import com.zgq.wokao.model.paper.QuestionType;
+import com.zgq.wokao.model.paper.question.impl.FillInQuestion;
 import com.zgq.wokao.parser.adapter.BaseAdapter;
 import com.zgq.wokao.parser.adapter.IFillInAdapter;
 import com.zgq.wokao.parser.context.QuestionContext;
@@ -19,7 +17,7 @@ import java.util.ArrayList;
  */
 
 public class FillInAdapter extends BaseAdapter implements IFillInAdapter {
-    private QuestionType type = QuestionType.fillin;
+    private QuestionType type = QuestionType.FILLIN;
     ArrayList<String> content = new ArrayList<>();
     QuestionContext context = new QuestionContext();
     private ArrayList<FillInQuestion> results = new ArrayList<>();

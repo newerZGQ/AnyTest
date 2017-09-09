@@ -2,8 +2,8 @@ package com.zgq.wokao.parser.adapter.impl;
 
 import com.zgq.wokao.Util.ListUtil;
 import com.zgq.wokao.Util.UUIDUtil;
-import com.zgq.wokao.model.paper.question.impl.DiscussQuestion;
 import com.zgq.wokao.model.paper.QuestionType;
+import com.zgq.wokao.model.paper.question.impl.DiscussQuestion;
 import com.zgq.wokao.parser.adapter.BaseAdapter;
 import com.zgq.wokao.parser.adapter.IDiscussAdapter;
 import com.zgq.wokao.parser.context.QuestionContext;
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class DiscussAdapter extends BaseAdapter implements IDiscussAdapter {
 
-    private QuestionType type = QuestionType.disc;
+    private QuestionType type = QuestionType.DISCUSS;
     ArrayList<String> content = new ArrayList<>();
     QuestionContext context = new QuestionContext();
     private ArrayList<DiscussQuestion> results = new ArrayList<>();

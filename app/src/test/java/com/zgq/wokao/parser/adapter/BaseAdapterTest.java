@@ -1,14 +1,10 @@
 package com.zgq.wokao.parser.adapter;
 
-import com.zgq.wokao.model.paper.QuestionType;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by zhangguoqiang on 2017/2/19.

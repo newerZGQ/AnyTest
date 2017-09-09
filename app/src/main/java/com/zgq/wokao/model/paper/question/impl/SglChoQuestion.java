@@ -38,7 +38,7 @@ public class SglChoQuestion extends RealmObject implements IQuestion ,CascadeDel
             this.answer = new Answer();
         }
         if (this.info == null){
-            this.info = new QuestionInfo(QuestionType.sglc);
+            this.info = new QuestionInfo(QuestionType.SINGLECHOOSE);
         }
         if (this.record == null){
             this.record = new QuestionRecord();

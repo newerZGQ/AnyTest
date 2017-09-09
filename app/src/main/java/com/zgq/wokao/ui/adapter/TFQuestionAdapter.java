@@ -237,6 +237,12 @@ public class TFQuestionAdapter extends BaseViewPagerAdapter {
     public void hideCurrentAnswer() {
 
     }
+
+    @Override
+    public int getLastPosition() {
+        return datas.get(currentPosition).getInfo().getQstId();
+    }
+
     public final class TFQuestionViewHolder {
         public TextView questionBody;
         public LinearLayout optionTrue;

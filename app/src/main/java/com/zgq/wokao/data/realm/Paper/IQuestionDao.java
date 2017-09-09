@@ -1,6 +1,5 @@
 package com.zgq.wokao.data.realm.Paper;
 
-import com.zgq.wokao.action.paper.IQuestionInfoAction;
 import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.paper.question.IQuestion;
 

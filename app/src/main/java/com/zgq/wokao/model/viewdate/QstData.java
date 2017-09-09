@@ -1,21 +1,12 @@
 package com.zgq.wokao.model.viewdate;
 
-import android.util.Log;
-
-import com.zgq.wokao.Util.LogUtil;
 import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.paper.info.IPaperInfo;
 import com.zgq.wokao.model.paper.question.IQuestion;
-import com.zgq.wokao.model.paper.question.info.IQuestionInfo;
-import com.zgq.wokao.model.paper.question.info.QuestionInfo;
-import com.zgq.wokao.model.paper.question.record.QuestionRecord;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
-import io.realm.Realm;
 
 /**
  * Created by zgq on 2017/3/19.
@@ -28,7 +19,7 @@ public class QstData implements ViewData{
     //试卷id
     private String paperId;
     //题目类型
-    private QuestionType type = QuestionType.fillin;
+    private QuestionType type = QuestionType.FILLIN;
     //回答正确次数
     private int correctNum;
     //学习次数

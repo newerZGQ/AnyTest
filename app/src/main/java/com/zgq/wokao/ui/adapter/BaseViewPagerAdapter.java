@@ -45,6 +45,8 @@ public abstract class BaseViewPagerAdapter extends PagerAdapter implements BaseS
         }
     }
 
+    public abstract int getLastPosition();
+
     public void setStudiedListener(OnStudiedListener listener){
         this.studiedListener = listener;
     }

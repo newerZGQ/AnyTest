@@ -36,7 +36,7 @@ public class QuestionsInfoAdapter extends RecyclerView.Adapter {
             ((MyViewHolder)holder).outLayout.setBackgroundColor(0x6CCF6E);
         }
 
-        ((MyViewHolder)holder).qstType.setText(qstDatas.get(position).getType().getName() + "题");
+        ((MyViewHolder)holder).qstType.setText(qstDatas.get(position).getType().name() + "题");
         ((MyViewHolder)holder).qstInfo.
                 setText("共" + qstDatas.get(position).getQstCount()+
                         "题，收藏" + qstDatas.get(position).getStarCount() + "题");

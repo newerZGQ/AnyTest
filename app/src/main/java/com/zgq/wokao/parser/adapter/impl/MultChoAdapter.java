@@ -3,9 +3,9 @@ package com.zgq.wokao.parser.adapter.impl;
 import com.zgq.wokao.Util.ListUtil;
 import com.zgq.wokao.Util.StringUtil;
 import com.zgq.wokao.Util.UUIDUtil;
+import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.paper.question.impl.MultChoQuestion;
 import com.zgq.wokao.model.paper.question.option.Option;
-import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.parser.adapter.BaseAdapter;
 import com.zgq.wokao.parser.adapter.IMultChoAdapter;
 import com.zgq.wokao.parser.context.QuestionContext;
@@ -19,7 +19,7 @@ import java.util.ArrayList;
  */
 
 public class MultChoAdapter extends BaseAdapter implements IMultChoAdapter {
-    private QuestionType type = QuestionType.mtlc;
+    private QuestionType type = QuestionType.MUTTICHOOSE;
     ArrayList<String> content = new ArrayList<>();
     QuestionContext context = new QuestionContext();
     private ArrayList<MultChoQuestion> results = new ArrayList<>();

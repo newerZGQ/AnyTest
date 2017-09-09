@@ -1,7 +1,6 @@
 package com.zgq.wokao.ui.presenter.impl;
 
 import com.zgq.wokao.action.paper.impl.PaperAction;
-import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.paper.question.IQuestion;
 import com.zgq.wokao.ui.presenter.IAnswerStudyPresenter;
 import com.zgq.wokao.ui.view.IStudyAnswerView;

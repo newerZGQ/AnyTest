@@ -1,7 +1,7 @@
 package com.zgq.wokao.parser;
 
-import com.zgq.wokao.model.paper.question.IQuestion;
 import com.zgq.wokao.model.paper.QuestionType;
+import com.zgq.wokao.model.paper.question.IQuestion;
 import com.zgq.wokao.parser.adapter.IAdapter;
 import com.zgq.wokao.parser.adapter.impl.DiscussAdapter;
 import com.zgq.wokao.parser.adapter.impl.FillInAdapter;
@@ -24,22 +24,23 @@ public class QuestionParser extends BaseParser implements IQuestionParser{
 
     @Override
     public void setAdapter(QuestionType type) {
-        this.type = type;
-        switch (type.getIndex()){
-            case QuestionType.fillin_index:
+        switch (type){
+            case FILLIN:
                 adapter = new FillInAdapter();
                 break;
-            case QuestionType.tf_index:
+            case TF:
                 adapter = new TFAdapter();
                 break;
-            case QuestionType.sglc_index:
+            case SINGLECHOOSE:
                 adapter = new SglChoAdapter();
                 break;
-            case QuestionType.mtlc_index:
+            case MUTTICHOOSE:
                 adapter = new MultChoAdapter();
                 break;
-            case QuestionType.disc_index:
+            case DISCUSS:
                 adapter = new DiscussAdapter();
+                break;
+            default:
                 break;
         }
     }

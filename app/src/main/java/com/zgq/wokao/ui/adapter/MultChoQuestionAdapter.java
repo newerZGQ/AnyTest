@@ -253,6 +253,11 @@ public class MultChoQuestionAdapter extends BaseViewPagerAdapter implements View
         return chars;
     }
 
+    @Override
+    public int getLastPosition() {
+        return datas.get(currentPosition).getInfo().getQstId();
+    }
+
     public final class MultiChoQuestionViewHolder {
         public LinearLayout optionLayout;
         public TextView questionBody;

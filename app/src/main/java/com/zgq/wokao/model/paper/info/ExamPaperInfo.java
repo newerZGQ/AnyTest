@@ -2,10 +2,12 @@ package com.zgq.wokao.model.paper.info;
 
 import com.zgq.wokao.model.CascadeDeleteable;
 import com.zgq.wokao.model.paper.QuestionType;
+import com.zgq.wokao.model.realmwrapper.RealmString;
 import com.zgq.wokao.model.schedule.Schedule;
 import com.zgq.wokao.model.search.Searchable;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
@@ -23,7 +25,7 @@ public class ExamPaperInfo extends RealmObject implements IPaperInfo, Serializab
     private boolean parseRight;
     private int studyCount;
 
-    private RealmList<QuestionType> questionTypes = new RealmList<>();
+    private RealmList<RealmString> questionTypes = new RealmList<>();
     //是否加入日程学习
     private boolean isInSchedule;
     private Schedule schedule = new Schedule();
@@ -109,16 +111,21 @@ public class ExamPaperInfo extends RealmObject implements IPaperInfo, Serializab
     }
 
     @Override
-    public RealmList<QuestionType> getQuestionTypes() {
-        return questionTypes;
+    public ArrayList<QuestionType> getQuestionTypes() {
+        ArrayList types = new ArrayList();
+        for (RealmString type : questionTypes){
+            types.add(QuestionType.valueOf(type.getValue()));
+        }
+        return types;
     }
 
     @Override
     public void addQuestionType(QuestionType type) {
-        for (QuestionType typeTmp: questionTypes){
-            if (typeTmp.getIndex() == type.getIndex()) return;
+        for (RealmString typeTmp: questionTypes){
+            if (typeTmp.getValue().equals(type.name()))
+            return;
         }
-        questionTypes.add(type);
+        questionTypes.add(new RealmString(type.name()));
     }
 
     @Override

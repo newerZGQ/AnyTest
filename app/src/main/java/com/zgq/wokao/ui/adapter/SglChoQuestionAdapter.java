@@ -195,6 +195,12 @@ public class SglChoQuestionAdapter extends BaseViewPagerAdapter implements View.
         char a = label.charAt(0);
         return ((int)a - 65);
     }
+
+    @Override
+    public int getLastPosition() {
+        return datas.get(currentPosition).getInfo().getQstId();
+    }
+
     public final class SglChoQuestionViewHolder {
         public LinearLayout optionLayout;
         public TextView questionBody;

@@ -1,58 +1,67 @@
 package com.zgq.wokao.model.paper;
 
-import com.zgq.wokao.model.CascadeDeleteable;
-
-import io.realm.RealmObject;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
- * Created by zgq on 2017/2/11.
+ * Created by zgq on 2017/9/10.
  */
 
-public class QuestionType extends RealmObject implements CascadeDeleteable{
-    public static final int noqst_index = 0;
-    public static final int fillin_index = 1;
-    public static final int tf_index = 2;
-    public static final int sglc_index = 3;
-    public static final int mtlc_index = 4;
-    public static final int disc_index = 5;
-    public static QuestionType notQst = new QuestionType("非题目" ,noqst_index);
-    public static QuestionType fillin = new QuestionType("填空", fillin_index);
-    public static QuestionType tf = new QuestionType("判断", tf_index);
-    public static QuestionType sglc = new QuestionType("单选", sglc_index);
-    public static QuestionType mtlc = new QuestionType("多选", mtlc_index);
-    public static QuestionType disc = new QuestionType("简答", disc_index);
-
-
-
+public enum QuestionType implements Parcelable{
+    NOTQUESTION("非问题",0),
+    FILLIN("填空",1),
+    TF("判断",2),
+    SINGLECHOOSE("单选",3),
+    MUTTICHOOSE("多选",4),
+    DISCUSS("简答",5);
     private String name;
-    private int index;
-
-    public QuestionType() {
-    }
-
-    public QuestionType(String name, int index) {
+    private int value;
+    private QuestionType(String name, int value){
         this.name = name;
-        this.index = index;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getIndex() {
-        return index;
-    }
-
-    public void setIndex(int index) {
-        this.index = index;
+        this.value = value;
     }
 
     @Override
-    public void cascadeDelete() {
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeInt(value);
+    }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<QuestionType> CREATOR = new Creator<QuestionType>() {
+        @Override
+        public QuestionType createFromParcel(Parcel in) {
+            switch (in.readInt()){
+                case 0:
+                    return QuestionType.NOTQUESTION;
+                case 1:
+                    return QuestionType.FILLIN;
+                case 2:
+                    return QuestionType.TF;
+                case 3:
+                    return QuestionType.SINGLECHOOSE;
+                case 4:
+                    return QuestionType.MUTTICHOOSE;
+                case 5:
+                    return QuestionType.DISCUSS;
+            }
+            return QuestionType.NOTQUESTION;
+        }
+
+        @Override
+        public QuestionType[] newArray(int size) {
+            return new QuestionType[size];
+        }
+    };
+
+    public int getValue(){
+        return value;
+    }
+    public String getName(){
+        return name;
     }
 }

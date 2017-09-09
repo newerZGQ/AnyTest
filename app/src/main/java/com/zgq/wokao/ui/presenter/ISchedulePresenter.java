@@ -1,5 +1,6 @@
 package com.zgq.wokao.ui.presenter;
 
+import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.viewdate.ScheduleData;
 
 import java.util.ArrayList;
@@ -14,4 +15,6 @@ public interface ISchedulePresenter {
     void scheduleInfoChangeData(int position);
     int checkSchedulesSize();
     void setDailyCount(int position, int count);
+    QuestionType getLastStudyType(String paperId);
+    int getLastStudyPos(String paperId);
 }

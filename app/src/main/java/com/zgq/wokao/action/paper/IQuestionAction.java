@@ -3,7 +3,6 @@ package com.zgq.wokao.action.paper;
 import com.zgq.wokao.model.paper.IExamPaper;
 import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.paper.question.IQuestion;
-import com.zgq.wokao.model.paper.question.info.QuestionInfo;
 
 import java.util.ArrayList;
 

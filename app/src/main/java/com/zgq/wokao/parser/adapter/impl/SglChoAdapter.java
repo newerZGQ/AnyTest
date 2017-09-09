@@ -1,13 +1,11 @@
 package com.zgq.wokao.parser.adapter.impl;
 
-import android.util.Log;
-
 import com.zgq.wokao.Util.ListUtil;
 import com.zgq.wokao.Util.StringUtil;
 import com.zgq.wokao.Util.UUIDUtil;
+import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.paper.question.impl.SglChoQuestion;
 import com.zgq.wokao.model.paper.question.option.Option;
-import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.parser.adapter.BaseAdapter;
 import com.zgq.wokao.parser.adapter.ISglChoAdapter;
 import com.zgq.wokao.parser.context.QuestionContext;
@@ -21,7 +19,7 @@ import java.util.ArrayList;
  */
 
 public class SglChoAdapter extends BaseAdapter implements ISglChoAdapter {
-    private QuestionType type = QuestionType.sglc;
+    private QuestionType type = QuestionType.SINGLECHOOSE;
     ArrayList<String> content = new ArrayList<>();
     QuestionContext context = new QuestionContext();
     private ArrayList<SglChoQuestion> results = new ArrayList<>();

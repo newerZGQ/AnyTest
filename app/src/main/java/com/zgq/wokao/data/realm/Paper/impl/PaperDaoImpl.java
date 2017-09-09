@@ -11,10 +11,10 @@ import com.zgq.wokao.data.realm.BaseRealmProvider;
 import com.zgq.wokao.data.realm.Paper.IPaperDao;
 import com.zgq.wokao.model.paper.IExamPaper;
 import com.zgq.wokao.model.paper.NormalExamPaper;
+import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.paper.info.ExamPaperInfo;
 import com.zgq.wokao.model.paper.info.IPaperInfo;
 import com.zgq.wokao.model.paper.question.IQuestion;
-import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.schedule.DailyRecord;
 import com.zgq.wokao.model.schedule.Schedule;
 import com.zgq.wokao.model.search.SearchInfoItem;
@@ -136,15 +136,15 @@ public class PaperDaoImpl extends BaseRealmProvider<NormalExamPaper> implements 
     public void setLastStudyInfo(String paperId, QuestionType questionType, int num) {
         realm.beginTransaction();
         IExamPaper paper = query(paperId);
-        paper.getPaperInfo().getSchedule().setLastStudyType(questionType);
         paper.getPaperInfo().getSchedule().setLastStudyNum(num);
+        paper.getPaperInfo().getSchedule().setLastStudyType(questionType);
         realm.commitTransaction();
     }
 
     @Override
     public QuestionType getLastStudyType(String paperId) {
         IExamPaper paper = query(paperId);
-        return paper.getPaperInfo().getSchedule().getLastStudyType();
+        return QuestionType.valueOf(paper.getPaperInfo().getSchedule().getLastStudyType());
     }
 
     @Override
@@ -318,27 +318,27 @@ public class PaperDaoImpl extends BaseRealmProvider<NormalExamPaper> implements 
                 searchQstFromList(
                         query,
                         (List) paper.getFillInQuestions(),
-                        paper.getPaperInfo(), QuestionType.fillin.getIndex()),
+                        paper.getPaperInfo(), QuestionType.FILLIN.getValue()),
                 searchQstFromList(
                         query,
                         (List) paper.getTfQuestions(),
                         paper.getPaperInfo(),
-                        QuestionType.tf.getIndex()),
+                        QuestionType.TF.getValue()),
                 searchQstFromList(
                         query,
                         (List) paper.getSglChoQuestions(),
                         paper.getPaperInfo(),
-                        QuestionType.sglc.getIndex()),
+                        QuestionType.SINGLECHOOSE.getValue()),
                 searchQstFromList(
                         query,
                         (List) paper.getMultChoQuestions(),
                         paper.getPaperInfo(),
-                        QuestionType.mtlc.getIndex()),
+                        QuestionType.MUTTICHOOSE.getValue()),
                 searchQstFromList(
                         query,
                         (List) paper.getDiscussQuestions(),
                         paper.getPaperInfo(),
-                        QuestionType.disc.getIndex())
+                        QuestionType.DISCUSS.getValue())
         );
         return results;
     }

@@ -5,6 +5,7 @@ import android.content.Context;
 import com.zgq.wokao.action.paper.impl.PaperAction;
 import com.zgq.wokao.action.viewdata.ViewDataAction;
 import com.zgq.wokao.model.paper.IExamPaper;
+import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.viewdate.QstData;
 import com.zgq.wokao.model.viewdate.ScheduleData;
 import com.zgq.wokao.ui.presenter.ISchedulePresenter;
@@ -93,5 +94,16 @@ public class SchedulePresenter implements ISchedulePresenter {
         paperAction.setDailyCount(paperAction.queryById(paperId),count);
         schedulePapers = getSchedulePaper();
         scheduleDatas = getScheduleData(schedulePapers);
+    }
+
+    @Override
+    public QuestionType getLastStudyType(String paperId) {
+        QuestionType  type = QuestionType.valueOf(paperAction.queryById(paperId).getPaperInfo().getSchedule().getLastStudyType());
+        return type;
+    }
+
+    @Override
+    public int getLastStudyPos(String paperId) {
+        return paperAction.queryById(paperId).getPaperInfo().getSchedule().getLastStudyNum();
     }
 }

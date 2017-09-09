@@ -17,8 +17,8 @@ public class Schedule extends RealmObject implements ISchedule, CascadeDeleteabl
     private boolean isOpened;
     //默认每天学习任务20题
     private int dailyCount = 20;
-    private QuestionType lastStudyType;
-    private int lastStudyNum;
+    private String lastStudyType = QuestionType.FILLIN.name();
+    private int lastStudyNum = 0;
     private RealmList<DailyRecord> dailyRecords = new RealmList<>();
 
     private int studyNumber;
@@ -90,12 +90,12 @@ public class Schedule extends RealmObject implements ISchedule, CascadeDeleteabl
         this.dailyCount = count;
     }
     @Override
-    public QuestionType getLastStudyType() {
+    public String getLastStudyType() {
         return lastStudyType;
     }
     @Override
     public void setLastStudyType(QuestionType lastStudyType) {
-        this.lastStudyType = lastStudyType;
+        this.lastStudyType = lastStudyType.name();
     }
     @Override
     public int getLastStudyNum() {

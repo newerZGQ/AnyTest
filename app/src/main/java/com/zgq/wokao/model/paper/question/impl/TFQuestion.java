@@ -35,7 +35,7 @@ public class TFQuestion extends RealmObject implements IQuestion ,CascadeDeletea
             this.answer = new Answer();
         }
         if (this.info == null){
-            this.info = new QuestionInfo(QuestionType.tf);
+            this.info = new QuestionInfo(QuestionType.TF);
         }
         if (this.record == null){
             this.record = new QuestionRecord();

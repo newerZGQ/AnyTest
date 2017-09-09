@@ -2,7 +2,8 @@ package com.zgq.wokao.model.paper.info;
 
 import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.schedule.ISchedule;
-import com.zgq.wokao.model.schedule.Schedule;
+
+import java.util.ArrayList;
 
 import io.realm.RealmList;
 
@@ -45,7 +46,7 @@ public interface IPaperInfo {
 
     public boolean isInSchedule();
 
-    public RealmList<QuestionType> getQuestionTypes();
+    public ArrayList<QuestionType> getQuestionTypes();
 
     public void addQuestionType(QuestionType type);
 

@@ -38,25 +38,20 @@ public class DiscussQuestionAdapter extends BaseViewPagerAdapter {
     }
 
     @Override public int getCount() {
-        Log.e("test","getCount ");
         return this.datas.size();
     }
     @Override public int getItemPosition(Object object) {
-        Log.e("test","getItemPosition ");
         return super.getItemPosition(object);
     }
     @Override public Object instantiateItem(ViewGroup container, int position) {
-        Log.e("test","instantiateItem " + position);
         return getDiscussQuestionView(container,position);
     }
     @Override public void destroyItem(ViewGroup container, int position, Object object) {
-        Log.e("test","destroyItem " + position);
         View contentView = (View) object;
         container.removeView(contentView);
         this.mViewCache.add(contentView);
     }
     @Override public boolean isViewFromObject(View view, Object o) {
-        Log.e("test","isViewFromObject ");
         return view == o;
     }
 
@@ -113,6 +108,11 @@ public class DiscussQuestionAdapter extends BaseViewPagerAdapter {
     @Override
     public void hideCurrentAnswer() {
 
+    }
+
+    @Override
+    public int getLastPosition() {
+        return datas.get(currentPosition).getInfo().getQstId();
     }
 
     public final class DiscussQuestionViewHolder {

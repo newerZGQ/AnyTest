@@ -35,7 +35,7 @@ public class DiscussQuestion extends RealmObject implements IQuestion ,CascadeDe
             this.answer = new Answer();
         }
         if (this.info == null){
-            this.info = new QuestionInfo(QuestionType.disc);
+            this.info = new QuestionInfo(QuestionType.DISCUSS);
         }
         if (this.record == null){
             this.record = new QuestionRecord();

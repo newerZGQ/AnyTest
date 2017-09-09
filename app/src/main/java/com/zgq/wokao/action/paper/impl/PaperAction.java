@@ -1,5 +1,6 @@
 package com.zgq.wokao.action.paper.impl;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.zgq.wokao.Util.LogUtil;
@@ -43,47 +44,46 @@ public class PaperAction extends BaseAction implements IPaperAction,IQuestionAct
 
     @Override
     public ArrayList<IQuestion> getQuestins(IExamPaper paper, QuestionType type) {
-        int typeIndex = type.getIndex();
         ArrayList<IQuestion> results = new ArrayList<>();
-        switch (typeIndex){
-            case QuestionType.fillin_index:
+        switch (type){
+            case FILLIN:
                 if (paper.getFillInQuestions() == null){
                     break;
                 }
                 for (FillInQuestion question : paper.getFillInQuestions()){
-                    results.add((IQuestion)question);
+                    results.add(question);
                 }
                 break;
-            case QuestionType.tf_index:
+            case TF:
                 if (paper.getTfQuestions() == null){
                     break;
                 }
                 for (TFQuestion question : paper.getTfQuestions()){
-                    results.add((IQuestion)question);
+                    results.add(question);
                 }
                 break;
-            case QuestionType.sglc_index:
+            case SINGLECHOOSE:
                 if (paper.getSglChoQuestions() == null){
                     break;
                 }
                 for (SglChoQuestion question : paper.getSglChoQuestions()){
-                    results.add((IQuestion)question);
+                    results.add(question);
                 }
                 break;
-            case QuestionType.mtlc_index:
+            case MUTTICHOOSE:
                 if (paper.getMultChoQuestions() == null){
                     break;
                 }
                 for (MultChoQuestion question : paper.getMultChoQuestions()){
-                    results.add((IQuestion)question);
+                    results.add(question);
                 }
                 break;
-            case QuestionType.disc_index:
+            case DISCUSS:
                 if (paper.getDiscussQuestions() == null){
                     break;
                 }
                 for (DiscussQuestion question : paper.getDiscussQuestions()){
-                    results.add((IQuestion)question);
+                    results.add(question);
                 }
                 break;
             default:
@@ -209,8 +209,8 @@ public class PaperAction extends BaseAction implements IPaperAction,IQuestionAct
     }
 
     @Override
-    public void updateLastStudyPosition(IExamPaper paper, QuestionType type, int position) {
-
+    public void updateLastStudyPosition(@NonNull IExamPaper paper,@NonNull QuestionType type,@NonNull int position) {
+        paperDao.setLastStudyInfo(paper.getPaperInfo().getId(), type, position);
     }
 
     @Override
@@ -262,23 +262,23 @@ public class PaperAction extends BaseAction implements IPaperAction,IQuestionAct
         float accuracy = 0f;
         int studyCount = 0;
         int correctCount = 0;
-        for (IQuestion question : getQuestins(paper,QuestionType.fillin)){
+        for (IQuestion question : getQuestins(paper,QuestionType.FILLIN)){
             studyCount += question.getRecord().getStudyNumber();
             correctCount += question.getRecord().getCorrectNumber();
         }
-        for (IQuestion question : getQuestins(paper,QuestionType.tf)){
+        for (IQuestion question : getQuestins(paper,QuestionType.TF)){
             studyCount += question.getRecord().getStudyNumber();
             correctCount += question.getRecord().getCorrectNumber();
         }
-        for (IQuestion question : getQuestins(paper,QuestionType.sglc)){
+        for (IQuestion question : getQuestins(paper,QuestionType.SINGLECHOOSE)){
             studyCount += question.getRecord().getStudyNumber();
             correctCount += question.getRecord().getCorrectNumber();
         }
-        for (IQuestion question : getQuestins(paper,QuestionType.mtlc)){
+        for (IQuestion question : getQuestins(paper,QuestionType.MUTTICHOOSE)){
             studyCount += question.getRecord().getStudyNumber();
             correctCount += question.getRecord().getCorrectNumber();
         }
-        for (IQuestion question : getQuestins(paper,QuestionType.disc)){
+        for (IQuestion question : getQuestins(paper,QuestionType.DISCUSS)){
             studyCount += question.getRecord().getStudyNumber();
             correctCount += question.getRecord().getCorrectNumber();
         }

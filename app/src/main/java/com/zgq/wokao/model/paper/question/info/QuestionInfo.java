@@ -12,13 +12,13 @@ import io.realm.RealmObject;
 public class QuestionInfo extends RealmObject implements IQuestionInfo ,CascadeDeleteable{
 
     private String id;
-    private QuestionType type;
+    private String type;
     private int qstId;
     private boolean isStared;
 
     public QuestionInfo(){}
     public QuestionInfo(QuestionType type){
-        this.type = type;
+        this.type = type.name();
     }
 
     public String getId() {
@@ -30,11 +30,11 @@ public class QuestionInfo extends RealmObject implements IQuestionInfo ,CascadeD
     }
 
     public QuestionType getType() {
-        return type;
+        return QuestionType.valueOf(type);
     }
 
     public void setType(QuestionType type) {
-        this.type = type;
+        this.type = type.name();
     }
 
     public int getQstId() {
@@ -55,7 +55,6 @@ public class QuestionInfo extends RealmObject implements IQuestionInfo ,CascadeD
 
     @Override
     public void cascadeDelete() {
-        type.cascadeDelete();
         deleteFromRealm();
     }
 }

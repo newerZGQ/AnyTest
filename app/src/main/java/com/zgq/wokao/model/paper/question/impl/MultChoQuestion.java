@@ -37,7 +37,7 @@ public class MultChoQuestion extends RealmObject implements IQuestion ,CascadeDe
             this.answer = new Answer();
         }
         if (this.info == null){
-            this.info = new QuestionInfo(QuestionType.mtlc);
+            this.info = new QuestionInfo(QuestionType.MUTTICHOOSE);
         }
         if (this.record == null){
             this.record = new QuestionRecord();

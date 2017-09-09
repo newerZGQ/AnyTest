@@ -2,7 +2,6 @@ package com.zgq.wokao;
 
 import android.app.Activity;
 import android.app.Application;
-import android.content.Context;
 
 import com.zgq.wokao.Util.ContextUtil;
 import com.zgq.wokao.Util.FileUtil;

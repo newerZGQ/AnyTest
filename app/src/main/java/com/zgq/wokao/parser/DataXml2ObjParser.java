@@ -258,15 +258,15 @@ public class DataXml2ObjParser {
     private QuestionType changeIntToType(String type){
         switch (type){
             case "fill_in_question":
-                return QuestionType.fillin;
+                return QuestionType.FILLIN;
             case "tf_question":
-                return QuestionType.tf;
+                return QuestionType.TF;
             case "sglcho_question":
-                return QuestionType.sglc;
+                return QuestionType.SINGLECHOOSE;
             case "multcho_question":
-                return QuestionType.mtlc;
+                return QuestionType.MUTTICHOOSE;
             case "discuss_question":
-                return QuestionType.disc;
+                return QuestionType.DISCUSS;
             default:
                 return null;
         }
