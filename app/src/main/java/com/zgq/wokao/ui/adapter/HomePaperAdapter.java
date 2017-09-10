@@ -45,15 +45,6 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
         return this;
     }
 
-    private int getNewBackgroundId() {
-        lastBackground++;
-        if (lastBackground == 4){
-            lastBackground = 0;
-        }
-        return lastBackground;
-    }
-
-
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
@@ -63,8 +54,6 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
 
         final MyViewHolder holder1 = (MyViewHolder) holder;
         final IPaperInfo info = paperInfos.get(position);
-        //front background
-        int backIndex = getNewBackgroundId();
         if (info.isInSchedule()){
             ((MyViewHolder) holder).frontLayout.setBackground(context.getResources()
                     .getDrawable(R.drawable.rectangle_blue));
@@ -72,24 +61,6 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
             ((MyViewHolder) holder).frontLayout.setBackground(context.getResources()
                     .getDrawable(R.drawable.rectangle_red));
         }
-//        switch (info.isInSchedule()) {
-//            case true:
-//                ((MyViewHolder) holder).frontLayout.setBackground(context.getResources()
-//                        .getDrawable(R.drawable.rectangle_blue));
-//                break;
-//            case false:
-//                ((MyViewHolder) holder).frontLayout.setBackground(context.getResources()
-//                        .getDrawable(R.drawable.rectangle_red));
-//                break;
-//            case 2:
-//                ((MyViewHolder) holder).frontLayout.setBackground(context.getResources()
-//                        .getDrawable(R.drawable.rectangle_yellow));
-//                break;
-//            case 3:
-//                ((MyViewHolder) holder).frontLayout.setBackground(context.getResources()
-//                        .getDrawable(R.drawable.rectangle_gree));
-//                break;
-//        }
 
         //title
         if (info.getTitle() != null) {
@@ -218,15 +189,15 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
     }
 
     public interface PaperAdapterListener {
-        public void onItemClick(int position, IPaperInfo info);
+        void onItemClick(int position, IPaperInfo info);
 
-        public void onItemLongClick(int position, IPaperInfo info);
+        void onItemLongClick(int position, IPaperInfo info);
 
-        public void onDeleteClick(int position, IPaperInfo info);
+        void onDeleteClick(int position, IPaperInfo info);
 
-        public void onExitClick(int position, IPaperInfo info);
+        void onExitClick(int position, IPaperInfo info);
 
-        public void onStartClick(int position, IPaperInfo info);
+        void onStartClick(int position, IPaperInfo info);
     }
 
 }

@@ -1,8 +1,6 @@
 package com.zgq.wokao.ui.activity;
 
-import android.animation.Animator;
 import android.animation.ObjectAnimator;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,7 +8,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -18,8 +15,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gigamole.navigationtabstrip.NavigationTabStrip;
-import com.nbsp.materialfilepicker.MaterialFilePicker;
-import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 import com.zgq.linechart.ChartView;
 import com.zgq.wokao.R;
 import com.zgq.wokao.action.login.LoginAction;
@@ -37,8 +32,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -84,11 +77,6 @@ public class HomeActivity extends BaseActivity implements
 
     private int currentItem = 0;
 
-    private Timer timer = new Timer();
-    private TimerTask hideLoadingTask;
-
-    public boolean needUpdateData = false;
-
     private ScheduleFragment scheduleFragment;
     private PapersFragment papersFragment;
     private QuestionsFragment questionsFragment;
@@ -103,7 +91,6 @@ public class HomeActivity extends BaseActivity implements
             LoginAction.getInstance().setFirstTimeLoginFalse();
         }
         homePresenter = new HomePresenterImpl(this);
-//        initTask();
         initView();
     }
 
@@ -141,42 +128,6 @@ public class HomeActivity extends BaseActivity implements
         initLineChart();
         initContent();
     }
-
-//    private void initTask() {
-//        hideLoadingTask = new TimerTask() {
-//            @Override
-//            public void run() {
-//                runOnUiThread(new Runnable() {      // UI thread
-//                    @Override
-//                    public void run() {
-//                        ObjectAnimator animator = ObjectAnimator.ofFloat(loadingView, "alpha", 1, 0).setDuration(500);
-//                        animator.addListener(new Animator.AnimatorListener() {
-//                            @Override
-//                            public void onAnimationStart(Animator animator) {
-//                                loadingView.setVisibility(View.INVISIBLE);
-//                            }
-//
-//                            @Override
-//                            public void onAnimationEnd(Animator animator) {
-//
-//                            }
-//
-//                            @Override
-//                            public void onAnimationCancel(Animator animator) {
-//
-//                            }
-//
-//                            @Override
-//                            public void onAnimationRepeat(Animator animator) {
-//
-//                            }
-//                        });
-//                        animator.start();
-//                    }
-//                });
-//            }
-//        };
-//    }
 
     private void initTabStrip() {
         tabStrip.setTitles("日程", "试卷");
@@ -229,21 +180,7 @@ public class HomeActivity extends BaseActivity implements
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                if (!needUpdateData) {
-                    return;
-                }
-                switch (position) {
-                    case 0:
-                        if (positionOffset == 0) {
-                            showLoadingView();
-                            scheduleFragment.notifyDataChanged();
-                            hideLoadingView();
-                            needUpdateData = false;
-                        }
-                        break;
-                    case 1:
-                        break;
-                }
+
             }
 
             @Override
@@ -314,11 +251,6 @@ public class HomeActivity extends BaseActivity implements
     }
 
     @Override
-    public void setNeedUpdateData(boolean needUpdateData) {
-        this.needUpdateData = needUpdateData;
-    }
-
-    @Override
     public void setSlideaMenuLayout(StudySummary studySummary) {
 
     }
@@ -370,33 +302,12 @@ public class HomeActivity extends BaseActivity implements
 
     @Override
     public void showQuestionsFragment(String paperId) {
-        Log.d(TAG,"showquestion");
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         questionsFragment = QuestionsFragment.newInstance(paperId);
         transaction.replace(R.id.questions_frag_2,questionsFragment);
         transaction.addToBackStack(null);
         transaction.commit();
         hideToolBar();
-    }
-
-
-    @Override
-    public void notifyDataChanged() {
-        ((ScheduleFragment) fragments.get(0)).notifyDataChanged();
-        ((PapersFragment) fragments.get(1)).getPapersPresenter().notifyDataChanged();
-    }
-
-
-    @Override
-    public void hideLoadingView() {
-//        initTask();
-        timer.schedule(hideLoadingTask, 1000);
-    }
-
-    @Override
-    public void showLoadingView() {
-//        loadingView.setVisibility(View.VISIBLE);
-//        ObjectAnimator.ofFloat(loadingView,"alpha",0,1).setDuration(500).start();
     }
 
     @Override
@@ -422,7 +333,6 @@ public class HomeActivity extends BaseActivity implements
             slideUp.hide();
             return;
         }
-
         showToolBar();
         super.onBackPressed();
     }
@@ -444,7 +354,5 @@ public class HomeActivity extends BaseActivity implements
         public Fragment getItem(int position) {
             return fragments.get(position);
         }
-
-
     }
 }

@@ -10,8 +10,5 @@ import java.util.ArrayList;
  */
 
 public interface IScheduleView {
-    public void notifyDataChanged();
-    public void scheduleInfoChangeData(ScheduleData data);
-    public void onEmptyPapers();
-    public void onNoneEmptyPapers();
+    void scheduleInfoChangeData(ScheduleData data);
 }

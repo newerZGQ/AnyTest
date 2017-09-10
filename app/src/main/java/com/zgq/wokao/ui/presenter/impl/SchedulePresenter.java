@@ -74,18 +74,13 @@ public class SchedulePresenter implements ISchedulePresenter {
     }
 
     @Override
-    public void scheduleInfoChangeData(int position) {
-        if (position > scheduleDatas.size()-1) return;
-        scheduleView.scheduleInfoChangeData(scheduleDatas.get(position));
+    public ScheduleData getScheduleInfo(int position) {
+        if (position > scheduleDatas.size()-1) return null;
+        return scheduleDatas.get(position);
     }
 
     @Override
-    public int checkSchedulesSize() {
-        if (schedulePapers.size() == 0){
-            scheduleView.onEmptyPapers();
-        }else{
-            scheduleView.onNoneEmptyPapers();
-        }
+    public int getPaperCount() {
         return schedulePapers.size();
     }
 

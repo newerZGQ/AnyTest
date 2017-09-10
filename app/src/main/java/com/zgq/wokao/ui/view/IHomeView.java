@@ -12,10 +12,6 @@ public interface IHomeView {
     void showScheduleFragment();
     void showPapersFragment();
     void showQuestionsFragment(String paperId);
-    void notifyDataChanged();
-    void hideLoadingView();
-    void showLoadingView();
-    void setNeedUpdateData(boolean needUpdateData);
     void setSlideaMenuLayout(StudySummary studySummary);
     void setViewPagerScrollble(boolean scrollble);
     void hideToolBar();

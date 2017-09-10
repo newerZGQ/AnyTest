@@ -1,7 +1,6 @@
 package com.zgq.wokao.ui.fragment.impl;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,7 +14,6 @@ import android.widget.LinearLayout;
 
 import com.zgq.wokao.R;
 import com.zgq.wokao.model.paper.info.IPaperInfo;
-import com.zgq.wokao.ui.activity.HomeActivity;
 import com.zgq.wokao.ui.adapter.HomePaperAdapter;
 import com.zgq.wokao.ui.fragment.BaseFragment;
 import com.zgq.wokao.ui.presenter.impl.PapersPresenter;
@@ -42,7 +40,7 @@ public class PapersFragment extends BaseFragment implements IPapersView{
 
     private FrameLayout rootView;
 
-    private PapersPresenter papersPresenter = new PapersPresenter(this);
+    private PapersPresenter presenter = new PapersPresenter(this);
 
     public PapersFragment() {}
 
@@ -59,18 +57,11 @@ public class PapersFragment extends BaseFragment implements IPapersView{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         rootView =  (FrameLayout) inflater.inflate(R.layout.fragment_papers, container, false);
         ButterKnife.bind(this,rootView);
-        papersPresenter.initPapersList();
-        papersPresenter.checkPapersSize();
+        initPaperList(presenter.getPaperInfos());
+        checkPaperCount();
         return rootView;
-    }
-
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-
-        }
     }
 
     @Override
@@ -92,7 +83,6 @@ public class PapersFragment extends BaseFragment implements IPapersView{
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
     }
 
     @Override
@@ -100,8 +90,7 @@ public class PapersFragment extends BaseFragment implements IPapersView{
         return false;
     }
 
-    @Override
-    public void initPaperList(final ArrayList<IPaperInfo> paperInfos) {
+    private void initPaperList(final ArrayList<IPaperInfo> paperInfos) {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         paperList.setLayoutManager(layoutManager);
         paperList.setAdapter(new HomePaperAdapter(paperInfos, new HomePaperAdapter.PaperAdapterListener() {
@@ -120,8 +109,8 @@ public class PapersFragment extends BaseFragment implements IPapersView{
                 Snackbar.make(rootView,"确定要删除么",Snackbar.LENGTH_LONG).setAction("确定", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        papersPresenter.deletePaper(info.getId());
-                        paperList.getAdapter().notifyItemChanged(position);
+                        presenter.deletePaper(info.getId());
+                        updateList();
                     }
                 }).setActionTextColor(0xfff44336).show();
             }
@@ -131,8 +120,8 @@ public class PapersFragment extends BaseFragment implements IPapersView{
                 Snackbar.make(rootView,"确定退出学习该试卷么",Snackbar.LENGTH_LONG).setAction("确定", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        papersPresenter.removeFromSchedule(info.getId());
-                        paperList.getAdapter().notifyItemChanged(position);
+                        presenter.removeFromSchedule(info.getId());
+                        updateList();
                     }
                 }).show();
             }
@@ -142,8 +131,8 @@ public class PapersFragment extends BaseFragment implements IPapersView{
                 Snackbar.make(rootView,"确定开始学习么",Snackbar.LENGTH_LONG).setAction("确定", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        papersPresenter.addToSchedule(info.getId());
-                        paperList.getAdapter().notifyItemChanged(position);
+                        presenter.addToSchedule(info.getId());
+                        updateList();
                     }
                 }).show();
             }
@@ -151,24 +140,15 @@ public class PapersFragment extends BaseFragment implements IPapersView{
         paperList.setItemViewCacheSize(1);
     }
 
-
-    @Override
-    public void notifyDataChanged(ArrayList<IPaperInfo> paperInfos) {
-        ((HomePaperAdapter)paperList.getAdapter()).setData(paperInfos);
-        paperList.getAdapter().notifyDataSetChanged();
-        papersPresenter.checkPapersSize();
+    private void checkPaperCount(){
+        if (presenter.getPaperCount() == 0){
+            onEmptyPapers();
+        }else{
+            onNoneEmptyPapers();
+        }
     }
 
-    public interface OnPaperFragmentListener {
-
-    }
-
-    public HomeActivity getHomeActivity(){
-        return (HomeActivity)getActivity();
-    }
-
-    @Override
-    public void onEmptyPapers() {
+    private void onEmptyPapers() {
         paperList.setVisibility(View.GONE);
         coverView.setVisibility(View.GONE);
         if (noContentLayout == null){
@@ -179,8 +159,7 @@ public class PapersFragment extends BaseFragment implements IPapersView{
         }
     }
 
-    @Override
-    public void onNoneEmptyPapers() {
+    private void onNoneEmptyPapers() {
         paperList.setVisibility(View.VISIBLE);
         coverView.setVisibility(View.VISIBLE);
         if (noContentLayout != null){
@@ -188,7 +167,14 @@ public class PapersFragment extends BaseFragment implements IPapersView{
         }
     }
 
-    public PapersPresenter getPapersPresenter() {
-        return papersPresenter;
+    private void updateList(){
+        ((HomePaperAdapter)paperList.getAdapter()).setData(presenter.getPaperInfos());
+        paperList.getAdapter().notifyDataSetChanged();
+        checkPaperCount();
     }
+
+    public interface OnPaperFragmentListener {
+
+    }
+
 }

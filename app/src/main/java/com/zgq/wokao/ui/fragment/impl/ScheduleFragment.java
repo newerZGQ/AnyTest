@@ -97,28 +97,9 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
         taskSettingLayout.setOnTaskSettingListener(this);
         initViewPager();
         initScheduleInfoView();
-        presenter.checkSchedulesSize();
+        checkPaperCount();
         return rootView;
     }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-//        onViewPagerDataChanged();
-//        viewPager.setCurrentItem(currentPosition);
-//        presenter.scheduleInfoChangeData(currentPosition);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-    }
-
 
     @Override
     protected void onAttachToContext(Context context) {
@@ -133,12 +114,6 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
-    }
-
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
     }
 
     @Override
@@ -161,11 +136,6 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
         viewPager.addOnPageChangeListener(new SchedulePageChangeListener());
     }
 
-    private void onViewPagerDataChanged() {
-        ((SchedulePagerAdapter) viewPager.getAdapter()).setScheduleDatas(presenter.getScheduleDatas());
-        viewPager.getAdapter().notifyDataSetChanged();
-    }
-
     private void initScheduleInfoView() {
         viewPager.post(new Runnable() {
             @Override
@@ -173,12 +143,6 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
                 scheduleInfoView.showBottom(0);
             }
         });
-    }
-
-    @Override
-    public void notifyDataChanged() {
-        presenter.notifyDataChanged();
-        presenter.checkSchedulesSize();
     }
 
     private void startStudy(String paperId, QuestionType type, int qstNum) {
@@ -198,28 +162,6 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
         scheduleInfoView.changeContent(data.getAccuracy(), String.valueOf(data.getCountToday())
                 , String.valueOf(data.getCountEveryday()));
     }
-
-    @Override
-    public void onEmptyPapers() {
-        viewPager.setVisibility(View.GONE);
-        scheduleInfoView.setVisibility(View.GONE);
-        if (noContentLayout == null) {
-            noContentStub.inflate();
-            noContentLayout = (LinearLayout) rootView.findViewById(R.id.no_schedule_layout);
-        } else {
-            noContentLayout.setVisibility(View.VISIBLE);
-        }
-    }
-
-    @Override
-    public void onNoneEmptyPapers() {
-        viewPager.setVisibility(View.VISIBLE);
-        scheduleInfoView.setVisibility(View.VISIBLE);
-        if (noContentLayout != null) {
-            noContentLayout.setVisibility(View.GONE);
-        }
-    }
-
 
     @Override
     public void onClick(View v) {
@@ -249,6 +191,33 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
         presenter.setDailyCount(currentPosition, task);
     }
 
+    private void checkPaperCount(){
+        if (presenter.getPaperCount() == 0){
+            onEmptyPapers();
+        }else{
+            onNoneEmptyPapers();
+        }
+    }
+
+    private void onEmptyPapers() {
+        viewPager.setVisibility(View.GONE);
+        scheduleInfoView.setVisibility(View.GONE);
+        if (noContentLayout == null) {
+            noContentStub.inflate();
+            noContentLayout = (LinearLayout) rootView.findViewById(R.id.no_schedule_layout);
+        } else {
+            noContentLayout.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void onNoneEmptyPapers() {
+        viewPager.setVisibility(View.VISIBLE);
+        scheduleInfoView.setVisibility(View.VISIBLE);
+        if (noContentLayout != null) {
+            noContentLayout.setVisibility(View.GONE);
+        }
+    }
+
 
     /**
      * This interface must be implemented by activities that contain this
@@ -266,7 +235,7 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
         @Override
         public void onPageSelected(int position) {
             currentPosition = position;
-            presenter.scheduleInfoChangeData(position);
+            scheduleInfoChangeData(presenter.getScheduleInfo(position));
         }
 
         @Override

@@ -87,8 +87,8 @@ public class TaskSettingLayout extends LinearLayout {
     }
 
     public interface OnTaskSettingListener{
-        public void onHide();
-        public void onshow();
-        public void onTaskSelected(int task);
+        void onHide();
+        void onshow();
+        void onTaskSelected(int task);
     }
 }
