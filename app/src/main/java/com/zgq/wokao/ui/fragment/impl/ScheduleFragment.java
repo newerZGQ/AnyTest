@@ -96,7 +96,7 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
         infoLayout.setOnClickListener(this);
         taskSettingLayout.setOnTaskSettingListener(this);
         initViewPager();
-        initScheduleInfoView();
+        updateScheduleInfo(presenter.getScheduleInfo(0),false);
         checkPaperCount();
         return rootView;
     }
@@ -137,15 +137,6 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
         viewPager.addOnPageChangeListener(new SchedulePageChangeListener());
     }
 
-    private void initScheduleInfoView() {
-        viewPager.post(new Runnable() {
-            @Override
-            public void run() {
-                scheduleInfoView.showBottom(0);
-            }
-        });
-    }
-
     private void startStudy(String paperId, QuestionType type, int qstNum) {
         Intent intent = new Intent(getActivity(), AnswerStudyActivity.class);
         if (paperId != null && !paperId.equals("")) {
@@ -158,9 +149,14 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
         getActivity().startActivity(intent);
     }
 
-    private void updateScheduleInfo(ScheduleData data) {
-        scheduleInfoView.changeContent(data.getAccuracy(), String.valueOf(data.getCountToday())
-                , String.valueOf(data.getCountEveryday()));
+    private void updateScheduleInfo(ScheduleData data, boolean withAnimator) {
+        if (withAnimator) {
+            scheduleInfoView.updateWithAnimator(data.getAccuracy(), String.valueOf(data.getCountToday())
+                    , String.valueOf(data.getCountEveryday()));
+        }else {
+            scheduleInfoView.updateImmediate(data.getAccuracy(), String.valueOf(data.getCountToday())
+                    , String.valueOf(data.getCountEveryday()));
+        }
     }
 
     @Override
@@ -244,7 +240,7 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
         @Override
         public void onPageSelected(int position) {
             currentPosition = position;
-            updateScheduleInfo(presenter.getScheduleInfo(position));
+            updateScheduleInfo(presenter.getScheduleInfo(position),true);
         }
 
         @Override
