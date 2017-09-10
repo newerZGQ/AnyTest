@@ -39,8 +39,8 @@ public class TaskSettingLayout extends LinearLayout {
         init();
     }
 
-    private void init(){
-        rootView = LayoutInflater.from(context).inflate(R.layout.fragment_schedule_task_setting_layout,this);
+    private void init() {
+        rootView = LayoutInflater.from(context).inflate(R.layout.fragment_schedule_task_setting_layout, this);
         seekBar = (BubbleSeekBar) rootView.findViewById(R.id.seekbar);
         seekBar.setOnProgressChangedListener(new BubbleSeekBar.OnProgressChangedListener() {
             @Override
@@ -75,20 +75,22 @@ public class TaskSettingLayout extends LinearLayout {
         rootView.setVisibility(GONE);
     }
 
-    public void show(){
+    public void show() {
         rootView.setVisibility(VISIBLE);
-        if (listener != null){
+        if (listener != null) {
             listener.onshow();
         }
     }
 
-    public void setOnTaskSettingListener(OnTaskSettingListener listener){
+    public void setOnTaskSettingListener(OnTaskSettingListener listener) {
         this.listener = listener;
     }
 
-    public interface OnTaskSettingListener{
+    public interface OnTaskSettingListener {
         void onHide();
+
         void onshow();
+
         void onTaskSelected(int task);
     }
 }

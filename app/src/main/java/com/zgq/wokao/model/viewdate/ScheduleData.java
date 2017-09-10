@@ -10,7 +10,7 @@ import com.zgq.wokao.model.paper.info.ExamPaperInfo;
  * Created by zgq on 2017/3/5.
  */
 
-public class ScheduleData implements ViewData{
+public class ScheduleData implements ViewData {
     private String paperId;
     private String accuracy;
     private String paperTitle;
@@ -75,12 +75,13 @@ public class ScheduleData implements ViewData{
     public void setAddTime(String addTime) {
         this.addTime = addTime;
     }
-    public static class Formator{
-        public static ScheduleData format(IExamPaper paper){
+
+    public static class Formator {
+        public static ScheduleData format(IExamPaper paper) {
             ScheduleData data = new ScheduleData();
             data.setPaperTitle(paper.getPaperInfo().getTitle());
             data.setCountToday(paper.getPaperInfo().getSchedule().getcurrentRecord().getStudyNumber());
-            data.setCountEveryday(((ExamPaperInfo)paper.getPaperInfo()).getSchedule().getDailyCount());
+            data.setCountEveryday(((ExamPaperInfo) paper.getPaperInfo()).getSchedule().getDailyCount());
             data.setCountAllQuestions(34);
             data.setPaperId(paper.getPaperInfo().getId());
             data.setAddTime(paper.getPaperInfo().getCreateDate());

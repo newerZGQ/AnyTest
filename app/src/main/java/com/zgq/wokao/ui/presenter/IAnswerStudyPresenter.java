@@ -8,5 +8,6 @@ import com.zgq.wokao.model.paper.question.IQuestion;
 
 public interface IAnswerStudyPresenter {
     public void updateQuestion(String questionId, IQuestion question);
+
     public void startEditMode();
 }

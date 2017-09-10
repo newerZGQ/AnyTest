@@ -24,38 +24,40 @@ public class SearchAction {
         void onResults(List<HistorySuggestion> results);
     }
 
-    public interface OnGetDefaultSuggestionsListener{
+    public interface OnGetDefaultSuggestionsListener {
         void OnResults(List<HistorySuggestion> results);
     }
-    public static void findSuggesions(String query, int limit, OnFindSuggestionsListener listener){
-        List<SearchHistory> list = SearchHistoryProvider.getInstance().findRelative(query,10);
+
+    public static void findSuggesions(String query, int limit, OnFindSuggestionsListener listener) {
+        List<SearchHistory> list = SearchHistoryProvider.getInstance().findRelative(query, 10);
         ArrayList<HistorySuggestion> results = new ArrayList<>();
-        for (SearchHistory tmp : list){
+        for (SearchHistory tmp : list) {
             HistorySuggestion suggestion = new HistorySuggestion(tmp.getContent());
             results.add(suggestion);
         }
         listener.onResults(results);
     }
-    public static void findPaperAndQst(String query, Integer limit, OnFindPaperAndQstListener listener){
+
+    public static void findPaperAndQst(String query, Integer limit, OnFindPaperAndQstListener listener) {
         List<Searchable> list = PaperDaoImpl.getInstance().search(query);
         listener.onResults(list);
     }
 
-    public static void getDefaultSuggestions(int limit, OnFindSuggestionsListener listener){
+    public static void getDefaultSuggestions(int limit, OnFindSuggestionsListener listener) {
         List<SearchHistory> list = SearchHistoryProvider.getInstance().findLastest(limit);
         ArrayList<HistorySuggestion> results = new ArrayList<>();
-        for (SearchHistory tmp : list){
+        for (SearchHistory tmp : list) {
             HistorySuggestion suggestion = new HistorySuggestion(tmp.getContent());
             results.add(suggestion);
         }
         listener.onResults(results);
     }
 
-    public static void clickSuggestion(SearchSuggestion suggestion){
+    public static void clickSuggestion(SearchSuggestion suggestion) {
         SearchHistoryProvider.getInstance().queryHistory(suggestion.getBody());
     }
 
-    public static void addSuggestion(SearchSuggestion suggestion){
+    public static void addSuggestion(SearchSuggestion suggestion) {
         SearchHistory history = new SearchHistory();
         history.setContent(suggestion.getBody());
         history.setDate(DateUtil.getCurrentDate());

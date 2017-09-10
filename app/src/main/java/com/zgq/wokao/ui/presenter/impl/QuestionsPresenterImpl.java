@@ -22,20 +22,20 @@ public class QuestionsPresenterImpl implements IQuestionsPresenter {
 
     private ArrayList<QstData> qstLists;
 
-    private QuestionsPresenterImpl(){
+    private QuestionsPresenterImpl() {
 
     }
 
-    public QuestionsPresenterImpl(String paperId){
+    public QuestionsPresenterImpl(String paperId) {
         this.paperId = paperId;
-        Log.d("paperid",paperId);
+        Log.d("paperid", paperId);
         qstLists = ViewDataAction.getInstance().getQstData(PaperAction.getInstance().queryById(paperId));
     }
 
     @Override
     public ArrayList<QstData> getQstLists() {
-        if (qstLists == null){
-            Log.d(TAG,"null qstlist");
+        if (qstLists == null) {
+            Log.d(TAG, "null qstlist");
         }
         return qstLists;
     }

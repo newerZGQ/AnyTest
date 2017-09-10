@@ -8,11 +8,13 @@ import android.content.Context;
 
 public class ContextUtil {
     private static Context context;
-    public static void init(Context ct){
+
+    public static void init(Context ct) {
         context = ct;
     }
-    public static Context getContext(){
-        if (context != null){
+
+    public static Context getContext() {
+        if (context != null) {
             return context;
         }
         return null;

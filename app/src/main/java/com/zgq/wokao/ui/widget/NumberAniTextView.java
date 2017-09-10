@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 public class NumberAniTextView extends TextView {
     private Context context;
+
     public NumberAniTextView(Context context) {
         super(context);
     }
@@ -22,6 +23,7 @@ public class NumberAniTextView extends TextView {
     public NumberAniTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
+
     public void runInt(int start, int end, int duration) {
 
         ValueAnimator valueAnimator = ValueAnimator.ofInt((int) start,

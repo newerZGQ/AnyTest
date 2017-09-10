@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public interface IQuestionParser {
 
     public void setAdapter(QuestionType type);
+
     public ArrayList<IQuestion> parse(PaperParser.Topic resource);
 
 }

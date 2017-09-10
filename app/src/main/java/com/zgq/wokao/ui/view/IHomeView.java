@@ -8,12 +8,20 @@ import com.zgq.wokao.model.total.StudySummary;
 
 public interface IHomeView {
     void updateSlideUp();
+
     void goSearch();
+
     void showScheduleFragment();
+
     void showPapersFragment();
+
     void showQuestionsFragment(String paperId);
+
     void setSlideaMenuLayout(StudySummary studySummary);
+
     void setViewPagerScrollble(boolean scrollble);
+
     void hideToolBar();
+
     void showToolBar();
 }

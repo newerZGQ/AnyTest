@@ -12,11 +12,11 @@ public class DateUtil {
         return getFormatData("yyyy-MM-dd HH:mm:ss");
     }
 
-    public static String getYYYY_MM_DD(){
+    public static String getYYYY_MM_DD() {
         return getFormatData("yyyy-MM-dd");
     }
 
-    public static String getFormatData(String format){
+    public static String getFormatData(String format) {
         SimpleDateFormat formatter = new SimpleDateFormat(format);
         Date curDate = new Date(System.currentTimeMillis());//获取当前时间
         String str = formatter.format(curDate);
@@ -85,7 +85,7 @@ public class DateUtil {
         return display;
     }
 
-    public static long getMSDate(String date) throws ParseException{
+    public static long getMSDate(String date) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return sdf.parse(date).getTime();
     }

@@ -189,19 +189,19 @@ public class AnswerStudyActivity extends AppCompatActivity implements IStudyAnsw
     }
 
     //初始化监听器
-     private void initStudiedListener(){
-         onStudiedListener = new BaseViewPagerAdapter.OnStudiedListener() {
-             @Override
-             public void onFalse() {
-                 setQuestionStudyInfo(viewPager.getCurrentItem());
-             }
+    private void initStudiedListener() {
+        onStudiedListener = new BaseViewPagerAdapter.OnStudiedListener() {
+            @Override
+            public void onFalse() {
+                setQuestionStudyInfo(viewPager.getCurrentItem());
+            }
 
-             @Override
-             public void onCorrect() {
-                 setQuestionStudyInfo(viewPager.getCurrentItem());
-             }
-         };
-     }
+            @Override
+            public void onCorrect() {
+                setQuestionStudyInfo(viewPager.getCurrentItem());
+            }
+        };
+    }
 
     //初始化当前的问题
     private void initCurrentQuestionList() {
@@ -329,14 +329,14 @@ public class AnswerStudyActivity extends AppCompatActivity implements IStudyAnsw
         upDateBottomMenu(getCurrentQstAdapter().getCurrentPosition());
     }
 
-    private void setQuestionStudyInfo(int position){
+    private void setQuestionStudyInfo(int position) {
         if (currentMode == ALLQUESTIONMODE) {
-            Log.d(LogUtil.PREFIX,TAG +" " + currentAllQuestions.get(position).getRecord().getStudyNumber());
-            String info = "正确"+currentAllQuestions.get(position).getRecord().getCorrectNumber() + "/"
+            Log.d(LogUtil.PREFIX, TAG + " " + currentAllQuestions.get(position).getRecord().getStudyNumber());
+            String info = "正确" + currentAllQuestions.get(position).getRecord().getCorrectNumber() + "/"
                     + currentAllQuestions.get(position).getRecord().getStudyNumber();
             studyInfo.setText(info);
         } else {
-            String info = "正确"+currentStarQuestions.get(position).getRecord().getCorrectNumber() + "/"
+            String info = "正确" + currentStarQuestions.get(position).getRecord().getCorrectNumber() + "/"
                     + currentAllQuestions.get(position).getRecord().getStudyNumber();
             studyInfo.setText(info);
         }
@@ -483,11 +483,11 @@ public class AnswerStudyActivity extends AppCompatActivity implements IStudyAnsw
         updateLastStudyPosition();
     }
 
-    private void updateLastStudyPosition(){
+    private void updateLastStudyPosition() {
         int position = 0;
-        if (currentMode == ALLQUESTIONMODE){
+        if (currentMode == ALLQUESTIONMODE) {
             position = currentAllQstAdapter.getLastPosition();
-        }else if (currentMode == STARQUESTIONMODE) {
+        } else if (currentMode == STARQUESTIONMODE) {
             position = currentStarQstAdapter.getLastPosition();
         }
         PaperAction.getInstance().updateLastStudyPosition(normalExamPaper, currentQuestionType, position);
@@ -609,7 +609,7 @@ public class AnswerStudyActivity extends AppCompatActivity implements IStudyAnsw
         viewPager.setVisibility(View.INVISIBLE);
         bottomMenu.setVisibility(View.INVISIBLE);
 
-        switch (currentQuestionType){
+        switch (currentQuestionType) {
             case FILLIN:
                 if (editLayout == null) {
                     editStub = (ViewStub) findViewById(R.id.edit_fillin);
@@ -621,9 +621,9 @@ public class AnswerStudyActivity extends AppCompatActivity implements IStudyAnsw
                 EditText answer = (EditText) editLayout.findViewById(R.id.edit_fillin_answer);
                 FillInQuestion question = null;
                 int position = viewPager.getCurrentItem();
-                if (currentMode == ALLQUESTIONMODE){
+                if (currentMode == ALLQUESTIONMODE) {
                     question = (FillInQuestion) currentAllQuestions.get(position);
-                }else if (currentMode == STARQUESTIONMODE){
+                } else if (currentMode == STARQUESTIONMODE) {
                     question = (FillInQuestion) currentStarQuestions.get(position);
                 }
                 if (question == null) return;
@@ -645,12 +645,12 @@ public class AnswerStudyActivity extends AppCompatActivity implements IStudyAnsw
         bottomMenu.setVisibility(View.VISIBLE);
     }
 
-    private IQuestion getEditedQuestion(QuestionType type){
+    private IQuestion getEditedQuestion(QuestionType type) {
         IQuestion question = null;
-        switch (type){
+        switch (type) {
             case FILLIN:
-                String bodyStr = ((EditText)editLayout.findViewById(R.id.edit_fillin_body)).getText().toString();
-                String answerStr = ((EditText)editLayout.findViewById(R.id.edit_fillin_answer)).getText().toString();
+                String bodyStr = ((EditText) editLayout.findViewById(R.id.edit_fillin_body)).getText().toString();
+                String answerStr = ((EditText) editLayout.findViewById(R.id.edit_fillin_answer)).getText().toString();
                 FillInQuestion fillInQuestion = new FillInQuestion.Builder().build();
                 fillInQuestion.getBody().setContent(bodyStr);
                 fillInQuestion.getAnswer().setContent(answerStr);

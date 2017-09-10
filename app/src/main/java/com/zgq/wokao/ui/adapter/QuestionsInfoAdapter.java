@@ -19,26 +19,26 @@ import java.util.List;
 public class QuestionsInfoAdapter extends RecyclerView.Adapter {
     private List<QstData> qstDatas;
 
-    public QuestionsInfoAdapter(List<QstData> qstDatas){
+    public QuestionsInfoAdapter(List<QstData> qstDatas) {
         this.qstDatas = qstDatas;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).
-                inflate(R.layout.recyclerview_questions_item,null);
+                inflate(R.layout.recyclerview_questions_item, null);
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (position % 2 == 0){
-            ((MyViewHolder)holder).outLayout.setBackgroundColor(0x6CCF6E);
+        if (position % 2 == 0) {
+            ((MyViewHolder) holder).outLayout.setBackgroundColor(0x6CCF6E);
         }
 
-        ((MyViewHolder)holder).qstType.setText(qstDatas.get(position).getType().getName() + "题");
-        ((MyViewHolder)holder).qstInfo.
-                setText("共" + qstDatas.get(position).getQstCount()+
+        ((MyViewHolder) holder).qstType.setText(qstDatas.get(position).getType().getName() + "题");
+        ((MyViewHolder) holder).qstInfo.
+                setText("共" + qstDatas.get(position).getQstCount() +
                         "题，收藏" + qstDatas.get(position).getStarCount() + "题");
 
     }

@@ -9,10 +9,14 @@ import com.zgq.wokao.model.paper.QuestionType;
 
 public interface IPaperSchdlAction {
     void openSchedule(IExamPaper paper);
+
     void closeSchedule(IExamPaper paper);
-    void setDailyCount(IExamPaper paper,int count);
+
+    void setDailyCount(IExamPaper paper, int count);
+
     //每次答题后调用来更新学习记录
     void updateDailyRecord(IExamPaper paper);
+
     void updateLastStudyPosition(IExamPaper paper, QuestionType type, int position);
 
 }

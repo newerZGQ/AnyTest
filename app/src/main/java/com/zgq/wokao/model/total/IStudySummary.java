@@ -6,7 +6,10 @@ package com.zgq.wokao.model.total;
 
 public interface IStudySummary {
     public void studyCountPlus_1();
+
     public void correctCountPlus_1();
+
     public void updateDailyCount();
+
     public TotalDailyCount getCurrentDailyCount();
 }

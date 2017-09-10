@@ -8,5 +8,6 @@ import java.io.File;
 
 public interface Formater {
     public void params(Object... args);
+
     public String getContent();
 }

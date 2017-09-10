@@ -13,23 +13,25 @@ import java.io.OutputStream;
  * Created by zgq on 16-6-18.
  */
 public class FileUtil {
-    public static boolean isTxtFile(File file){
+    public static boolean isTxtFile(File file) {
         if (!isLegal(file)) return false;
         String name = file.getName();
         if (name.contains(".txt") || name.contains(".TXT")) return true;
         return false;
     }
-    public static boolean isXmlFile(File file){
+
+    public static boolean isXmlFile(File file) {
         if (!isLegal(file)) return false;
         String name = file.getName();
         if (name.contains(".xml") || name.contains(".XML")) return true;
         return false;
     }
-    private static boolean isLegal(File file){
-        return (file == null)?false:true;
+
+    private static boolean isLegal(File file) {
+        return (file == null) ? false : true;
     }
 
-    public static boolean SdcardMountedRight(){
+    public static boolean SdcardMountedRight() {
         String status = Environment.getExternalStorageState();
         if (status.equals(Environment.MEDIA_MOUNTED)) {
             return true;
@@ -38,35 +40,35 @@ public class FileUtil {
         }
     }
 
-    private static String getSdRootPath(){
+    private static String getSdRootPath() {
         String root = Environment.getExternalStorageDirectory().toString();
         return root;
     }
 
-    public static String getOrInitAppStoragePath(){
-        if (!SdcardMountedRight()){
+    public static String getOrInitAppStoragePath() {
+        if (!SdcardMountedRight()) {
             return null;
         }
         String root = getSdRootPath();
         String appPath = root + "/wokao";
         File file = new File(appPath);
-        if (!file.exists()){
+        if (!file.exists()) {
             file.mkdir();
         }
         return appPath;
     }
 
-    public static void transAssets2SD(String assetsFilePath, String sdFilePath){
+    public static void transAssets2SD(String assetsFilePath, String sdFilePath) {
         AssetManager am = ContextUtil.getContext().getAssets();
         try {
             InputStream inputStream = am.open(assetsFilePath);
-            createFileFromInputStream(sdFilePath,inputStream);
+            createFileFromInputStream(sdFilePath, inputStream);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static File createFileFromInputStream(String filePath,InputStream inputStream) {
+    public static File createFileFromInputStream(String filePath, InputStream inputStream) {
 
         try {
             File f = new File(filePath);

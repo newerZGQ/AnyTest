@@ -4,50 +4,50 @@ package com.zgq.wokao.parser.adapter;
  * Created by zgq on 2017/2/19.
  */
 
-public abstract class BaseAdapter implements IAdapter{
+public abstract class BaseAdapter implements IAdapter {
 
-    public boolean isStartWithNumber(String s){
+    public boolean isStartWithNumber(String s) {
         char[] chars = s.trim().toCharArray();
         int numberCount = 0;
         int index = 0;
-        for (char tmp: chars){
-            if (tmp>=48 && tmp<=57){
+        for (char tmp : chars) {
+            if (tmp >= 48 && tmp <= 57) {
                 numberCount++;
                 index++;
-            }else{
+            } else {
                 break;
             }
         }
-        if (numberCount == 0){
+        if (numberCount == 0) {
             return false;
         }
         return true;
     }
 
-    protected String trimNum(String s){
+    protected String trimNum(String s) {
         s = s.trim();
         char[] chars = s.toCharArray();
-        if (chars.length == 0){
+        if (chars.length == 0) {
             return s;
         }
-        if (chars[0]>=48 && chars[0]<=57 ) {
+        if (chars[0] >= 48 && chars[0] <= 57) {
             int index = 0;
             for (char tmp : chars) {
                 index++;
                 if ((int) tmp >= 48 && (int) tmp <= 57) {
                     continue;
-                }else {
+                } else {
                     break;
                 }
             }
-            s = s.substring(index-1).trim();
-            if (s.startsWith(".")){
+            s = s.substring(index - 1).trim();
+            if (s.startsWith(".")) {
                 s = s.substring(1);
             }
             return s.trim();
         }
 
-        if (s.startsWith("(") || s.startsWith("（")){
+        if (s.startsWith("(") || s.startsWith("（")) {
             String newS = s.substring(1);
             char[] chars2 = newS.toCharArray();
             int numberCount = 0;
@@ -57,17 +57,17 @@ public abstract class BaseAdapter implements IAdapter{
                 if ((int) tmp >= 48 && (int) tmp <= 57) {
                     numberCount++;
                     continue;
-                }else {
+                } else {
                     break;
                 }
             }
-            if (numberCount == 0){
+            if (numberCount == 0) {
                 return s.trim();
             }
             String newS2 = newS.substring(index);
-            if ((newS2.startsWith(")")|| newS2.startsWith("）")) && numberCount>0){
+            if ((newS2.startsWith(")") || newS2.startsWith("）")) && numberCount > 0) {
                 return newS2.substring(1).trim();
-            }else if (numberCount>0){
+            } else if (numberCount > 0) {
                 return newS2.trim();
             }
             return s.trim();
@@ -75,31 +75,31 @@ public abstract class BaseAdapter implements IAdapter{
         return s;
     }
 
-    protected boolean isQstNumber(String s){
-        if (isStartWithNumber(s)){
+    protected boolean isQstNumber(String s) {
+        if (isStartWithNumber(s)) {
             return true;
         }
         if (s.startsWith("(") ||
-                s.startsWith("（") ){
+                s.startsWith("（")) {
             s = s.substring(1);
-            if (isStartWithNumber(s)){
+            if (isStartWithNumber(s)) {
                 return true;
             }
         }
         return false;
     }
 
-    protected boolean startWithWord(String s){
+    protected boolean startWithWord(String s) {
         char[] chars = s.trim().toCharArray();
         int letterCount = 0;
-        for (char tmp: chars){
-            if ((tmp>=65 && tmp<=90) || (tmp>=97 &&tmp<=122)){
+        for (char tmp : chars) {
+            if ((tmp >= 65 && tmp <= 90) || (tmp >= 97 && tmp <= 122)) {
                 letterCount++;
-            }else{
+            } else {
                 break;
             }
         }
-        if (letterCount > 1){
+        if (letterCount > 1) {
             return true;
         }
         return false;

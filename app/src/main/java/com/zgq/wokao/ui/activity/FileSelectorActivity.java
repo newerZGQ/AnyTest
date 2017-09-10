@@ -18,7 +18,7 @@ import java.util.TimerTask;
  * Created by zgq on 2017/9/11.
  */
 
-public class FileSelectorActivity extends BaseActivity implements IFileSelectorView{
+public class FileSelectorActivity extends BaseActivity implements IFileSelectorView {
 
     FileSelectorPresenter presenter = new FileSelectorPresenter(this);
 
@@ -57,13 +57,13 @@ public class FileSelectorActivity extends BaseActivity implements IFileSelectorV
         startHomeActivity();
     }
 
-    private void showLoadingView(){
+    private void showLoadingView() {
         findViewById(R.id.loadView).setVisibility(View.VISIBLE);
     }
 
-    private void startHomeActivity(){
-        Timer timer =  new Timer();
-        timer.schedule(startHomeActivity,1000);
+    private void startHomeActivity() {
+        Timer timer = new Timer();
+        timer.schedule(startHomeActivity, 1000);
     }
 
     private TimerTask startHomeActivity = new TimerTask() {

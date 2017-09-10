@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PapersFragment extends BaseFragment implements IPapersView{
+public class PapersFragment extends BaseFragment implements IPapersView {
 
     private static final String TAG = "PapersFragment";
 
@@ -42,7 +42,8 @@ public class PapersFragment extends BaseFragment implements IPapersView{
 
     private PapersPresenter presenter = new PapersPresenter(this);
 
-    public PapersFragment() {}
+    public PapersFragment() {
+    }
 
     public static PapersFragment newInstance() {
         PapersFragment fragment = new PapersFragment();
@@ -57,8 +58,8 @@ public class PapersFragment extends BaseFragment implements IPapersView{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        rootView =  (FrameLayout) inflater.inflate(R.layout.fragment_papers, container, false);
-        ButterKnife.bind(this,rootView);
+        rootView = (FrameLayout) inflater.inflate(R.layout.fragment_papers, container, false);
+        ButterKnife.bind(this, rootView);
         initPaperList(presenter.getPaperInfos());
         checkPaperCount();
         return rootView;
@@ -106,7 +107,7 @@ public class PapersFragment extends BaseFragment implements IPapersView{
 
             @Override
             public void onDeleteClick(final int position, final IPaperInfo info) {
-                Snackbar.make(rootView,"确定要删除么",Snackbar.LENGTH_LONG).setAction("确定", new View.OnClickListener() {
+                Snackbar.make(rootView, "确定要删除么", Snackbar.LENGTH_LONG).setAction("确定", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         mListener.onPaperDeleted(info.getId());
@@ -118,7 +119,7 @@ public class PapersFragment extends BaseFragment implements IPapersView{
 
             @Override
             public void onExitClick(final int position, final IPaperInfo info) {
-                Snackbar.make(rootView,"确定退出学习该试卷么",Snackbar.LENGTH_LONG).setAction("确定", new View.OnClickListener() {
+                Snackbar.make(rootView, "确定退出学习该试卷么", Snackbar.LENGTH_LONG).setAction("确定", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         presenter.removeFromSchedule(info.getId());
@@ -130,7 +131,7 @@ public class PapersFragment extends BaseFragment implements IPapersView{
 
             @Override
             public void onStartClick(final int position, final IPaperInfo info) {
-                Snackbar.make(rootView,"确定开始学习么",Snackbar.LENGTH_LONG).setAction("确定", new View.OnClickListener() {
+                Snackbar.make(rootView, "确定开始学习么", Snackbar.LENGTH_LONG).setAction("确定", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         presenter.addToSchedule(info.getId());
@@ -143,10 +144,10 @@ public class PapersFragment extends BaseFragment implements IPapersView{
         paperList.setItemViewCacheSize(1);
     }
 
-    private void checkPaperCount(){
-        if (presenter.getPaperCount() == 0){
+    private void checkPaperCount() {
+        if (presenter.getPaperCount() == 0) {
             onEmptyPapers();
-        }else{
+        } else {
             onNoneEmptyPapers();
         }
     }
@@ -154,10 +155,10 @@ public class PapersFragment extends BaseFragment implements IPapersView{
     private void onEmptyPapers() {
         paperList.setVisibility(View.GONE);
         coverView.setVisibility(View.GONE);
-        if (noContentLayout == null){
+        if (noContentLayout == null) {
             noPaperStub.inflate();
             noContentLayout = (LinearLayout) rootView.findViewById(R.id.no_paper_layout);
-        }else{
+        } else {
             noContentLayout.setVisibility(View.VISIBLE);
         }
     }
@@ -165,20 +166,22 @@ public class PapersFragment extends BaseFragment implements IPapersView{
     private void onNoneEmptyPapers() {
         paperList.setVisibility(View.VISIBLE);
         coverView.setVisibility(View.VISIBLE);
-        if (noContentLayout != null){
+        if (noContentLayout != null) {
             noContentLayout.setVisibility(View.GONE);
         }
     }
 
-    private void updateList(){
-        ((HomePaperAdapter)paperList.getAdapter()).setData(presenter.getPaperInfos());
+    private void updateList() {
+        ((HomePaperAdapter) paperList.getAdapter()).setData(presenter.getPaperInfos());
         paperList.getAdapter().notifyDataSetChanged();
         checkPaperCount();
     }
 
     public interface PaperFragmentListener {
         void onPaperDeleted(String paperId);
+
         void onPaperExitSchedule(String paperId);
+
         void onPaperInSchedule(String paperId);
     }
 

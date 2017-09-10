@@ -59,9 +59,9 @@ public class TFAdapter extends BaseAdapter implements ITFAdapter {
             if (isQstNumber(tmp)) {
                 //把上一次循环的题干和答案提取出来
                 bodyString = builder.toString();
-                if (bodyString.equals("")){
+                if (bodyString.equals("")) {
 
-                }else{
+                } else {
                     TFQuestion question = parseSingle(number, bodyString);
                     if (question != null) {
                         results.add(question);

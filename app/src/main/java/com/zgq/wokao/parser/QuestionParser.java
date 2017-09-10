@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * Created by zgq on 2017/2/19.
  */
 
-public class QuestionParser extends BaseParser implements IQuestionParser{
+public class QuestionParser extends BaseParser implements IQuestionParser {
 
     private QuestionType type;
     private IAdapter adapter;
@@ -24,7 +24,7 @@ public class QuestionParser extends BaseParser implements IQuestionParser{
 
     @Override
     public void setAdapter(QuestionType type) {
-        switch (type){
+        switch (type) {
             case FILLIN:
                 adapter = new FillInAdapter();
                 break;
@@ -47,7 +47,7 @@ public class QuestionParser extends BaseParser implements IQuestionParser{
 
     @Override
     public ArrayList<IQuestion> parse(PaperParser.Topic resource) {
-        results =  adapter.parse(resource.getContent());
-        return  results;
+        results = adapter.parse(resource.getContent());
+        return results;
     }
 }

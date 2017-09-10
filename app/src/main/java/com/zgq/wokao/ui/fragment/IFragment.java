@@ -9,5 +9,6 @@ import android.view.LayoutInflater;
 
 public interface IFragment {
     public void setContext(Context context);
+
     public LayoutInflater getInflater();
 }

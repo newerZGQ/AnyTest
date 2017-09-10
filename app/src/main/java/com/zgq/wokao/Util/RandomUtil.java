@@ -7,10 +7,10 @@ import java.util.Random;
  */
 
 public class RandomUtil {
-    public static int getRandom(int start, int end){
+    public static int getRandom(int start, int end) {
         Random random = new Random();
         if (start >= end) return 0;
-        int tmp = (int)(random.nextFloat()*(end - start));
+        int tmp = (int) (random.nextFloat() * (end - start));
         return tmp + start;
     }
 }

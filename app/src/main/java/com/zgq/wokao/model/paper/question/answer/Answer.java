@@ -8,7 +8,7 @@ import io.realm.RealmObject;
  * Created by zgq on 2017/2/27.
  */
 
-public class Answer extends RealmObject implements IAnswer , CascadeDeleteable{
+public class Answer extends RealmObject implements IAnswer, CascadeDeleteable {
     private String content;
 
     @Override
@@ -23,7 +23,7 @@ public class Answer extends RealmObject implements IAnswer , CascadeDeleteable{
 
     @Override
     public boolean hasAnswer() {
-        if (content == null || content.equals("")){
+        if (content == null || content.equals("")) {
             return false;
         }
         return true;

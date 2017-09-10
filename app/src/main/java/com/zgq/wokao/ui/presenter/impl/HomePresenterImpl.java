@@ -24,29 +24,33 @@ import io.realm.RealmList;
  * Created by zgq on 2017/3/4.
  */
 
-public class HomePresenterImpl implements IHomePrerenter{
+public class HomePresenterImpl implements IHomePrerenter {
 
     private IHomeView homeView;
     private StudySummaryAction summaryAction = StudySummaryAction.getInstance();
     private StudySummary studySummary = summaryAction.getStudySummary();
-    public HomePresenterImpl(IHomeView homeView){
+
+    public HomePresenterImpl(IHomeView homeView) {
         this.homeView = homeView;
     }
 
-    public void setSlideaMenuLayout(StudySummary studySummary){
+    public void setSlideaMenuLayout(StudySummary studySummary) {
 
     }
 
-    public void updateSlideUp(){
+    public void updateSlideUp() {
         homeView.updateSlideUp();
     }
-    public void goSearch(){
+
+    public void goSearch() {
         homeView.goSearch();
     }
-    public void showScheduleFragment(){
+
+    public void showScheduleFragment() {
         homeView.showScheduleFragment();
     }
-    public void showPapersFragment(){
+
+    public void showPapersFragment() {
         homeView.showPapersFragment();
     }
 
@@ -65,9 +69,9 @@ public class HomePresenterImpl implements IHomePrerenter{
         int count = 0;
         String dateTmp = "";
         String dateReal = DateUtil.getFormatData("yyyy-MM-dd");
-        for (int i = list.size()-1; i< list.size(); i--){
+        for (int i = list.size() - 1; i < list.size(); i--) {
             dateTmp = list.get(i).getDate();
-            if (dateReal.equals(dateTmp)){
+            if (dateReal.equals(dateTmp)) {
                 data.add(list.get(i));
             }
         }

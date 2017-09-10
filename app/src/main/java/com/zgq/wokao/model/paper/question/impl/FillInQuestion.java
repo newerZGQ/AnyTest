@@ -14,7 +14,7 @@ import io.realm.RealmObject;
 /**
  * Created by zgq on 16-6-18.
  */
-public class FillInQuestion extends RealmObject implements IQuestion ,CascadeDeleteable{
+public class FillInQuestion extends RealmObject implements IQuestion, CascadeDeleteable {
     private QuestionBody body;
     private Answer answer;
     private QuestionInfo info;
@@ -28,20 +28,21 @@ public class FillInQuestion extends RealmObject implements IQuestion ,CascadeDel
         this.answer = builder.answer;
         this.info = builder.info;
         this.record = builder.record;
-        if (this.body == null){
+        if (this.body == null) {
             this.body = new QuestionBody();
         }
-        if (this.answer == null){
+        if (this.answer == null) {
             this.answer = new Answer();
         }
-        if (this.info == null){
+        if (this.info == null) {
             this.info = new QuestionInfo(QuestionType.FILLIN);
         }
-        if (this.record == null){
+        if (this.record == null) {
             this.record = new QuestionRecord();
         }
 
     }
+
     @Override
     public Options getOptions() {
         return null;
@@ -81,7 +82,7 @@ public class FillInQuestion extends RealmObject implements IQuestion ,CascadeDel
 
     @Override
     public String toString() {
-        return info.getQstId()+" "+info.getType()+" "+body.getContent()+" "+answer.getContent();
+        return info.getQstId() + " " + info.getType() + " " + body.getContent() + " " + answer.getContent();
     }
 
     @Override
@@ -93,29 +94,33 @@ public class FillInQuestion extends RealmObject implements IQuestion ,CascadeDel
         deleteFromRealm();
     }
 
-    public static class Builder{
+    public static class Builder {
         private QuestionBody body;
         private Answer answer;
         private QuestionInfo info;
         private QuestionRecord record;
-        public Builder body(QuestionBody body){
+
+        public Builder body(QuestionBody body) {
             this.body = body;
             return this;
         }
-        public Builder answer(Answer answer){
+
+        public Builder answer(Answer answer) {
             this.answer = answer;
             return this;
         }
-        public Builder info(QuestionInfo info){
+
+        public Builder info(QuestionInfo info) {
             this.info = info;
             return this;
         }
-        public Builder record(QuestionRecord record){
+
+        public Builder record(QuestionRecord record) {
             this.record = record;
             return this;
         }
 
-        public FillInQuestion build(){
+        public FillInQuestion build() {
             return new FillInQuestion(this);
         }
     }

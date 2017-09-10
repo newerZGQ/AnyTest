@@ -17,18 +17,20 @@ import io.realm.Realm;
  * Created by zgq on 2017/3/19.
  */
 
-public class QuestionDaoImpl extends BaseRealmProvider<QuestionInfo> implements IQuestionDao{
+public class QuestionDaoImpl extends BaseRealmProvider<QuestionInfo> implements IQuestionDao {
     Realm realm = Realm.getDefaultInstance();
-    private QuestionDaoImpl(){}
+
+    private QuestionDaoImpl() {
+    }
 
     @Override
     public void updateQuestion(String questionId, IQuestion question) {
-        IQuestion destQuestion = queryQuestionById(questionId,question.getInfo().getType());
-        if (destQuestion == null){
+        IQuestion destQuestion = queryQuestionById(questionId, question.getInfo().getType());
+        if (destQuestion == null) {
             return;
         }
         realm.beginTransaction();
-        switch (question.getInfo().getType()){
+        switch (question.getInfo().getType()) {
             case FILLIN:
                 FillInQuestion fillin = (FillInQuestion) destQuestion;
                 fillin.getBody().setContent(question.getBody().getContent());
@@ -67,7 +69,7 @@ public class QuestionDaoImpl extends BaseRealmProvider<QuestionInfo> implements 
 
     @Override
     public IQuestion queryQuestionById(String questionId, QuestionType type) {
-        switch (type){
+        switch (type) {
             case FILLIN:
                 FillInQuestion fillin = realm
                         .where(FillInQuestion.class)
@@ -77,25 +79,25 @@ public class QuestionDaoImpl extends BaseRealmProvider<QuestionInfo> implements 
             case TF:
                 TFQuestion tfQuestion = realm
                         .where(TFQuestion.class)
-                        .equalTo("info.id",questionId)
+                        .equalTo("info.id", questionId)
                         .findFirst();
                 return tfQuestion;
             case SINGLECHOOSE:
                 SglChoQuestion sglChoQuestion = realm
                         .where(SglChoQuestion.class)
-                        .equalTo("info.id",questionId)
+                        .equalTo("info.id", questionId)
                         .findFirst();
                 return sglChoQuestion;
             case MUTTICHOOSE:
                 MultChoQuestion multChoQuestion = realm
                         .where(MultChoQuestion.class)
-                        .equalTo("info.id",questionId)
+                        .equalTo("info.id", questionId)
                         .findFirst();
                 return multChoQuestion;
             case DISCUSS:
                 DiscussQuestion discussQuestion = realm
                         .where(DiscussQuestion.class)
-                        .equalTo("info.id",questionId)
+                        .equalTo("info.id", questionId)
                         .findFirst();
                 return discussQuestion;
             default:
@@ -105,13 +107,14 @@ public class QuestionDaoImpl extends BaseRealmProvider<QuestionInfo> implements 
         return null;
     }
 
-    public static class InstanceHolder{
+    public static class InstanceHolder {
         public static QuestionDaoImpl instance = new QuestionDaoImpl();
     }
 
-    public static QuestionDaoImpl getInstance(){
+    public static QuestionDaoImpl getInstance() {
         return InstanceHolder.instance;
     }
+
     @Override
     public synchronized void star(final IQuestion question) {
         realm.beginTransaction();

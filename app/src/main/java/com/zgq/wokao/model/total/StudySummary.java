@@ -9,7 +9,7 @@ import io.realm.RealmObject;
  * Created by zhangguoqiang on 2017/4/9.
  */
 
-public class StudySummary extends RealmObject implements IStudySummary{
+public class StudySummary extends RealmObject implements IStudySummary {
     private int studyCount;
     private int correctCount;
     private RealmList<TotalDailyCount> dailyCountRecords = new RealmList<>();
@@ -50,7 +50,7 @@ public class StudySummary extends RealmObject implements IStudySummary{
 
     @Override
     public void updateDailyCount() {
-        getCurrentDailyCount().setDailyCount(getCurrentDailyCount().getDailyCount()+1);
+        getCurrentDailyCount().setDailyCount(getCurrentDailyCount().getDailyCount() + 1);
     }
 
     private void addRecord() {
@@ -61,6 +61,7 @@ public class StudySummary extends RealmObject implements IStudySummary{
         dailyCount.setDailyCount(0);
         dailyCount.setDate(DateUtil.getFormatData("yyyy-MM-dd"));
     }
+
     @Override
     public TotalDailyCount getCurrentDailyCount() {
         if (!lastRecordIsCurrent() || dailyCountRecords.size() == 0) {

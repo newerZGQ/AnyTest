@@ -45,36 +45,36 @@ public class ParserAction implements IParserAction {
     private ParseBroadcastReceiver receiver;
     private ParserService parserService;
 
-    private ParserAction(){
+    private ParserAction() {
         init();
     }
 
-    public static class InstanceHolder{
+    public static class InstanceHolder {
         public static ParserAction instance = new ParserAction();
     }
 
 
-    public static ParserAction getInstance(ParseResultListener listener){
+    public static ParserAction getInstance(ParseResultListener listener) {
         InstanceHolder.instance.setListener(listener);
         return InstanceHolder.instance;
     }
 
-    private void setListener(ParseResultListener listener){
+    private void setListener(ParseResultListener listener) {
         this.listener = listener;
     }
 
-    private void init(){
+    private void init() {
         context = ContextUtil.getContext();
     }
 
-    private void registerReceiver(){
+    private void registerReceiver() {
         receiver = new ParseBroadcastReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction("parse_action");
-        context.registerReceiver(receiver,filter);
+        context.registerReceiver(receiver, filter);
     }
 
-    private void unRegisterReceiver(){
+    private void unRegisterReceiver() {
         context.unregisterReceiver(receiver);
     }
 
@@ -90,13 +90,14 @@ public class ParserAction implements IParserAction {
 
         }
     };
+
     @Override
     public IExamPaper parseFromFile(String fileString) throws ParseException {
         registerReceiver();
         if (listener == null) return null;
         Intent intent = new Intent(context, ParserService.class);
-        intent.putExtra("filePath",fileString);
-        context.bindService(intent,mServiceConnection, context.BIND_AUTO_CREATE);
+        intent.putExtra("filePath", fileString);
+        context.bindService(intent, mServiceConnection, context.BIND_AUTO_CREATE);
         return null;
     }
 
@@ -118,10 +119,10 @@ public class ParserAction implements IParserAction {
             String action = intent.getAction();
             String result = intent.getStringExtra("parse_result");
             String paperId = intent.getStringExtra("paperId");
-            if (action != null && result != null && action.equals("parse_action") && result.equals("success")){
+            if (action != null && result != null && action.equals("parse_action") && result.equals("success")) {
                 PaperAction.getInstance().addToSchedule(paperId);
                 listener.onParseSuccess(paperId);
-            }else{
+            } else {
                 listener.onParseError("parse error");
             }
             unRegisterReceiver();
@@ -129,8 +130,9 @@ public class ParserAction implements IParserAction {
         }
     }
 
-    public interface ParseResultListener{
+    public interface ParseResultListener {
         public void onParseSuccess(String paperId);
+
         public void onParseError(String error);
     }
 }

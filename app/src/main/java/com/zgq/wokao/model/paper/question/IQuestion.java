@@ -11,9 +11,13 @@ import com.zgq.wokao.model.paper.question.record.QuestionRecord;
  */
 public interface IQuestion {
     public QuestionBody getBody();
+
     public QuestionInfo getInfo();
+
     public Answer getAnswer();
+
     public Options getOptions();
+
     public QuestionRecord getRecord();
 
 }

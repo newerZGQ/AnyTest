@@ -42,19 +42,19 @@ public class ParserService extends Service {
         super.onDestroy();
     }
 
-    public class MyBinder extends Binder{
-        public ParserService getParserService(){
+    public class MyBinder extends Binder {
+        public ParserService getParserService() {
             return ParserService.this;
         }
     }
 
-    public void parsePaper(String filePath){
+    public void parsePaper(String filePath) {
         ParserThread thread = new ParserThread(filePath);
         thread.setListener(new ParserThread.OnCompletedListener() {
             @Override
             public void onCompleted(final NormalExamPaper paper) {
-                if (paper == null){
-                    Log.d("---->>paper null","");
+                if (paper == null) {
+                    Log.d("---->>paper null", "");
                     return;
                 }
 
@@ -67,8 +67,8 @@ public class ParserService extends Service {
                 });
                 Intent intent = new Intent();
                 intent.setAction("parse_action");
-                intent.putExtra("parse_result","success");
-                intent.putExtra("paperId",paper.getPaperInfo().getId());
+                intent.putExtra("parse_result", "success");
+                intent.putExtra("paperId", paper.getPaperInfo().getId());
                 sendBroadcast(intent);
             }
         });

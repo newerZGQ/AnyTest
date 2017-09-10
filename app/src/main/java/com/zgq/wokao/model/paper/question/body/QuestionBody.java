@@ -8,7 +8,7 @@ import io.realm.RealmObject;
  * Created by zgq on 2017/2/27.
  */
 
-public class QuestionBody extends RealmObject implements IQuestionBody ,CascadeDeleteable{
+public class QuestionBody extends RealmObject implements IQuestionBody, CascadeDeleteable {
     private String content;
 
     @Override

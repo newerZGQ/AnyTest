@@ -6,5 +6,6 @@ package com.zgq.wokao.ui.adapter;
 
 public interface IAnswerListener {
     public void onCorrect(String questionId);
+
     public void onFailed(String questionId);
 }

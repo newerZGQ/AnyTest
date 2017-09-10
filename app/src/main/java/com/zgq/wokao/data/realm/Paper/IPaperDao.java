@@ -11,11 +11,16 @@ import java.util.List;
  * Created by zgq on 2017/2/11.
  */
 
-public interface IPaperDao extends IPaperInfoDao,IPaperSchdlDao{
+public interface IPaperDao extends IPaperInfoDao, IPaperSchdlDao {
     public List<NormalExamPaper> getAllPaper();
+
     public List<NormalExamPaper> getAllPaperInSchdl();
+
     public List<Searchable> search(String query);
+
     public List<ExamPaperInfo> getSchedulePapers();
+
     public void deleteById(String id);
+
     public void updateStudyInfo(IExamPaper paper, boolean isCorrect);
 }

@@ -6,10 +6,13 @@ import io.realm.RealmObject;
  * Created by zhangguoqiang on 2017/4/9.
  */
 
-public class TotalDailyCount extends RealmObject{
+public class TotalDailyCount extends RealmObject {
     private int dailyCount;
     private String date;
-    public TotalDailyCount(){}
+
+    public TotalDailyCount() {
+    }
+
     public TotalDailyCount(int dailyCount) {
         this.dailyCount = dailyCount;
     }

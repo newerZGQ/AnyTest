@@ -8,5 +8,6 @@ import java.io.File;
 
 public interface IPDFFormater {
     public boolean fileAvailable(File file);
+
     public String getContent(String filePath);
 }

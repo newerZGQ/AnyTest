@@ -10,8 +10,12 @@ import java.util.ArrayList;
 
 public interface IPapersPresenter {
     void deletePaper(String paperId);
+
     void addToSchedule(String paperId);
+
     void removeFromSchedule(String paperId);
+
     int getPaperCount();
+
     ArrayList<IPaperInfo> getPaperInfos();
 }

@@ -37,7 +37,7 @@ public class DataXml2ObjParser {
         return dataXml2ObjParser;
     }
 
-    public NormalExamPaper parse(File xmlFile) throws Exception,ParseException {
+    public NormalExamPaper parse(File xmlFile) throws Exception, ParseException {
 
         if (!xmlFile.exists() || xmlFile == null) return null;
 
@@ -255,8 +255,8 @@ public class DataXml2ObjParser {
         return discussQuestion;
     }
 
-    private QuestionType changeIntToType(String type){
-        switch (type){
+    private QuestionType changeIntToType(String type) {
+        switch (type) {
             case "fill_in_question":
                 return QuestionType.FILLIN;
             case "tf_question":

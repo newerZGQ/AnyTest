@@ -13,7 +13,9 @@ import io.realm.RealmList;
 
 public interface IPaperInfo {
     public String getId();
+
     public ISchedule getSchedule();
+
     public void setInSchedule(boolean inInSchedule);
 
     public String getTitle();

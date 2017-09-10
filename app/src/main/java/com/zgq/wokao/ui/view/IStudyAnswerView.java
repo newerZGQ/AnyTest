@@ -6,5 +6,6 @@ package com.zgq.wokao.ui.view;
 
 public interface IStudyAnswerView {
     public void startEditMode();
+
     public void stopEditMode();
 }

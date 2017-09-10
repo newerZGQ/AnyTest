@@ -59,9 +59,9 @@ public class DiscussAdapter extends BaseAdapter implements IDiscussAdapter {
             if (isQstNumber(tmp)) {
                 //把上一次循环的题干和答案提取出来
                 bodyString = builder.toString();
-                if (bodyString.equals("")){
+                if (bodyString.equals("")) {
 
-                }else{
+                } else {
                     DiscussQuestion question = parseSingle(number, bodyString);
                     if (question != null) {
                         results.add(question);

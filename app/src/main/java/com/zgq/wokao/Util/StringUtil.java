@@ -8,21 +8,24 @@ import android.content.Context;
 
 public class StringUtil {
     private static Context context;
-    public static void init(Context _context){
+
+    public static void init(Context _context) {
         context = _context;
     }
-    public static String getResString(int id){
+
+    public static String getResString(int id) {
         if (!checkParams()) return null;
         return context.getResources().getString(id);
     }
-    public static boolean checkParams(){
-        if (context == null){
+
+    public static boolean checkParams() {
+        if (context == null) {
             return false;
         }
         return true;
     }
 
-    public static String char2String(char c){
+    public static String char2String(char c) {
         char[] chars = new char[1];
         chars[0] = c;
         return new String(chars);

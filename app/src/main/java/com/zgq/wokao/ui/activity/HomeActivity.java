@@ -168,7 +168,7 @@ public class HomeActivity extends BaseActivity implements
                 .build();
     }
 
-    private void initFragments(){
+    private void initFragments() {
         scheduleFragment = ScheduleFragment.newInstance("", "");
         papersFragment = PapersFragment.newInstance();
     }
@@ -238,13 +238,13 @@ public class HomeActivity extends BaseActivity implements
         parseBtn.setOnClickListener(this);
     }
 
-    private void initContent(){
+    private void initContent() {
         StudySummary studySummary = StudySummaryAction.getInstance().getStudySummary();
-        totalCount.setText(""+studySummary.getStudyCount());
+        totalCount.setText("" + studySummary.getStudyCount());
         String accuracy = "0";
-        if (studySummary.getStudyCount() != 0){
-            accuracy = String.valueOf(studySummary.getCorrectCount()/studySummary.getStudyCount());
-        }else{
+        if (studySummary.getStudyCount() != 0) {
+            accuracy = String.valueOf(studySummary.getCorrectCount() / studySummary.getStudyCount());
+        } else {
             accuracy = "未学习";
         }
         totalAccuracy.setText(accuracy);
@@ -304,7 +304,7 @@ public class HomeActivity extends BaseActivity implements
     public void showQuestionsFragment(String paperId) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         questionsFragment = QuestionsFragment.newInstance(paperId);
-        transaction.replace(R.id.questions_frag_2,questionsFragment);
+        transaction.replace(R.id.questions_frag_2, questionsFragment);
         transaction.addToBackStack(null);
         transaction.commit();
         hideToolBar();
@@ -320,6 +320,7 @@ public class HomeActivity extends BaseActivity implements
                 homePresenter.goSearch();
                 break;
             case R.id.toolbar_add:
+                finish();
                 openActivity(FileSelectorActivity.class);
                 break;
             default:

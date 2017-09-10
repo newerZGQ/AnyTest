@@ -13,7 +13,7 @@ import com.zgq.wokao.ui.view.IFileSelectorView;
 public class FileSelectorPresenter implements IFileSelectorPresenter {
     private IFileSelectorView selectorView;
 
-    public FileSelectorPresenter(IFileSelectorView selectorView){
+    public FileSelectorPresenter(IFileSelectorView selectorView) {
         this.selectorView = selectorView;
     }
 
@@ -25,6 +25,7 @@ public class FileSelectorPresenter implements IFileSelectorPresenter {
                 public void onParseSuccess(String paperId) {
                     selectorView.notifyParseSuccess();
                 }
+
                 @Override
                 public void onParseError(String error) {
                     selectorView.notifyParseFailed();

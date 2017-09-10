@@ -15,17 +15,19 @@ import io.realm.RealmResults;
 
 public class StudySummaryDaoImpl extends BaseRealmProvider<StudySummary> implements IStudySummaryDao {
     Realm realm = Realm.getDefaultInstance();
-    private StudySummaryDaoImpl(){
+
+    private StudySummaryDaoImpl() {
         setClass(StudySummary.class);
     }
 
-    public static StudySummaryDaoImpl getInstance(){
+    public static StudySummaryDaoImpl getInstance() {
         return InstanceHolder.instance;
     }
 
-    public static class InstanceHolder{
+    public static class InstanceHolder {
         public static StudySummaryDaoImpl instance = new StudySummaryDaoImpl();
     }
+
     //override delete避免被删除
     @Override
     public void delete(StudySummary entity) {
@@ -44,7 +46,7 @@ public class StudySummaryDaoImpl extends BaseRealmProvider<StudySummary> impleme
         realm.beginTransaction();
         studySummary.studyCountPlus_1();
         studySummary.updateDailyCount();
-        if (correct){
+        if (correct) {
             studySummary.correctCountPlus_1();
         }
         realm.commitTransaction();

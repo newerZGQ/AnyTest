@@ -13,25 +13,26 @@ import java.io.FileNotFoundException;
  * Created by zgq on 2017/2/9.
  */
 
-public class MSDocFormater extends BaseFormater implements IMSDocFormater{
+public class MSDocFormater extends BaseFormater implements IMSDocFormater {
 
     public static final String TAG = "MSDocFormater";
     private String doc;
 
-    private MSDocFormater(){}
+    private MSDocFormater() {
+    }
 
-    private static class InstanceHolder{
+    private static class InstanceHolder {
         private static MSDocFormater msDocFormater = new MSDocFormater();
     }
 
-    public static MSDocFormater getInstance(){
+    public static MSDocFormater getInstance() {
         return InstanceHolder.msDocFormater;
     }
 
 
     @Override
     public void params(Object... args) {
-        if (args[0] instanceof String){
+        if (args[0] instanceof String) {
             doc = args[0].toString();
         }
     }
@@ -39,7 +40,7 @@ public class MSDocFormater extends BaseFormater implements IMSDocFormater{
     @Override
     public String getContent() {
         File docFile = new File(doc);
-        if (!fileAvailable(docFile)){
+        if (!fileAvailable(docFile)) {
             return null;
         }
         return getDocContent(docFile);
@@ -47,7 +48,7 @@ public class MSDocFormater extends BaseFormater implements IMSDocFormater{
 
     @Override
     public boolean fileAvailable(File file) {
-        if (file.getName().endsWith(".doc") || file.getName().endsWith(".docx")){
+        if (file.getName().endsWith(".doc") || file.getName().endsWith(".docx")) {
             return true;
         }
         return false;
@@ -59,7 +60,7 @@ public class MSDocFormater extends BaseFormater implements IMSDocFormater{
         return getContent();
     }
 
-    private String getDocContent(File file){
+    private String getDocContent(File file) {
         // 创建输入流读取doc文件
         FileInputStream in = null;
         try {

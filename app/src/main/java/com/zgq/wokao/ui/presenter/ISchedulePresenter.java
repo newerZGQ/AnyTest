@@ -11,10 +11,16 @@ import java.util.ArrayList;
 
 public interface ISchedulePresenter {
     ArrayList<ScheduleData> getScheduleDatas();
+
     void updateDatas();
+
     ScheduleData getScheduleInfo(int position);
+
     int getPaperCount();
+
     void setDailyCount(int position, int count);
+
     QuestionType getLastStudyType(String paperId);
+
     int getLastStudyPos(String paperId);
 }

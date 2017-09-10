@@ -26,11 +26,11 @@ public class SchedulePresenter implements ISchedulePresenter {
     private ArrayList<ScheduleData> scheduleDatas = new ArrayList<>();
     private ArrayList<ArrayList<QstData>> qstDatasList = new ArrayList<>();
 
-    public SchedulePresenter(IScheduleView scheduleView, Context context){
+    public SchedulePresenter(IScheduleView scheduleView, Context context) {
         getData();
     }
 
-    private void getData(){
+    private void getData() {
         schedulePapers.clear();
         schedulePapers = getSchedulePaper();
 
@@ -41,26 +41,30 @@ public class SchedulePresenter implements ISchedulePresenter {
         qstDatasList = getQstData(schedulePapers);
     }
 
-    private ArrayList<IExamPaper> getSchedulePaper(){
+    private ArrayList<IExamPaper> getSchedulePaper() {
         return (ArrayList) paperAction.getAllPaperInSchdl();
     }
-    private ArrayList<ScheduleData> getScheduleData(ArrayList<IExamPaper> papers){
+
+    private ArrayList<ScheduleData> getScheduleData(ArrayList<IExamPaper> papers) {
         ArrayList<ScheduleData> results = new ArrayList<>();
-        for (IExamPaper paper: papers){
+        for (IExamPaper paper : papers) {
             results.add(ScheduleData.Formator.format(paper));
         }
         return results;
     }
-    private ArrayList<ArrayList<QstData>> getQstData(ArrayList<IExamPaper> papers){
+
+    private ArrayList<ArrayList<QstData>> getQstData(ArrayList<IExamPaper> papers) {
         ArrayList<ArrayList<QstData>> results = new ArrayList<>();
-        for (IExamPaper paper: papers){
+        for (IExamPaper paper : papers) {
             results.add(ViewDataAction.getInstance().getQstData(paper));
         }
         return results;
     }
 
     @Override
-    public @NonNull ArrayList<ScheduleData> getScheduleDatas(){
+    public
+    @NonNull
+    ArrayList<ScheduleData> getScheduleDatas() {
         return scheduleDatas;
     }
 
@@ -71,7 +75,7 @@ public class SchedulePresenter implements ISchedulePresenter {
 
     @Override
     public ScheduleData getScheduleInfo(int position) {
-        if (position > scheduleDatas.size()-1) return null;
+        if (position > scheduleDatas.size() - 1) return null;
         return scheduleDatas.get(position);
     }
 
@@ -83,14 +87,14 @@ public class SchedulePresenter implements ISchedulePresenter {
     @Override
     public void setDailyCount(int position, int count) {
         String paperId = schedulePapers.get(position).getPaperInfo().getId();
-        paperAction.setDailyCount(paperAction.queryById(paperId),count);
+        paperAction.setDailyCount(paperAction.queryById(paperId), count);
         schedulePapers = getSchedulePaper();
         scheduleDatas = getScheduleData(schedulePapers);
     }
 
     @Override
     public QuestionType getLastStudyType(String paperId) {
-        QuestionType  type = QuestionType.valueOf(paperAction.queryById(paperId).getPaperInfo().getSchedule().getLastStudyType());
+        QuestionType type = QuestionType.valueOf(paperAction.queryById(paperId).getPaperInfo().getSchedule().getLastStudyType());
         return type;
     }
 

@@ -18,13 +18,16 @@ import io.realm.Sort;
 
 public class SearchHistoryProvider extends BaseRealmProvider<SearchHistory> implements ISearchHistoryProvider {
     private Realm realm = Realm.getDefaultInstance();
-    private SearchHistoryProvider(){
+
+    private SearchHistoryProvider() {
         setClass(SearchHistory.class);
     }
-    private static class InstanceHolder{
+
+    private static class InstanceHolder {
         private static SearchHistoryProvider instance = new SearchHistoryProvider();
     }
-    public static SearchHistoryProvider getInstance(){
+
+    public static SearchHistoryProvider getInstance() {
         return InstanceHolder.instance;
     }
 
@@ -34,9 +37,9 @@ public class SearchHistoryProvider extends BaseRealmProvider<SearchHistory> impl
             return;
         }
         RealmResults<SearchHistory> list = realm.where(SearchHistory.class).equalTo("content", entity.getContent()).findAll();
-        if (list.size() == 0){
+        if (list.size() == 0) {
             super.save(entity);
-        }else{
+        } else {
             queryHistory(entity.getContent());
         }
 
@@ -46,14 +49,14 @@ public class SearchHistoryProvider extends BaseRealmProvider<SearchHistory> impl
     @Override
     public void update(SearchHistory entity) {
         entity.setDate(DateUtil.getCurrentDate());
-        entity.setCount(entity.getCount()+1);
+        entity.setCount(entity.getCount() + 1);
         super.update(entity);
     }
 
     @Override
     public SearchHistory query(String content) {
-        RealmResults<SearchHistory> results = realm.where(SearchHistory.class).equalTo("content",content).findAll();
-        if (results.size() == 0){
+        RealmResults<SearchHistory> results = realm.where(SearchHistory.class).equalTo("content", content).findAll();
+        if (results.size() == 0) {
             return null;
         }
         return results.get(0);
@@ -62,28 +65,28 @@ public class SearchHistoryProvider extends BaseRealmProvider<SearchHistory> impl
     /**
      * @param content
      */
-    public void queryHistory(String content){
+    public void queryHistory(String content) {
         realm.beginTransaction();
         SearchHistory history = query(content);
         history.setDate(DateUtil.getCurrentDate());
-        history.setCount(history.getCount()+1);
+        history.setCount(history.getCount() + 1);
         realm.commitTransaction();
     }
 
     @Override
     public List<SearchHistory> findRelative(String query, Integer limit) {
         RealmResults<SearchHistory> realmResults = realm.where(SearchHistory.class).
-                contains("content",query).
+                contains("content", query).
                 findAll().
                 sort("count", Sort.DESCENDING);
         ArrayList<SearchHistory> results = new ArrayList<>();
-        if (limit == null){
+        if (limit == null) {
             limit = 20;
         }
-        if (limit == 0 ) {
+        if (limit == 0) {
             return results;
         }
-        for (int i = 0; i<realmResults.size() ; i++) {
+        for (int i = 0; i < realmResults.size(); i++) {
             if (i == limit) {
                 break;
             }
@@ -96,15 +99,15 @@ public class SearchHistoryProvider extends BaseRealmProvider<SearchHistory> impl
     public List<SearchHistory> findLastest(Integer limit) {
         RealmResults<SearchHistory> realmResults = realm.where(SearchHistory.class).
                 findAll().
-                sort("date",Sort.DESCENDING);
+                sort("date", Sort.DESCENDING);
         ArrayList<SearchHistory> results = new ArrayList<>();
-        if (limit == null){
+        if (limit == null) {
             limit = 20;
         }
-        if (limit == 0 ) {
+        if (limit == 0) {
             return results;
         }
-        for (int i = 0; i<realmResults.size() ; i++) {
+        for (int i = 0; i < realmResults.size(); i++) {
             if (i == limit) {
                 break;
             }

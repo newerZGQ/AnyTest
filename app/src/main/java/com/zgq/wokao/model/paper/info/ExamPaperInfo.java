@@ -15,7 +15,7 @@ import io.realm.RealmObject;
 /**
  * Created by zgq on 16-6-20.
  */
-public class ExamPaperInfo extends RealmObject implements IPaperInfo, Serializable ,Searchable ,CascadeDeleteable{
+public class ExamPaperInfo extends RealmObject implements IPaperInfo, Serializable, Searchable, CascadeDeleteable {
     private String id;
     private String title;
     private String author;
@@ -32,6 +32,7 @@ public class ExamPaperInfo extends RealmObject implements IPaperInfo, Serializab
 
     public ExamPaperInfo() {
     }
+
     public ExamPaperInfo(String id, String title, String author, String createDate, String lastStudyDate, Schedule schedule) {
         this.id = id;
         this.title = title;
@@ -113,7 +114,7 @@ public class ExamPaperInfo extends RealmObject implements IPaperInfo, Serializab
     @Override
     public ArrayList<QuestionType> getQuestionTypes() {
         ArrayList types = new ArrayList();
-        for (RealmString type : questionTypes){
+        for (RealmString type : questionTypes) {
             types.add(QuestionType.valueOf(type.getValue()));
         }
         return types;
@@ -121,9 +122,9 @@ public class ExamPaperInfo extends RealmObject implements IPaperInfo, Serializab
 
     @Override
     public void addQuestionType(QuestionType type) {
-        for (RealmString typeTmp: questionTypes){
+        for (RealmString typeTmp : questionTypes) {
             if (typeTmp.getValue().equals(type.name()))
-            return;
+                return;
         }
         questionTypes.add(new RealmString(type.name()));
     }

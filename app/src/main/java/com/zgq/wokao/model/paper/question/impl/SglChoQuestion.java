@@ -14,7 +14,7 @@ import io.realm.RealmObject;
 /**
  * Created by zgq on 16-6-18.
  */
-public class SglChoQuestion extends RealmObject implements IQuestion ,CascadeDeleteable{
+public class SglChoQuestion extends RealmObject implements IQuestion, CascadeDeleteable {
 
     private QuestionBody body;
     private Answer answer;
@@ -31,19 +31,19 @@ public class SglChoQuestion extends RealmObject implements IQuestion ,CascadeDel
         this.info = builder.info;
         this.record = builder.record;
         this.options = builder.options;
-        if (this.body == null){
+        if (this.body == null) {
             this.body = new QuestionBody();
         }
-        if (this.answer == null){
+        if (this.answer == null) {
             this.answer = new Answer();
         }
-        if (this.info == null){
+        if (this.info == null) {
             this.info = new QuestionInfo(QuestionType.SINGLECHOOSE);
         }
-        if (this.record == null){
+        if (this.record == null) {
             this.record = new QuestionRecord();
         }
-        if (options == null){
+        if (options == null) {
             this.options = new Options();
         }
     }
@@ -90,7 +90,7 @@ public class SglChoQuestion extends RealmObject implements IQuestion ,CascadeDel
 
     @Override
     public String toString() {
-        return info.getQstId()+" "+info.getType()+" "+body.getContent()+" "+answer.getContent();
+        return info.getQstId() + " " + info.getType() + " " + body.getContent() + " " + answer.getContent();
     }
 
     @Override
@@ -102,34 +102,39 @@ public class SglChoQuestion extends RealmObject implements IQuestion ,CascadeDel
         deleteFromRealm();
     }
 
-    public static class Builder{
+    public static class Builder {
         private QuestionBody body;
         private Answer answer;
         private QuestionInfo info;
         private QuestionRecord record;
         private Options options;
-        public Builder body(QuestionBody body){
+
+        public Builder body(QuestionBody body) {
             this.body = body;
             return this;
         }
-        public Builder answer(Answer answer){
+
+        public Builder answer(Answer answer) {
             this.answer = answer;
             return this;
         }
-        public Builder info(QuestionInfo info){
+
+        public Builder info(QuestionInfo info) {
             this.info = info;
             return this;
         }
-        public Builder record(QuestionRecord record){
+
+        public Builder record(QuestionRecord record) {
             this.record = record;
             return this;
         }
-        public Builder options(Options options){
+
+        public Builder options(Options options) {
             this.options = options;
             return this;
         }
 
-        public SglChoQuestion build(){
+        public SglChoQuestion build() {
             return new SglChoQuestion(this);
         }
     }

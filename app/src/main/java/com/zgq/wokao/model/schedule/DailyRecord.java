@@ -7,15 +7,16 @@ import io.realm.RealmObject;
 /**
  * Created by zgq on 2017/2/25.
  */
-public class DailyRecord extends RealmObject implements CascadeDeleteable{
+public class DailyRecord extends RealmObject implements CascadeDeleteable {
     private String date;
     private int studyNumber;
     private int studyCount;
     private boolean isCompleted;
 
-    public DailyRecord(){}
+    public DailyRecord() {
+    }
 
-    public DailyRecord(Builder builder){
+    public DailyRecord(Builder builder) {
         this.date = builder.date;
         this.studyNumber = builder.studyNumber;
         this.studyCount = builder.studyCount;
@@ -54,7 +55,7 @@ public class DailyRecord extends RealmObject implements CascadeDeleteable{
         isCompleted = completed;
     }
 
-    public void addStudyNumber(){
+    public void addStudyNumber() {
         studyNumber++;
     }
 
@@ -63,29 +64,33 @@ public class DailyRecord extends RealmObject implements CascadeDeleteable{
 
     }
 
-    public static class Builder{
+    public static class Builder {
         private String date;
         private int studyNumber;
         private int studyCount;
         private boolean isCompleted;
-        public Builder date(String date){
+
+        public Builder date(String date) {
             this.date = date;
             return this;
         }
-        public Builder studyNumber(int studyNumber){
+
+        public Builder studyNumber(int studyNumber) {
             this.studyNumber = studyNumber;
             return this;
         }
-        public Builder studyCount(int studyCount){
+
+        public Builder studyCount(int studyCount) {
             this.studyCount = studyCount;
             return this;
         }
-        public Builder isCompleted(boolean isCompleted){
+
+        public Builder isCompleted(boolean isCompleted) {
             this.isCompleted = isCompleted;
             return this;
         }
 
-        public DailyRecord build(){
+        public DailyRecord build() {
             return new DailyRecord(this);
         }
 

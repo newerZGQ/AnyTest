@@ -11,7 +11,7 @@ import com.zgq.wokao.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class TutotialActivity extends AppCompatActivity implements View.OnClickListener{
+public class TutotialActivity extends AppCompatActivity implements View.OnClickListener {
 
     @BindView(R.id.toolbar_back)
     TextView toolbarBack;
@@ -27,6 +27,7 @@ public class TutotialActivity extends AppCompatActivity implements View.OnClickL
         super.onResume();
         MobclickAgent.onResume(this);
     }
+
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);
@@ -34,7 +35,7 @@ public class TutotialActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.toolbar_back:
                 finish();
                 break;

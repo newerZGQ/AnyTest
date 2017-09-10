@@ -25,7 +25,7 @@ public class Schedule extends RealmObject implements ISchedule, CascadeDeleteabl
     private int correctNumber;
     private float accuracy;
 
-    public Schedule(){
+    public Schedule() {
         DailyRecord dailyRecord = new DailyRecord.Builder().date(DateUtil.getFormatData("yyyy-MM-dd"))
                 .isCompleted(false)
                 .studyCount(this.dailyCount)
@@ -60,12 +60,12 @@ public class Schedule extends RealmObject implements ISchedule, CascadeDeleteabl
         return correctNumber;
     }
 
-    public void updateStudyInfo(boolean isCorrect){
+    public void updateStudyInfo(boolean isCorrect) {
         studyNumber++;
         if (isCorrect) correctNumber++;
-        if (studyNumber == 0){
+        if (studyNumber == 0) {
             accuracy = 0;
-        }else {
+        } else {
             accuracy = (float) correctNumber / (float) studyNumber;
         }
 
@@ -89,18 +89,22 @@ public class Schedule extends RealmObject implements ISchedule, CascadeDeleteabl
     public void setDailyCount(int count) {
         this.dailyCount = count;
     }
+
     @Override
     public String getLastStudyType() {
         return lastStudyType;
     }
+
     @Override
     public void setLastStudyType(QuestionType lastStudyType) {
         this.lastStudyType = lastStudyType.name();
     }
+
     @Override
     public int getLastStudyNum() {
         return lastStudyNum;
     }
+
     @Override
     public void setLastStudyNum(int lastStudyNum) {
         this.lastStudyNum = lastStudyNum;
@@ -116,7 +120,7 @@ public class Schedule extends RealmObject implements ISchedule, CascadeDeleteabl
                 .studyCount(this.dailyCount)
                 .studyNumber(0)
                 .build();
-        PaperDaoImpl.getInstance().addRecord(this,dailyRecord);
+        PaperDaoImpl.getInstance().addRecord(this, dailyRecord);
     }
 
     @Override
@@ -124,7 +128,7 @@ public class Schedule extends RealmObject implements ISchedule, CascadeDeleteabl
         if (!lastRecordIsCurrent() || dailyRecords.size() == 0) {
             addRecord();
         }
-        if (dailyRecords.size() == 0){
+        if (dailyRecords.size() == 0) {
             return null;
         }
         return dailyRecords.last();

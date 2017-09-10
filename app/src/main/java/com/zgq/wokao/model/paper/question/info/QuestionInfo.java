@@ -9,15 +9,17 @@ import io.realm.RealmObject;
  * Created by zgq on 2017/2/27.
  */
 
-public class QuestionInfo extends RealmObject implements IQuestionInfo ,CascadeDeleteable{
+public class QuestionInfo extends RealmObject implements IQuestionInfo, CascadeDeleteable {
 
     private String id;
     private String type;
     private int qstId;
     private boolean isStared;
 
-    public QuestionInfo(){}
-    public QuestionInfo(QuestionType type){
+    public QuestionInfo() {
+    }
+
+    public QuestionInfo(QuestionType type) {
         this.type = type.name();
     }
 

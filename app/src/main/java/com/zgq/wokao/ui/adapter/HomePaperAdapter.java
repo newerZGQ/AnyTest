@@ -54,10 +54,10 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
 
         final MyViewHolder holder1 = (MyViewHolder) holder;
         final IPaperInfo info = paperInfos.get(position);
-        if (info.isInSchedule()){
+        if (info.isInSchedule()) {
             ((MyViewHolder) holder).frontLayout.setBackground(context.getResources()
                     .getDrawable(R.drawable.rectangle_blue));
-        }else{
+        } else {
             ((MyViewHolder) holder).frontLayout.setBackground(context.getResources()
                     .getDrawable(R.drawable.rectangle_red));
         }
@@ -70,22 +70,22 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
         //设置问题类型
         ArrayList<QuestionType> qstList = paperInfos.get(position).getQuestionTypes();
         LinearLayout qstTypes = ((MyViewHolder) holder).qstTypes;
-        for (int i = 0; i< qstTypes.getChildCount(); i++){
+        for (int i = 0; i < qstTypes.getChildCount(); i++) {
             if (i < qstList.size()) {
                 qstTypes.getChildAt(i).setVisibility(View.VISIBLE);
                 ((TextView) qstTypes.getChildAt(i)).setText(qstList.get(i).getName());
-            }else{
+            } else {
                 qstTypes.getChildAt(i).setVisibility(View.INVISIBLE);
             }
         }
 
         //根据学习状态设置View
-        if (paperInfos.get(position).isInSchedule()){
+        if (paperInfos.get(position).isInSchedule()) {
             ((MyViewHolder) holder).statusIcon.setVisibility(View.VISIBLE);
             ((MyViewHolder) holder).exitBtn.setVisibility(View.VISIBLE);
             ((MyViewHolder) holder).studyStatus.setVisibility(View.VISIBLE);
             ((MyViewHolder) holder).scheduleOpt.setVisibility(View.GONE);
-        }else{
+        } else {
             ((MyViewHolder) holder).statusIcon.setVisibility(View.INVISIBLE);
             ((MyViewHolder) holder).exitBtn.setVisibility(View.GONE);
             ((MyViewHolder) holder).studyStatus.setVisibility(View.INVISIBLE);
@@ -122,7 +122,7 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
         return new MyViewHolder(view);
     }
 
-    private RecyclerView.Adapter getMyAdapter(){
+    private RecyclerView.Adapter getMyAdapter() {
         return this;
     }
 
@@ -171,13 +171,13 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
                     keepOne.toggle(this);
                     break;
                 case R.id.exit_schedule_btn:
-                    listener.onExitClick(position,paperInfos.get(position));
+                    listener.onExitClick(position, paperInfos.get(position));
                     break;
                 case R.id.delete_paper_btn:
-                    listener.onDeleteClick(position,paperInfos.get(position));
+                    listener.onDeleteClick(position, paperInfos.get(position));
                     break;
                 case R.id.start_schedule_btn:
-                    listener.onStartClick(position,paperInfos.get(position));
+                    listener.onStartClick(position, paperInfos.get(position));
                     break;
             }
         }

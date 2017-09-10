@@ -10,18 +10,20 @@ import java.util.ArrayList;
  * Created by zgq on 2017/2/28.
  */
 
-public interface IQuestionAction extends IQuestionInfoAction, IQuestionRecordAction{
+public interface IQuestionAction extends IQuestionInfoAction, IQuestionRecordAction {
     public ArrayList<IQuestion> getQuestins(IExamPaper paper, QuestionType type);
 
     /**
      * 更新question，只能更新question的body，answer, options
+     *
      * @param questionId
      * @param question
      */
-    public void updateQuestion(String questionId,IQuestion question);
+    public void updateQuestion(String questionId, IQuestion question);
 
     /**
      * 查询question
+     *
      * @param questionId
      * @return
      */

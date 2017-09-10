@@ -12,7 +12,7 @@ import java.util.List;
  * Created by zgq on 2017/3/19.
  */
 
-public class QstData implements ViewData{
+public class QstData implements ViewData {
 
     public static final String TAG = QstData.class.getSimpleName();
 
@@ -32,6 +32,7 @@ public class QstData implements ViewData{
     private int qstCount;
     //收藏题目数量
     private int starCount;
+
     public String getPaperId() {
         return paperId;
     }
@@ -97,50 +98,50 @@ public class QstData implements ViewData{
         this.starCount = starCount;
     }
 
-    public static class Formator{
-        public static QstData format(List<IQuestion> questions, IPaperInfo paperInfo){
+    public static class Formator {
+        public static QstData format(List<IQuestion> questions, IPaperInfo paperInfo) {
             QstData data = new QstData();
-            if (questions.size() == 0){
+            if (questions.size() == 0) {
                 return data;
             }
 
             int studyCount = 0;
             int correctCount = 0;
             int starCount = 0;
-            for (int i = 0; i< questions.size(); i++){
+            for (int i = 0; i < questions.size(); i++) {
                 studyCount += questions.get(i).getRecord().getStudyNumber();
                 correctCount += questions.get(i).getRecord().getCorrectNumber();
                 if (questions.get(i).getInfo().isStared()) starCount++;
             }
 
-            Collections.sort(questions,new SortQstByAccuracy());
+            Collections.sort(questions, new SortQstByAccuracy());
             data.setPaperId(paperInfo.getId());
             data.setStudyNum(studyCount);
             data.setCorrectNum(correctCount);
             data.setStarCount(starCount);
             data.setQstCount(questions.size());
-            data.setAccuracy(studyCount == 0 ? 1f : correctCount/studyCount);
+            data.setAccuracy(studyCount == 0 ? 1f : correctCount / studyCount);
             data.setType(questions.get(0).getInfo().getType());
             if (questions.size() >= 3) {
                 data.setFallibleQsts(questions.subList(0, 3));
-            }else{
+            } else {
                 data.setFallibleQsts(questions);
             }
             return data;
         }
     }
 
-    static class SortQstByAccuracy implements Comparator{
+    static class SortQstByAccuracy implements Comparator {
 
         @Override
         public int compare(Object lhs, Object rhs) {
-            IQuestion left = (IQuestion)lhs;
-            IQuestion right = (IQuestion)rhs;
-            if (left.getRecord().getAccuracy() > right.getRecord().getAccuracy()){
+            IQuestion left = (IQuestion) lhs;
+            IQuestion right = (IQuestion) rhs;
+            if (left.getRecord().getAccuracy() > right.getRecord().getAccuracy()) {
                 return 1;
-            }else if (left.getRecord().getAccuracy() == right.getRecord().getAccuracy()){
+            } else if (left.getRecord().getAccuracy() == right.getRecord().getAccuracy()) {
                 return 0;
-            }else {
+            } else {
                 return -1;
             }
         }

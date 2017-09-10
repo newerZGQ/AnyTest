@@ -8,5 +8,6 @@ import com.zgq.wokao.model.paper.question.IQuestion;
 
 public interface IQuestionInfoAction {
     public void star(IQuestion question);
+
     public void unStar(IQuestion question);
 }

@@ -110,7 +110,7 @@ public class QuestionsFragment extends BaseFragment {
 
     }
 
-    private void initQstList(View parent){
+    private void initQstList(View parent) {
         qstPager = (RecyclerView) parent.findViewById(R.id.questions_list);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),
                 OrientationHelper.VERTICAL, false);

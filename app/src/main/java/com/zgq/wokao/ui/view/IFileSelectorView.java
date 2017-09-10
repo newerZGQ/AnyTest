@@ -6,5 +6,6 @@ package com.zgq.wokao.ui.view;
 
 public interface IFileSelectorView {
     void notifyParseFailed();
+
     void notifyParseSuccess();
 }

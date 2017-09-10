@@ -7,16 +7,17 @@ import android.os.Parcelable;
  * Created by zgq on 2017/9/10.
  */
 
-public enum QuestionType implements Parcelable{
-    NOTQUESTION("非问题",0),
-    FILLIN("填空",1),
-    TF("判断",2),
-    SINGLECHOOSE("单选",3),
-    MUTTICHOOSE("多选",4),
-    DISCUSS("简答",5);
+public enum QuestionType implements Parcelable {
+    NOTQUESTION("非问题", 0),
+    FILLIN("填空", 1),
+    TF("判断", 2),
+    SINGLECHOOSE("单选", 3),
+    MUTTICHOOSE("多选", 4),
+    DISCUSS("简答", 5);
     private String name;
     private int value;
-    private QuestionType(String name, int value){
+
+    private QuestionType(String name, int value) {
         this.name = name;
         this.value = value;
     }
@@ -35,7 +36,7 @@ public enum QuestionType implements Parcelable{
     public static final Creator<QuestionType> CREATOR = new Creator<QuestionType>() {
         @Override
         public QuestionType createFromParcel(Parcel in) {
-            switch (in.readInt()){
+            switch (in.readInt()) {
                 case 0:
                     return QuestionType.NOTQUESTION;
                 case 1:
@@ -58,10 +59,11 @@ public enum QuestionType implements Parcelable{
         }
     };
 
-    public int getValue(){
+    public int getValue() {
         return value;
     }
-    public String getName(){
+
+    public String getName() {
         return name;
     }
 }

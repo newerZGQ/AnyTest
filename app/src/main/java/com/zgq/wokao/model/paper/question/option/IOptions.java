@@ -7,8 +7,12 @@ import io.realm.RealmList;
  */
 public interface IOptions {
     public abstract boolean hasOptions();
+
     public abstract int getOptionsCount();
+
     public abstract RealmList<Option> getOptionList();
+
     public abstract void setOptionList(RealmList<Option> optionList);
+
     public abstract boolean addOption(Option option);
 }

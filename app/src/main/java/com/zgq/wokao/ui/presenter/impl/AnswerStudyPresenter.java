@@ -12,13 +12,14 @@ import com.zgq.wokao.ui.view.IStudyAnswerView;
 public class AnswerStudyPresenter implements IAnswerStudyPresenter {
     private PaperAction paperAction = PaperAction.getInstance();
     private IStudyAnswerView studyAnswerView;
-    public AnswerStudyPresenter(IStudyAnswerView studyAnswerView){
+
+    public AnswerStudyPresenter(IStudyAnswerView studyAnswerView) {
         this.studyAnswerView = studyAnswerView;
     }
 
     @Override
     public void updateQuestion(String questionId, IQuestion question) {
-        paperAction.updateQuestion(questionId,question);
+        paperAction.updateQuestion(questionId, question);
     }
 
     @Override

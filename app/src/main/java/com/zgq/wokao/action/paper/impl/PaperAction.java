@@ -31,7 +31,7 @@ import java.util.List;
  * Created by zgq on 2017/2/28.
  */
 
-public class PaperAction extends BaseAction implements IPaperAction,IQuestionAction {
+public class PaperAction extends BaseAction implements IPaperAction, IQuestionAction {
 
     private static final String TAG = PaperAction.class.getSimpleName();
 
@@ -40,49 +40,50 @@ public class PaperAction extends BaseAction implements IPaperAction,IQuestionAct
     private ParserHelper parserHelper = ParserHelper.getInstance();
     private StudySummaryAction summaryAction = StudySummaryAction.getInstance();
 
-    private PaperAction(){}
+    private PaperAction() {
+    }
 
     @Override
     public ArrayList<IQuestion> getQuestins(IExamPaper paper, QuestionType type) {
         ArrayList<IQuestion> results = new ArrayList<>();
-        switch (type){
+        switch (type) {
             case FILLIN:
-                if (paper.getFillInQuestions() == null){
+                if (paper.getFillInQuestions() == null) {
                     break;
                 }
-                for (FillInQuestion question : paper.getFillInQuestions()){
+                for (FillInQuestion question : paper.getFillInQuestions()) {
                     results.add(question);
                 }
                 break;
             case TF:
-                if (paper.getTfQuestions() == null){
+                if (paper.getTfQuestions() == null) {
                     break;
                 }
-                for (TFQuestion question : paper.getTfQuestions()){
+                for (TFQuestion question : paper.getTfQuestions()) {
                     results.add(question);
                 }
                 break;
             case SINGLECHOOSE:
-                if (paper.getSglChoQuestions() == null){
+                if (paper.getSglChoQuestions() == null) {
                     break;
                 }
-                for (SglChoQuestion question : paper.getSglChoQuestions()){
+                for (SglChoQuestion question : paper.getSglChoQuestions()) {
                     results.add(question);
                 }
                 break;
             case MUTTICHOOSE:
-                if (paper.getMultChoQuestions() == null){
+                if (paper.getMultChoQuestions() == null) {
                     break;
                 }
-                for (MultChoQuestion question : paper.getMultChoQuestions()){
+                for (MultChoQuestion question : paper.getMultChoQuestions()) {
                     results.add(question);
                 }
                 break;
             case DISCUSS:
-                if (paper.getDiscussQuestions() == null){
+                if (paper.getDiscussQuestions() == null) {
                     break;
                 }
-                for (DiscussQuestion question : paper.getDiscussQuestions()){
+                for (DiscussQuestion question : paper.getDiscussQuestions()) {
                     results.add(question);
                 }
                 break;
@@ -94,26 +95,26 @@ public class PaperAction extends BaseAction implements IPaperAction,IQuestionAct
 
     @Override
     public void updateQuestion(String questionId, IQuestion question) {
-        questionDao.updateQuestion(questionId,question);
+        questionDao.updateQuestion(questionId, question);
     }
 
     @Override
-    public IQuestion queryQuestionById(String questionId,QuestionType type) {
-        return questionDao.queryQuestionById(questionId,type);
+    public IQuestion queryQuestionById(String questionId, QuestionType type) {
+        return questionDao.queryQuestionById(questionId, type);
     }
 
 
-    public static class InstanceHolder{
+    public static class InstanceHolder {
         public static PaperAction instance = new PaperAction();
     }
 
-    public static PaperAction getInstance(){
+    public static PaperAction getInstance() {
         return InstanceHolder.instance;
     }
 
-    public void setAllPaperInSche(){
+    public void setAllPaperInSche() {
         List<NormalExamPaper> papers = getAllPaper();
-        for (NormalExamPaper paper: papers){
+        for (NormalExamPaper paper : papers) {
             paperDao.addToSchedule(paper);
             paperDao.openSchedule(paper);
         }
@@ -200,7 +201,7 @@ public class PaperAction extends BaseAction implements IPaperAction,IQuestionAct
 
     @Override
     public void setDailyCount(final IExamPaper paper, final int count) {
-        paperDao.setDailyCount(paper,count);
+        paperDao.setDailyCount(paper, count);
     }
 
     @Override
@@ -209,7 +210,7 @@ public class PaperAction extends BaseAction implements IPaperAction,IQuestionAct
     }
 
     @Override
-    public void updateLastStudyPosition(@NonNull IExamPaper paper,@NonNull QuestionType type,@NonNull int position) {
+    public void updateLastStudyPosition(@NonNull IExamPaper paper, @NonNull QuestionType type, @NonNull int position) {
         paperDao.setLastStudyInfo(paper.getPaperInfo().getId(), type, position);
     }
 
@@ -245,14 +246,14 @@ public class PaperAction extends BaseAction implements IPaperAction,IQuestionAct
 
     @Override
     public IExamPaper parseAndSave(String filePath) throws FileNotFoundException, ParseException {
-        NormalExamPaper paper =  parserHelper.parse(filePath);
+        NormalExamPaper paper = parserHelper.parse(filePath);
         addExamPaper(paper);
         return paper;
     }
 
     @Override
     public IExamPaper parseAndSave(InputStream inputStream) throws ParseException {
-        NormalExamPaper paper =  parserHelper.parse(inputStream);
+        NormalExamPaper paper = parserHelper.parse(inputStream);
         addExamPaper(paper);
         return paper;
     }
@@ -262,42 +263,42 @@ public class PaperAction extends BaseAction implements IPaperAction,IQuestionAct
         float accuracy = 0f;
         int studyCount = 0;
         int correctCount = 0;
-        for (IQuestion question : getQuestins(paper,QuestionType.FILLIN)){
+        for (IQuestion question : getQuestins(paper, QuestionType.FILLIN)) {
             studyCount += question.getRecord().getStudyNumber();
             correctCount += question.getRecord().getCorrectNumber();
         }
-        for (IQuestion question : getQuestins(paper,QuestionType.TF)){
+        for (IQuestion question : getQuestins(paper, QuestionType.TF)) {
             studyCount += question.getRecord().getStudyNumber();
             correctCount += question.getRecord().getCorrectNumber();
         }
-        for (IQuestion question : getQuestins(paper,QuestionType.SINGLECHOOSE)){
+        for (IQuestion question : getQuestins(paper, QuestionType.SINGLECHOOSE)) {
             studyCount += question.getRecord().getStudyNumber();
             correctCount += question.getRecord().getCorrectNumber();
         }
-        for (IQuestion question : getQuestins(paper,QuestionType.MUTTICHOOSE)){
+        for (IQuestion question : getQuestins(paper, QuestionType.MUTTICHOOSE)) {
             studyCount += question.getRecord().getStudyNumber();
             correctCount += question.getRecord().getCorrectNumber();
         }
-        for (IQuestion question : getQuestins(paper,QuestionType.DISCUSS)){
+        for (IQuestion question : getQuestins(paper, QuestionType.DISCUSS)) {
             studyCount += question.getRecord().getStudyNumber();
             correctCount += question.getRecord().getCorrectNumber();
         }
         if (studyCount == 0) return 0f;
-        return correctCount/studyCount;
+        return correctCount / studyCount;
     }
 
     @Override
     public void updateAllStudyInfo(String paperId, IQuestion question, boolean isCorrect) {
-        Log.d(LogUtil.PREFIX,TAG+" "+ paperId);
+        Log.d(LogUtil.PREFIX, TAG + " " + paperId);
         //更新某一题的记录
-        updateQuestionRecord(question,isCorrect);
+        updateQuestionRecord(question, isCorrect);
         //更新试卷每日的记录
         IExamPaper paper = queryById(paperId);
         updateDailyRecord(paper);
         //更新该试卷总的记录
-        paperDao.updateStudyInfo(paper,isCorrect);
+        paperDao.updateStudyInfo(paper, isCorrect);
         //更新所有试卷学习记录总结
-        summaryAction.updateSummary(summaryAction.getStudySummary(),isCorrect);
+        summaryAction.updateSummary(summaryAction.getStudySummary(), isCorrect);
     }
 
     @Override
@@ -312,6 +313,6 @@ public class PaperAction extends BaseAction implements IPaperAction,IQuestionAct
 
     @Override
     public void updateQuestionRecord(final IQuestion question, final boolean isCorrect) {
-        questionDao.updateQuestionRecord(question,isCorrect);
+        questionDao.updateQuestionRecord(question, isCorrect);
     }
 }

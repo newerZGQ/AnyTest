@@ -128,6 +128,7 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
                     public void onClickTopLayout(int position) {
                         mListener.goQuestionsList(presenter.getScheduleDatas().get(position).getPaperId());
                     }
+
                     @Override
                     public void onClickStartBtn(int position, String paperId) {
                         startStudy(paperId, presenter.getLastStudyType(paperId), presenter.getLastStudyPos(paperId));
@@ -190,10 +191,10 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
         presenter.setDailyCount(currentPosition, task);
     }
 
-    private void checkPaperCount(){
-        if (presenter.getPaperCount() == 0){
+    private void checkPaperCount() {
+        if (presenter.getPaperCount() == 0) {
             onEmptyPapers();
-        }else{
+        } else {
             onNoneEmptyPapers();
         }
     }
@@ -221,7 +222,7 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
     public void onPaperDataChanged() {
         presenter.updateDatas();
         checkPaperCount();
-        ((SchedulePagerAdapter)viewPager.getAdapter()).setScheduleDatas(presenter.getScheduleDatas());
+        ((SchedulePagerAdapter) viewPager.getAdapter()).setScheduleDatas(presenter.getScheduleDatas());
         viewPager.getAdapter().notifyDataSetChanged();
         viewPager.setCurrentItem(0);
     }

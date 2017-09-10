@@ -38,10 +38,11 @@ public class SchedulePagerAdapter extends PagerAdapter {
 
     private OnViewClickListener listener;
 
-    private SchedulePagerAdapter(){}
+    private SchedulePagerAdapter() {
+    }
 
-    public SchedulePagerAdapter(Context context,ArrayList<ScheduleData> scheduleDatas,
-                                OnViewClickListener listener){
+    public SchedulePagerAdapter(Context context, ArrayList<ScheduleData> scheduleDatas,
+                                OnViewClickListener listener) {
         this.scheduleDatas = scheduleDatas;
         this.listener = listener;
         this.context = context;
@@ -64,7 +65,7 @@ public class SchedulePagerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        return getScheduleView(container,position);
+        return getScheduleView(container, position);
     }
 
     @Override
@@ -82,15 +83,15 @@ public class SchedulePagerAdapter extends PagerAdapter {
         return view == object;
     }
 
-    public View getScheduleView(ViewGroup container, final int position){
+    public View getScheduleView(ViewGroup container, final int position) {
         ViewHolder holder = null;
         View convertView = null;
-        if(mViewCache.size() == 0){
-            convertView = this.layoutInflater.inflate(R.layout.viewpager_schedule_item , null ,false);
+        if (mViewCache.size() == 0) {
+            convertView = this.layoutInflater.inflate(R.layout.viewpager_schedule_item, null, false);
             LinearLayout topLayout = (LinearLayout) convertView.findViewById(R.id.top_layout);
-            TextView title = (TextView)convertView.findViewById(R.id.question_type);
+            TextView title = (TextView) convertView.findViewById(R.id.question_type);
             title.setTypeface(FontsUtil.getSans_serif_thin());
-            TextView addTime = (TextView)convertView.findViewById(R.id.add_time);
+            TextView addTime = (TextView) convertView.findViewById(R.id.add_time);
             Button startBtn = (Button) convertView.findViewById(R.id.start_study);
             holder = new ViewHolder();
             holder.topLayout = topLayout;
@@ -98,7 +99,7 @@ public class SchedulePagerAdapter extends PagerAdapter {
             holder.addTime = addTime;
             holder.startBtn = startBtn;
             convertView.setTag(holder);
-        }else {
+        } else {
             convertView = mViewCache.removeFirst();
             holder = (ViewHolder) convertView.getTag();
         }
@@ -118,15 +119,14 @@ public class SchedulePagerAdapter extends PagerAdapter {
         });
 
         ArrayList<Integer> models = new ArrayList<>();
-        for(int i = 0; i < 5; ++i)
-        {
+        for (int i = 0; i < 5; ++i) {
             Random random = new Random();
             random.setSeed(i);
             int color = Color.argb(255, random.nextInt(255), random.nextInt(255), random.nextInt(255));
             models.add(color);
         }
 
-        container.addView(convertView ,ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT );
+        container.addView(convertView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         return convertView;
     }
 
@@ -138,8 +138,9 @@ public class SchedulePagerAdapter extends PagerAdapter {
         public Button startBtn;
     }
 
-    public interface OnViewClickListener{
+    public interface OnViewClickListener {
         void onClickTopLayout(int position);
+
         void onClickStartBtn(int position, String paperId);
     }
 

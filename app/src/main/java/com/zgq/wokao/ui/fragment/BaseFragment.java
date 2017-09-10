@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 public abstract class BaseFragment extends Fragment implements IFragment {
 
     private Context context;
+
     @TargetApi(23)
     @Override
     public void onAttach(Context context) {

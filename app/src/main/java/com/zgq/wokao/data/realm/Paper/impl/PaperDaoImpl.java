@@ -250,7 +250,7 @@ public class PaperDaoImpl extends BaseRealmProvider<NormalExamPaper> implements 
                 .where(NormalExamPaper.class)
                 .equalTo("paperInfo.id", id)
                 .findAll();
-        for (int i = 0; i < results.size(); i++){
+        for (int i = 0; i < results.size(); i++) {
             results.get(i).cascadeDelete();
         }
         realm.commitTransaction();
@@ -269,7 +269,7 @@ public class PaperDaoImpl extends BaseRealmProvider<NormalExamPaper> implements 
                 .where(NormalExamPaper.class)
                 .equalTo("paperInfo.id", id)
                 .findAll();
-        if (results == null || results.size() == 0){
+        if (results == null || results.size() == 0) {
             return null;
         }
         return changeRealmListToList(results).get(0);

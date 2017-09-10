@@ -12,9 +12,11 @@ import java.util.Queue;
 public abstract class BaseContext implements Context {
     private Queue<ParserItem> itemQueue;
     private int queueCapacity = 5;
-    public BaseContext(){
+
+    public BaseContext() {
     }
-    public BaseContext(int queueCapacity){
+
+    public BaseContext(int queueCapacity) {
         this.queueCapacity = queueCapacity;
     }
 
@@ -37,14 +39,14 @@ public abstract class BaseContext implements Context {
 
     @Override
     public ParserItem tail(int distance) {
-        return (ParserItem) ((LinkedList)itemQueue).get(itemQueue.size()-1-distance);
+        return (ParserItem) ((LinkedList) itemQueue).get(itemQueue.size() - 1 - distance);
     }
 
-    private void adjustQueue(){
-        if (itemQueue.size() <= queueCapacity-1){
+    private void adjustQueue() {
+        if (itemQueue.size() <= queueCapacity - 1) {
             return;
         }
-        while(itemQueue.size()>queueCapacity-1){
+        while (itemQueue.size() > queueCapacity - 1) {
             itemQueue.poll();
         }
     }

@@ -60,7 +60,7 @@ public class MultChoAdapter extends BaseAdapter implements IMultChoAdapter {
             if (isQstNumber(tmp)) {
                 //把上一次循环的题干和答案提取出来
                 bodyString = builder.toString();
-                if (!bodyString.equals("")){
+                if (!bodyString.equals("")) {
                     MultChoQuestion question = parseSingle(number, bodyString);
                     if (question != null) {
                         results.add(question);
@@ -94,36 +94,36 @@ public class MultChoAdapter extends BaseAdapter implements IMultChoAdapter {
         int headBack = 0;
         for (String tmp : resArray) {
             tmp = tmp.trim();
-            int head = tmp.substring(0,1).toUpperCase().charAt(0);
-            if (head == 65 && !startWithWord(tmp)){
+            int head = tmp.substring(0, 1).toUpperCase().charAt(0);
+            if (head == 65 && !startWithWord(tmp)) {
                 String body = builder.toString();
-                builder.delete(0,builder.length());
+                builder.delete(0, builder.length());
                 question.getBody().setContent(body);
                 context.inContext(QuestionItemType.body);
                 builder.append(getOptionContent(tmp));
                 continue;
             }
-            if (head > 65 && head <= 77 && !startWithWord(tmp)){
+            if (head > 65 && head <= 77 && !startWithWord(tmp)) {
                 String optionContent = builder.toString();
-                String tag = StringUtil.char2String((char)(head-1));
+                String tag = StringUtil.char2String((char) (head - 1));
                 headBack = head;
                 question.getOptions().addOption(new Option.Builder()
                         .option(optionContent)
                         .tag(tag)
                         .build());
                 context.inContext(QuestionItemType.option);
-                builder.delete(0,builder.length());
+                builder.delete(0, builder.length());
                 builder.append(getOptionContent(tmp));
                 continue;
             }
             if (tmp.startsWith("答案")) {
                 String optionContent = builder.toString();
-                String tag = StringUtil.char2String((char)headBack);
+                String tag = StringUtil.char2String((char) headBack);
                 question.getOptions().addOption(new Option.Builder()
                         .option(optionContent)
                         .tag(tag)
                         .build());
-                builder.delete(0,builder.length());
+                builder.delete(0, builder.length());
                 builder.append(tmp.substring(2).trim());
                 continue;
             }
@@ -139,13 +139,14 @@ public class MultChoAdapter extends BaseAdapter implements IMultChoAdapter {
         return question;
     }
 
-    private String getOptionContent(String s){
+    private String getOptionContent(String s) {
         s = s.trim().substring(1).trim();
-        if (s.startsWith(":")||s.startsWith("：")){
+        if (s.startsWith(":") || s.startsWith("：")) {
             s = s.trim().substring(1).trim();
         }
         return s;
     }
+
     private void inContext(QuestionItemType type) {
         context.inContext(new QuestionItem(type));
     }

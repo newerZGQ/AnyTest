@@ -8,7 +8,7 @@ import io.realm.RealmObject;
  * Created by zgq on 2017/2/15.
  */
 
-public class SearchHistory extends RealmObject implements Searchable, CascadeDeleteable{
+public class SearchHistory extends RealmObject implements Searchable, CascadeDeleteable {
     private String content;
     private String date;
     private int count;
