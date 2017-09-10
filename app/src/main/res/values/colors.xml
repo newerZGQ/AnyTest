@@ -12,15 +12,6 @@
     <color name="colorTeal">#031027</color>
     <color name="colorCyan">#00bcd4</color>
     <color name="colorLime">#cddc39</color>
-    <color name="colorIndigo">#3f51b5</color>
-    <color name="colorTransparentWhite">#64ffffff</color>;"
-
-    //代表题目类型的颜色
-    <color name="colorFillIn">#6CCF6E</color>
-    <color name="colorTF">#49B9AD</color>
-    <color name="colorSglcho">#9EB6A6</color>
-    <color name="colorMultcho">#4E7A4F</color>
-    <color name="colorDisc">#759267</color>
 
 
     <color name="colorRed">#6CCF6E</color>
@@ -30,23 +21,11 @@
     <color name="colorStatusBar">#031027</color>
     <color name="colorTransparent">#00000000</color>
 
-    //acrivity_questionlist
-    <color name="colorTransparentText">#75ffffff</color>
-    <color name="colorBottomBackground">#63000000</color>
-
     <color name="colorFirstLevelText">#DE000000</color>
-    <color name="colorSecondLevelText">#8a000000</color>
 
     <color name="colorRecyclerViewDivider">#32504f4f</color>
-    <color name="colorRecyclerViewItemSelectedBackGround">#14000000</color>
 
     <color name="colorAlphaBackground">#33000000</color>
-
-    <color name="colorRotateTextViewUpSide">#23af3b</color>
-    <color name="colorRotateTextViewDownSide">#888888</color>
-
-    <color name="colorActionModeActionBarBackground">#757575</color>
-    <color name="colorActionModeStatusBarBackground">#616161</color>
 
     <color name="black_overlay">#66000000</color>
 
@@ -59,28 +38,9 @@
 
     <color name="color_accuracy_text_light">#85ffd437</color>
 
-    <color name="color_daily_count_uncompleted">#E50041</color>
-    <color name="color_daily_count_completed">#1e8b1c</color>
-
-    <color name="color_cardview_title_dis">#7E6918</color>
-    <color name="color_cardview_title_mlc">#1E3A7E</color>
-    <color name="color_cardview_title_sgl">#9D5E00</color>
-    <color name="color_cardview_title_tf">#7C0924</color>
-    <color name="color_cardview_title_fillin">#0A2F69</color>
-
-    <color name="color_cardview_qstinfo">#5cffffff</color>
-
     <color name="color_task_setting_backgroung">#c2000000</color>
 
-    <color name="color_1">#EF9A9A</color>
-    <color name="color_2">#E53935</color>
-    <color name="color_3">#F8BBD0</color>
-    <color name="color_4">#D81B60</color>
-    <color name="color_5">#880E4F</color>
-
     //papersfragment
-    <color name="color_paperitem_parent_yellow">#DACE2B</color>
-    <color name="color_paperitem_title_text">#e5ffffff</color>
     <color name="color_paperitem_qsttype_text">#9bffffff</color>
     <color name="color_paperitem_qsttype_back">#3fffffff</color>
     <color name="color_paper_list_cover_back_1">#031027</color>
@@ -94,7 +54,6 @@
     <color name="color_home_loading_background">#b8000000</color>
 
     //studyactivity
-    <color name="color_study_activity_tip_text">#000000</color>
     <color name="color_study_activity_qstinfo_back">#40031027</color>
 
 </resources>
