@@ -1,5 +1,6 @@
 package com.zgq.wokao.ui.view;
 
+import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.total.StudySummary;
 
 /**
@@ -24,4 +25,5 @@ public interface IHomeView {
     void hideToolBar();
 
     void showToolBar();
+
 }

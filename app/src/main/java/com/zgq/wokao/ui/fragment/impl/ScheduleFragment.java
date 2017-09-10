@@ -1,9 +1,7 @@
 package com.zgq.wokao.ui.fragment.impl;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +12,7 @@ import android.widget.LinearLayout;
 import com.zgq.wokao.R;
 import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.viewdate.ScheduleData;
-import com.zgq.wokao.ui.activity.AnswerStudyActivity;
+import com.zgq.wokao.ui.activity.HomeActivity;
 import com.zgq.wokao.ui.adapter.SchedulePagerAdapter;
 import com.zgq.wokao.ui.fragment.BaseFragment;
 import com.zgq.wokao.ui.presenter.impl.SchedulePresenter;
@@ -50,7 +48,7 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
     private String mParam1;
     private String mParam2;
 
-    private OnScheduleFragmentListener mListener;
+    private ScheduleFragmentListener mListener;
 
     private SchedulePresenter presenter;
 
@@ -103,11 +101,11 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
 
     @Override
     protected void onAttachToContext(Context context) {
-        if (context instanceof OnScheduleFragmentListener) {
-            mListener = (OnScheduleFragmentListener) context;
+        if (context instanceof ScheduleFragmentListener) {
+            mListener = (ScheduleFragmentListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnScheduleFragmentListener");
+                    + " must implement ScheduleFragmentListener");
         }
     }
 
@@ -131,22 +129,12 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
 
                     @Override
                     public void onClickStartBtn(int position, String paperId) {
-                        startStudy(paperId, presenter.getLastStudyType(paperId), presenter.getLastStudyPos(paperId));
+                        mListener.startFromScheduleFrag(paperId,
+                                        presenter.getLastStudyType(paperId),
+                                        presenter.getLastStudyPos(paperId));
                     }
                 }));
         viewPager.addOnPageChangeListener(new SchedulePageChangeListener());
-    }
-
-    private void startStudy(String paperId, QuestionType type, int qstNum) {
-        Intent intent = new Intent(getActivity(), AnswerStudyActivity.class);
-        if (paperId != null && !paperId.equals("")) {
-            intent.putExtra("paperId", paperId);
-            intent.putExtra("qstType", (Parcelable) type);
-            intent.putExtra("qstNum", qstNum);
-        } else {
-            return;
-        }
-        getActivity().startActivity(intent);
     }
 
     private void updateScheduleInfo(ScheduleData data, boolean withAnimator) {
@@ -227,8 +215,9 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
     /**
      * This interface must be implemented by activities that contain this
      */
-    public interface OnScheduleFragmentListener {
+    public interface ScheduleFragmentListener {
         void goQuestionsList(String paperId);
+        void startFromScheduleFrag(String paperId, QuestionType type, int qstNum);
     }
 
     public class SchedulePageChangeListener implements ViewPager.OnPageChangeListener {

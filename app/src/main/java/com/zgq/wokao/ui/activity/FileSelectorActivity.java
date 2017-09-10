@@ -37,38 +37,38 @@ public class FileSelectorActivity extends BaseActivity implements IFileSelectorV
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK) {
             String filePath = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
-            if (TextUtils.isEmpty(filePath)) {
-                return;
-            }
             showLoadingView();
             presenter.parseFromFile(filePath);
+        }else{
+            startHomeActivity(0);
         }
     }
 
     @Override
     public void notifyParseFailed() {
         showToast("解析错误");
-        startHomeActivity();
+        startHomeActivity(2000);
     }
 
     @Override
     public void notifyParseSuccess() {
         showToast("解析成功");
-        startHomeActivity();
+        startHomeActivity(2000);
     }
 
     private void showLoadingView() {
         findViewById(R.id.loadView).setVisibility(View.VISIBLE);
     }
 
-    private void startHomeActivity() {
+    private void startHomeActivity(int delayTime) {
         Timer timer = new Timer();
-        timer.schedule(startHomeActivity, 1000);
+        timer.schedule(startHomeActivity, delayTime);
     }
 
     private TimerTask startHomeActivity = new TimerTask() {
         @Override
         public void run() {
+            finish();
             openActivity(HomeActivity.class);
         }
     };

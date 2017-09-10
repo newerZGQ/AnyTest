@@ -18,14 +18,11 @@ import com.zgq.wokao.ui.widget.exprecyclerview.ExpandableViewHoldersUtil;
 
 import java.util.ArrayList;
 
-import io.realm.RealmList;
-
 /**
  * Created by zgq on 2017/2/24.
  */
 
 public class HomePaperAdapter extends RecyclerView.Adapter {
-    //recyclerView adapter
     private android.content.Context context = ContextUtil.getContext();
     private ArrayList<IPaperInfo> paperInfos = null;
 

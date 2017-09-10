@@ -1,13 +1,16 @@
 package com.zgq.wokao.ui.activity;
 
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +22,7 @@ import com.zgq.linechart.ChartView;
 import com.zgq.wokao.R;
 import com.zgq.wokao.action.login.LoginAction;
 import com.zgq.wokao.action.paper.impl.StudySummaryAction;
+import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.total.StudySummary;
 import com.zgq.wokao.ui.fragment.impl.PapersFragment;
 import com.zgq.wokao.ui.fragment.impl.QuestionsFragment;
@@ -37,7 +41,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class HomeActivity extends BaseActivity implements
-        ScheduleFragment.OnScheduleFragmentListener,
+        ScheduleFragment.ScheduleFragmentListener,
         PapersFragment.PaperFragmentListener,
         QuestionsFragment.QuestionsFragmentListener,
         IHomeView,
@@ -281,6 +285,11 @@ public class HomeActivity extends BaseActivity implements
     }
 
     @Override
+    public void startFromScheduleFrag(String paperId, QuestionType type, int qstNum) {
+        startStudy(paperId,type,qstNum);
+    }
+
+    @Override
     public void updateSlideUp() {
         if (slideUp.isVisible()) {
             slideUp.hide();
@@ -351,6 +360,20 @@ public class HomeActivity extends BaseActivity implements
     @Override
     public void onPaperInSchedule(String paperId) {
         scheduleFragment.onPaperDataChanged();
+    }
+
+    @Override
+    public void startFromQuestionFrag(String paperId, QuestionType type) {
+        startStudy(paperId,type,0);
+    }
+
+
+    private void startStudy(String paperId, QuestionType type, int qstNum) {
+        Intent intent = new Intent(this, AnswerStudyActivity.class);
+        intent.putExtra("paperId", paperId);
+        intent.putExtra("qstType", (Parcelable) type);
+        intent.putExtra("qstNum", qstNum);
+        startActivity(intent);
     }
 
     public class HomeFragmentPagerAdapter extends FragmentPagerAdapter {

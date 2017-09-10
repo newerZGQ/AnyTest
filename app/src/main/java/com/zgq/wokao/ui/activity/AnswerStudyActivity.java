@@ -22,7 +22,6 @@ import android.widget.TextView;
 
 import com.umeng.analytics.MobclickAgent;
 import com.zgq.wokao.R;
-import com.zgq.wokao.Util.LogUtil;
 import com.zgq.wokao.action.paper.impl.PaperAction;
 import com.zgq.wokao.model.paper.NormalExamPaper;
 import com.zgq.wokao.model.paper.QuestionType;
@@ -185,6 +184,8 @@ public class AnswerStudyActivity extends AppCompatActivity implements IStudyAnsw
         Intent intent = getIntent();
         String paperId = intent.getStringExtra("paperId");
         currentQuestionType = intent.getParcelableExtra("qstType");
+        Log.d(TAG,"current "+currentQuestionType);
+        Log.d(TAG,"current "+paperId);
         normalExamPaper = (NormalExamPaper) PaperAction.getInstance().queryById(paperId);
     }
 
@@ -331,7 +332,6 @@ public class AnswerStudyActivity extends AppCompatActivity implements IStudyAnsw
 
     private void setQuestionStudyInfo(int position) {
         if (currentMode == ALLQUESTIONMODE) {
-            Log.d(LogUtil.PREFIX, TAG + " " + currentAllQuestions.get(position).getRecord().getStudyNumber());
             String info = "正确" + currentAllQuestions.get(position).getRecord().getCorrectNumber() + "/"
                     + currentAllQuestions.get(position).getRecord().getStudyNumber();
             studyInfo.setText(info);

@@ -2,6 +2,7 @@ package com.zgq.wokao.model.paper;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 /**
  * Created by zgq on 2017/9/10.
@@ -24,8 +25,7 @@ public enum QuestionType implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(name);
-        dest.writeInt(value);
+        dest.writeInt(getValue());
     }
 
     @Override
@@ -36,21 +36,28 @@ public enum QuestionType implements Parcelable {
     public static final Creator<QuestionType> CREATOR = new Creator<QuestionType>() {
         @Override
         public QuestionType createFromParcel(Parcel in) {
-            switch (in.readInt()) {
-                case 0:
-                    return QuestionType.NOTQUESTION;
+            int value = in.readInt();
+            QuestionType type = NOTQUESTION;
+            switch (value){
                 case 1:
-                    return QuestionType.FILLIN;
+                    type = FILLIN;
+                    break;
                 case 2:
-                    return QuestionType.TF;
+                    type = TF;
+                    break;
                 case 3:
-                    return QuestionType.SINGLECHOOSE;
+                    type = SINGLECHOOSE;
+                    break;
                 case 4:
-                    return QuestionType.MUTTICHOOSE;
+                    type = MUTTICHOOSE;
+                    break;
                 case 5:
-                    return QuestionType.DISCUSS;
+                    type = DISCUSS;
+                    break;
+                default:
+                    break;
             }
-            return QuestionType.NOTQUESTION;
+            return type;
         }
 
         @Override

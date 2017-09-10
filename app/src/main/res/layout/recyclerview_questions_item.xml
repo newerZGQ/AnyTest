@@ -7,7 +7,7 @@
     <TextView
         android:id="@+id/out_layout"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="200dp"
         android:background="@color/colorOrange" />
 
     <TextView
@@ -15,20 +15,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="64dp"
-        android:layout_marginTop="40dp"
-        android:text="填空题"
+        android:layout_marginTop="60dp"
         android:textColor="@color/cardview_light_background"
-        android:textSize="20sp" />
+        android:textSize="23sp" />
 
     <TextView
         android:id="@+id/qst_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="64dp"
-        android:layout_marginTop="100dp"
-        android:text="共45题，收藏34题"
+        android:layout_marginTop="150dp"
         android:textColor="@color/cardview_light_background"
-        android:textSize="12sp" />
+        android:textSize="14sp" />
 
 
 </RelativeLayout>

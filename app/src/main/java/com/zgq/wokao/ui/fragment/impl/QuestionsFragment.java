@@ -6,12 +6,15 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.zgq.wokao.R;
+import com.zgq.wokao.model.paper.QuestionType;
+import com.zgq.wokao.model.viewdate.QstData;
 import com.zgq.wokao.ui.adapter.QuestionsInfoAdapter;
 import com.zgq.wokao.ui.fragment.BaseFragment;
 import com.zgq.wokao.ui.presenter.impl.QuestionsPresenterImpl;
@@ -25,6 +28,8 @@ import com.zgq.wokao.ui.presenter.impl.QuestionsPresenterImpl;
  * create an instance of this fragment.
  */
 public class QuestionsFragment extends BaseFragment {
+
+    private static final String TAG = QuestionsFragment.class.getSimpleName();
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -107,7 +112,7 @@ public class QuestionsFragment extends BaseFragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface QuestionsFragmentListener {
-
+        void startFromQuestionFrag(String paperId, QuestionType type);
     }
 
     private void initQstList(View parent) {
@@ -118,7 +123,14 @@ public class QuestionsFragment extends BaseFragment {
         LinearLayout.LayoutParams lp = new LinearLayout.
                 LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         qstPager.setLayoutParams(lp);
-        qstPager.setAdapter(new QuestionsInfoAdapter(presenter.getQstLists()));
+        qstPager.setAdapter(new QuestionsInfoAdapter(presenter.getQstLists(), new QuestionsInfoAdapter.ItemClickListener() {
+            @Override
+            public void onItemClicked(int position) {
+                QstData qstData = presenter.getQstLists().get(position);
+                Log.d(TAG,position + ": " +qstData.getType());
+                mListener.startFromQuestionFrag(qstData.getPaperId(),qstData.getType());
+            }
+        }));
     }
 
 }
