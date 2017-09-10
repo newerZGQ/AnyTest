@@ -20,8 +20,6 @@ import java.util.ArrayList;
 
 public class SchedulePresenter implements ISchedulePresenter {
     public static final String TAG = SchedulePresenter.class.getSimpleName();
-    private IScheduleView scheduleView;
-    private Context context;
     private PaperAction paperAction = PaperAction.getInstance();
 
     private ArrayList<IExamPaper> schedulePapers = new ArrayList<>();
@@ -29,8 +27,6 @@ public class SchedulePresenter implements ISchedulePresenter {
     private ArrayList<ArrayList<QstData>> qstDatasList = new ArrayList<>();
 
     public SchedulePresenter(IScheduleView scheduleView, Context context){
-        this.scheduleView = scheduleView;
-        this.context = context;
         getData();
     }
 
@@ -69,7 +65,7 @@ public class SchedulePresenter implements ISchedulePresenter {
     }
 
     @Override
-    public void notifyDataChanged() {
+    public void updateDatas() {
         getData();
     }
 

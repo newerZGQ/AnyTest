@@ -38,7 +38,7 @@ import butterknife.ButterKnife;
 
 public class HomeActivity extends BaseActivity implements
         ScheduleFragment.OnScheduleFragmentListener,
-        PapersFragment.OnPaperFragmentListener,
+        PapersFragment.PaperFragmentListener,
         QuestionsFragment.QuestionsFragmentListener,
         IHomeView,
         View.OnClickListener {
@@ -335,6 +335,21 @@ public class HomeActivity extends BaseActivity implements
         }
         showToolBar();
         super.onBackPressed();
+    }
+
+    @Override
+    public void onPaperDeleted(String paperId) {
+        scheduleFragment.onPaperDataChanged();
+    }
+
+    @Override
+    public void onPaperExitSchedule(String paperId) {
+        scheduleFragment.onPaperDataChanged();
+    }
+
+    @Override
+    public void onPaperInSchedule(String paperId) {
+        scheduleFragment.onPaperDataChanged();
     }
 
     public class HomeFragmentPagerAdapter extends FragmentPagerAdapter {

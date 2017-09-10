@@ -10,5 +10,5 @@ import java.util.ArrayList;
  */
 
 public interface IScheduleView {
-    void scheduleInfoChangeData(ScheduleData data);
+    void onPaperDataChanged();
 }

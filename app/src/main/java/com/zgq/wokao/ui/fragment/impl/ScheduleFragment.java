@@ -157,8 +157,7 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
         getActivity().startActivity(intent);
     }
 
-    @Override
-    public void scheduleInfoChangeData(ScheduleData data) {
+    private void updateScheduleInfo(ScheduleData data) {
         scheduleInfoView.changeContent(data.getAccuracy(), String.valueOf(data.getCountToday())
                 , String.valueOf(data.getCountEveryday()));
     }
@@ -218,6 +217,15 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
         }
     }
 
+    @Override
+    public void onPaperDataChanged() {
+        presenter.updateDatas();
+        checkPaperCount();
+        ((SchedulePagerAdapter)viewPager.getAdapter()).setScheduleDatas(presenter.getScheduleDatas());
+        viewPager.getAdapter().notifyDataSetChanged();
+        viewPager.setCurrentItem(0);
+    }
+
 
     /**
      * This interface must be implemented by activities that contain this
@@ -235,7 +243,7 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
         @Override
         public void onPageSelected(int position) {
             currentPosition = position;
-            scheduleInfoChangeData(presenter.getScheduleInfo(position));
+            updateScheduleInfo(presenter.getScheduleInfo(position));
         }
 
         @Override

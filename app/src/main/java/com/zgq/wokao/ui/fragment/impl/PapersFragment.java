@@ -28,7 +28,7 @@ public class PapersFragment extends BaseFragment implements IPapersView{
 
     private static final String TAG = "PapersFragment";
 
-    private OnPaperFragmentListener mListener;
+    private PaperFragmentListener mListener;
     @BindView(R.id.paper_list)
     RecyclerView paperList;
     @BindView(R.id.cover_view)
@@ -67,11 +67,11 @@ public class PapersFragment extends BaseFragment implements IPapersView{
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnPaperFragmentListener) {
-            mListener = (OnPaperFragmentListener) context;
+        if (context instanceof PaperFragmentListener) {
+            mListener = (PaperFragmentListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnPaperFragmentListener");
+                    + " must implement PaperFragmentListener");
         }
     }
 
@@ -109,6 +109,7 @@ public class PapersFragment extends BaseFragment implements IPapersView{
                 Snackbar.make(rootView,"确定要删除么",Snackbar.LENGTH_LONG).setAction("确定", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        mListener.onPaperDeleted(info.getId());
                         presenter.deletePaper(info.getId());
                         updateList();
                     }
@@ -121,6 +122,7 @@ public class PapersFragment extends BaseFragment implements IPapersView{
                     @Override
                     public void onClick(View view) {
                         presenter.removeFromSchedule(info.getId());
+                        mListener.onPaperExitSchedule(info.getId());
                         updateList();
                     }
                 }).show();
@@ -132,6 +134,7 @@ public class PapersFragment extends BaseFragment implements IPapersView{
                     @Override
                     public void onClick(View view) {
                         presenter.addToSchedule(info.getId());
+                        mListener.onPaperInSchedule(info.getId());
                         updateList();
                     }
                 }).show();
@@ -173,8 +176,10 @@ public class PapersFragment extends BaseFragment implements IPapersView{
         checkPaperCount();
     }
 
-    public interface OnPaperFragmentListener {
-
+    public interface PaperFragmentListener {
+        void onPaperDeleted(String paperId);
+        void onPaperExitSchedule(String paperId);
+        void onPaperInSchedule(String paperId);
     }
 
 }
