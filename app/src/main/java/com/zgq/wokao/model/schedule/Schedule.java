@@ -16,7 +16,7 @@ public class Schedule extends RealmObject implements ISchedule, CascadeDeleteabl
     //是否开启学习计划
     private boolean isOpened;
     //默认每天学习任务20题
-    private int dailyCount = 20;
+    private int dailyCount = 50;
     private String lastStudyType = QuestionType.FILLIN.name();
     private int lastStudyNum = 0;
     private RealmList<DailyRecord> dailyRecords = new RealmList<>();
