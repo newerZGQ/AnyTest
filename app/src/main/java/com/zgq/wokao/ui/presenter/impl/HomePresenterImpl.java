@@ -8,8 +8,6 @@ import com.zgq.wokao.action.paper.impl.PaperAction;
 import com.zgq.wokao.action.paper.impl.StudySummaryAction;
 import com.zgq.wokao.action.parser.IParserAction;
 import com.zgq.wokao.action.parser.ParserAction;
-import com.zgq.wokao.exception.ParseException;
-import com.zgq.wokao.model.paper.IExamPaper;
 import com.zgq.wokao.model.total.StudySummary;
 import com.zgq.wokao.model.total.TotalDailyCount;
 import com.zgq.wokao.ui.presenter.IHomePrerenter;
@@ -29,29 +27,10 @@ import io.realm.RealmList;
 public class HomePresenterImpl implements IHomePrerenter{
 
     private IHomeView homeView;
-    private IPaperAction paperAction = PaperAction.getInstance();
-    private IParserAction parserAction = ParserAction.getInstance();
     private StudySummaryAction summaryAction = StudySummaryAction.getInstance();
     private StudySummary studySummary = summaryAction.getStudySummary();
     public HomePresenterImpl(IHomeView homeView){
         this.homeView = homeView;
-        initListener();
-    }
-
-    private void initListener(){
-        parserAction.setListener(new ParserAction.ParseResultListener() {
-            @Override
-            public void onParseSuccess(String paperId) {
-                homeView.setNeedUpdateData(true);
-                homeView.notifyDataChanged();
-                homeView.hideLoadingView();
-            }
-
-            @Override
-            public void onParseError(String error) {
-                //show error toast
-            }
-        });
     }
 
     public void setSlideaMenuLayout(StudySummary studySummary){
@@ -111,14 +90,5 @@ public class HomePresenterImpl implements IHomePrerenter{
         for (int i = 0; i < 9; i++) {
             yValue.add(i * 60);
         }
-    }
-    @Override
-    public IExamPaper parseFromFile(String filePath) {
-        try {
-            return parserAction.parseFromFile(filePath);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 }

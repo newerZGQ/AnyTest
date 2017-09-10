@@ -49,6 +49,8 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".ui.activity.FileSelectorActivity"/>
+
         <service android:name=".executor.ParserService">
 
         </service>

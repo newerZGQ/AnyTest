@@ -31,7 +31,17 @@ public class ParserAction implements IParserAction {
     private ParserHelper parserHelper = ParserHelper.getInstance();
 
     private Context context;
-    private ParseResultListener listener;
+    private ParseResultListener listener = new ParseResultListener() {
+        @Override
+        public void onParseSuccess(String paperId) {
+
+        }
+
+        @Override
+        public void onParseError(String error) {
+
+        }
+    };
     private ParseBroadcastReceiver receiver;
     private ParserService parserService;
 
@@ -44,12 +54,12 @@ public class ParserAction implements IParserAction {
     }
 
 
-    public static ParserAction getInstance(){
+    public static ParserAction getInstance(ParseResultListener listener){
+        InstanceHolder.instance.setListener(listener);
         return InstanceHolder.instance;
     }
 
-    @Override
-    public void setListener(ParseResultListener listener){
+    private void setListener(ParseResultListener listener){
         this.listener = listener;
     }
 
