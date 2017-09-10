@@ -10,19 +10,19 @@ import java.util.List;
  */
 
 public interface IPaperInfoDao extends IScheduleDao {
-    public List<IPaperInfo> getAllPaperInfo();
+    List<IPaperInfo> getAllPaperInfo();
 
-    public List<IPaperInfo> getPaperInfosInSchdl();
+    List<IPaperInfo> getPaperInfosInSchdl();
 
-    public void star(IExamPaper paper);
+    void star(IExamPaper paper);
 
-    public void unStar(IExamPaper paper);
+    void unStar(IExamPaper paper);
 
-    public void setTitle(IExamPaper paper, String title);
+    void setTitle(IExamPaper paper, String title);
 
-    public void addToSchedule(IExamPaper paper);
+    void addToSchedule(IExamPaper paper);
 
-    public void removeFromSchedule(IExamPaper paper);
+    void removeFromSchedule(IExamPaper paper);
 
-    public void setLastStudyDate(IExamPaper paper);
+    void setLastStudyDate(IExamPaper paper);
 }

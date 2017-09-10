@@ -54,8 +54,8 @@ public abstract class BaseViewPagerAdapter extends PagerAdapter implements BaseS
     }
 
     public interface OnStudiedListener {
-        public void onFalse();
+        void onFalse();
 
-        public void onCorrect();
+        void onCorrect();
     }
 }

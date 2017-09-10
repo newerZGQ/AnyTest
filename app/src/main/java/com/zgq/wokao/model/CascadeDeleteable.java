@@ -5,5 +5,5 @@ package com.zgq.wokao.model;
  */
 
 public interface CascadeDeleteable {
-    public void cascadeDelete();
+    void cascadeDelete();
 }

@@ -14,15 +14,15 @@ import io.realm.RealmList;
  * Created by zgq on 16-6-18.
  */
 public interface IExamPaper extends Searchable {
-    public IPaperInfo getPaperInfo();
+     IPaperInfo getPaperInfo();
 
-    public RealmList<FillInQuestion> getFillInQuestions();
+     RealmList<FillInQuestion> getFillInQuestions();
 
-    public RealmList<TFQuestion> getTfQuestions();
+     RealmList<TFQuestion> getTfQuestions();
 
-    public RealmList<SglChoQuestion> getSglChoQuestions();
+     RealmList<SglChoQuestion> getSglChoQuestions();
 
-    public RealmList<MultChoQuestion> getMultChoQuestions();
+     RealmList<MultChoQuestion> getMultChoQuestions();
 
-    public RealmList<DiscussQuestion> getDiscussQuestions();
+     RealmList<DiscussQuestion> getDiscussQuestions();
 }

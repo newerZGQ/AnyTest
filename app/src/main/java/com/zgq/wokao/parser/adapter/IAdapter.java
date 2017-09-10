@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 
 public interface IAdapter<T> {
-    public QuestionType getType();
+    QuestionType getType();
 
-    public ArrayList<T> parse(String resource);
+    ArrayList<T> parse(String resource);
 }

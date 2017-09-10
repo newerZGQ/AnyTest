@@ -12,44 +12,44 @@ import io.realm.RealmList;
  */
 
 public interface IPaperInfo {
-    public String getId();
+    String getId();
 
-    public ISchedule getSchedule();
+    ISchedule getSchedule();
 
-    public void setInSchedule(boolean inInSchedule);
+    void setInSchedule(boolean inInSchedule);
 
-    public String getTitle();
+    String getTitle();
 
-    public void setTitle(String title);
+    void setTitle(String title);
 
-    public String getAuthor();
+    String getAuthor();
 
-    public void setAuthor(String author);
+    void setAuthor(String author);
 
-    public String getCreateDate();
+    String getCreateDate();
 
-    public void setCreateDate(String createDate);
+    void setCreateDate(String createDate);
 
-    public String getLastStudyDate();
+    String getLastStudyDate();
 
-    public void setLastStudyDate(String lastStudyDate);
+    void setLastStudyDate(String lastStudyDate);
 
-    public boolean isStared();
+    boolean isStared();
 
-    public void setStared(boolean stared);
+    void setStared(boolean stared);
 
-    public boolean isParseRight();
+    boolean isParseRight();
 
-    public void setParseRight(boolean parseRight);
+    void setParseRight(boolean parseRight);
 
-    public int getStudyCount();
+    int getStudyCount();
 
-    public void setStudyCount(int studyCount);
+    void setStudyCount(int studyCount);
 
-    public boolean isInSchedule();
+    boolean isInSchedule();
 
-    public ArrayList<QuestionType> getQuestionTypes();
+    ArrayList<QuestionType> getQuestionTypes();
 
-    public void addQuestionType(QuestionType type);
+    void addQuestionType(QuestionType type);
 
 }

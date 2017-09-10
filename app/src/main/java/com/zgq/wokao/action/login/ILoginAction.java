@@ -5,7 +5,7 @@ package com.zgq.wokao.action.login;
  */
 
 public interface ILoginAction {
-    public boolean isFirstTimeLogin();
+    boolean isFirstTimeLogin();
 
-    public void setFirstTimeLoginFalse();
+    void setFirstTimeLoginFalse();
 }

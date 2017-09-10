@@ -5,9 +5,9 @@ package com.zgq.wokao.model.paper.question.answer;
  */
 
 public interface IAnswer {
-    public String getContent();
+    String getContent();
 
-    public void setContent(String content);
+    void setContent(String content);
 
-    public abstract boolean hasAnswer();
+    boolean hasAnswer();
 }

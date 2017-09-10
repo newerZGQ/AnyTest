@@ -10,5 +10,5 @@ import java.util.ArrayList;
  */
 
 public interface IViewDataAction {
-    public ArrayList<QstData> getQstData(IExamPaper paper);
+    ArrayList<QstData> getQstData(IExamPaper paper);
 }

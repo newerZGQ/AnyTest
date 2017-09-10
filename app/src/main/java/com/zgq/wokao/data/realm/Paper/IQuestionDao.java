@@ -15,7 +15,7 @@ public interface IQuestionDao extends IQuestionInfoDao, IQuestionRecordDao {
      * @param questionId
      * @param question
      */
-    public void updateQuestion(String questionId, IQuestion question);
+    void updateQuestion(String questionId, IQuestion question);
 
     /**
      * 查询question
@@ -23,5 +23,5 @@ public interface IQuestionDao extends IQuestionInfoDao, IQuestionRecordDao {
      * @param questionId
      * @return
      */
-    public IQuestion queryQuestionById(String questionId, QuestionType type);
+    IQuestion queryQuestionById(String questionId, QuestionType type);
 }

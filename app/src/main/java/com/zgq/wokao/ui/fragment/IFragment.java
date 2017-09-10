@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
  */
 
 public interface IFragment {
-    public void setContext(Context context);
+    void setContext(Context context);
 
-    public LayoutInflater getInflater();
+    LayoutInflater getInflater();
 }

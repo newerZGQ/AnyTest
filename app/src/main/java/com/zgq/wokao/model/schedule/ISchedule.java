@@ -7,29 +7,29 @@ import com.zgq.wokao.model.paper.QuestionType;
  */
 
 public interface ISchedule {
-    public void open();
+    void open();
 
-    public void close();
+    void close();
 
-    public int getDailyCount();
+    int getDailyCount();
 
-    public void setDailyCount(int count);
+    void setDailyCount(int count);
 
-    public void addRecord();
+    void addRecord();
 
-    public DailyRecord getcurrentRecord();
+    DailyRecord getcurrentRecord();
 
-    public void recordPlus1();
+    void recordPlus1();
 
-    public String getLastStudyType();
+    String getLastStudyType();
 
-    public void setLastStudyType(QuestionType lastStudyType);
+    void setLastStudyType(QuestionType lastStudyType);
 
-    public int getLastStudyNum();
+    int getLastStudyNum();
 
-    public void setLastStudyNum(int lastStudyNum);
+    void setLastStudyNum(int lastStudyNum);
 
-    public void updateStudyInfo(boolean isCorrect);
+    void updateStudyInfo(boolean isCorrect);
 
-    public float getAccuracy();
+    float getAccuracy();
 }

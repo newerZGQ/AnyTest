@@ -9,11 +9,11 @@ import com.zgq.wokao.model.schedule.Schedule;
  */
 
 public interface IScheduleDao {
-    public void addRecord(Schedule schedule, DailyRecord dailyRecord);
+    void addRecord(Schedule schedule, DailyRecord dailyRecord);
 
-    public void setLastStudyInfo(String paperId, QuestionType questionType, int num);
+    void setLastStudyInfo(String paperId, QuestionType questionType, int num);
 
-    public QuestionType getLastStudyType(String paperId);
+    QuestionType getLastStudyType(String paperId);
 
-    public int getLastStudyNum(String paperId);
+    int getLastStudyNum(String paperId);
 }

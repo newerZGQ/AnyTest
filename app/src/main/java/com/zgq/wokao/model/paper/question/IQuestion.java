@@ -10,14 +10,14 @@ import com.zgq.wokao.model.paper.question.record.QuestionRecord;
  * Created by zgq on 16-6-18.
  */
 public interface IQuestion {
-    public QuestionBody getBody();
+    QuestionBody getBody();
 
-    public QuestionInfo getInfo();
+    QuestionInfo getInfo();
 
-    public Answer getAnswer();
+    Answer getAnswer();
 
-    public Options getOptions();
+    Options getOptions();
 
-    public QuestionRecord getRecord();
+    QuestionRecord getRecord();
 
 }

@@ -7,5 +7,5 @@ import com.zgq.wokao.model.paper.question.IQuestion;
  */
 
 public interface IQuestionRecordAction {
-    public void updateQuestionRecord(IQuestion question, boolean isCorrect);
+    void updateQuestionRecord(IQuestion question, boolean isCorrect);
 }

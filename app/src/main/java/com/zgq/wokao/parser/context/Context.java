@@ -7,11 +7,11 @@ import com.zgq.wokao.parser.context.item.ParserItem;
  */
 
 public interface Context<T extends ParserItem> {
-    public void init(int length);
+    void init(int length);
 
-    public void inContext(T t);
+    void inContext(T t);
 
-    public void deContext();
+    void deContext();
 
-    public T tail(int distance);
+    T tail(int distance);
 }

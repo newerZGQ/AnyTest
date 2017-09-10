@@ -12,15 +12,15 @@ import java.util.List;
  */
 
 public interface IPaperDao extends IPaperInfoDao, IPaperSchdlDao {
-    public List<NormalExamPaper> getAllPaper();
+    List<NormalExamPaper> getAllPaper();
 
-    public List<NormalExamPaper> getAllPaperInSchdl();
+    List<NormalExamPaper> getAllPaperInSchdl();
 
-    public List<Searchable> search(String query);
+    List<Searchable> search(String query);
 
-    public List<ExamPaperInfo> getSchedulePapers();
+    List<ExamPaperInfo> getSchedulePapers();
 
-    public void deleteById(String id);
+    void deleteById(String id);
 
-    public void updateStudyInfo(IExamPaper paper, boolean isCorrect);
+    void updateStudyInfo(IExamPaper paper, boolean isCorrect);
 }

@@ -5,5 +5,5 @@ package com.zgq.wokao.model.paper.question.body;
  */
 
 public interface IQuestionBody {
-    public String getContent();
+    String getContent();
 }

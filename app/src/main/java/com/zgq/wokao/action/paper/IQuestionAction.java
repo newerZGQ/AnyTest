@@ -11,7 +11,7 @@ import java.util.ArrayList;
  */
 
 public interface IQuestionAction extends IQuestionInfoAction, IQuestionRecordAction {
-    public ArrayList<IQuestion> getQuestins(IExamPaper paper, QuestionType type);
+    ArrayList<IQuestion> getQuestins(IExamPaper paper, QuestionType type);
 
     /**
      * 更新question，只能更新question的body，answer, options
@@ -19,7 +19,7 @@ public interface IQuestionAction extends IQuestionInfoAction, IQuestionRecordAct
      * @param questionId
      * @param question
      */
-    public void updateQuestion(String questionId, IQuestion question);
+    void updateQuestion(String questionId, IQuestion question);
 
     /**
      * 查询question
@@ -27,7 +27,7 @@ public interface IQuestionAction extends IQuestionInfoAction, IQuestionRecordAct
      * @param questionId
      * @return
      */
-    public IQuestion queryQuestionById(String questionId, QuestionType type);
+    IQuestion queryQuestionById(String questionId, QuestionType type);
 
-    public void updateQuestionRecord(IQuestion question, boolean isCorrect);
+    void updateQuestionRecord(IQuestion question, boolean isCorrect);
 }

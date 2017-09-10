@@ -14,23 +14,23 @@ import java.util.List;
  */
 
 public interface IPaperAction extends IPaperInfoAction, IPaperSchdlAction {
-    public List<NormalExamPaper> getAllPaper();
+    List<NormalExamPaper> getAllPaper();
 
-    public List<NormalExamPaper> getAllPaperInSchdl();
+    List<NormalExamPaper> getAllPaperInSchdl();
 
-    public void addExamPaper(IExamPaper paper);
+    void addExamPaper(IExamPaper paper);
 
-    public void deleteExamPaper(IExamPaper paper);
+    void deleteExamPaper(IExamPaper paper);
 
-    public void deleteExamPaper(String paperId);
+    void deleteExamPaper(String paperId);
 
-    public IExamPaper queryById(String id);
+    IExamPaper queryById(String id);
 
-    public IExamPaper parseAndSave(String filePath) throws FileNotFoundException, ParseException;
+    IExamPaper parseAndSave(String filePath) throws FileNotFoundException, ParseException;
 
-    public IExamPaper parseAndSave(InputStream inputStream) throws ParseException;
+    IExamPaper parseAndSave(InputStream inputStream) throws ParseException;
 
-    public float getTotalAccuracy(IExamPaper paper);
+    float getTotalAccuracy(IExamPaper paper);
 
-    public void updateAllStudyInfo(String paperId, IQuestion question, boolean isCorrect);
+    void updateAllStudyInfo(String paperId, IQuestion question, boolean isCorrect);
 }
