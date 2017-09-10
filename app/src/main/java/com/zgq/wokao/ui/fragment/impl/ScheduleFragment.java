@@ -23,8 +23,6 @@ import com.zgq.wokao.ui.view.IScheduleView;
 import com.zgq.wokao.ui.widget.ScheduleInfoView;
 import com.zgq.wokao.ui.widget.TaskSettingLayout;
 
-import java.util.ArrayList;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -97,7 +95,8 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
         scheduleInfoView.setOnClickListener(this);
         infoLayout.setOnClickListener(this);
         taskSettingLayout.setOnTaskSettingListener(this);
-        setViewPager(presenter.getScheduleDatas());
+        initViewPager();
+        initScheduleInfoView();
         presenter.checkSchedulesSize();
         return rootView;
     }
@@ -105,8 +104,9 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
     @Override
     public void onResume() {
         super.onResume();
-        viewPager.setCurrentItem(currentPosition);
-        presenter.scheduleInfoChangeData(currentPosition);
+//        onViewPagerDataChanged();
+//        viewPager.setCurrentItem(currentPosition);
+//        presenter.scheduleInfoChangeData(currentPosition);
     }
 
     @Override
@@ -137,39 +137,42 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
     }
 
     @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+    }
+
+    @Override
     public boolean onActivityBackPress() {
         return false;
     }
 
-    public void setViewPager(ArrayList<ScheduleData> scheduleDatas) {
-        if (scheduleDatas == null) {
-            return;
-        }
+    private void initViewPager() {
+        viewPager.setAdapter(new SchedulePagerAdapter(getContext(), presenter.getScheduleDatas(),
+                new SchedulePagerAdapter.OnViewClickListener() {
+                    @Override
+                    public void onClickTopLayout(int position) {
+                        mListener.goQuestionsList(presenter.getScheduleDatas().get(position).getPaperId());
+                    }
+                    @Override
+                    public void onClickStartBtn(int position, String paperId) {
+                        startStudy(paperId, presenter.getLastStudyType(paperId), presenter.getLastStudyPos(paperId));
+                    }
+                }));
+        viewPager.addOnPageChangeListener(new SchedulePageChangeListener());
+    }
+
+    private void onViewPagerDataChanged() {
+        ((SchedulePagerAdapter) viewPager.getAdapter()).setScheduleDatas(presenter.getScheduleDatas());
+        viewPager.getAdapter().notifyDataSetChanged();
+    }
+
+    private void initScheduleInfoView() {
         viewPager.post(new Runnable() {
             @Override
             public void run() {
                 scheduleInfoView.showBottom(0);
             }
         });
-        if (viewPager.getAdapter() == null) {
-            viewPager.setAdapter(new SchedulePagerAdapter(getContext(), scheduleDatas,
-                    new SchedulePagerAdapter.OnViewClickListener() {
-                        @Override
-                        public void onClickTopLayout(int position) {
-                            mListener.goQuestionsList(presenter.getScheduleDatas().get(position).getPaperId());
-                        }
-
-                        @Override
-                        public void onClickStartBtn(int position, String paperId) {
-                            startStudy(paperId, presenter.getLastStudyType(paperId), presenter.getLastStudyPos(paperId));
-                        }
-                    }));
-
-            viewPager.addOnPageChangeListener(new SchedulePageChangeListener());
-        } else {
-            ((SchedulePagerAdapter) viewPager.getAdapter()).setScheduleDatas(scheduleDatas);
-            viewPager.getAdapter().notifyDataSetChanged();
-        }
     }
 
     @Override
@@ -178,13 +181,13 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
         presenter.checkSchedulesSize();
     }
 
-    private void startStudy(String paperId, QuestionType type, int qstNum){
-        Intent intent = new Intent(getActivity(),AnswerStudyActivity.class);
+    private void startStudy(String paperId, QuestionType type, int qstNum) {
+        Intent intent = new Intent(getActivity(), AnswerStudyActivity.class);
         if (paperId != null && !paperId.equals("")) {
             intent.putExtra("paperId", paperId);
             intent.putExtra("qstType", (Parcelable) type);
-            intent.putExtra("qstNum",qstNum);
-        }else {
+            intent.putExtra("qstNum", qstNum);
+        } else {
             return;
         }
         getActivity().startActivity(intent);
@@ -242,9 +245,10 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
 
     @Override
     public void onTaskSelected(int task) {
-        scheduleInfoView.changDailyCount(task,200);
-        presenter.setDailyCount(currentPosition,task);
+        scheduleInfoView.changDailyCount(task, 200);
+        presenter.setDailyCount(currentPosition, task);
     }
+
 
     /**
      * This interface must be implemented by activities that contain this

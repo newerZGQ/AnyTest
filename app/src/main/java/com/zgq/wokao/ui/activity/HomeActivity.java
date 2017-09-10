@@ -224,6 +224,8 @@ public class HomeActivity extends BaseActivity implements
     private void initFragments(){
         scheduleFragment = ScheduleFragment.newInstance("", "");
         papersFragment = PapersFragment.newInstance();
+//        getSupportFragmentManager().beginTransaction().add(scheduleFragment, ScheduleFragment.class.getSimpleName());
+//        getSupportFragmentManager().beginTransaction().add(papersFragment, PapersFragment.class.getSimpleName());
     }
 
     private void initViewPager() {
@@ -246,9 +248,6 @@ public class HomeActivity extends BaseActivity implements
                         }
                         break;
                     case 1:
-                        if (positionOffset == 0) {
-//                            papersFragment.getPapersPresenter().notifyDataChanged();
-                        }
                         break;
                 }
             }
@@ -374,6 +373,10 @@ public class HomeActivity extends BaseActivity implements
         viewPager.setCurrentItem(1);
     }
 
+    private void hideAllFragment(){
+        getSupportFragmentManager().beginTransaction().hide(scheduleFragment).hide(papersFragment).commit();
+    }
+
 
     @Override
     public void showQuestionsFragment(String paperId) {
@@ -386,20 +389,6 @@ public class HomeActivity extends BaseActivity implements
         hideToolBar();
     }
 
-    @Override
-    public void showFragment(String fragmentTag) {
-
-    }
-
-    @Override
-    public void showProgressBar() {
-
-    }
-
-    @Override
-    public void hideProgressBar() {
-
-    }
 
     @Override
     public void notifyDataChanged() {
@@ -480,6 +469,7 @@ public class HomeActivity extends BaseActivity implements
             if (filePath == null || filePath.equals("")) {
                 return;
             }
+            hideAllFragment();
             showLoadingView();
             homePresenter.parseFromFile(filePath);
         }

@@ -45,7 +45,6 @@ public class HomePresenterImpl implements IHomePrerenter{
                 homeView.setNeedUpdateData(true);
                 homeView.notifyDataChanged();
                 homeView.hideLoadingView();
-                homeView.hideProgressBar();
             }
 
             @Override

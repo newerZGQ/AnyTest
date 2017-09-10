@@ -10,7 +10,6 @@ import java.util.ArrayList;
  */
 
 public interface IScheduleView {
-    public void setViewPager(ArrayList<ScheduleData> scheduleDatas);
     public void notifyDataChanged();
     public void scheduleInfoChangeData(ScheduleData data);
     public void onEmptyPapers();

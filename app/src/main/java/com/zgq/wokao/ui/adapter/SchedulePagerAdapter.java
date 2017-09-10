@@ -70,7 +70,6 @@ public class SchedulePagerAdapter extends PagerAdapter {
     @Override
     public void notifyDataSetChanged() {
         super.notifyDataSetChanged();
-
     }
 
     @Override

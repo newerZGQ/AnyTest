@@ -1,6 +1,7 @@
 package com.zgq.wokao.ui.presenter.impl;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.zgq.wokao.action.paper.impl.PaperAction;
 import com.zgq.wokao.action.viewdata.ViewDataAction;
@@ -63,7 +64,7 @@ public class SchedulePresenter implements ISchedulePresenter {
     }
 
     @Override
-    public ArrayList<ScheduleData> getScheduleDatas(){
+    public @NonNull ArrayList<ScheduleData> getScheduleDatas(){
         return scheduleDatas;
     }
 
