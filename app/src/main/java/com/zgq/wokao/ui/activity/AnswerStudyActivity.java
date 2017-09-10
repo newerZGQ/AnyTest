@@ -22,12 +22,10 @@ import android.widget.TextView;
 
 import com.umeng.analytics.MobclickAgent;
 import com.zgq.wokao.R;
-import com.zgq.wokao.Util.LogUtil;
 import com.zgq.wokao.action.paper.impl.PaperAction;
 import com.zgq.wokao.model.paper.NormalExamPaper;
 import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.paper.question.answer.IAnswer;
-import com.zgq.wokao.model.paper.question.body.QuestionBody;
 import com.zgq.wokao.model.paper.question.impl.DiscussQuestion;
 import com.zgq.wokao.model.paper.question.impl.FillInQuestion;
 import com.zgq.wokao.model.paper.question.impl.MultChoQuestion;
@@ -41,7 +39,6 @@ import com.zgq.wokao.ui.adapter.FillInQuestionAdapter;
 import com.zgq.wokao.ui.adapter.MultChoQuestionAdapter;
 import com.zgq.wokao.ui.adapter.SglChoQuestionAdapter;
 import com.zgq.wokao.ui.adapter.TFQuestionAdapter;
-import com.zgq.wokao.model.paper.Constant;
 import com.zgq.wokao.model.paper.question.answer.MyAnswer;
 import com.zgq.wokao.ui.presenter.impl.AnswerStudyPresenter;
 import com.zgq.wokao.ui.view.IStudyAnswerView;
@@ -125,7 +122,7 @@ public class AnswerStudyActivity extends AppCompatActivity implements IStudyAnsw
     private Realm realm = Realm.getDefaultInstance();
     private NormalExamPaper normalExamPaper;
 
-    private int currentQuestionType = Constant.FILLINQUESTIONTYPE;
+    private QuestionType currentQuestionType = QuestionType.FILLIN;
 
     private ArrayList<IQuestion> currentAllQuestions = new ArrayList<>();
     private ArrayList<Boolean> allAnsweredList = new ArrayList<>();
@@ -186,53 +183,57 @@ public class AnswerStudyActivity extends AppCompatActivity implements IStudyAnsw
     private void initPaperData() {
         Intent intent = getIntent();
         String paperId = intent.getStringExtra("paperId");
-        currentQuestionType = intent.getIntExtra("qstType", Constant.FILLINQUESTIONTYPE);
+        currentQuestionType = intent.getParcelableExtra("qstType");
+        Log.d(TAG,"current "+currentQuestionType);
+        Log.d(TAG,"current "+paperId);
         normalExamPaper = (NormalExamPaper) PaperAction.getInstance().queryById(paperId);
     }
 
     //初始化监听器
-     private void initStudiedListener(){
-         onStudiedListener = new BaseViewPagerAdapter.OnStudiedListener() {
-             @Override
-             public void onFalse() {
-                 setQuestionStudyInfo(viewPager.getCurrentItem());
-             }
+    private void initStudiedListener() {
+        onStudiedListener = new BaseViewPagerAdapter.OnStudiedListener() {
+            @Override
+            public void onFalse() {
+                setQuestionStudyInfo(viewPager.getCurrentItem());
+            }
 
-             @Override
-             public void onCorrect() {
-                 setQuestionStudyInfo(viewPager.getCurrentItem());
-             }
-         };
-     }
+            @Override
+            public void onCorrect() {
+                setQuestionStudyInfo(viewPager.getCurrentItem());
+            }
+        };
+    }
 
     //初始化当前的问题
     private void initCurrentQuestionList() {
         currentAllQuestions.clear();
         switch (currentQuestionType) {
-            case Constant.FILLINQUESTIONTYPE:
+            case FILLIN:
                 for (FillInQuestion question : normalExamPaper.getFillInQuestions()) {
                     currentAllQuestions.add(question);
                 }
                 break;
-            case Constant.TFQUESTIONTYPE:
+            case TF:
                 for (TFQuestion question : normalExamPaper.getTfQuestions()) {
                     currentAllQuestions.add(question);
                 }
                 break;
-            case Constant.SGLCHOQUESTIONTYPE:
+            case SINGLECHOOSE:
                 for (SglChoQuestion question : normalExamPaper.getSglChoQuestions()) {
                     currentAllQuestions.add(question);
                 }
                 break;
-            case Constant.MULTCHOQUESTIONTYPE:
+            case MUTTICHOOSE:
                 for (MultChoQuestion question : normalExamPaper.getMultChoQuestions()) {
                     currentAllQuestions.add(question);
                 }
                 break;
-            case Constant.DISCUSSQUESTIONTYPE:
+            case DISCUSS:
                 for (DiscussQuestion question : normalExamPaper.getDiscussQuestions()) {
                     currentAllQuestions.add(question);
                 }
+                break;
+            default:
                 break;
         }
     }
@@ -280,8 +281,8 @@ public class AnswerStudyActivity extends AppCompatActivity implements IStudyAnsw
     }
 
     private boolean isNeedAnswer() {
-        if (currentQuestionType == Constant.TFQUESTIONTYPE || currentQuestionType == Constant.SGLCHOQUESTIONTYPE ||
-                currentQuestionType == Constant.MULTCHOQUESTIONTYPE) {
+        if (currentQuestionType == QuestionType.TF || currentQuestionType == QuestionType.SINGLECHOOSE ||
+                currentQuestionType == QuestionType.MUTTICHOOSE) {
             return true;
         }
         return false;
@@ -294,7 +295,7 @@ public class AnswerStudyActivity extends AppCompatActivity implements IStudyAnsw
         background.setVisibility(View.GONE);
         background.setOnClickListener(this);
         showAnswerButton.setOnClickListener(this);
-        if (currentQuestionType == Constant.TFQUESTIONTYPE || currentQuestionType == Constant.SGLCHOQUESTIONTYPE) {
+        if (currentQuestionType == QuestionType.TF || currentQuestionType == QuestionType.SINGLECHOOSE) {
             showAnswerButton.setVisibility(View.GONE);
         }
         setStared.setOnClickListener(this);
@@ -329,14 +330,13 @@ public class AnswerStudyActivity extends AppCompatActivity implements IStudyAnsw
         upDateBottomMenu(getCurrentQstAdapter().getCurrentPosition());
     }
 
-    private void setQuestionStudyInfo(int position){
+    private void setQuestionStudyInfo(int position) {
         if (currentMode == ALLQUESTIONMODE) {
-            Log.d(LogUtil.PREFIX,TAG +" " + currentAllQuestions.get(position).getRecord().getStudyNumber());
-            String info = "正确"+currentAllQuestions.get(position).getRecord().getCorrectNumber() + "/"
+            String info = "正确" + currentAllQuestions.get(position).getRecord().getCorrectNumber() + "/"
                     + currentAllQuestions.get(position).getRecord().getStudyNumber();
             studyInfo.setText(info);
         } else {
-            String info = "正确"+currentStarQuestions.get(position).getRecord().getCorrectNumber() + "/"
+            String info = "正确" + currentStarQuestions.get(position).getRecord().getCorrectNumber() + "/"
                     + currentAllQuestions.get(position).getRecord().getStudyNumber();
             studyInfo.setText(info);
         }
@@ -477,22 +477,41 @@ public class AnswerStudyActivity extends AppCompatActivity implements IStudyAnsw
         ObjectAnimator.ofFloat(bottomMenu, "translationY", bottomMenu.getHeight() - setStared.getHeight()).setDuration(300).start();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        updateLastStudyPosition();
+    }
+
+    private void updateLastStudyPosition() {
+        int position = 0;
+        if (currentMode == ALLQUESTIONMODE) {
+            position = currentAllQstAdapter.getLastPosition();
+        } else if (currentMode == STARQUESTIONMODE) {
+            position = currentStarQstAdapter.getLastPosition();
+        }
+        PaperAction.getInstance().updateLastStudyPosition(normalExamPaper, currentQuestionType, position);
+
+    }
+
     private PagerAdapter initCurrentAllQstAdapter() {
         switch (currentQuestionType) {
-            case Constant.FILLINQUESTIONTYPE:
+            case FILLIN:
                 currentAllQstAdapter = new FillInQuestionAdapter(currentAllQuestions, allAnsweredList, this);
                 break;
-            case Constant.DISCUSSQUESTIONTYPE:
+            case DISCUSS:
                 currentAllQstAdapter = new DiscussQuestionAdapter(currentAllQuestions, allAnsweredList, this);
                 break;
-            case Constant.TFQUESTIONTYPE:
+            case TF:
                 currentAllQstAdapter = new TFQuestionAdapter(currentAllQuestions, allAnsweredList, currentAllMyAnswer, this);
                 break;
-            case Constant.SGLCHOQUESTIONTYPE:
+            case SINGLECHOOSE:
                 currentAllQstAdapter = new SglChoQuestionAdapter(currentAllQuestions, allAnsweredList, currentAllMyAnswer, this);
                 break;
-            case Constant.MULTCHOQUESTIONTYPE:
+            case MUTTICHOOSE:
                 currentAllQstAdapter = new MultChoQuestionAdapter(currentAllQuestions, allAnsweredList, currentAllMyAnswer, this);
+                break;
+            default:
                 break;
         }
         currentAllQstAdapter.setPaperId(normalExamPaper.getPaperInfo().getId());
@@ -503,19 +522,19 @@ public class AnswerStudyActivity extends AppCompatActivity implements IStudyAnsw
     private PagerAdapter initCurrentStarQstAdapter() {
 
         switch (currentQuestionType) {
-            case Constant.FILLINQUESTIONTYPE:
+            case FILLIN:
                 currentStarQstAdapter = new FillInQuestionAdapter(currentStarQuestions, starAnsweredList, this);
                 break;
-            case Constant.DISCUSSQUESTIONTYPE:
+            case DISCUSS:
                 currentStarQstAdapter = new DiscussQuestionAdapter(currentStarQuestions, starAnsweredList, this);
                 break;
-            case Constant.TFQUESTIONTYPE:
+            case TF:
                 currentStarQstAdapter = new TFQuestionAdapter(currentStarQuestions, starAnsweredList, currentStarMyAnswer, this);
                 break;
-            case Constant.SGLCHOQUESTIONTYPE:
+            case SINGLECHOOSE:
                 currentStarQstAdapter = new SglChoQuestionAdapter(currentStarQuestions, starAnsweredList, currentStarMyAnswer, this);
                 break;
-            case Constant.MULTCHOQUESTIONTYPE:
+            case MUTTICHOOSE:
                 currentStarQstAdapter = new MultChoQuestionAdapter(currentStarQuestions, starAnsweredList, currentStarMyAnswer, this);
                 break;
         }
@@ -590,8 +609,8 @@ public class AnswerStudyActivity extends AppCompatActivity implements IStudyAnsw
         viewPager.setVisibility(View.INVISIBLE);
         bottomMenu.setVisibility(View.INVISIBLE);
 
-        switch (currentQuestionType){
-            case Constant.FILLINQUESTIONTYPE:
+        switch (currentQuestionType) {
+            case FILLIN:
                 if (editLayout == null) {
                     editStub = (ViewStub) findViewById(R.id.edit_fillin);
                     editStub.inflate();
@@ -602,16 +621,17 @@ public class AnswerStudyActivity extends AppCompatActivity implements IStudyAnsw
                 EditText answer = (EditText) editLayout.findViewById(R.id.edit_fillin_answer);
                 FillInQuestion question = null;
                 int position = viewPager.getCurrentItem();
-                if (currentMode == ALLQUESTIONMODE){
+                if (currentMode == ALLQUESTIONMODE) {
                     question = (FillInQuestion) currentAllQuestions.get(position);
-                }else if (currentMode == STARQUESTIONMODE){
+                } else if (currentMode == STARQUESTIONMODE) {
                     question = (FillInQuestion) currentStarQuestions.get(position);
                 }
                 if (question == null) return;
                 body.setText(question.getBody().getContent());
                 answer.setText(question.getAnswer().getContent());
                 break;
-            case Constant.TFQUESTIONTYPE:
+            case TF:
+                break;
 
         }
     }
@@ -625,25 +645,27 @@ public class AnswerStudyActivity extends AppCompatActivity implements IStudyAnsw
         bottomMenu.setVisibility(View.VISIBLE);
     }
 
-    private IQuestion getEditedQuestion(QuestionType type){
+    private IQuestion getEditedQuestion(QuestionType type) {
         IQuestion question = null;
-        switch (type.getIndex()){
-            case QuestionType.fillin_index:
-                String bodyStr = ((EditText)editLayout.findViewById(R.id.edit_fillin_body)).getText().toString();
-                String answerStr = ((EditText)editLayout.findViewById(R.id.edit_fillin_answer)).getText().toString();
+        switch (type) {
+            case FILLIN:
+                String bodyStr = ((EditText) editLayout.findViewById(R.id.edit_fillin_body)).getText().toString();
+                String answerStr = ((EditText) editLayout.findViewById(R.id.edit_fillin_answer)).getText().toString();
                 FillInQuestion fillInQuestion = new FillInQuestion.Builder().build();
                 fillInQuestion.getBody().setContent(bodyStr);
                 fillInQuestion.getAnswer().setContent(answerStr);
                 question = fillInQuestion;
                 break;
-            case QuestionType.tf_index:
+            case TF:
 
                 break;
-            case QuestionType.sglc_index:
+            case SINGLECHOOSE:
                 break;
-            case QuestionType.mtlc_index:
+            case MUTTICHOOSE:
                 break;
-            case QuestionType.disc_index:
+            case DISCUSS:
+                break;
+            default:
                 break;
         }
         return question;

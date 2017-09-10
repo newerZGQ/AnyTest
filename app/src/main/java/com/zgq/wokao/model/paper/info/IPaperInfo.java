@@ -2,7 +2,8 @@ package com.zgq.wokao.model.paper.info;
 
 import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.schedule.ISchedule;
-import com.zgq.wokao.model.schedule.Schedule;
+
+import java.util.ArrayList;
 
 import io.realm.RealmList;
 
@@ -11,42 +12,44 @@ import io.realm.RealmList;
  */
 
 public interface IPaperInfo {
-    public String getId();
-    public ISchedule getSchedule();
-    public void setInSchedule(boolean inInSchedule);
+    String getId();
 
-    public String getTitle();
+    ISchedule getSchedule();
 
-    public void setTitle(String title);
+    void setInSchedule(boolean inInSchedule);
 
-    public String getAuthor();
+    String getTitle();
 
-    public void setAuthor(String author);
+    void setTitle(String title);
 
-    public String getCreateDate();
+    String getAuthor();
 
-    public void setCreateDate(String createDate);
+    void setAuthor(String author);
 
-    public String getLastStudyDate();
+    String getCreateDate();
 
-    public void setLastStudyDate(String lastStudyDate);
+    void setCreateDate(String createDate);
 
-    public boolean isStared();
+    String getLastStudyDate();
 
-    public void setStared(boolean stared);
+    void setLastStudyDate(String lastStudyDate);
 
-    public boolean isParseRight();
+    boolean isStared();
 
-    public void setParseRight(boolean parseRight);
+    void setStared(boolean stared);
 
-    public int getStudyCount();
+    boolean isParseRight();
 
-    public void setStudyCount(int studyCount);
+    void setParseRight(boolean parseRight);
 
-    public boolean isInSchedule();
+    int getStudyCount();
 
-    public RealmList<QuestionType> getQuestionTypes();
+    void setStudyCount(int studyCount);
 
-    public void addQuestionType(QuestionType type);
+    boolean isInSchedule();
+
+    ArrayList<QuestionType> getQuestionTypes();
+
+    void addQuestionType(QuestionType type);
 
 }

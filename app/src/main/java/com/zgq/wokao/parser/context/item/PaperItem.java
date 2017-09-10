@@ -8,7 +8,7 @@ public class PaperItem implements ParserItem {
 
     private PaperItemType type;
 
-    public PaperItem(PaperItemType type){
+    public PaperItem(PaperItemType type) {
         this.type = type;
     }
 

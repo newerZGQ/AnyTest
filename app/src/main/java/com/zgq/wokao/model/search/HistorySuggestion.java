@@ -9,15 +9,18 @@ import com.zgq.wokao.model.CascadeDeleteable;
  * Created by zgq on 2017/2/15.
  */
 
-public class HistorySuggestion implements SearchSuggestion{
+public class HistorySuggestion implements SearchSuggestion {
 
     private String content;
-    public HistorySuggestion(String content){
+
+    public HistorySuggestion(String content) {
         this.content = content;
     }
-    public HistorySuggestion(Parcel in){
+
+    public HistorySuggestion(Parcel in) {
         this.content = in.readString();
     }
+
     @Override
     public String getBody() {
         return content;

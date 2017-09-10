@@ -1,7 +1,7 @@
 package com.zgq.wokao.parser;
 
-import com.zgq.wokao.model.paper.question.IQuestion;
 import com.zgq.wokao.model.paper.QuestionType;
+import com.zgq.wokao.model.paper.question.IQuestion;
 import com.zgq.wokao.parser.adapter.IAdapter;
 import com.zgq.wokao.parser.adapter.impl.DiscussAdapter;
 import com.zgq.wokao.parser.adapter.impl.FillInAdapter;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * Created by zgq on 2017/2/19.
  */
 
-public class QuestionParser extends BaseParser implements IQuestionParser{
+public class QuestionParser extends BaseParser implements IQuestionParser {
 
     private QuestionType type;
     private IAdapter adapter;
@@ -24,29 +24,30 @@ public class QuestionParser extends BaseParser implements IQuestionParser{
 
     @Override
     public void setAdapter(QuestionType type) {
-        this.type = type;
-        switch (type.getIndex()){
-            case QuestionType.fillin_index:
+        switch (type) {
+            case FILLIN:
                 adapter = new FillInAdapter();
                 break;
-            case QuestionType.tf_index:
+            case TF:
                 adapter = new TFAdapter();
                 break;
-            case QuestionType.sglc_index:
+            case SINGLECHOOSE:
                 adapter = new SglChoAdapter();
                 break;
-            case QuestionType.mtlc_index:
+            case MUTTICHOOSE:
                 adapter = new MultChoAdapter();
                 break;
-            case QuestionType.disc_index:
+            case DISCUSS:
                 adapter = new DiscussAdapter();
+                break;
+            default:
                 break;
         }
     }
 
     @Override
     public ArrayList<IQuestion> parse(PaperParser.Topic resource) {
-        results =  adapter.parse(resource.getContent());
-        return  results;
+        results = adapter.parse(resource.getContent());
+        return results;
     }
 }

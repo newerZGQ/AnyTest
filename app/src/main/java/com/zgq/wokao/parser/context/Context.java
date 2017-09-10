@@ -6,9 +6,12 @@ import com.zgq.wokao.parser.context.item.ParserItem;
  * Created by zgq on 2017/2/20.
  */
 
-public interface Context <T extends ParserItem>{
-    public void init(int length);
-    public void inContext(T t);
-    public void deContext();
-    public T tail(int distance);
+public interface Context<T extends ParserItem> {
+    void init(int length);
+
+    void inContext(T t);
+
+    void deContext();
+
+    T tail(int distance);
 }

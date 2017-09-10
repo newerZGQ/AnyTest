@@ -10,8 +10,9 @@ import java.io.InputStream;
  */
 
 public interface IParserAction {
-    public IExamPaper parseFromFile(String filePath) throws ParseException;
-    public IExamPaper parseFromIS(InputStream inputStream);
-    public IExamPaper parseFromString(String content);
-    public void setListener(ParserAction.ParseResultListener listener);
+    IExamPaper parseFromFile(String filePath) throws ParseException;
+
+    IExamPaper parseFromIS(InputStream inputStream);
+
+    IExamPaper parseFromString(String content);
 }

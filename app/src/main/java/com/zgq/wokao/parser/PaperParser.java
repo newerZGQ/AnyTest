@@ -1,8 +1,8 @@
 package com.zgq.wokao.parser;
 
 import com.zgq.wokao.exception.ParseException;
-import com.zgq.wokao.model.paper.info.ExamPaperInfo;
 import com.zgq.wokao.model.paper.QuestionType;
+import com.zgq.wokao.model.paper.info.ExamPaperInfo;
 import com.zgq.wokao.parser.context.PaperContext;
 import com.zgq.wokao.parser.context.item.PaperItemType;
 
@@ -17,7 +17,7 @@ import java.util.ArrayList;
  * Created by zgq on 2017/2/18.
  */
 
-public class PaperParser extends BaseParser implements IPaperParser{
+public class PaperParser extends BaseParser implements IPaperParser {
 
     private InputStream is;
     private PaperContext context = new PaperContext();
@@ -26,11 +26,11 @@ public class PaperParser extends BaseParser implements IPaperParser{
 
     private int contextLength = 5;
 
-    public PaperParser(){
+    public PaperParser() {
         initParam();
     }
 
-    public PaperParser initParam(){
+    public PaperParser initParam() {
         context.init(contextLength);
         return this;
     }
@@ -44,7 +44,7 @@ public class PaperParser extends BaseParser implements IPaperParser{
     }
 
     private ArrayList<Topic> parse() throws ParseException, IOException {
-        if (is == null){
+        if (is == null) {
             throw new ParseException("输入流为空");
         }
         String line = "";
@@ -52,39 +52,39 @@ public class PaperParser extends BaseParser implements IPaperParser{
 
         boolean hasTitle = true;
         boolean hasAuthor = true;
-        QuestionType topicType = QuestionType.fillin;
+        QuestionType topicType = QuestionType.FILLIN;
         StringBuilder ctBuilder = new StringBuilder();
 //        int count = 0;
-        while((line = br.readLine()) != null){
+        while ((line = br.readLine()) != null) {
 //            System.out.println("----->>"+count++);
             if (line.equals("")) continue;
-            if (hasTitle && getTopicType(line) == QuestionType.notQst){
+            if (hasTitle && getTopicType(line) == QuestionType.NOTQUESTION) {
                 parseTitle(line);
                 context.inContext(PaperItemType.title);
                 continue;
             }
-            if (hasAuthor && getTopicType(line) == QuestionType.notQst){
+            if (hasAuthor && getTopicType(line) == QuestionType.NOTQUESTION) {
                 parseAuthor(line);
                 context.inContext(PaperItemType.author);
                 continue;
             }
-            if (getTopicType(line) != QuestionType.notQst){
+            if (getTopicType(line) != QuestionType.NOTQUESTION) {
 
                 hasTitle = false;
                 hasAuthor = false;
                 //存储上个循环的结果
-                Topic topic = new Topic(topicType,ctBuilder.toString());
+                Topic topic = new Topic(topicType, ctBuilder.toString());
                 topicLists.add(topic);
                 //刷新数据
                 topicType = getTopicType(line);
-                ctBuilder.delete(0,ctBuilder.length());
+                ctBuilder.delete(0, ctBuilder.length());
                 context.inContext(PaperItemType.topic);
-            }else{
+            } else {
                 context.inContext(PaperItemType.other);
-                ctBuilder.append("\n"+line);
+                ctBuilder.append("\n" + line);
             }
         }
-        Topic topic = new Topic(topicType,ctBuilder.toString());
+        Topic topic = new Topic(topicType, ctBuilder.toString());
         topicLists.add(topic);
         return topicLists;
     }
@@ -102,28 +102,28 @@ public class PaperParser extends BaseParser implements IPaperParser{
         return null;
     }
 
-    private QuestionType getTopicType(String line){
+    private QuestionType getTopicType(String line) {
         if (line.contains("填空") &&
                 isTopicNumber(line))
-            return QuestionType.fillin;
+            return QuestionType.FILLIN;
         if (line.contains("判断") &&
                 isTopicNumber(line))
-            return QuestionType.tf;
+            return QuestionType.TF;
         if (line.contains("单")
                 && line.contains("选")
                 && isTopicNumber(line))
-            return QuestionType.sglc;
+            return QuestionType.SINGLECHOOSE;
         if (line.contains("多")
                 && line.contains("选")
                 && isTopicNumber(line))
-            return QuestionType.mtlc;
+            return QuestionType.MUTTICHOOSE;
         if ((line.contains("简答") || line.contains("问答"))
                 && isTopicNumber(line))
-            return QuestionType.disc;
-        return QuestionType.notQst;
+            return QuestionType.DISCUSS;
+        return QuestionType.NOTQUESTION;
     }
 
-    private boolean isStartWithNumber(String s){
+    private boolean isStartWithNumber(String s) {
         if (s.startsWith("一") ||
                 s.startsWith("二") ||
                 s.startsWith("三") ||
@@ -144,34 +144,34 @@ public class PaperParser extends BaseParser implements IPaperParser{
                 s.startsWith("8") ||
                 s.startsWith("9") ||
                 s.startsWith("10")
-                ){
+                ) {
             return true;
         }
         return false;
     }
 
-    private void parseTitle(String s){
-        if (getTopicType(s) == QuestionType.notQst &&
-                !s.startsWith("作者")){
+    private void parseTitle(String s) {
+        if (getTopicType(s) == QuestionType.NOTQUESTION &&
+                !s.startsWith("作者")) {
             info.setTitle(s);
         }
     }
 
-    private void parseAuthor(String s){
-        if (getTopicType(s) == QuestionType.notQst &&
+    private void parseAuthor(String s) {
+        if (getTopicType(s) == QuestionType.NOTQUESTION &&
                 s.startsWith("作者")) {
             info.setAuthor(s);
         }
     }
 
-    private boolean isTopicNumber(String s){
-        if (isStartWithNumber(s)){
+    private boolean isTopicNumber(String s) {
+        if (isStartWithNumber(s)) {
             return true;
         }
         if (s.startsWith("(") ||
-                s.startsWith("（") ){
+                s.startsWith("（")) {
             s = s.substring(1);
-            if (isStartWithNumber(s)){
+            if (isStartWithNumber(s)) {
                 return true;
             }
         }
@@ -179,7 +179,7 @@ public class PaperParser extends BaseParser implements IPaperParser{
     }
 
 
-    public static class Topic{
+    public static class Topic {
         private QuestionType type;
         private String content;
 

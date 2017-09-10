@@ -6,7 +6,7 @@ package com.zgq.wokao.data;
 
 public class SearchDataHelper {
 
-    public static void findSuggestion(){
+    public static void findSuggestion() {
 
     }
 }

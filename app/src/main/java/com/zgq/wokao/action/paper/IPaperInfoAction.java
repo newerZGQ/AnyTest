@@ -10,17 +10,29 @@ import java.util.List;
  */
 
 public interface IPaperInfoAction {
-    public List<IPaperInfo> getAllPaperInfo();
-    public List<IPaperInfo> getPaperInfosInSchdl();
-    public void deletePaperInfo(IPaperInfo paperInfo);
-    public void star(IExamPaper paper);
-    public void star(String paperId);
-    public void unStar(IExamPaper paper);
-    public void unstar(String paperId);
-    public void setTitle(IExamPaper paper,String title);
-    public void addToSchedule(IExamPaper paper);
-    public void removeFromSchedule(IExamPaper paper);
-    public void addToSchedule(String paperId);
-    public void removeFromSchedule(String paperId);
-    public void setLastStudyDate(IExamPaper paper);
+    List<IPaperInfo> getAllPaperInfo();
+
+    List<IPaperInfo> getPaperInfosInSchdl();
+
+    void deletePaperInfo(IPaperInfo paperInfo);
+
+    void star(IExamPaper paper);
+
+    void star(String paperId);
+
+    void unStar(IExamPaper paper);
+
+    void unstar(String paperId);
+
+    void setTitle(IExamPaper paper, String title);
+
+    void addToSchedule(IExamPaper paper);
+
+    void removeFromSchedule(IExamPaper paper);
+
+    void addToSchedule(String paperId);
+
+    void removeFromSchedule(String paperId);
+
+    void setLastStudyDate(IExamPaper paper);
 }

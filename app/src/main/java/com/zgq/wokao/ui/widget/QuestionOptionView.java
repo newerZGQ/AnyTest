@@ -24,6 +24,7 @@ public class QuestionOptionView extends LinearLayout {
     private TextView optionLabel;
     private TextView optionText;
     private Context context;
+
     public QuestionOptionView(Context context) {
         super(context);
         this.context = context;
@@ -35,23 +36,24 @@ public class QuestionOptionView extends LinearLayout {
         this.context = context;
         init();
     }
-    private void init(){
+
+    private void init() {
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.setMargins(0,DensityUtil.dip2px(context,8),0,0);
+        layoutParams.setMargins(0, DensityUtil.dip2px(context, 8), 0, 0);
         this.setLayoutParams(layoutParams);
         this.setOrientation(HORIZONTAL);
 
-        int dimen = DensityUtil.dip2px(context,32f);
+        int dimen = DensityUtil.dip2px(context, 32f);
         optionLabel = new TextView(context);
         optionLabel.setGravity(Gravity.CENTER);
         optionLabel.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
         optionLabel.setBackground(context.getResources().getDrawable(R.drawable.circle_background_option_unselected));
 
-        LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(dimen,dimen);
+        LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(dimen, dimen);
 //        params1.setMarginStart(DensityUtil.dip2px(context,13f));
-        params1.setMargins(DensityUtil.dip2px(context,13f),DensityUtil.dip2px(context,1f),0,0);
-        this.addView(optionLabel,params1);
+        params1.setMargins(DensityUtil.dip2px(context, 13f), DensityUtil.dip2px(context, 1f), 0, 0);
+        this.addView(optionLabel, params1);
 
         optionText = new TextView(context);
         optionText.setGravity(View.TEXT_ALIGNMENT_CENTER);
@@ -60,27 +62,27 @@ public class QuestionOptionView extends LinearLayout {
         optionText.setTextColor(context.getResources().getColor(R.color.colorBlack));
         optionText.setGravity(Gravity.START);
         LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params2.setMarginStart(DensityUtil.dip2px(context,16f));
-        this.addView(optionText,params2);
+        params2.setMarginStart(DensityUtil.dip2px(context, 16f));
+        this.addView(optionText, params2);
     }
 
-    public void setContent(String label,String content){
+    public void setContent(String label, String content) {
         optionLabel.setText(label);
         optionText.setText(content);
     }
 
-    public void setToCorrect(){
+    public void setToCorrect() {
         optionLabel.setBackground(context.getResources().getDrawable(R.drawable.circle_background_option_select_correct));
         optionLabel.setTextColor(context.getResources().getColor(R.color.colorWhite));
         optionText.setTextColor(context.getResources().getColor(R.color.colorGreen));
     }
 
-    public void setToWrong(){
+    public void setToWrong() {
         optionLabel.setBackground(context.getResources().getDrawable(R.drawable.circle_background_option_select_wrong));
         optionLabel.setTextColor(context.getResources().getColor(R.color.colorWhite));
     }
 
-    public void setUnselected(){
+    public void setUnselected() {
         optionLabel.setBackground(context.getResources().getDrawable(R.drawable.circle_background_option_unselected));
         optionLabel.setTextColor(context.getResources().getColor(R.color.colorFirstLevelText));
         optionText.setTextColor(context.getResources().getColor(R.color.colorBlack));
@@ -88,7 +90,7 @@ public class QuestionOptionView extends LinearLayout {
         currentMode = UNSELECTED;
     }
 
-    public void setSelected(){
+    public void setSelected() {
         optionLabel.setBackground(context.getResources().getDrawable(R.drawable.circle_background_option_selected));
         optionLabel.setTextColor(context.getResources().getColor(R.color.colorWhite));
         optionText.setTextColor(context.getResources().getColor(R.color.colorBlue));
@@ -96,7 +98,7 @@ public class QuestionOptionView extends LinearLayout {
         currentMode = SELECTED;
     }
 
-    public int getCurrentMode(){
+    public int getCurrentMode() {
         return currentMode;
     }
 }

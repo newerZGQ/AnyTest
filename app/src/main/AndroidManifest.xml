@@ -29,7 +29,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
-        <activity android:name=".ui.activity.MainActivity" />
         <activity android:name=".ui.activity.AnswerStudyActivity">
             <intent-filter>
                 <action android:name="AnswerStudyActivity"/>
@@ -50,6 +49,8 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".ui.activity.FileSelectorActivity"/>
+
         <service android:name=".executor.ParserService">
 
         </service>
@@ -61,7 +62,6 @@
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="baidu" />
-
 
     </application>
 

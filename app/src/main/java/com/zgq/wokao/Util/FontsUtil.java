@@ -17,6 +17,6 @@ public class FontsUtil {
 
     public static void init(Context context) {
         AssetManager assetManager = context.getAssets();
-        sans_serif_thin = Typeface.createFromAsset(assetManager,"fonts/Roboto-Thin.ttf");
+        sans_serif_thin = Typeface.createFromAsset(assetManager, "fonts/Roboto-Thin.ttf");
     }
 }

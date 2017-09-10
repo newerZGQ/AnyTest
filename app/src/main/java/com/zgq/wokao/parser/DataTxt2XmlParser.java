@@ -53,7 +53,7 @@ public class DataTxt2XmlParser {
     }
 
     //解析txt文件，生成xml文件并返回xml文件名称
-    public String parse(File txt, File xml) throws IOException,ParseException {
+    public String parse(File txt, File xml) throws IOException, ParseException {
         if (!FileUtil.isTxtFile(txt)) return null;
         if (!FileUtil.isXmlFile(xml)) return null;
         txtFile = txt;
@@ -78,11 +78,11 @@ public class DataTxt2XmlParser {
 
         try {
             fileReader = new FileReader(txtFile);
-            fileWriter = new FileWriter(xmlFile,true);
+            fileWriter = new FileWriter(xmlFile, true);
             br = new BufferedReader(fileReader);
 
             fileWriter.write("<?xml version=\"1.0\"?>\n");
-            fileWriter.write("<"+examPaperNode+">"+"\n");
+            fileWriter.write("<" + examPaperNode + ">" + "\n");
 
             while ((line = br.readLine()) != null) {
                 if (count > 10) return;
@@ -94,14 +94,14 @@ public class DataTxt2XmlParser {
                     line = line.substring("%%".length(), line.length());
                     line = getXmlNodeElement(examPaperTitleNode, line);
 //                    Log.d("----------->>", line);
-                    fileWriter.write(line+"\n");
+                    fileWriter.write(line + "\n");
                     continue;
                 }
                 if (line.contains("&&")) {
                     line = line.substring("&&".length(), line.length());
                     line = getXmlNodeElement(examPaperAuthorNode, line);
 //                    Log.d("----------->>", line);
-                    fileWriter.write(line+"\n");
+                    fileWriter.write(line + "\n");
                     continue;
                 }
             }
@@ -124,7 +124,7 @@ public class DataTxt2XmlParser {
         }
     }
 
-    private void getQuestions() throws ParseException{
+    private void getQuestions() throws ParseException {
         int id = 1;
         int currentQuestionType = 0;
         boolean inQuestionField = false;
@@ -139,7 +139,7 @@ public class DataTxt2XmlParser {
             fileReader = new FileReader(txtFile);
             br = new BufferedReader(fileReader);
             //打开输出流
-            fileWriter = new FileWriter(xmlFile,true);
+            fileWriter = new FileWriter(xmlFile, true);
             while ((line = br.readLine()) != null) {
 //                Log.d("----------->>", line);
                 if (line.contains("%%") || line.contains("&&")) {
@@ -148,10 +148,10 @@ public class DataTxt2XmlParser {
                     tmp.delete(0, tmp.length());
                     continue;
                 }
-                if (line.contains("**")){
+                if (line.contains("**")) {
                     if (!(tmp.toString().equals(""))) {
                         String question = getQuestion(currentQuestionType, new RawQuestion(tmp.toString(), id, currentQuestionType));
-                        fileWriter.write(question+"\n");
+                        fileWriter.write(question + "\n");
                     }
                     id = 1;
                     inQuestionField = false;
@@ -162,7 +162,7 @@ public class DataTxt2XmlParser {
                 if (line.contains("##")) {
                     if (!(tmp.toString().equals(""))) {
                         String question = getQuestion(currentQuestionType, new RawQuestion(tmp.toString(), id, currentQuestionType));
-                        fileWriter.write(question+"\n");
+                        fileWriter.write(question + "\n");
                         id++;
                     }
                     inQuestionField = true;
@@ -176,7 +176,7 @@ public class DataTxt2XmlParser {
             }
             if (!(tmp.toString().equals(""))) {
                 String question = getQuestion(currentQuestionType, new RawQuestion(tmp.toString(), id, currentQuestionType));
-                fileWriter.write(question+"\n"+"</"+examPaperNode+">");
+                fileWriter.write(question + "\n" + "</" + examPaperNode + ">");
             }
             fileReader.close();
             fileWriter.close();
@@ -186,7 +186,7 @@ public class DataTxt2XmlParser {
     }
 
     //获得题目类型
-    private int getQuestionType(String line) throws ParseException{
+    private int getQuestionType(String line) throws ParseException {
         if (line.contains("填空")) return FILLINQUESTION;
         if (line.contains("判断")) return TFQUESTION;
         if (line.contains("单") && line.contains("选")) return SGLCHOQUESTION;
@@ -195,7 +195,7 @@ public class DataTxt2XmlParser {
         return 0;
     }
 
-    private String getQuestion(int questionType, RawQuestion question)throws ParseException {
+    private String getQuestion(int questionType, RawQuestion question) throws ParseException {
         switch (questionType) {
             case FILLINQUESTION:
                 return getFillInQuestion(question);
@@ -211,7 +211,7 @@ public class DataTxt2XmlParser {
         return null;
     }
 
-    private String getFillInQuestion(RawQuestion rawQuestion) throws ParseException{
+    private String getFillInQuestion(RawQuestion rawQuestion) throws ParseException {
         if (rawQuestion == null) return null;
         String[] parts = rawQuestion.question.split("\n");
         String[] elements = new String[parts.length + 2];
@@ -222,7 +222,7 @@ public class DataTxt2XmlParser {
         return getXmlQuestionElement(rawQuestion.questionType, elements);
     }
 
-    private String getTfQuestion(RawQuestion rawQuestion) throws ParseException{
+    private String getTfQuestion(RawQuestion rawQuestion) throws ParseException {
         if (rawQuestion == null) return null;
         String[] parts = rawQuestion.question.split("\n");
         String[] elements = new String[parts.length + 2];
@@ -233,35 +233,35 @@ public class DataTxt2XmlParser {
         return getXmlQuestionElement(rawQuestion.questionType, elements);
     }
 
-    private String getSglChoQuestion(RawQuestion rawQuestion) throws ParseException{
+    private String getSglChoQuestion(RawQuestion rawQuestion) throws ParseException {
         if (rawQuestion == null) return null;
         String[] parts = rawQuestion.question.split("\n");
-        String[] elements = new String[parts.length+2];
-        elements[0] = getXmlNodeElement(idNode,""+rawQuestion.id);
+        String[] elements = new String[parts.length + 2];
+        elements[0] = getXmlNodeElement(idNode, "" + rawQuestion.id);
         elements[1] = getXmlNodeElement(typeNode, sglChoQuestionNode);
         elements[2] = getXmlNodeElement(bodyNode, parts[0]);
         elements[3] = getXmlNodeElement(answerNode, parts[1]);
-        for (int i = 4;i<elements.length;i++){
-            elements[i] = getXmlNodeElement(optionNode,parts[i-2]);
+        for (int i = 4; i < elements.length; i++) {
+            elements[i] = getXmlNodeElement(optionNode, parts[i - 2]);
         }
         return getXmlQuestionElement(rawQuestion.questionType, elements);
     }
 
-    private String getMultChoQuestion(RawQuestion rawQuestion) throws ParseException{
+    private String getMultChoQuestion(RawQuestion rawQuestion) throws ParseException {
         if (rawQuestion == null) return null;
         String[] parts = rawQuestion.question.split("\n");
-        String[] elements = new String[parts.length+2];
-        elements[0] = getXmlNodeElement(idNode,""+rawQuestion.id);
+        String[] elements = new String[parts.length + 2];
+        elements[0] = getXmlNodeElement(idNode, "" + rawQuestion.id);
         elements[1] = getXmlNodeElement(typeNode, sglChoQuestionNode);
         elements[2] = getXmlNodeElement(bodyNode, parts[0]);
         elements[3] = getXmlNodeElement(answerNode, parts[1]);
-        for (int i = 4;i<elements.length;i++){
-            elements[i] = getXmlNodeElement(optionNode,parts[i-2]);
+        for (int i = 4; i < elements.length; i++) {
+            elements[i] = getXmlNodeElement(optionNode, parts[i - 2]);
         }
         return getXmlQuestionElement(rawQuestion.questionType, elements);
     }
 
-    private String getDiscussQuestion(RawQuestion rawQuestion) throws ParseException{
+    private String getDiscussQuestion(RawQuestion rawQuestion) throws ParseException {
         if (rawQuestion == null) return null;
         String[] parts = rawQuestion.question.split("\n");
         String[] elements = new String[parts.length + 2];
@@ -273,12 +273,12 @@ public class DataTxt2XmlParser {
     }
 
 
-    private String getXmlNodeElement(String node, String value) throws ParseException{
+    private String getXmlNodeElement(String node, String value) throws ParseException {
         if (node == null || value == null) return null;
         return "<" + node + ">" + value + "</" + node + ">";
     }
 
-    private String getNodeNameByQuestionType(int questionType) throws ParseException{
+    private String getNodeNameByQuestionType(int questionType) throws ParseException {
         switch (questionType) {
             case FILLINQUESTION:
                 return fillInQuestionNode;
@@ -294,7 +294,7 @@ public class DataTxt2XmlParser {
         return null;
     }
 
-    private String getXmlQuestionElement(int questionType, String[] elements) throws ParseException{
+    private String getXmlQuestionElement(int questionType, String[] elements) throws ParseException {
         String questionNode = getNodeNameByQuestionType(questionType);
         StringBuilder result = new StringBuilder();
         result.append("<" + questionNode + ">" + "\n");

@@ -1,7 +1,7 @@
 package com.zgq.wokao.parser;
 
-import com.zgq.wokao.model.paper.question.IQuestion;
 import com.zgq.wokao.model.paper.QuestionType;
+import com.zgq.wokao.model.paper.question.IQuestion;
 
 import java.util.ArrayList;
 
@@ -11,7 +11,8 @@ import java.util.ArrayList;
 
 public interface IQuestionParser {
 
-    public void setAdapter(QuestionType type);
-    public ArrayList<IQuestion> parse(PaperParser.Topic resource);
+    void setAdapter(QuestionType type);
+
+    ArrayList<IQuestion> parse(PaperParser.Topic resource);
 
 }

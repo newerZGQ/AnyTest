@@ -30,7 +30,7 @@ public class SearchResultsListAdapter extends RecyclerView.Adapter<SearchResults
 
     private int mLastAnimatedItemPosition = -1;
 
-    public interface OnItemClickListener{
+    public interface OnItemClickListener {
 //        void onClick(ColorWrapper colorWrapper);
     }
 
@@ -54,7 +54,7 @@ public class SearchResultsListAdapter extends RecyclerView.Adapter<SearchResults
         notifyDataSetChanged();
     }
 
-    public void setItemsOnClickListener(OnItemClickListener onClickListener){
+    public void setItemsOnClickListener(OnItemClickListener onClickListener) {
         this.mItemsOnClickListener = onClickListener;
     }
 
@@ -69,14 +69,14 @@ public class SearchResultsListAdapter extends RecyclerView.Adapter<SearchResults
     public void onBindViewHolder(ViewHolder holder, final int position) {
 
         Searchable tmp = mDataSet.get(position);
-        if (tmp instanceof SearchInfoItem){
+        if (tmp instanceof SearchInfoItem) {
 //            Log.d(TAG,"SearchInfoItem");
-            SearchInfoItem infoItem = (SearchInfoItem)tmp;
+            SearchInfoItem infoItem = (SearchInfoItem) tmp;
             holder.mColorName.setText(infoItem.getInfo().getAuthor());
         }
-        if (tmp instanceof SearchQstItem){
-            Log.d(TAG,"SearchQstItem");
-            SearchQstItem qstItem = (SearchQstItem)tmp;
+        if (tmp instanceof SearchQstItem) {
+            Log.d(TAG, "SearchQstItem");
+            SearchQstItem qstItem = (SearchQstItem) tmp;
             holder.mColorName.setText(qstItem.getQst().getBody().getContent());
         }
 //        Log.d(TAG,"bindview");

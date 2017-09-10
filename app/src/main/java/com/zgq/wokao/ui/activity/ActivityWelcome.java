@@ -56,7 +56,7 @@ public class ActivityWelcome extends AppCompatActivity {
             }
         };
         Timer timer = new Timer(true);
-        timer.schedule(task,1000);
+        timer.schedule(task, 1000);
     }
 
     public void onResume() {
@@ -64,6 +64,7 @@ public class ActivityWelcome extends AppCompatActivity {
         incWorkingCount();
         MobclickAgent.onResume(this);
     }
+
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);
@@ -112,11 +113,9 @@ public class ActivityWelcome extends AppCompatActivity {
     /**
      * 打开次数增加
      */
-    private void incWorkingCount(){
+    private void incWorkingCount() {
         MarketChecker.WoringCounter.increase(this);
     }
-
-
 
 
     static class MyHandler extends Handler {

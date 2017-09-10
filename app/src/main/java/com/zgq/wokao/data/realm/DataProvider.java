@@ -6,10 +6,14 @@ import io.realm.Realm;
  * Created by zgq on 2017/2/11.
  */
 
-public interface DataProvider <T>{
-    public Realm getRealm();
-    public void save(T entity);
-    public void delete(T entity);
-    public void update(T entity);
-    public T query(String id);
+public interface DataProvider<T> {
+    Realm getRealm();
+
+    void save(T entity);
+
+    void delete(T entity);
+
+    void update(T entity);
+
+    T query(String id);
 }

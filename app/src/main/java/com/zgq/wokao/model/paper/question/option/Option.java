@@ -7,7 +7,7 @@ import io.realm.RealmObject;
 /**
  * Created by zgq on 16-6-18.
  */
-public class Option extends RealmObject implements CascadeDeleteable{
+public class Option extends RealmObject implements CascadeDeleteable {
     private String option;
     private String tag;
 
@@ -45,19 +45,21 @@ public class Option extends RealmObject implements CascadeDeleteable{
         deleteFromRealm();
     }
 
-    public static class Builder{
+    public static class Builder {
         private String option;
         private String tag;
-        public Builder option(String option){
+
+        public Builder option(String option) {
             this.option = option;
             return this;
         }
-        public Builder tag(String tag){
+
+        public Builder tag(String tag) {
             this.tag = tag;
             return this;
         }
 
-        public Option build(){
+        public Option build() {
             return new Option(this);
         }
     }

@@ -9,7 +9,7 @@ import io.realm.RealmObject;
  * Created by zgq on 2017/2/27.
  */
 
-public class Options extends RealmObject implements IOptions ,CascadeDeleteable{
+public class Options extends RealmObject implements IOptions, CascadeDeleteable {
     private RealmList<Option> optionList = new RealmList<>();
 
     @Override
@@ -37,7 +37,7 @@ public class Options extends RealmObject implements IOptions ,CascadeDeleteable{
 
     @Override
     public void cascadeDelete() {
-        for (Option option: optionList){
+        for (Option option : optionList) {
             option.cascadeDelete();
         }
         deleteFromRealm();

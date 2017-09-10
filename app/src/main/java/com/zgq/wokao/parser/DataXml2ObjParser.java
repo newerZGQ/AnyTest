@@ -37,7 +37,7 @@ public class DataXml2ObjParser {
         return dataXml2ObjParser;
     }
 
-    public NormalExamPaper parse(File xmlFile) throws Exception,ParseException {
+    public NormalExamPaper parse(File xmlFile) throws Exception, ParseException {
 
         if (!xmlFile.exists() || xmlFile == null) return null;
 
@@ -255,18 +255,18 @@ public class DataXml2ObjParser {
         return discussQuestion;
     }
 
-    private QuestionType changeIntToType(String type){
-        switch (type){
+    private QuestionType changeIntToType(String type) {
+        switch (type) {
             case "fill_in_question":
-                return QuestionType.fillin;
+                return QuestionType.FILLIN;
             case "tf_question":
-                return QuestionType.tf;
+                return QuestionType.TF;
             case "sglcho_question":
-                return QuestionType.sglc;
+                return QuestionType.SINGLECHOOSE;
             case "multcho_question":
-                return QuestionType.mtlc;
+                return QuestionType.MUTTICHOOSE;
             case "discuss_question":
-                return QuestionType.disc;
+                return QuestionType.DISCUSS;
             default:
                 return null;
         }

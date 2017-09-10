@@ -7,17 +7,6 @@
     <string name="tips4">  我要把我的试卷分享给朋友</string>
     <string name="tips5">  为了考试打印好多张纸，用完就扔了，好浪费</string>
 
-    <!--用于MainActivity 显示启动应用市场去打分的dialog-->
-    <string name="market_dialog_title">:)</string>
-    <string name="market_dialog_message">开发不易，赏脸给个好评可否？</string>
-    <string name="market_dialog_positive_button">确定</string>
-    <string name="market_dialog_negative_button">取消</string>
-    <string name="title_activity_main2">Main2Activity</string>
-
     <string name="title_activity_home">HomeActivity</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

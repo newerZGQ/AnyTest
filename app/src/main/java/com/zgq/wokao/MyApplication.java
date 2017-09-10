@@ -2,7 +2,6 @@ package com.zgq.wokao;
 
 import android.app.Activity;
 import android.app.Application;
-import android.content.Context;
 
 import com.zgq.wokao.Util.ContextUtil;
 import com.zgq.wokao.Util.FileUtil;
@@ -29,9 +28,9 @@ public class MyApplication extends Application {
         RealmConfiguration config = new RealmConfiguration.Builder(this).build();
         Realm.setDefaultConfiguration(config);
 
-        if (FileUtil.SdcardMountedRight()){
-            File file = new File(StorageUtils.getRootPath(this)+"/wokao");
-            if (!file.exists()){
+        if (FileUtil.SdcardMountedRight()) {
+            File file = new File(StorageUtils.getRootPath(this) + "/wokao");
+            if (!file.exists()) {
                 file.mkdir();
             }
         }
@@ -57,7 +56,9 @@ public class MyApplication extends Application {
 
     /***************************** activity管理 start **********************************/
 
-    /** add Activity 添加Activity到栈 */
+    /**
+     * add Activity 添加Activity到栈
+     */
     public synchronized void addActivity(Activity activity) {
 
         if (activityStack == null) {
@@ -67,19 +68,25 @@ public class MyApplication extends Application {
 
     }
 
-    /** get current Activity 获取当前Activity（栈中最后一个压入的） */
+    /**
+     * get current Activity 获取当前Activity（栈中最后一个压入的）
+     */
     public synchronized Activity currentActivity() {
         Activity activity = activityStack.lastElement();
         return activity;
     }
 
-    /** 结束当前Activity（栈中最后一个压入的） */
+    /**
+     * 结束当前Activity（栈中最后一个压入的）
+     */
     public synchronized void finishActivity() {
         Activity activity = activityStack.lastElement();
         finishActivity(activity);
     }
 
-    /** 结束指定的Activity */
+    /**
+     * 结束指定的Activity
+     */
     public synchronized void finishActivity(Activity activity) {
         if (activity != null) {
             activityStack.remove(activity);
@@ -94,7 +101,9 @@ public class MyApplication extends Application {
         }
     }
 
-    /** 结束指定类名的Activity */
+    /**
+     * 结束指定类名的Activity
+     */
     public synchronized void finishActivity(Class<?> cls) {
         for (Activity activity : activityStack) {
             if (activity.getClass().equals(cls)) {
@@ -104,7 +113,9 @@ public class MyApplication extends Application {
         }
     }
 
-    /** 结束所有Activity */
+    /**
+     * 结束所有Activity
+     */
     public synchronized void finishAllActivity() {
         for (int i = 0, size = activityStack.size(); i < size; i++) {
             if (null != activityStack.get(i)) {
@@ -115,7 +126,9 @@ public class MyApplication extends Application {
 
     }
 
-    /** 退出应用程序 */
+    /**
+     * 退出应用程序
+     */
     public void AppExit() {
         try {
             finishAllActivity();

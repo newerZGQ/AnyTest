@@ -8,8 +8,6 @@ import com.zgq.wokao.action.paper.impl.PaperAction;
 import com.zgq.wokao.action.paper.impl.StudySummaryAction;
 import com.zgq.wokao.action.parser.IParserAction;
 import com.zgq.wokao.action.parser.ParserAction;
-import com.zgq.wokao.exception.ParseException;
-import com.zgq.wokao.model.paper.IExamPaper;
 import com.zgq.wokao.model.total.StudySummary;
 import com.zgq.wokao.model.total.TotalDailyCount;
 import com.zgq.wokao.ui.presenter.IHomePrerenter;
@@ -26,49 +24,33 @@ import io.realm.RealmList;
  * Created by zgq on 2017/3/4.
  */
 
-public class HomePresenterImpl implements IHomePrerenter{
+public class HomePresenterImpl implements IHomePrerenter {
 
     private IHomeView homeView;
-    private IPaperAction paperAction = PaperAction.getInstance();
-    private IParserAction parserAction = ParserAction.getInstance();
     private StudySummaryAction summaryAction = StudySummaryAction.getInstance();
     private StudySummary studySummary = summaryAction.getStudySummary();
-    public HomePresenterImpl(IHomeView homeView){
+
+    public HomePresenterImpl(IHomeView homeView) {
         this.homeView = homeView;
-        initListener();
     }
 
-    private void initListener(){
-        parserAction.setListener(new ParserAction.ParseResultListener() {
-            @Override
-            public void onParseSuccess(String paperId) {
-                homeView.setNeedUpdateData(true);
-                homeView.notifyDataChanged();
-                homeView.hideLoadingView();
-                homeView.hideProgressBar();
-            }
-
-            @Override
-            public void onParseError(String error) {
-                //show error toast
-            }
-        });
-    }
-
-    public void setSlideaMenuLayout(StudySummary studySummary){
+    public void setSlideaMenuLayout(StudySummary studySummary) {
 
     }
 
-    public void updateSlideUp(){
+    public void updateSlideUp() {
         homeView.updateSlideUp();
     }
-    public void goSearch(){
+
+    public void goSearch() {
         homeView.goSearch();
     }
-    public void showScheduleFragment(){
+
+    public void showScheduleFragment() {
         homeView.showScheduleFragment();
     }
-    public void showPapersFragment(){
+
+    public void showPapersFragment() {
         homeView.showPapersFragment();
     }
 
@@ -87,9 +69,9 @@ public class HomePresenterImpl implements IHomePrerenter{
         int count = 0;
         String dateTmp = "";
         String dateReal = DateUtil.getFormatData("yyyy-MM-dd");
-        for (int i = list.size()-1; i< list.size(); i--){
+        for (int i = list.size() - 1; i < list.size(); i--) {
             dateTmp = list.get(i).getDate();
-            if (dateReal.equals(dateTmp)){
+            if (dateReal.equals(dateTmp)) {
                 data.add(list.get(i));
             }
         }
@@ -112,14 +94,5 @@ public class HomePresenterImpl implements IHomePrerenter{
         for (int i = 0; i < 9; i++) {
             yValue.add(i * 60);
         }
-    }
-    @Override
-    public IExamPaper parseFromFile(String filePath) {
-        try {
-            return parserAction.parseFromFile(filePath);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 }

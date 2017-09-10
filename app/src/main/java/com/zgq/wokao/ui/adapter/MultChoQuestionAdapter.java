@@ -109,8 +109,8 @@ public class MultChoQuestionAdapter extends BaseViewPagerAdapter implements View
             optionViews.add(optionView);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.setMargins(0, DensityUtil.dip2px(mContext,16f),0,0);
-            layout.addView(optionView,params);
+            params.setMargins(0, DensityUtil.dip2px(mContext, 16f), 0, 0);
+            layout.addView(optionView, params);
         }
         for (QuestionOptionView view : optionViews) {
             view.setOnClickListener(this);
@@ -122,9 +122,9 @@ public class MultChoQuestionAdapter extends BaseViewPagerAdapter implements View
             for (int j = 0; j < correctAnswer.length; j++) {
                 optionViews.get(correctAnswer[j]).setToCorrect();
             }
-        }else{
+        } else {
             multiChoQuestionViewHolder.myAnswerTv.setText("");
-            for (int i =0 ;i<optionViews.size();i++){
+            for (int i = 0; i < optionViews.size(); i++) {
                 optionViews.get(i).setUnselected();
             }
         }
@@ -161,22 +161,22 @@ public class MultChoQuestionAdapter extends BaseViewPagerAdapter implements View
             optionViews.get(correctAnswer[j]).setToCorrect();
         }
         holder.myAnswerTv.setText(myAnswer.get(currentPosition).getContent());
-        hasShowAnswer.set(currentPosition,true);
+        hasShowAnswer.set(currentPosition, true);
 
         int[] thisAnswer = getRealAnswerPosition(getRealAnswer(myAnswer.get(currentPosition).getContent()));
-        if (thisAnswer.length == correctAnswer.length){
-            for (int i = 0; i< thisAnswer.length; i++){
-                if (thisAnswer[i] != correctAnswer[i]){
+        if (thisAnswer.length == correctAnswer.length) {
+            for (int i = 0; i < thisAnswer.length; i++) {
+                if (thisAnswer[i] != correctAnswer[i]) {
                     isCorrect = false;
-                }else {
+                } else {
                     isCorrect = true;
                 }
             }
         }
-        if (isCorrect){
-            getCorrectAnswer(getPaperId(),datas.get(currentPosition));
-        }else {
-            getFalseAnswer(getPaperId(),datas.get(currentPosition));
+        if (isCorrect) {
+            getCorrectAnswer(getPaperId(), datas.get(currentPosition));
+        } else {
+            getFalseAnswer(getPaperId(), datas.get(currentPosition));
         }
         return isCorrect;
     }
@@ -208,7 +208,7 @@ public class MultChoQuestionAdapter extends BaseViewPagerAdapter implements View
             answerContent = answerContent + optionLabel;
         }
         answer.setContent(getRealAnswer(answerContent));
-        myAnswer.set(currentPosition,answer);
+        myAnswer.set(currentPosition, answer);
     }
 
     private String getLabelFromPosition(int optionPosition) {
@@ -251,6 +251,11 @@ public class MultChoQuestionAdapter extends BaseViewPagerAdapter implements View
                 }
             }
         return chars;
+    }
+
+    @Override
+    public int getLastPosition() {
+        return datas.get(currentPosition).getInfo().getQstId() - 1;
     }
 
     public final class MultiChoQuestionViewHolder {

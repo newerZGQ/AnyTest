@@ -21,7 +21,7 @@ import com.zgq.wokao.R;
 
 /**
  * AccuracyView custom view.
- *
+ * <p>
  * https://github.com/passsy/android-AccuracyView
  *
  * @author Pascal.Welsch
@@ -89,11 +89,11 @@ public class AccuracyView extends View {
     /**
      * The stroke width used to paint the circle.
      */
-    private int mCircleStrokeWidth = 50;
+    private int mCircleStrokeWidth = 10;
 
     /**
      * The gravity of the view. Where should the Circle be drawn within the given bounds
-     *
+     * <p>
      * {@link #computeInsets(int, int)}
      */
     private int mGravity = Gravity.CENTER;
@@ -157,7 +157,7 @@ public class AccuracyView extends View {
 
     /**
      * Radius of the circle
-     *
+     * <p>
      * <p> Note: (Re)calculated in {@link #onMeasure(int, int)}. </p>
      */
     private float mRadius;
@@ -169,7 +169,7 @@ public class AccuracyView extends View {
 
     /**
      * The Thumb pos x.
-     *
+     * <p>
      * Care. the position is not the position of the rotated thumb. The position is only calculated
      * in {@link #onMeasure(int, int)}
      */
@@ -177,7 +177,7 @@ public class AccuracyView extends View {
 
     /**
      * The Thumb pos y.
-     *
+     * <p>
      * Care. the position is not the position of the rotated thumb. The position is only calculated
      * in {@link #onMeasure(int, int)}
      */
@@ -186,7 +186,7 @@ public class AccuracyView extends View {
     /**
      * The pointer width (in pixels).
      */
-    private int mThumbRadius = 20;
+    private int mThumbRadius = 10;
 
     /**
      * The Translation offset x which gives us the ability to use our own coordinates system.
@@ -240,7 +240,7 @@ public class AccuracyView extends View {
      * @param defStyle the def style
      */
     public AccuracyView(final Context context, final AttributeSet attrs,
-                                   final int defStyle) {
+                        final int defStyle) {
         super(context, attrs, defStyle);
 
         // load the styled attributes and set their properties
@@ -568,7 +568,7 @@ public class AccuracyView extends View {
 
     /**
      * Compute insets.
-     *
+     * <p>
      * <pre>
      *  ______________________
      * |_________dx/2_________|
@@ -673,8 +673,8 @@ public class AccuracyView extends View {
         invalidate();
     }
 
-    public void setProgress(float progress){
-        animate(this,progress);
+    public void setProgress(float progress) {
+        animate(this, progress);
     }
 
     /**
@@ -682,17 +682,17 @@ public class AccuracyView extends View {
      *
      * @param progressBar the progress bar
      */
-    private void animate(AccuracyView progressBar,float mProgress) {
+    private void animate(AccuracyView progressBar, float mProgress) {
         int duration = 500;
         animate(progressBar, mProgress, duration);
     }
 
     private void animate(final AccuracyView progressBar,
                          final float progress, final int duration) {
-        if (valueAnimator != null){
+        if (valueAnimator != null) {
             valueAnimator.reverse();
         }
-        valueAnimator = ValueAnimator.ofFloat(0,progress);
+        valueAnimator = ValueAnimator.ofFloat(0, progress);
         valueAnimator.setDuration(duration);
 
         valueAnimator.addListener(new Animator.AnimatorListener() {

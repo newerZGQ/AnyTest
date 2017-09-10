@@ -2,7 +2,8 @@ package com.zgq.wokao.ui.activity;
 
 /**
  * Created by zgq on 2017/2/11.
- *  * @类名称： BaseActivity.java
+ * * @类名称： BaseActivity.java
+ *
  * @类描述： BaseActivity ,便于管理activity，toast工具类，intent跳转类
  */
 
@@ -44,6 +45,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         loadingDialog(this, "努力加载中...");
 
     }
+
     /** 自定义dialog **/
     protected Dialog dialog;
 
@@ -206,7 +208,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     /**
      *
      */
-    protected void showSnakeBar(){
+    protected void showSnakeBar() {
 
     }
 

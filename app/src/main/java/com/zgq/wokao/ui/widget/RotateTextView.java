@@ -9,8 +9,8 @@ import android.widget.TextView;
 /**
  * Created by zgq on 16-7-8.
  */
-public class RotateTextView extends TextView implements ObjectAnimator.AnimatorListener{
-    public static final int UPSIDE   = 1;
+public class RotateTextView extends TextView implements ObjectAnimator.AnimatorListener {
+    public static final int UPSIDE = 1;
     public static final int DOWNSIDE = 2;
     private int currentSide = UPSIDE;
     private Context context;
@@ -31,28 +31,33 @@ public class RotateTextView extends TextView implements ObjectAnimator.AnimatorL
         super(context, attrs, defStyleAttr);
         this.context = context;
     }
-    private void init(){
+
+    private void init() {
     }
-    public void setSidesStyle(UpAndDownSideStyle sidesStyle){
+
+    public void setSidesStyle(UpAndDownSideStyle sidesStyle) {
         this.sidesStyle = sidesStyle;
     }
-    public void setUpside(){
+
+    public void setUpside() {
         sidesStyle.setUpSideStyle();
 
     }
-    public void setDownside(){
+
+    public void setDownside() {
         sidesStyle.setDownSideStyle();
     }
 
-    public int getCurrentSide(){
+    public int getCurrentSide() {
         return currentSide;
     }
-    public void setCurrentSide(int currentSide){
+
+    public void setCurrentSide(int currentSide) {
         this.currentSide = currentSide;
     }
 
-    public void changeSide(){
-        switch (currentSide){
+    public void changeSide() {
+        switch (currentSide) {
             case UPSIDE:
                 currentSide = DOWNSIDE;
                 break;
@@ -60,22 +65,23 @@ public class RotateTextView extends TextView implements ObjectAnimator.AnimatorL
                 currentSide = UPSIDE;
                 break;
         }
-        ObjectAnimator up2downFirstStep = new ObjectAnimator().ofFloat(this,"rotationY",0,90f).setDuration(100);
+        ObjectAnimator up2downFirstStep = new ObjectAnimator().ofFloat(this, "rotationY", 0, 90f).setDuration(100);
         up2downFirstStep.addListener(this);
         up2downFirstStep.start();
     }
-    public void setToUpside(){
+
+    public void setToUpside() {
         currentSide = UPSIDE;
         startAnimation();
     }
 
-    public void setToDownside(){
+    public void setToDownside() {
         currentSide = DOWNSIDE;
         startAnimation();
     }
 
-    public void startAnimation(){
-        ObjectAnimator up2downFirstStep = new ObjectAnimator().ofFloat(this,"rotationY",0,90f).setDuration(100);
+    public void startAnimation() {
+        ObjectAnimator up2downFirstStep = new ObjectAnimator().ofFloat(this, "rotationY", 0, 90f).setDuration(100);
         up2downFirstStep.addListener(this);
         up2downFirstStep.start();
     }
@@ -87,7 +93,7 @@ public class RotateTextView extends TextView implements ObjectAnimator.AnimatorL
 
     @Override
     public void onAnimationEnd(Animator animation) {
-        switch (currentSide){
+        switch (currentSide) {
             case DOWNSIDE:
                 sidesStyle.setDownSideStyle();
                 break;
@@ -95,7 +101,7 @@ public class RotateTextView extends TextView implements ObjectAnimator.AnimatorL
                 sidesStyle.setUpSideStyle();
                 break;
         }
-        ObjectAnimator.ofFloat(this,"rotationY",270f,360f).setDuration(100).start();
+        ObjectAnimator.ofFloat(this, "rotationY", 270f, 360f).setDuration(100).start();
     }
 
     @Override
@@ -107,8 +113,10 @@ public class RotateTextView extends TextView implements ObjectAnimator.AnimatorL
     public void onAnimationRepeat(Animator animation) {
 
     }
-    public interface UpAndDownSideStyle{
+
+    public interface UpAndDownSideStyle {
         public void setUpSideStyle();
+
         public void setDownSideStyle();
     }
 }

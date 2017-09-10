@@ -7,6 +7,7 @@ import java.io.File;
  */
 
 public interface IMSDocFormater {
-    public boolean fileAvailable(File file);
-    public String getContent(String filePath);
+    boolean fileAvailable(File file);
+
+    String getContent(String filePath);
 }

@@ -1,13 +1,11 @@
 package com.zgq.wokao.parser.adapter.impl;
 
-import android.util.Log;
-
 import com.zgq.wokao.Util.ListUtil;
 import com.zgq.wokao.Util.StringUtil;
 import com.zgq.wokao.Util.UUIDUtil;
+import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.paper.question.impl.SglChoQuestion;
 import com.zgq.wokao.model.paper.question.option.Option;
-import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.parser.adapter.BaseAdapter;
 import com.zgq.wokao.parser.adapter.ISglChoAdapter;
 import com.zgq.wokao.parser.context.QuestionContext;
@@ -21,7 +19,7 @@ import java.util.ArrayList;
  */
 
 public class SglChoAdapter extends BaseAdapter implements ISglChoAdapter {
-    private QuestionType type = QuestionType.sglc;
+    private QuestionType type = QuestionType.SINGLECHOOSE;
     ArrayList<String> content = new ArrayList<>();
     QuestionContext context = new QuestionContext();
     private ArrayList<SglChoQuestion> results = new ArrayList<>();
@@ -62,7 +60,7 @@ public class SglChoAdapter extends BaseAdapter implements ISglChoAdapter {
             if (isQstNumber(tmp)) {
                 //把上一次循环的题干和答案提取出来
                 bodyString = builder.toString();
-                if (!bodyString.equals("")){
+                if (!bodyString.equals("")) {
                     SglChoQuestion question = parseSingle(number, bodyString);
                     if (question != null) {
                         results.add(question);
@@ -96,36 +94,36 @@ public class SglChoAdapter extends BaseAdapter implements ISglChoAdapter {
         int headBack = 0;
         for (String tmp : resArray) {
             tmp = tmp.trim();
-            int head = tmp.substring(0,1).toUpperCase().charAt(0);
-            if (head == 65){
+            int head = tmp.substring(0, 1).toUpperCase().charAt(0);
+            if (head == 65) {
                 String body = builder.toString();
-                builder.delete(0,builder.length());
+                builder.delete(0, builder.length());
                 question.getBody().setContent(body);
                 context.inContext(QuestionItemType.body);
                 builder.append(getOptionContent(tmp));
                 continue;
             }
-            if (head > 65 && head <= 77){
+            if (head > 65 && head <= 77) {
                 String optionContent = builder.toString();
-                String tag = StringUtil.char2String((char)(head-1));
+                String tag = StringUtil.char2String((char) (head - 1));
                 headBack = head;
                 question.getOptions().addOption(new Option.Builder()
                         .option(optionContent)
                         .tag(tag)
                         .build());
                 context.inContext(QuestionItemType.option);
-                builder.delete(0,builder.length());
+                builder.delete(0, builder.length());
                 builder.append(getOptionContent(tmp));
                 continue;
             }
             if (tmp.startsWith("答案")) {
                 String optionContent = builder.toString();
-                String tag = StringUtil.char2String((char)headBack);
+                String tag = StringUtil.char2String((char) headBack);
                 question.getOptions().addOption(new Option.Builder()
                         .option(optionContent)
                         .tag(tag)
                         .build());
-                builder.delete(0,builder.length());
+                builder.delete(0, builder.length());
                 builder.append(tmp.substring(2).trim());
                 continue;
             }
@@ -141,13 +139,14 @@ public class SglChoAdapter extends BaseAdapter implements ISglChoAdapter {
         return question;
     }
 
-    private String getOptionContent(String s){
+    private String getOptionContent(String s) {
         s = s.trim().substring(1).trim();
-        if (s.startsWith(":")||s.startsWith("：")){
+        if (s.startsWith(":") || s.startsWith("：")) {
             s = s.trim().substring(1).trim();
         }
         return s;
     }
+
     private void inContext(QuestionItemType type) {
         context.inContext(new QuestionItem(type));
     }

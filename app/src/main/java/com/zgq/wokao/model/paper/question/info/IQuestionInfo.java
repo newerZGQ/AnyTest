@@ -5,5 +5,5 @@ package com.zgq.wokao.model.paper.question.info;
  */
 public interface IQuestionInfo {
 
-    public boolean isStared();
+    boolean isStared();
 }

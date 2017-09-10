@@ -6,9 +6,13 @@ import io.realm.RealmList;
  * Created by zgq on 16-6-18.
  */
 public interface IOptions {
-    public abstract boolean hasOptions();
-    public abstract int getOptionsCount();
-    public abstract RealmList<Option> getOptionList();
-    public abstract void setOptionList(RealmList<Option> optionList);
-    public abstract boolean addOption(Option option);
+    boolean hasOptions();
+
+    int getOptionsCount();
+
+    RealmList<Option> getOptionList();
+
+    void setOptionList(RealmList<Option> optionList);
+
+    boolean addOption(Option option);
 }

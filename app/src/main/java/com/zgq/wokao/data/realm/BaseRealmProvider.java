@@ -14,7 +14,8 @@ public abstract class BaseRealmProvider<T extends RealmObject> implements DataPr
 
     private Realm realm = Realm.getDefaultInstance();
     private Class entityClass;
-    public void setClass(Class entityClass){
+
+    public void setClass(Class entityClass) {
         this.entityClass = entityClass;
     }
 
@@ -47,16 +48,16 @@ public abstract class BaseRealmProvider<T extends RealmObject> implements DataPr
 
     @Override
     public T query(String id) {
-        if (id == null || id.equals("")){
+        if (id == null || id.equals("")) {
             return null;
         }
-        if (entityClass == null){
+        if (entityClass == null) {
             return null;
         }
         RealmQuery<T> query = realm.where(entityClass);
-        query.equalTo("paperInfo.id",id);
+        query.equalTo("paperInfo.id", id);
         RealmResults<T> results = query.findAll();
-        if (results.isEmpty()){
+        if (results.isEmpty()) {
             return null;
         }
         return results.get(0);

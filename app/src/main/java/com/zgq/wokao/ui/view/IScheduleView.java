@@ -10,13 +10,5 @@ import java.util.ArrayList;
  */
 
 public interface IScheduleView {
-    public void setListener();
-    public void setViewPager(ArrayList<ScheduleData> scheduleDatas, ArrayList<ArrayList<QstData>> qstDataLists);
-    public void notifyDataChanged();
-    public void showDetail(int duration);
-    public void hideDetail(int duration);
-    public void scheduleInfoChangeData(ScheduleData data);
-    public void changeViewPagerStatus(boolean showFullView);
-    public void onEmptyPapers();
-    public void onNoneEmptyPapers();
+    void onPaperDataChanged();
 }

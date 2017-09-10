@@ -25,13 +25,13 @@ public class SearchActivity extends BaseActivity implements SearchFragment.Searc
     @Override
     public void onBackPressed() {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-        if (!(((SearchFragment)fragment).onActivityBackPress())) {
+        if (!(((SearchFragment) fragment).onActivityBackPress())) {
             super.onBackPressed();
         }
     }
 
     private void showFragment(Fragment fragment) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
     }
 
     @Override

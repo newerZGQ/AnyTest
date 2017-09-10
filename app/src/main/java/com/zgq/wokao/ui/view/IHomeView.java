@@ -1,5 +1,6 @@
 package com.zgq.wokao.ui.view;
 
+import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.total.StudySummary;
 
 /**
@@ -8,18 +9,21 @@ import com.zgq.wokao.model.total.StudySummary;
 
 public interface IHomeView {
     void updateSlideUp();
+
     void goSearch();
+
     void showScheduleFragment();
+
     void showPapersFragment();
-    void showQuestionsFragment();
-    void showFragment(String fragmentTag);
-    void showProgressBar();
-    void hideProgressBar();
-    void notifyDataChanged();
-    void hideLoadingView();
-    void showLoadingView();
-    void setNeedUpdateData(boolean needUpdateData);
+
+    void showQuestionsFragment(String paperId);
+
     void setSlideaMenuLayout(StudySummary studySummary);
+
     void setViewPagerScrollble(boolean scrollble);
+
     void hideToolBar();
+
+    void showToolBar();
+
 }

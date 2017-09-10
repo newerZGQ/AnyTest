@@ -17,18 +17,20 @@ import io.realm.Realm;
 public class ParserThread extends Thread {
     private String filePath;
     private OnCompletedListener listener;
-    public ParserThread(String filePath){
+
+    public ParserThread(String filePath) {
         this.filePath = filePath;
     }
 
-    public void setListener(OnCompletedListener listener){
+    public void setListener(OnCompletedListener listener) {
         this.listener = listener;
     }
+
     @Override
     public void run() {
         super.run();
         try {
-            Realm realm  = Realm.getDefaultInstance();
+            Realm realm = Realm.getDefaultInstance();
             final NormalExamPaper paper = ParserHelper.getInstance().parse(filePath);
             realm.executeTransaction(new Realm.Transaction() {
                 @Override
@@ -36,8 +38,8 @@ public class ParserThread extends Thread {
                     realm.copyToRealm(paper);
                 }
             });
-            Log.d("---->>",paper.getPaperInfo().getTitle());
-            Log.d("---->>",paper.getDiscussQuestions().get(0).getBody().getContent());
+            Log.d("---->>", paper.getPaperInfo().getTitle());
+            Log.d("---->>", paper.getDiscussQuestions().get(0).getBody().getContent());
 
             listener.onCompleted(paper);
         } catch (FileNotFoundException e) {
@@ -47,7 +49,7 @@ public class ParserThread extends Thread {
         }
     }
 
-    public interface OnCompletedListener{
+    public interface OnCompletedListener {
         public void onCompleted(NormalExamPaper paper);
     }
 }

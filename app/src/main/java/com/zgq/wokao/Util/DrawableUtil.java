@@ -16,6 +16,7 @@ public class DrawableUtil {
     private static int colorBlue = R.drawable.circle_background_upside_blue;
     private static int colorPrivious = 0;
     static ArrayList<Integer> colorSet = new ArrayList<>();
+
     static {
         colorSet.add(colorGreen);
         colorSet.add(colorBlue);
@@ -23,22 +24,22 @@ public class DrawableUtil {
         colorSet.add(colorYellow);
     }
 
-    public static int getCircleDrawable(){
-        int position = (int)(Math.random()*4);
-        Log.d("getColorPo",""+position);
+    public static int getCircleDrawable() {
+        int position = (int) (Math.random() * 4);
+        Log.d("getColorPo", "" + position);
         int colorCurrent = colorSet.get(position);
-        Log.d("getColor",""+colorCurrent);
-        if (colorPrivious == colorCurrent){
+        Log.d("getColor", "" + colorCurrent);
+        if (colorPrivious == colorCurrent) {
             return getCircleDrawable();
-        }else {
+        } else {
             colorPrivious = colorCurrent;
             return colorCurrent;
         }
     }
 
-    public static ArrayList<Integer> getCircleDrawableSet(int capcity){
+    public static ArrayList<Integer> getCircleDrawableSet(int capcity) {
         ArrayList<Integer> arrayList = new ArrayList<>();
-        for (int i = 0;i<capcity;i++){
+        for (int i = 0; i < capcity; i++) {
             arrayList.add(getCircleDrawable());
         }
         return arrayList;

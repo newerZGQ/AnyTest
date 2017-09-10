@@ -18,7 +18,7 @@ public class MyAnswer implements IAnswer {
 
     @Override
     public boolean hasAnswer() {
-        if (content == null || content.equals("")){
+        if (content == null || content.equals("")) {
             return false;
         }
         return true;

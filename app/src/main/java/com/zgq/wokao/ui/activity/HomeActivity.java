@@ -1,11 +1,10 @@
 package com.zgq.wokao.ui.activity;
 
-import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -19,12 +18,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gigamole.navigationtabstrip.NavigationTabStrip;
-import com.nbsp.materialfilepicker.MaterialFilePicker;
-import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 import com.zgq.linechart.ChartView;
 import com.zgq.wokao.R;
 import com.zgq.wokao.action.login.LoginAction;
 import com.zgq.wokao.action.paper.impl.StudySummaryAction;
+import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.total.StudySummary;
 import com.zgq.wokao.ui.fragment.impl.PapersFragment;
 import com.zgq.wokao.ui.fragment.impl.QuestionsFragment;
@@ -38,24 +36,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class HomeActivity extends BaseActivity implements
-        ScheduleFragment.OnScheduleFragmentListener,
-        PapersFragment.OnPaperFragmentListener,
-        QuestionsFragment.OnFragmentInteractionListener,
+        ScheduleFragment.ScheduleFragmentListener,
+        PapersFragment.PaperFragmentListener,
+        QuestionsFragment.QuestionsFragmentListener,
         IHomeView,
         View.OnClickListener {
 
     public static final String TAG = "HomeActivity";
-
-    private static final String ScheduleFragmentTag = "schedule";
-    private static final String PapersFragmentTag = "papers";
-    private static final String QuestionsFragmentTag = "questions";
 
     private HomePresenterImpl homePresenter;
 
@@ -82,19 +74,12 @@ public class HomeActivity extends BaseActivity implements
     ChartView lineChart;
     @BindView(R.id.toolbar_add)
     Button parseBtn;
-    @BindView(R.id.loadingview)
-    RelativeLayout loadingView;
     @BindView(R.id.total_count)
     TextView totalCount;
     @BindView(R.id.total_accuracy)
     TextView totalAccuracy;
 
     private int currentItem = 0;
-
-    private Timer timer = new Timer();
-    private TimerTask hideLoadingTask;
-
-    public boolean needUpdateData = false;
 
     private ScheduleFragment scheduleFragment;
     private PapersFragment papersFragment;
@@ -110,7 +95,6 @@ public class HomeActivity extends BaseActivity implements
             LoginAction.getInstance().setFirstTimeLoginFalse();
         }
         homePresenter = new HomePresenterImpl(this);
-        initTask();
         initView();
     }
 
@@ -149,42 +133,6 @@ public class HomeActivity extends BaseActivity implements
         initContent();
     }
 
-    private void initTask() {
-        hideLoadingTask = new TimerTask() {
-            @Override
-            public void run() {
-                runOnUiThread(new Runnable() {      // UI thread
-                    @Override
-                    public void run() {
-                        ObjectAnimator animator = ObjectAnimator.ofFloat(loadingView, "alpha", 1, 0).setDuration(500);
-                        animator.addListener(new Animator.AnimatorListener() {
-                            @Override
-                            public void onAnimationStart(Animator animator) {
-                                loadingView.setVisibility(View.INVISIBLE);
-                            }
-
-                            @Override
-                            public void onAnimationEnd(Animator animator) {
-
-                            }
-
-                            @Override
-                            public void onAnimationCancel(Animator animator) {
-
-                            }
-
-                            @Override
-                            public void onAnimationRepeat(Animator animator) {
-
-                            }
-                        });
-                        animator.start();
-                    }
-                });
-            }
-        };
-    }
-
     private void initTabStrip() {
         tabStrip.setTitles("日程", "试卷");
         tabStrip.setTabIndex(0, true);
@@ -193,7 +141,6 @@ public class HomeActivity extends BaseActivity implements
         tabStrip.setStripWeight(10);
         tabStrip.setStripFactor(5f);
         tabStrip.setStripGravity(NavigationTabStrip.StripGravity.BOTTOM);
-        //tabStrip.setTypeface("fonts/typeface.ttf");
         tabStrip.setCornersRadius(3);
         tabStrip.setAnimationDuration(200);
         tabStrip.setInactiveColor(getResources().getColor(R.color.color_home_inactivity_selected_tab));
@@ -225,15 +172,9 @@ public class HomeActivity extends BaseActivity implements
                 .build();
     }
 
-    private void initFragments(){
+    private void initFragments() {
         scheduleFragment = ScheduleFragment.newInstance("", "");
         papersFragment = PapersFragment.newInstance();
-        questionsFragment = QuestionsFragment.newInstance("","");
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//        transaction.add(papersFragment,PapersFragmentTag);
-//        transaction.add(scheduleFragment,ScheduleFragmentTag);
-        transaction.add(questionsFragment,QuestionsFragmentTag);
-        transaction.commit();
     }
 
     private void initViewPager() {
@@ -243,24 +184,7 @@ public class HomeActivity extends BaseActivity implements
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                if (!needUpdateData) {
-                    return;
-                }
-                switch (position) {
-                    case 0:
-                        if (positionOffset == 0) {
-                            showLoadingView();
-                            scheduleFragment.notifyDataChanged();
-                            hideLoadingView();
-                            needUpdateData = false;
-                        }
-                        break;
-                    case 1:
-                        if (positionOffset == 0) {
-//                            papersFragment.getPapersPresenter().notifyDataChanged();
-                        }
-                        break;
-                }
+
             }
 
             @Override
@@ -318,21 +242,16 @@ public class HomeActivity extends BaseActivity implements
         parseBtn.setOnClickListener(this);
     }
 
-    private void initContent(){
+    private void initContent() {
         StudySummary studySummary = StudySummaryAction.getInstance().getStudySummary();
-        totalCount.setText(""+studySummary.getStudyCount());
+        totalCount.setText("" + studySummary.getStudyCount());
         String accuracy = "0";
-        if (studySummary.getStudyCount() != 0){
-            accuracy = String.valueOf(studySummary.getCorrectCount()/studySummary.getStudyCount());
-        }else{
+        if (studySummary.getStudyCount() != 0) {
+            accuracy = String.valueOf(studySummary.getCorrectCount() / studySummary.getStudyCount());
+        } else {
             accuracy = "未学习";
         }
         totalAccuracy.setText(accuracy);
-    }
-
-    @Override
-    public void setNeedUpdateData(boolean needUpdateData) {
-        this.needUpdateData = needUpdateData;
     }
 
     @Override
@@ -347,13 +266,12 @@ public class HomeActivity extends BaseActivity implements
 
     @Override
     public void hideToolBar() {
-
+        toolbarLayout.setVisibility(View.INVISIBLE);
     }
 
-
     @Override
-    public void onFragmentInteraction(Uri uri) {
-
+    public void showToolBar() {
+        toolbarLayout.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -363,22 +281,12 @@ public class HomeActivity extends BaseActivity implements
 
     @Override
     public void goQuestionsList(String paperId) {
-        showQuestionsFragment();
-//        Bundle bundle = new Bundle();
-//        bundle.putString("paperId", paperId);
+        showQuestionsFragment(paperId);
     }
 
     @Override
-    public void onShowQuestionDetail() {
-        toolbarLayout.setVisibility(View.GONE);
-        setViewPagerScrollble(false);
-        showQuestionsFragment();
-    }
-
-    @Override
-    public void onHideQuestionDetail() {
-        toolbarLayout.setVisibility(View.VISIBLE);
-        setViewPagerScrollble(true);
+    public void startFromScheduleFrag(String paperId, QuestionType type, int qstNum) {
+        startStudy(paperId,type,qstNum);
     }
 
     @Override
@@ -400,46 +308,15 @@ public class HomeActivity extends BaseActivity implements
         viewPager.setCurrentItem(1);
     }
 
+
     @Override
-    public void showQuestionsFragment() {
+    public void showQuestionsFragment(String paperId) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.viewpaper,getSupportFragmentManager().findFragmentByTag(QuestionsFragmentTag));
+        questionsFragment = QuestionsFragment.newInstance(paperId);
+        transaction.replace(R.id.questions_frag_2, questionsFragment);
         transaction.addToBackStack(null);
         transaction.commit();
-    }
-
-    @Override
-    public void showFragment(String fragmentTag) {
-
-    }
-
-    @Override
-    public void showProgressBar() {
-
-    }
-
-    @Override
-    public void hideProgressBar() {
-
-    }
-
-    @Override
-    public void notifyDataChanged() {
-        ((ScheduleFragment) fragments.get(0)).notifyDataChanged();
-        ((PapersFragment) fragments.get(1)).getPapersPresenter().notifyDataChanged();
-    }
-
-
-    @Override
-    public void hideLoadingView() {
-        initTask();
-        timer.schedule(hideLoadingTask, 1000);
-    }
-
-    @Override
-    public void showLoadingView() {
-        loadingView.setVisibility(View.VISIBLE);
-        ObjectAnimator.ofFloat(loadingView,"alpha",0,1).setDuration(500).start();
+        hideToolBar();
     }
 
     @Override
@@ -452,10 +329,10 @@ public class HomeActivity extends BaseActivity implements
                 homePresenter.goSearch();
                 break;
             case R.id.toolbar_add:
-                new MaterialFilePicker()
-                        .withActivity(this)
-                        .withRequestCode(1)
-                        .start();
+                finish();
+                openActivity(FileSelectorActivity.class);
+                break;
+            default:
                 break;
         }
     }
@@ -466,7 +343,37 @@ public class HomeActivity extends BaseActivity implements
             slideUp.hide();
             return;
         }
+        showToolBar();
         super.onBackPressed();
+    }
+
+    @Override
+    public void onPaperDeleted(String paperId) {
+        scheduleFragment.onPaperDataChanged();
+    }
+
+    @Override
+    public void onPaperExitSchedule(String paperId) {
+        scheduleFragment.onPaperDataChanged();
+    }
+
+    @Override
+    public void onPaperInSchedule(String paperId) {
+        scheduleFragment.onPaperDataChanged();
+    }
+
+    @Override
+    public void startFromQuestionFrag(String paperId, QuestionType type) {
+        startStudy(paperId,type,0);
+    }
+
+
+    private void startStudy(String paperId, QuestionType type, int qstNum) {
+        Intent intent = new Intent(this, AnswerStudyActivity.class);
+        intent.putExtra("paperId", paperId);
+        intent.putExtra("qstType", (Parcelable) type);
+        intent.putExtra("qstNum", qstNum);
+        startActivity(intent);
     }
 
     public class HomeFragmentPagerAdapter extends FragmentPagerAdapter {
@@ -485,21 +392,6 @@ public class HomeActivity extends BaseActivity implements
         @Override
         public Fragment getItem(int position) {
             return fragments.get(position);
-        }
-
-
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == RESULT_OK) {
-            String filePath = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
-            if (filePath == null || filePath.equals("")) {
-                return;
-            }
-            showLoadingView();
-            homePresenter.parseFromFile(filePath);
         }
     }
 }
