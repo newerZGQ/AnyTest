@@ -176,6 +176,7 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
     public void onTaskSelected(int task) {
         scheduleInfoView.changDailyCount(task, 200);
         presenter.setDailyCount(currentPosition, task);
+        ((IHomeView) getActivity()).setViewPagerScrollble(true);
     }
 
     private void checkPaperCount() {
