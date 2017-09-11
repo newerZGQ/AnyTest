@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.zgq.wokao.MyApplication;
 import com.zgq.wokao.R;
 import com.zgq.wokao.model.viewdate.QstData;
 
@@ -34,7 +35,11 @@ public class QuestionsInfoAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (position % 2 == 0) {
-            ((MyViewHolder) holder).outLayout.setBackgroundColor(0x6CCF6E);
+            ((MyViewHolder) holder).outLayout.setBackground(MyApplication.getInstance().
+                    getResources().getDrawable(R.drawable.question_type_back_1));
+        }else{
+            ((MyViewHolder) holder).outLayout.setBackground(MyApplication.getInstance().
+                    getResources().getDrawable(R.drawable.question_type_back_3));
         }
 
         ((MyViewHolder) holder).qstType.setText(qstDatas.get(position).getType().getName() + "题");
