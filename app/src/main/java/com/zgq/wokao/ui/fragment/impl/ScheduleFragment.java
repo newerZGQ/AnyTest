@@ -138,6 +138,9 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
     }
 
     private void updateScheduleInfo(ScheduleData data, boolean withAnimator) {
+        if (data == null){
+            return;
+        }
         if (withAnimator) {
             scheduleInfoView.updateWithAnimator(data.getAccuracy(), String.valueOf(data.getCountToday())
                     , String.valueOf(data.getCountEveryday()));
