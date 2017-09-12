@@ -62,18 +62,17 @@ public class ScheduleInfoView extends RelativeLayout {
     }
 
 
-    public void updateWithAnimator(final String accuracy, final String todayNum, final String dailyCount) {
-        final float accuracyF = Float.valueOf(accuracy);
+    public void updateWithAnimator(int accuracy, final String todayNum, final String dailyCount) {
         int todayNumI = Integer.valueOf(todayNum);
         int dailyCountI = Integer.valueOf(dailyCount);
         float scheduleF = 0f;
         if (dailyCountI != 0) {
             scheduleF = (float) todayNumI / (float) dailyCountI;
         }
-        accuracyCircle.setProgress(accuracyF);
+        accuracyCircle.setProgress(((float) accuracy)/100);
         scheduleCircle.setProgress(scheduleF);
 
-        accuracyText.runInt(0, (int) (accuracyF * 100), 200);
+        accuracyText.runInt(0, accuracy, 200);
 
         AnimatorSet set = new AnimatorSet();
         set.playTogether(
@@ -119,17 +118,16 @@ public class ScheduleInfoView extends RelativeLayout {
         set.setDuration(200).start();
     }
 
-    public void updateImmediate(final String accuracy, final String todayNum, final String dailyCount){
-        final float accuracyF = Float.valueOf(accuracy);
+    public void updateImmediate(int accuracy, final String todayNum, final String dailyCount){
         int todayNumI = Integer.valueOf(todayNum);
         int dailyCountI = Integer.valueOf(dailyCount);
         float scheduleF = 0f;
         if (dailyCountI != 0) {
             scheduleF = (float) todayNumI / (float) dailyCountI;
         }
-        accuracyCircle.setProgress(accuracyF);
+        accuracyCircle.setProgress(((float) accuracy)/100);
         scheduleCircle.setProgress(scheduleF);
-        accuracyText.setText(accuracy);
+        accuracyText.setText(""+accuracy);
         todayNumText.setText(todayNum);
         dailyCountText.setText(dailyCount);
     }

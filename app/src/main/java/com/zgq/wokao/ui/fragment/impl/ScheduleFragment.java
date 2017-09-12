@@ -1,5 +1,7 @@
 package com.zgq.wokao.ui.fragment.impl;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -8,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.zgq.wokao.R;
 import com.zgq.wokao.model.paper.QuestionType;
@@ -138,11 +141,15 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
     }
 
     private void updateScheduleInfo(ScheduleData data, boolean withAnimator) {
+        if (data == null){
+            return;
+        }
+        float accuracy = Float.valueOf(data.getAccuracy());
         if (withAnimator) {
-            scheduleInfoView.updateWithAnimator(data.getAccuracy(), String.valueOf(data.getCountToday())
+            scheduleInfoView.updateWithAnimator((int)Math.floor(accuracy*100), String.valueOf(data.getCountToday())
                     , String.valueOf(data.getCountEveryday()));
         }else {
-            scheduleInfoView.updateImmediate(data.getAccuracy(), String.valueOf(data.getCountToday())
+            scheduleInfoView.updateImmediate((int)Math.floor(accuracy*100), String.valueOf(data.getCountToday())
                     , String.valueOf(data.getCountEveryday()));
         }
     }
@@ -153,7 +160,8 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
             case R.id.schedule_info_view:
                 break;
             case R.id.schedule_info_layout:
-                taskSettingLayout.show();
+                startSettingDaily();
+                break;
             default:
                 break;
         }
@@ -162,17 +170,65 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
     @Override
     public void onHide() {
         ((IHomeView) getActivity()).setViewPagerScrollble(true);
+        actionViewPagerAndScheduleView(false,300);
+        mListener.onEndSettingDaily();
     }
 
     @Override
     public void onshow() {
         ((IHomeView) getActivity()).setViewPagerScrollble(false);
+        mListener.onStartSettingDaily();
     }
 
     @Override
     public void onTaskSelected(int task) {
         scheduleInfoView.changDailyCount(task, 200);
         presenter.setDailyCount(currentPosition, task);
+        ((IHomeView) getActivity()).setViewPagerScrollble(true);
+        actionViewPagerAndScheduleView(false,300);
+        mListener.onEndSettingDaily();
+    }
+
+    private void startSettingDaily(){
+        actionViewPagerAndScheduleView(true,300);
+        taskSettingLayout.show();
+    }
+
+    private void actionViewPagerAndScheduleView(boolean toHide, int duration){
+        float viewPagerStartPos;
+        float viewPagerEndPos;
+        float scheduleStartPos;
+        float scheduleEndPos;
+        float scheduleStartScale;
+        float scheduleEndScale;
+        if (toHide) {
+            viewPagerStartPos = 0;
+            viewPagerEndPos = viewPager.getHeight();
+            scheduleStartPos = 0;
+            scheduleEndPos = -scheduleInfoView.getHeight()/10;
+            scheduleStartScale = 1;
+            scheduleEndScale = 0.9f;
+        }else{
+            viewPagerStartPos = viewPager.getHeight();
+            viewPagerEndPos = 0;
+            scheduleStartPos = -scheduleInfoView.getHeight()/10;
+            scheduleEndPos = 0;
+            scheduleStartScale = 0.9f;
+            scheduleEndScale = 1f;
+        }
+        ObjectAnimator hideViewPager = ObjectAnimator.ofFloat(viewPager, "translationY",
+                viewPagerStartPos, viewPagerEndPos).setDuration(duration);
+        hideViewPager.start();
+        AnimatorSet hideSchedule = new AnimatorSet();
+        ObjectAnimator moveSchedule = ObjectAnimator.ofFloat(scheduleInfoView, "translationY",
+                scheduleStartPos,scheduleEndPos);
+        ObjectAnimator scaleScheduleX = ObjectAnimator.ofFloat(scheduleInfoView, "scaleX",
+                scheduleStartScale,scheduleEndScale);
+        ObjectAnimator scaleScheduleY = ObjectAnimator.ofFloat(scheduleInfoView, "scaleY",
+                scheduleStartScale,scheduleEndScale);
+        hideSchedule.playTogether(moveSchedule, scaleScheduleX, scaleScheduleY);
+        hideSchedule.setDuration(duration);
+        hideSchedule.start();
     }
 
     private void checkPaperCount() {
@@ -218,6 +274,8 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
     public interface ScheduleFragmentListener {
         void goQuestionsList(String paperId);
         void startFromScheduleFrag(String paperId, QuestionType type, int qstNum);
+        void onStartSettingDaily();
+        void onEndSettingDaily();
     }
 
     public class SchedulePageChangeListener implements ViewPager.OnPageChangeListener {

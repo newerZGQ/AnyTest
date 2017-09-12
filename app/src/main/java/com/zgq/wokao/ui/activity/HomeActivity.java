@@ -265,13 +265,17 @@ public class HomeActivity extends BaseActivity implements
     }
 
     @Override
-    public void hideToolBar() {
-        toolbarLayout.setVisibility(View.INVISIBLE);
+    public void hideToolBar(int duration) {
+        ObjectAnimator hideTooBar = ObjectAnimator.ofFloat(toolbarLayout,"rotationX",
+                0,90).setDuration(300);
+        hideTooBar.start();
     }
 
     @Override
-    public void showToolBar() {
-        toolbarLayout.setVisibility(View.VISIBLE);
+    public void showToolBar(int duration) {
+        ObjectAnimator showTooBar = ObjectAnimator.ofFloat(toolbarLayout,"rotationX",
+                90,0).setDuration(300);
+        showTooBar.start();
     }
 
     @Override
@@ -287,6 +291,16 @@ public class HomeActivity extends BaseActivity implements
     @Override
     public void startFromScheduleFrag(String paperId, QuestionType type, int qstNum) {
         startStudy(paperId,type,qstNum);
+    }
+
+    @Override
+    public void onStartSettingDaily() {
+        hideToolBar(300);
+    }
+
+    @Override
+    public void onEndSettingDaily() {
+        showToolBar(300);
     }
 
     @Override
@@ -316,7 +330,7 @@ public class HomeActivity extends BaseActivity implements
         transaction.replace(R.id.questions_frag_2, questionsFragment);
         transaction.addToBackStack(null);
         transaction.commit();
-        hideToolBar();
+        hideToolBar(300);
     }
 
     @Override
@@ -343,7 +357,7 @@ public class HomeActivity extends BaseActivity implements
             slideUp.hide();
             return;
         }
-        showToolBar();
+        showToolBar(300);
         super.onBackPressed();
     }
 

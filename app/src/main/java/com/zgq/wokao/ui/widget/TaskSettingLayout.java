@@ -19,7 +19,22 @@ public class TaskSettingLayout extends LinearLayout {
     private View rootView;
     private Context context;
     private BubbleSeekBar seekBar;
-    private OnTaskSettingListener listener;
+    private OnTaskSettingListener listener = new OnTaskSettingListener() {
+        @Override
+        public void onHide() {
+
+        }
+
+        @Override
+        public void onshow() {
+
+        }
+
+        @Override
+        public void onTaskSelected(int task) {
+
+        }
+    };
 
     public TaskSettingLayout(Context context) {
         super(context);
@@ -51,9 +66,7 @@ public class TaskSettingLayout extends LinearLayout {
             @Override
             public void getProgressOnActionUp(int progress, float progressFloat) {
                 rootView.setVisibility(GONE);
-                if (listener != null) {
-                    listener.onTaskSelected(progress);
-                }
+                listener.onTaskSelected(progress);
             }
 
             @Override
@@ -66,9 +79,7 @@ public class TaskSettingLayout extends LinearLayout {
             @Override
             public void onClick(View view) {
                 rootView.setVisibility(GONE);
-                if (listener != null) {
-                    listener.onHide();
-                }
+                listener.onHide();
             }
         });
 
@@ -77,9 +88,7 @@ public class TaskSettingLayout extends LinearLayout {
 
     public void show() {
         rootView.setVisibility(VISIBLE);
-        if (listener != null) {
-            listener.onshow();
-        }
+        listener.onshow();
     }
 
     public void setOnTaskSettingListener(OnTaskSettingListener listener) {
