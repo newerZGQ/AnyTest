@@ -22,8 +22,8 @@ public interface IHomeView {
 
     void setViewPagerScrollble(boolean scrollble);
 
-    void hideToolBar();
+    void hideToolBar(int duration);
 
-    void showToolBar();
+    void showToolBar(int duration);
 
 }

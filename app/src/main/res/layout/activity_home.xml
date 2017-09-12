@@ -114,7 +114,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="24dp"
-                android:background="@color/colorTransparent"/>
+                android:background="@color/color_home_activity_background"/>
 
             <RelativeLayout
                 android:id="@+id/toolbar_opt_layout"
