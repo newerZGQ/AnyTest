@@ -23,13 +23,17 @@ public class StudySummaryAction implements IStudySummaryAction {
     }
 
     @Override
-    public void addStudySummary(StudySummary studySummary) {
-        studySummaryDao.addStudySummary(studySummary);
+    public void initStudySummary() {
+        if (studySummaryDao.getStudySummary() != null){
+            return;
+        }
+        studySummaryDao.addStudySummary(new StudySummary());
+        studySummaryDao.initStudySummary(studySummaryDao.getStudySummary());
     }
 
     @Override
-    public void updateSummary(StudySummary studySummary, boolean correct) {
-        studySummaryDao.updateSummary(studySummary, correct);
+    public void updateSummary(boolean correct) {
+        studySummaryDao.updateSummary(studySummaryDao.getStudySummary(), correct);
     }
 
     @Override

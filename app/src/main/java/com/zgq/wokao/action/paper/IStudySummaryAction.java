@@ -7,10 +7,11 @@ import com.zgq.wokao.model.total.StudySummary;
  */
 
 public interface IStudySummaryAction {
-    void addStudySummary(StudySummary studySummary);
+
+    void initStudySummary();
 
     //更新学习记录，correct是表示记录的答题是否回答正确
-    void updateSummary(StudySummary studySummary, boolean correct);
+    void updateSummary(boolean correct);
 
     StudySummary getStudySummary();
 }

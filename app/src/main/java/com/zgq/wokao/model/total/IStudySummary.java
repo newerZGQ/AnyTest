@@ -5,11 +5,12 @@ package com.zgq.wokao.model.total;
  */
 
 public interface IStudySummary {
-    void studyCountPlus_1();
 
-    void correctCountPlus_1();
+    void initSummary();
 
-    void updateDailyCount();
+    void updateSummary(boolean isCorrect);
 
-    TotalDailyCount getCurrentDailyCount();
+    int getStudyCount();
+
+    int getCorrectCount();
 }

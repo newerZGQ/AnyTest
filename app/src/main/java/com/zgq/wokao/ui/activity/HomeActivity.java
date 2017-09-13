@@ -23,7 +23,9 @@ import com.zgq.wokao.R;
 import com.zgq.wokao.action.login.LoginAction;
 import com.zgq.wokao.action.paper.impl.StudySummaryAction;
 import com.zgq.wokao.model.paper.QuestionType;
+import com.zgq.wokao.model.schedule.DailyRecord;
 import com.zgq.wokao.model.total.StudySummary;
+import com.zgq.wokao.model.total.TotalDailyCount;
 import com.zgq.wokao.ui.fragment.impl.PapersFragment;
 import com.zgq.wokao.ui.fragment.impl.QuestionsFragment;
 import com.zgq.wokao.ui.fragment.impl.ScheduleFragment;
@@ -90,10 +92,7 @@ public class HomeActivity extends BaseActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
-        if (LoginAction.getInstance().isFirstTimeLogin()) {
-            StudySummaryAction.getInstance().addStudySummary(new StudySummary());
-            LoginAction.getInstance().setFirstTimeLoginFalse();
-        }
+        StudySummaryAction.getInstance().initStudySummary();
         homePresenter = new HomePresenterImpl(this);
         initView();
     }
@@ -101,7 +100,7 @@ public class HomeActivity extends BaseActivity implements
     @Override
     protected void onStart() {
         super.onStart();
-        homePresenter.showScheduleFragment();
+        showScheduleFragment();
     }
 
     @Override
@@ -109,10 +108,10 @@ public class HomeActivity extends BaseActivity implements
         super.onResume();
         switch (currentItem) {
             case 0:
-                homePresenter.showScheduleFragment();
+                showScheduleFragment();
                 break;
             case 1:
-                homePresenter.showPapersFragment();
+                showPapersFragment();
                 break;
         }
     }
@@ -129,7 +128,7 @@ public class HomeActivity extends BaseActivity implements
         initViewPager();
         setListener();
         initTabStrip();
-        initLineChart();
+        initLineChart(homePresenter.getDailyRecords());
         initContent();
     }
 
@@ -208,32 +207,28 @@ public class HomeActivity extends BaseActivity implements
         });
     }
 
-    private void initLineChart() {
+    private void initLineChart(List<TotalDailyCount> dailyRecords) {
+        dailyRecords.add(0,dailyRecords.get(0));
+        dailyRecords.add(dailyRecords.get(dailyRecords.size()-1));
+
+        for (TotalDailyCount totalDailyCount : dailyRecords){
+            Log.d(TAG,"" + totalDailyCount.getDate() + " count " + totalDailyCount.getDailyCount());
+        }
         //x轴坐标对应的数据
         List<String> xValue = new ArrayList<>();
         //y轴坐标对应的数据
         List<Integer> yValue = new ArrayList<>();
         //折线对应的数据
         Map<String, Integer> value = new HashMap<>();
-        for (int i = 0; i < 9; i++) {
-            if (i == 0 || i == 1) {
-                xValue.add((i + 1) + "月");
-                value.put((i + 1) + "月", (int) (181));//60--240
-                continue;
-            }
-            if (i == 7 || i == 8) {
-                xValue.add((i + 1) + "月");
-                value.put((i + 1) + "月", (int) (160));//60--240
-                continue;
-            }
-            xValue.add((i + 1) + "月");
-            value.put((i + 1) + "月", (int) (Math.random() * 181 + 60));//60--240
+        for (int i = 0; i< dailyRecords.size(); i++){
+            xValue.add("" + i);
+            value.put(xValue.get(i),dailyRecords.get(i).getDailyCount());
         }
 
         for (int i = 0; i < 9; i++) {
             yValue.add(i * 60);
         }
-        lineChart.setValue(value, xValue, yValue);
+        lineChart.setValue(value, xValue, yValue, 350);
     }
 
     private void setListener() {
@@ -328,6 +323,7 @@ public class HomeActivity extends BaseActivity implements
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         questionsFragment = QuestionsFragment.newInstance(paperId);
         transaction.replace(R.id.questions_frag_2, questionsFragment);
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.addToBackStack(null);
         transaction.commit();
         hideToolBar(300);
@@ -337,10 +333,10 @@ public class HomeActivity extends BaseActivity implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.toolbar_menu:
-                homePresenter.updateSlideUp();
+                updateSlideUp();
                 break;
             case R.id.toolbar_search:
-                homePresenter.goSearch();
+                goSearch();
                 break;
             case R.id.toolbar_add:
                 finish();
@@ -388,6 +384,7 @@ public class HomeActivity extends BaseActivity implements
         intent.putExtra("qstType", (Parcelable) type);
         intent.putExtra("qstNum", qstNum);
         startActivity(intent);
+        finish();
     }
 
     public class HomeFragmentPagerAdapter extends FragmentPagerAdapter {

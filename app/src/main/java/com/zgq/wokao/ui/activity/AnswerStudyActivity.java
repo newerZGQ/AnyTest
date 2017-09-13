@@ -36,6 +36,7 @@ import com.zgq.wokao.ui.adapter.BaseStudySystemAdapter;
 import com.zgq.wokao.ui.adapter.BaseViewPagerAdapter;
 import com.zgq.wokao.ui.adapter.DiscussQuestionAdapter;
 import com.zgq.wokao.ui.adapter.FillInQuestionAdapter;
+import com.zgq.wokao.ui.adapter.HomePaperAdapter;
 import com.zgq.wokao.ui.adapter.MultChoQuestionAdapter;
 import com.zgq.wokao.ui.adapter.SglChoQuestionAdapter;
 import com.zgq.wokao.ui.adapter.TFQuestionAdapter;
@@ -50,7 +51,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.Realm;
 
-public class AnswerStudyActivity extends AppCompatActivity implements IStudyAnswerView, View.OnClickListener {
+public class AnswerStudyActivity extends BaseActivity implements IStudyAnswerView, View.OnClickListener {
 
     private static final String TAG = AnswerStudyActivity.class.getSimpleName();
 
@@ -152,6 +153,8 @@ public class AnswerStudyActivity extends AppCompatActivity implements IStudyAnsw
         initView();
         presenter = new AnswerStudyPresenter(this);
     }
+
+
 
     public void onResume() {
         super.onResume();
@@ -481,6 +484,7 @@ public class AnswerStudyActivity extends AppCompatActivity implements IStudyAnsw
     public void onBackPressed() {
         super.onBackPressed();
         updateLastStudyPosition();
+        openActivity(HomeActivity.class);
     }
 
     private void updateLastStudyPosition() {
