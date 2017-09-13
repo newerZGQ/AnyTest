@@ -8,7 +8,7 @@ import com.zgq.wokao.model.total.StudySummary;
  */
 
 public interface IHomeView {
-    void updateSlideUp();
+    void changeSlideUpState();
 
     void goSearch();
 
@@ -25,5 +25,9 @@ public interface IHomeView {
     void hideToolBar(int duration);
 
     void showToolBar(int duration);
+
+    void animateToolbarLeft(int duration);
+
+    void animateToolbarRight(int duration);
 
 }

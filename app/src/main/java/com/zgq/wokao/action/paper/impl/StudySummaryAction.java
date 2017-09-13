@@ -2,6 +2,7 @@ package com.zgq.wokao.action.paper.impl;
 
 import com.zgq.wokao.action.paper.IStudySummaryAction;
 import com.zgq.wokao.data.realm.Paper.impl.StudySummaryDaoImpl;
+import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.total.StudySummary;
 
 /**
@@ -32,8 +33,13 @@ public class StudySummaryAction implements IStudySummaryAction {
     }
 
     @Override
-    public void updateSummary(boolean correct) {
-        studySummaryDao.updateSummary(studySummaryDao.getStudySummary(), correct);
+    public void updateSummary(QuestionType type, boolean correct) {
+        if ((type == QuestionType.TF || type == QuestionType.SINGLECHOOSE ||
+                type == QuestionType.MUTTICHOOSE) && correct) {
+            studySummaryDao.updateSummary(studySummaryDao.getStudySummary(), true);
+        }else {
+            studySummaryDao.updateSummary(studySummaryDao.getStudySummary(), false);
+        }
     }
 
     @Override

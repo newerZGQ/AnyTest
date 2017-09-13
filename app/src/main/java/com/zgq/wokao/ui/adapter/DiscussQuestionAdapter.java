@@ -110,7 +110,8 @@ public class DiscussQuestionAdapter extends BaseViewPagerAdapter {
     @Override
     public boolean showCurrentAnswer() {
         if (hasShowAnswer.get(currentPosition)) return false;
-        ((DiscussQuestionViewHolder) (currentView.getTag())).questionAnswer.setText(datas.get(currentPosition).getAnswer().getContent());
+        ((DiscussQuestionViewHolder) (currentView.getTag())).questionAnswer.
+                setText(datas.get(currentPosition).getAnswer().getContent());
         hasShowAnswer.set(currentPosition, true);
         getCorrectAnswer(getPaperId(), datas.get(currentPosition));
         return true;

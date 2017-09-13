@@ -10,7 +10,7 @@
     <RelativeLayout
         android:id="@+id/menu_layout"
         android:layout_width="match_parent"
-        android:layout_height="520dp"
+        android:layout_height="540dp"
         android:orientation="vertical">
         <TextView
             android:id="@+id/app_name"
@@ -54,18 +54,17 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical">
                 <TextView
-                    android:text="总学习量"
+                    android:text="共学习"
                     android:textColor="@color/colorWhiteTransparent"
-                    android:textSize="11sp"
+                    android:textSize="13sp"
                     android:gravity="center_horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
                 <TextView
                     android:id="@+id/total_count"
-                    android:text="2000"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="8dp"
                     android:textColor="@color/color_accuracy_circle_2_hard"
-                    android:textSize="25sp"
+                    android:textSize="30sp"
                     android:gravity="center_horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
@@ -77,18 +76,17 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical">
                 <TextView
-                    android:text="总正确率"
+                    android:text="正确"
                     android:textColor="@color/colorWhiteTransparent"
-                    android:textSize="11sp"
+                    android:textSize="13sp"
                     android:gravity="center_horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
                 <TextView
                     android:id="@+id/total_accuracy"
-                    android:text="64%"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="8dp"
                     android:textColor="@color/color_accuracy_circle_1_hard"
-                    android:textSize="25sp"
+                    android:textSize="30sp"
                     android:gravity="center_horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
