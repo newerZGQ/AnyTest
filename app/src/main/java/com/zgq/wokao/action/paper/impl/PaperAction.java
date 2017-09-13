@@ -297,7 +297,7 @@ public class PaperAction extends BaseAction implements IPaperAction, IQuestionAc
         //更新该试卷总的记录
         paperDao.updateStudyInfo(paper, isCorrect);
         //更新所有试卷学习记录总结
-        summaryAction.updateSummary(isCorrect);
+        summaryAction.updateSummary(question.getInfo().getType(), isCorrect);
     }
 
     @Override

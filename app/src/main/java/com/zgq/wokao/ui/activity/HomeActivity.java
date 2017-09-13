@@ -10,7 +10,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -20,10 +19,8 @@ import android.widget.TextView;
 import com.gigamole.navigationtabstrip.NavigationTabStrip;
 import com.zgq.linechart.ChartView;
 import com.zgq.wokao.R;
-import com.zgq.wokao.action.login.LoginAction;
 import com.zgq.wokao.action.paper.impl.StudySummaryAction;
 import com.zgq.wokao.model.paper.QuestionType;
-import com.zgq.wokao.model.schedule.DailyRecord;
 import com.zgq.wokao.model.total.StudySummary;
 import com.zgq.wokao.model.total.TotalDailyCount;
 import com.zgq.wokao.ui.fragment.impl.PapersFragment;
@@ -85,7 +82,6 @@ public class HomeActivity extends BaseActivity implements
 
     private ScheduleFragment scheduleFragment;
     private PapersFragment papersFragment;
-    private QuestionsFragment questionsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,17 +149,14 @@ public class HomeActivity extends BaseActivity implements
                     @Override
                     public void onSlide(float percent) {
                         if (percent == 0.0) return;
-                        ObjectAnimator.ofFloat(mainLayout, "translationY", menuLayout.getHeight() * (1 - percent / 100)).
+                        ObjectAnimator.ofFloat(mainLayout, "translationY",
+                                menuLayout.getHeight() * (1 - percent / 100)).
                                 setDuration(0).start();
                     }
 
                     @Override
                     public void onVisibilityChanged(int visibility) {
-                        if (visibility == View.GONE) {
 
-                        } else {
-
-                        }
                     }
                 })
                 .withStartState(SlideUp.State.HIDDEN)
@@ -197,6 +190,8 @@ public class HomeActivity extends BaseActivity implements
                         parseBtn.setVisibility(View.VISIBLE);
                         searchBtn.setVisibility(View.GONE);
                         break;
+                    default:
+                        break;
                 }
             }
 
@@ -208,21 +203,14 @@ public class HomeActivity extends BaseActivity implements
     }
 
     private void initLineChart(List<TotalDailyCount> dailyRecords) {
-        dailyRecords.add(0,dailyRecords.get(0));
-        dailyRecords.add(dailyRecords.get(dailyRecords.size()-1));
-
-        for (TotalDailyCount totalDailyCount : dailyRecords){
-            Log.d(TAG,"" + totalDailyCount.getDate() + " count " + totalDailyCount.getDailyCount());
-        }
-        //x轴坐标对应的数据
+        dailyRecords.add(0, dailyRecords.get(0));
+        dailyRecords.add(dailyRecords.get(dailyRecords.size() - 1));
         List<String> xValue = new ArrayList<>();
-        //y轴坐标对应的数据
         List<Integer> yValue = new ArrayList<>();
-        //折线对应的数据
         Map<String, Integer> value = new HashMap<>();
-        for (int i = 0; i< dailyRecords.size(); i++){
+        for (int i = 0; i < dailyRecords.size(); i++) {
             xValue.add("" + i);
-            value.put(xValue.get(i),dailyRecords.get(i).getDailyCount());
+            value.put(xValue.get(i), dailyRecords.get(i).getDailyCount());
         }
 
         for (int i = 0; i < 9; i++) {
@@ -239,14 +227,8 @@ public class HomeActivity extends BaseActivity implements
 
     private void initContent() {
         StudySummary studySummary = StudySummaryAction.getInstance().getStudySummary();
-        totalCount.setText("" + studySummary.getStudyCount());
-        String accuracy = "0";
-        if (studySummary.getStudyCount() != 0) {
-            accuracy = String.valueOf(studySummary.getCorrectCount() / studySummary.getStudyCount());
-        } else {
-            accuracy = "未学习";
-        }
-        totalAccuracy.setText(accuracy);
+        totalCount.setText(String.valueOf(studySummary.getStudyCount()));
+        totalAccuracy.setText(String.valueOf(studySummary.getCorrectCount()));
     }
 
     @Override
@@ -261,15 +243,15 @@ public class HomeActivity extends BaseActivity implements
 
     @Override
     public void hideToolBar(int duration) {
-        ObjectAnimator hideTooBar = ObjectAnimator.ofFloat(toolbarLayout,"rotationX",
-                0,90).setDuration(300);
+        ObjectAnimator hideTooBar = ObjectAnimator.ofFloat(toolbarLayout, "rotationX",
+                0, 90).setDuration(300);
         hideTooBar.start();
     }
 
     @Override
     public void showToolBar(int duration) {
-        ObjectAnimator showTooBar = ObjectAnimator.ofFloat(toolbarLayout,"rotationX",
-                90,0).setDuration(300);
+        ObjectAnimator showTooBar = ObjectAnimator.ofFloat(toolbarLayout, "rotationX",
+                90, 0).setDuration(300);
         showTooBar.start();
     }
 
@@ -285,7 +267,7 @@ public class HomeActivity extends BaseActivity implements
 
     @Override
     public void startFromScheduleFrag(String paperId, QuestionType type, int qstNum) {
-        startStudy(paperId,type,qstNum);
+        startStudy(paperId, type, qstNum);
     }
 
     @Override
@@ -321,7 +303,7 @@ public class HomeActivity extends BaseActivity implements
     @Override
     public void showQuestionsFragment(String paperId) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        questionsFragment = QuestionsFragment.newInstance(paperId);
+        QuestionsFragment questionsFragment = QuestionsFragment.newInstance(paperId);
         transaction.replace(R.id.questions_frag_2, questionsFragment);
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.addToBackStack(null);
@@ -374,7 +356,7 @@ public class HomeActivity extends BaseActivity implements
 
     @Override
     public void startFromQuestionFrag(String paperId, QuestionType type) {
-        startStudy(paperId,type,0);
+        startStudy(paperId, type, 0);
     }
 
 
@@ -390,7 +372,7 @@ public class HomeActivity extends BaseActivity implements
     public class HomeFragmentPagerAdapter extends FragmentPagerAdapter {
         ArrayList<Fragment> fragments;
 
-        public HomeFragmentPagerAdapter(FragmentManager fm, ArrayList<Fragment> fragments) {
+        HomeFragmentPagerAdapter(FragmentManager fm, ArrayList<Fragment> fragments) {
             super(fm);
             this.fragments = fragments;
         }
