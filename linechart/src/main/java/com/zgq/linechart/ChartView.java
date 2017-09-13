@@ -3,6 +3,7 @@ package com.zgq.linechart;
 import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -33,11 +34,12 @@ import com.zgq.linechart.R;
 
 /**
  * 自定义折线图
- * Created by xiaoyunfei on 16/11/29.
  * 一共需要九组数据，其中第一个和第九个不用来展示，只是为了好看，并且第0个与第一个和第八个与第九个间隔为space，
  * 为了显示好看，建议第0个和最后一个小一点
  */
 public class ChartView extends View {
+
+    private static final String TAG = ChartView.class.getSimpleName();
     //一共七组数据，将屏幕x方向均分为7部分，每部分宽度为space，其中最左边和最右边各为二分之一space
     private int space;
     //xy坐标轴颜色
@@ -74,6 +76,8 @@ public class ChartView extends View {
     private float maxXInit;
     //第一个点对应的最小X坐标
     private float minXInit;
+
+    private Map<String, Integer> origiValue = new HashMap<>();
     //x轴坐标对应的数据
     private List<String> xValue = new ArrayList<>();
     //y轴坐标对应的数据
@@ -125,7 +129,7 @@ public class ChartView extends View {
         initLinePaint();
     }
 
-    private void initLinePaint(){
+    private void initLinePaint() {
         linePaint.setAntiAlias(true);
         linePaint.setStrokeWidth(xylinewidth);
         linePaint.setStrokeCap(Paint.Cap.ROUND);
@@ -179,9 +183,9 @@ public class ChartView extends View {
             width = getWidth();
             height = getHeight();
             //计算space
-            space = width/7;
+            space = width / 7;
             //计算interval
-            interval = width/7;
+            interval = width / 7;
             //Y轴文本最大宽度
             float textYWdith = getTextBounds("000", xyTextPaint).width();
             for (int i = 0; i < yValue.size(); i++) {//求取y轴文本最大的宽度
@@ -203,7 +207,7 @@ public class ChartView extends View {
                 if (rect.width() > xValueRect.width())
                     xValueRect = rect;
             }
-            yOri = (int) (height - dp2 - textXHeight - dp3 - xylinewidth-dpToPx(140));//dp3是x轴文本距离底边，dp2是x轴文本距离x轴的距离
+            yOri = (int) (height - dp2 - textXHeight - dp3 - xylinewidth - dpToPx(140));//dp3是x轴文本距离底边，dp2是x轴文本距离x轴的距离
             //xInit = interval + xOri;
             xInit = xOri;
 //            minXInit = width - (width - xOri) * 0.1f - interval * (xValue.size() - 1);//减去0.1f是因为最后一个X周刻度距离右边的长度为X轴可见长度的10%
@@ -258,19 +262,19 @@ public class ChartView extends View {
         float dp7 = dpToPx(7);
         //绘制节点对应的原点
         for (int i = 0; i < xValue.size(); i++) {
-            float x = xInit + space/2 + interval * (i-1);
+            float x = xInit + space / 2 + interval * (i - 1);
             float y = yOri - yOri * (1 - 0.1f) * value.get(xValue.get(i)) / yValue.get(yValue.size() - 1);
-            if (i == 8){
+            if (i == 8) {
                 continue;
             }
             //绘制选中的点
-            if ((i == (selectIndex[0] - 1)) || (i==(selectIndex[1] -1))) {
+            if ((i == (selectIndex[0] - 1)) || (i == (selectIndex[1] - 1))) {
                 linePaint.setStyle(Paint.Style.FILL);
                 linePaint.setColor(0xffd0f3f2);
                 canvas.drawCircle(x, y, dp7, linePaint);
                 linePaint.setColor(0xff81dddb);
                 canvas.drawCircle(x, y, dp4, linePaint);
-                drawFloatTextBox(canvas, x, y - dp7, value.get(xValue.get(i)));
+                drawFloatTextBox(canvas, x, y - dp7, origiValue.get(xValue.get(i)));
             }
             //绘制普通的节点
             linePaint.setStyle(Paint.Style.FILL);
@@ -332,40 +336,40 @@ public class ChartView extends View {
         Path linePath = new Path();
         float x = xInit + interval * 0;
         float y = yOri - yOri * (1 - 0.1f) * value.get(xValue.get(0)) / yValue.get(yValue.size() - 1);
-        backPath.moveTo(x,y);
-        linePath.moveTo(x,y);
+        backPath.moveTo(x, y);
+        linePath.moveTo(x, y);
         for (int i = 1; i < xValue.size(); i++) {
-            if (i == 1){
-                x = xInit + space/2;
+            if (i == 1) {
+                x = xInit + space / 2;
                 y = yOri - yOri * (1 - 0.1f) * value.get(xValue.get(i)) / yValue.get(yValue.size() - 1);
                 backPath.lineTo(x, y);
                 linePath.lineTo(x, y);
                 continue;
             }
-            if (i == 8){
-                x = xInit + space + interval * (i-2);
+            if (i == 8) {
+                x = xInit + space + interval * (i - 2);
                 y = yOri - yOri * (1 - 0.1f) * value.get(xValue.get(i)) / yValue.get(yValue.size() - 1);
                 backPath.lineTo(x, y);
                 linePath.lineTo(x, y);
                 continue;
             }
-            x = xInit + space/2 + interval * (i-1);
+            x = xInit + space / 2 + interval * (i - 1);
             y = yOri - yOri * (1 - 0.1f) * value.get(xValue.get(i)) / yValue.get(yValue.size() - 1);
             backPath.lineTo(x, y);
             linePath.lineTo(x, y);
         }
-        backPath.lineTo(x,getHeight());
-        backPath.lineTo(0,getHeight());
+        backPath.lineTo(x, getHeight());
+        backPath.lineTo(0, getHeight());
         backPath.close();
-        canvas.drawPath(linePath,linePaint);
+        canvas.drawPath(linePath, linePaint);
         canvas.drawPath(backPath, getShadeColorPaint(linePaint));
     }
 
     // 修改笔的颜色
     private Paint getShadeColorPaint(Paint paint) {
         paint.setStyle(Paint.Style.FILL);
-        Shader mShader = new LinearGradient(getWidth()/2, 0, getWidth()/2, getHeight()-dpToPx(50),
-                new int[] { context.getResources().getColor(R.color.colorWhiteTransparent), android.R.color.transparent}, null, Shader.TileMode.CLAMP);
+        Shader mShader = new LinearGradient(getWidth() / 2, 0, getWidth() / 2, getHeight() - dpToPx(50),
+                new int[]{context.getResources().getColor(R.color.colorWhiteTransparent), android.R.color.transparent}, null, Shader.TileMode.CLAMP);
         // 新建一个线性渐变，前两个参数是渐变开始的点坐标，第三四个参数是渐变结束的点的坐标。连接这2个点就拉出一条渐变线了，玩过PS的都懂。然后那个数组是渐变的颜色。下一个参数是渐变颜色的分布，如果为空，每个颜色就是均匀分布的。最后是模式，这里设置的是循环渐变
         paint.setShader(mShader);
         return paint;
@@ -421,7 +425,7 @@ public class ChartView extends View {
                 //绘制X轴文本
                 String text = xValue.get(i);
                 Rect rect = getTextBounds(text, xyTextPaint);
-                if ((i == selectIndex[0] - 1) || (i == selectIndex[1] - 1) ){
+                if ((i == selectIndex[0] - 1) || (i == selectIndex[1] - 1)) {
                     xyTextPaint.setColor(linecolor);
                     canvas.drawText(text, 0, text.length(), x - rect.width() / 2, yOri + xylinewidth + dpToPx(2) + rect.height(), xyTextPaint);
                     canvas.drawRoundRect(x - xValueRect.width() / 2 - dpToPx(3), yOri + xylinewidth + dpToPx(1), x + xValueRect.width() / 2 + dpToPx(3), yOri + xylinewidth + dpToPx(2) + xValueRect.height() + dpToPx(2), dpToPx(2), dpToPx(2), xyTextPaint);
@@ -455,23 +459,45 @@ public class ChartView extends View {
         invalidate();
     }
 
-    public void setValue(Map<String, Integer> value, List<String> xValue, List<Integer> yValue) {
-        this.value = value;
-        this.xValue = xValue;
-        this.yValue = yValue;
+    public void setValue(Map<String, Integer> value, List<String> xValue, List<Integer> yValue, int normalize) {
+        normalizeValue(value,xValue,yValue,normalize);
         int indexMax = 0;
         int tmp = 0;
-        for(int i = 0; i< xValue.size();i++){
-            if (value.get(xValue.get(i)) > tmp){
+        for (int i = 0; i < xValue.size(); i++) {
+            if (value.get(xValue.get(i)) > tmp) {
                 tmp = value.get(xValue.get(i));
                 indexMax = i;
             }
         }
         int[] selected = new int[2];
-        selected[0] = indexMax+1;
+        selected[0] = indexMax + 1;
         selected[1] = 8;
         setSelectIndex(selected);
         invalidate();
+    }
+
+    private void normalizeValue(Map<String, Integer> value, List<String> xValue, List<Integer> yValue, int normalize){
+        int max = 0;
+        for (int i = 0; i < yValue.size(); i++) {
+            int tmp = value.get(xValue.get(i));
+            if (tmp > max) {
+                max = tmp;
+            }
+        }
+        float scale = 0;
+        if (max != 0) {
+            scale = normalize / (float)max ;
+        }
+
+        for (int i = 0; i < xValue.size(); i++) {
+            origiValue.put(xValue.get(i), value.get(xValue.get(i)));
+            int valueGraph = (int)(value.get(xValue.get(i)) * scale);
+            value.put(xValue.get(i), valueGraph);
+        }
+
+        this.value = value;
+        this.xValue = xValue;
+        this.yValue = yValue;
     }
 
     public List<String> getxValue() {

@@ -1,5 +1,7 @@
 package com.zgq.wokao.parser.adapter;
 
+import com.zgq.wokao.model.paper.QuestionType;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

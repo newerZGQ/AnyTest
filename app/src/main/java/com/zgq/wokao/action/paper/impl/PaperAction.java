@@ -289,7 +289,6 @@ public class PaperAction extends BaseAction implements IPaperAction, IQuestionAc
 
     @Override
     public void updateAllStudyInfo(String paperId, IQuestion question, boolean isCorrect) {
-        Log.d(LogUtil.PREFIX, TAG + " " + paperId);
         //更新某一题的记录
         updateQuestionRecord(question, isCorrect);
         //更新试卷每日的记录
@@ -298,7 +297,7 @@ public class PaperAction extends BaseAction implements IPaperAction, IQuestionAc
         //更新该试卷总的记录
         paperDao.updateStudyInfo(paper, isCorrect);
         //更新所有试卷学习记录总结
-        summaryAction.updateSummary(summaryAction.getStudySummary(), isCorrect);
+        summaryAction.updateSummary(isCorrect);
     }
 
     @Override
