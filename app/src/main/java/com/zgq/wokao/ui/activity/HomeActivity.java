@@ -1,5 +1,7 @@
 package com.zgq.wokao.ui.activity;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.graphics.Color;
@@ -10,6 +12,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -148,6 +151,7 @@ public class HomeActivity extends BaseActivity implements
                 .withListeners(new SlideUp.Listener() {
                     @Override
                     public void onSlide(float percent) {
+//                        Log.d(TAG,"per " + percent);
                         if (percent == 0.0) return;
                         ObjectAnimator.ofFloat(mainLayout, "translationY",
                                 menuLayout.getHeight() * (1 - percent / 100)).
@@ -156,7 +160,6 @@ public class HomeActivity extends BaseActivity implements
 
                     @Override
                     public void onVisibilityChanged(int visibility) {
-
                     }
                 })
                 .withStartState(SlideUp.State.HIDDEN)
@@ -256,6 +259,52 @@ public class HomeActivity extends BaseActivity implements
     }
 
     @Override
+    public void animateToolbarLeft(int duration) {
+        AnimatorSet hideSchedule = new AnimatorSet();
+        ObjectAnimator moveScheduleTab = ObjectAnimator.ofFloat(tabStrip, "translationX",
+                0,-tabStrip.getLeft() + menuBtn.getRight());
+        ObjectAnimator alphaSchedule = ObjectAnimator.ofFloat(tabStrip, "alpha",
+                1,0);
+
+        View actionLayout = (View) searchBtn.getParent();
+        ObjectAnimator moveScheduleSea = ObjectAnimator.ofFloat(actionLayout, "translationX",
+                0,-actionLayout.getLeft() + menuBtn.getRight());
+        ObjectAnimator alphaScheduleSea = ObjectAnimator.ofFloat(actionLayout, "alpha",
+                1,0);
+        hideSchedule.playTogether(moveScheduleTab, alphaSchedule,moveScheduleSea,alphaScheduleSea);
+        hideSchedule.setDuration(duration);
+        hideSchedule.setStartDelay(300);
+
+        tabStrip.setClickable(false);
+        actionLayout.setClickable(false);
+
+        hideSchedule.start();
+    }
+
+    @Override
+    public void animateToolbarRight(int duration) {
+        AnimatorSet hideSchedule = new AnimatorSet();
+        ObjectAnimator moveScheduleTab = ObjectAnimator.ofFloat(tabStrip, "translationX",
+                -tabStrip.getLeft() + menuBtn.getRight(),0);
+        ObjectAnimator alphaSchedule = ObjectAnimator.ofFloat(tabStrip, "alpha",
+                0,1);
+
+        View actionLayout = (View) searchBtn.getParent();
+        ObjectAnimator moveScheduleSea = ObjectAnimator.ofFloat(actionLayout, "translationX",
+                -actionLayout.getLeft() + menuBtn.getRight(),0);
+        ObjectAnimator alphaScheduleSea = ObjectAnimator.ofFloat(actionLayout, "alpha",
+                0,1);
+        hideSchedule.playTogether(moveScheduleTab, alphaSchedule,moveScheduleSea,alphaScheduleSea);
+        hideSchedule.setDuration(duration);
+        hideSchedule.setStartDelay(300);
+
+        tabStrip.setClickable(true);
+        actionLayout.setClickable(true);
+
+        hideSchedule.start();
+    }
+
+    @Override
     public void goSearch() {
         openActivity(SearchActivity.class);
     }
@@ -281,11 +330,13 @@ public class HomeActivity extends BaseActivity implements
     }
 
     @Override
-    public void updateSlideUp() {
+    public void changeSlideUpState() {
         if (slideUp.isVisible()) {
             slideUp.hide();
+            animateToolbarRight(350);
         } else {
             slideUp.show();
+            animateToolbarLeft(350);
         }
     }
 
@@ -315,7 +366,7 @@ public class HomeActivity extends BaseActivity implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.toolbar_menu:
-                updateSlideUp();
+                changeSlideUpState();
                 break;
             case R.id.toolbar_search:
                 goSearch();
