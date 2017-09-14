@@ -138,6 +138,9 @@ public class SlideUp implements View.OnTouchListener, ValueAnimator.AnimatorUpda
          * @param visibility (<b>GONE</b> or <b>VISIBLE</b>)
          */
         void onVisibilityChanged(int visibility);
+
+
+        void onAnimatorStarted(int direction);
     }
 
     /**
@@ -148,6 +151,11 @@ public class SlideUp implements View.OnTouchListener, ValueAnimator.AnimatorUpda
         }
 
         public void onVisibilityChanged(int visibility) {
+        }
+
+        @Override
+        public void onAnimatorStarted(int direction) {
+
         }
     }
 
@@ -759,7 +767,6 @@ public class SlideUp implements View.OnTouchListener, ValueAnimator.AnimatorUpda
             case END:
                 return onTouchEndToStart(event);
             default:
-                e("onTouchListener", "(onTouch)", "You are using not supportable gravity");
                 return false;
         }
     }
@@ -1015,9 +1022,7 @@ public class SlideUp implements View.OnTouchListener, ValueAnimator.AnimatorUpda
                 Listener l = listeners.get(i);
                 if (l != null) {
                     l.onSlide(percent);
-                    d("Listener(" + i + ")", "(onSlide)", "value = " + percent);
                 } else {
-                    e("Listener(" + i + ")", "(onSlide)", "Listener is null, skip notify for him...");
                 }
             }
         }
@@ -1029,9 +1034,7 @@ public class SlideUp implements View.OnTouchListener, ValueAnimator.AnimatorUpda
                 Listener l = listeners.get(i);
                 if (l != null) {
                     l.onVisibilityChanged(visibility);
-                    d("Listener(" + i + ")", "(onVisibilityChanged)", "value = " + (visibility == VISIBLE ? "VISIBLE" : visibility == GONE ? "GONE" : visibility));
                 } else {
-                    e("Listener(" + i + ")", "(onVisibilityChanged)", "Listener is null, skip  notify for him...");
                 }
             }
         }
@@ -1045,12 +1048,30 @@ public class SlideUp implements View.OnTouchListener, ValueAnimator.AnimatorUpda
         }
     }
 
+    private void notifyStartAnimate(int direction){
+        if (listeners != null && !listeners.isEmpty()) {
+            for (int i = 0; i < listeners.size(); i++) {
+                Listener l = listeners.get(i);
+                if (l != null) {
+                    l.onAnimatorStarted(direction);
+                } else {
+                }
+            }
+        }
+    }
+
+    public static int toBottom = 1;
+    public static int toUp = 2;
     @Override
     public final void onAnimationStart(Animator animator) {
         if (sliderView.getVisibility() != VISIBLE) {
             sliderView.setVisibility(VISIBLE);
             notifyVisibilityChanged(VISIBLE);
+            notifyStartAnimate(toBottom);
+        }else{
+            notifyStartAnimate(toUp);
         }
+
     }
 
     @Override
@@ -1069,15 +1090,5 @@ public class SlideUp implements View.OnTouchListener, ValueAnimator.AnimatorUpda
 
     @Override
     public final void onAnimationRepeat(Animator animator) {
-    }
-
-    private void e(String listener, String method, String message) {
-        if (debug)
-            Log.e(TAG, String.format("%1$-15s %2$-23s %3$s", listener, method, message));
-    }
-
-    private void d(String listener, String method, String value) {
-        if (debug)
-            Log.d(TAG, String.format("%1$-15s %2$-23s %3$s", listener, method, value));
     }
 }

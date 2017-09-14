@@ -151,15 +151,24 @@ public class HomeActivity extends BaseActivity implements
                 .withListeners(new SlideUp.Listener() {
                     @Override
                     public void onSlide(float percent) {
-//                        Log.d(TAG,"per " + percent);
-                        if (percent == 0.0) return;
-                        ObjectAnimator.ofFloat(mainLayout, "translationY",
-                                menuLayout.getHeight() * (1 - percent / 100)).
-                                setDuration(0).start();
                     }
 
                     @Override
                     public void onVisibilityChanged(int visibility) {
+
+                    }
+
+                    @Override
+                    public void onAnimatorStarted(int direction) {
+                        if (direction == SlideUp.toUp) {
+                            ObjectAnimator.ofFloat(mainLayout, "translationY",
+                                    menuLayout.getHeight(), 0).
+                                    setDuration(300).start();
+                        } else {
+                            ObjectAnimator.ofFloat(mainLayout, "translationY",
+                                    0, menuLayout.getHeight()).
+                                    setDuration(300).start();
+                        }
                     }
                 })
                 .withStartState(SlideUp.State.HIDDEN)
@@ -262,21 +271,22 @@ public class HomeActivity extends BaseActivity implements
     public void animateToolbarLeft(int duration) {
         AnimatorSet hideSchedule = new AnimatorSet();
         ObjectAnimator moveScheduleTab = ObjectAnimator.ofFloat(tabStrip, "translationX",
-                0,-tabStrip.getLeft() + menuBtn.getRight());
+                0, -tabStrip.getLeft() + menuBtn.getRight());
         ObjectAnimator alphaSchedule = ObjectAnimator.ofFloat(tabStrip, "alpha",
-                1,0);
+                1, 0);
 
         View actionLayout = (View) searchBtn.getParent();
         ObjectAnimator moveScheduleSea = ObjectAnimator.ofFloat(actionLayout, "translationX",
-                0,-actionLayout.getLeft() + menuBtn.getRight());
+                0, -actionLayout.getLeft() + menuBtn.getRight());
         ObjectAnimator alphaScheduleSea = ObjectAnimator.ofFloat(actionLayout, "alpha",
-                1,0);
-        hideSchedule.playTogether(moveScheduleTab, alphaSchedule,moveScheduleSea,alphaScheduleSea);
+                1, 0);
+        hideSchedule.playTogether(moveScheduleTab, alphaSchedule, moveScheduleSea, alphaScheduleSea);
         hideSchedule.setDuration(duration);
         hideSchedule.setStartDelay(300);
 
         tabStrip.setClickable(false);
-        actionLayout.setClickable(false);
+        searchBtn.setClickable(false);
+        parseBtn.setClickable(false);
 
         hideSchedule.start();
     }
@@ -285,21 +295,22 @@ public class HomeActivity extends BaseActivity implements
     public void animateToolbarRight(int duration) {
         AnimatorSet hideSchedule = new AnimatorSet();
         ObjectAnimator moveScheduleTab = ObjectAnimator.ofFloat(tabStrip, "translationX",
-                -tabStrip.getLeft() + menuBtn.getRight(),0);
+                -tabStrip.getLeft() + menuBtn.getRight(), 0);
         ObjectAnimator alphaSchedule = ObjectAnimator.ofFloat(tabStrip, "alpha",
-                0,1);
+                0, 1);
 
         View actionLayout = (View) searchBtn.getParent();
         ObjectAnimator moveScheduleSea = ObjectAnimator.ofFloat(actionLayout, "translationX",
-                -actionLayout.getLeft() + menuBtn.getRight(),0);
+                -actionLayout.getLeft() + menuBtn.getRight(), 0);
         ObjectAnimator alphaScheduleSea = ObjectAnimator.ofFloat(actionLayout, "alpha",
-                0,1);
-        hideSchedule.playTogether(moveScheduleTab, alphaSchedule,moveScheduleSea,alphaScheduleSea);
+                0, 1);
+        hideSchedule.playTogether(moveScheduleTab, alphaSchedule, moveScheduleSea, alphaScheduleSea);
         hideSchedule.setDuration(duration);
         hideSchedule.setStartDelay(300);
 
         tabStrip.setClickable(true);
-        actionLayout.setClickable(true);
+        searchBtn.setClickable(true);
+        parseBtn.setClickable(true);
 
         hideSchedule.start();
     }
