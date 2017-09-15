@@ -285,7 +285,8 @@ public class HomeActivity extends BaseActivity implements
         hideSchedule.setStartDelay(300);
 
         tabStrip.setClickable(false);
-        actionLayout.setClickable(false);
+        searchBtn.setClickable(false);
+        parseBtn.setClickable(false);
 
         hideSchedule.start();
     }
@@ -308,7 +309,8 @@ public class HomeActivity extends BaseActivity implements
         hideSchedule.setStartDelay(300);
 
         tabStrip.setClickable(true);
-        actionLayout.setClickable(true);
+        searchBtn.setClickable(true);
+        parseBtn.setClickable(true);
 
         hideSchedule.start();
     }
