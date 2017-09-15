@@ -152,14 +152,28 @@ public class HomeActivity extends BaseActivity implements
                     @Override
                     public void onSlide(float percent) {
 //                        Log.d(TAG,"per " + percent);
-                        if (percent == 0.0) return;
-                        ObjectAnimator.ofFloat(mainLayout, "translationY",
-                                menuLayout.getHeight() * (1 - percent / 100)).
-                                setDuration(0).start();
+//                        if (percent == 0.0) return;
+//                        ObjectAnimator.ofFloat(mainLayout, "translationY",
+//                                menuLayout.getHeight() * (1 - percent / 100)).
+//                                setDuration(0).start();
                     }
 
                     @Override
                     public void onVisibilityChanged(int visibility) {
+
+                    }
+
+                    @Override
+                    public void onAnimatorStarted(int direction) {
+                        if (direction == SlideUp.toUp){
+                            ObjectAnimator.ofFloat(mainLayout, "translationY",
+                                    menuLayout.getHeight(),0).
+                                    setDuration(300).start();
+                        }else{
+                            ObjectAnimator.ofFloat(mainLayout, "translationY",
+                                    0,menuLayout.getHeight()).
+                                    setDuration(300).start();
+                        }
                     }
                 })
                 .withStartState(SlideUp.State.HIDDEN)
