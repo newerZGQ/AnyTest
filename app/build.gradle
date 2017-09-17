@@ -60,11 +60,8 @@ configurations.all {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile files('libs/tm-extractors-0.4.jar')
-
     compile project(':linechart')
     compile project(':shapeloading')
-
-    compile project(':cardview')
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:support-v4:25.3.1'
     compile 'com.android.support:recyclerview-v7:25.3.1'
