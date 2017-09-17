@@ -41,17 +41,13 @@ public class SearchFragment extends BaseFragment {
     private RecyclerView mSearchResultsList;
     private SearchResultsListAdapter mSearchResultsAdapter;
 
-    private boolean mIsDarkSearchTheme = false;
-
     private String mLastQuery = "";
 
     private SearchFragmentCallbacks mCallbacks;
 
-    private Button testBtn;
-    private TextView testTv;
 
     public SearchFragment() {
-        // Required empty public constructor
+
     }
 
     public interface SearchFragmentCallbacks {
@@ -112,7 +108,6 @@ public class SearchFragment extends BaseFragment {
                         }
                     });
                 }
-//                Log.d(TAG, "onSearchTextChanged()");
             }
         });
 
@@ -126,10 +121,8 @@ public class SearchFragment extends BaseFragment {
                     public void onResults(List<Searchable> results) {
                         mSearchResultsAdapter.swapData(results);
                         SearchAction.clickSuggestion(suggestion);
-//                        Log.d("----->>de",SearchHistoryProvider.getInstance().query("的").getDate());
                     }
                 });
-//                Log.d(TAG, "onSuggestionClicked()");
             }
 
             @Override
@@ -143,7 +136,6 @@ public class SearchFragment extends BaseFragment {
                         SearchAction.addSuggestion(suggestion);
                     }
                 });
-//                Log.d(TAG, "onSearchAction()");
             }
         });
 
@@ -158,7 +150,6 @@ public class SearchFragment extends BaseFragment {
                         mSearchView.swapSuggestions(results);
                     }
                 });
-//                Log.d(TAG, "onFocus()");
             }
 
             @Override
