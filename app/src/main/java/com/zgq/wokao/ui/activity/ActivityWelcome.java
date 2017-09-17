@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.umeng.analytics.MobclickAgent;
 import com.zgq.wokao.R;
 
+import com.zgq.wokao.action.BaseAction;
 import com.zgq.wokao.data.realm.Paper.impl.PaperDaoImpl;
 import com.zgq.wokao.action.setting.MarketChecker;
 
@@ -30,7 +31,7 @@ import butterknife.ButterKnife;
 import cn.qqtheme.framework.util.StorageUtils;
 import io.realm.Realm;
 
-public class ActivityWelcome extends AppCompatActivity {
+public class ActivityWelcome extends BaseActivity {
     @BindView(R.id.tips)
     TextView tip;
 

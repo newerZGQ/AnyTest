@@ -53,6 +53,9 @@
     <color name="color_home_inactivity_selected_tab">#84acbfb9</color>
     <color name="color_home_loading_background">#b8000000</color>
 
+    //searchactivity
+    <color name="color_search_activity_tip">#d421544c</color>
+
     //studyactivity
     <color name="color_study_activity_qstinfo_back">#40031027</color>
 

@@ -11,7 +11,7 @@ import com.zgq.wokao.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class TutotialActivity extends AppCompatActivity implements View.OnClickListener {
+public class TutotialActivity extends BaseActivity implements View.OnClickListener {
 
     @BindView(R.id.toolbar_back)
     TextView toolbarBack;

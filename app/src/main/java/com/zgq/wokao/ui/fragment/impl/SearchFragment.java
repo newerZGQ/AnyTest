@@ -1,7 +1,9 @@
 package com.zgq.wokao.ui.fragment.impl;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +20,10 @@ import com.arlib.floatingsearchview.FloatingSearchView;
 import com.arlib.floatingsearchview.suggestions.SearchSuggestionsAdapter;
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.zgq.wokao.R;
+import com.zgq.wokao.model.paper.QuestionType;
+import com.zgq.wokao.model.search.SearchInfoItem;
+import com.zgq.wokao.model.search.SearchQstItem;
+import com.zgq.wokao.ui.activity.AnswerStudyActivity;
 import com.zgq.wokao.ui.adapter.SearchResultsListAdapter;
 import com.zgq.wokao.model.search.HistorySuggestion;
 import com.zgq.wokao.model.search.Searchable;
@@ -33,8 +39,6 @@ import java.util.List;
 
 public class SearchFragment extends BaseFragment {
     private final String TAG = "SearchFragment";
-
-    public static final long FIND_SUGGESTION_SIMULATED_DELAY = 250;
 
     private FloatingSearchView mSearchView;
 
@@ -52,6 +56,7 @@ public class SearchFragment extends BaseFragment {
 
     public interface SearchFragmentCallbacks {
         void onAttachSearchViewBack(FloatingSearchView searchView);
+        void onSelectItem(Searchable item);
     }
 
 
@@ -158,10 +163,6 @@ public class SearchFragment extends BaseFragment {
                 //set the title of the bar so that when focus is returned a new query begins
                 mSearchView.setSearchBarTitle(mLastQuery);
 
-                //you can also set setSearchText(...) to make keep the query there when not focused and when focus returns
-                //mSearchView.setSearchText(searchSuggestion.getBody());
-
-                Log.d(TAG, "onFocusCleared()");
             }
         });
 
@@ -172,26 +173,6 @@ public class SearchFragment extends BaseFragment {
             @Override
             public void onActionMenuItemSelected(MenuItem item) {
 
-//                if (item.getItemId() == R.id.action_change_colors) {
-//
-//                    mIsDarkSearchTheme = true;
-//
-//                    //demonstrate setting colors for items
-//                    mSearchView.setBackgroundColor(Color.parseColor("#787878"));
-//                    mSearchView.setViewTextColor(Color.parseColor("#e9e9e9"));
-//                    mSearchView.setHintTextColor(Color.parseColor("#e9e9e9"));
-//                    mSearchView.setActionMenuOverflowColor(Color.parseColor("#e9e9e9"));
-//                    mSearchView.setMenuItemIconColor(Color.parseColor("#e9e9e9"));
-//                    mSearchView.setLeftActionIconColor(Color.parseColor("#e9e9e9"));
-//                    mSearchView.setClearBtnColor(Color.parseColor("#e9e9e9"));
-//                    mSearchView.setDividerColor(Color.parseColor("#BEBEBE"));
-//                    mSearchView.setLeftActionIconColor(Color.parseColor("#e9e9e9"));
-//                } else {
-//
-//                    //just print action
-//                    Toast.makeText(getActivity().getApplicationContext(), item.getTitle(),
-//                            Toast.LENGTH_SHORT).show();
-//                }
 
             }
         });
@@ -201,7 +182,6 @@ public class SearchFragment extends BaseFragment {
             @Override
             public void onHomeClicked() {
 
-                Log.d(TAG, "onHomeClicked()");
             }
         });
 
@@ -237,6 +217,12 @@ public class SearchFragment extends BaseFragment {
 
     private void setupResultsList() {
         mSearchResultsAdapter = new SearchResultsListAdapter();
+        mSearchResultsAdapter.setItemsOnClickListener(new SearchResultsListAdapter.OnItemClickListener() {
+            @Override
+            public void onClick(Searchable item) {
+                mCallbacks.onSelectItem(item);
+            }
+        });
         mSearchResultsList.setAdapter(mSearchResultsAdapter);
         mSearchResultsList.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
@@ -256,4 +242,5 @@ public class SearchFragment extends BaseFragment {
     private void setupDrawer() {
         attachSearchViewBack(mSearchView);
     }
+
 }

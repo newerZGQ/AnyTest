@@ -3,18 +3,22 @@ package com.zgq.wokao.ui.adapter;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.view.PagerAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zgq.wokao.R;
 import com.zgq.wokao.Util.ContextUtil;
+import com.zgq.wokao.Util.DateUtil;
 import com.zgq.wokao.Util.FontsUtil;
 import com.zgq.wokao.model.viewdate.ScheduleData;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
@@ -92,7 +96,7 @@ public class SchedulePagerAdapter extends PagerAdapter {
             TextView title = (TextView) convertView.findViewById(R.id.question_type);
             title.setTypeface(FontsUtil.getSans_serif_thin());
             TextView addTime = (TextView) convertView.findViewById(R.id.add_time);
-            Button startBtn = (Button) convertView.findViewById(R.id.start_study);
+            ImageView startBtn = (ImageView) convertView.findViewById(R.id.start_study);
             holder = new ViewHolder();
             holder.topLayout = topLayout;
             holder.title = title;
@@ -110,7 +114,13 @@ public class SchedulePagerAdapter extends PagerAdapter {
             }
         });
         holder.title.setText(scheduleDatas.get(position).getPaperTitle());
-        holder.addTime.setText(scheduleDatas.get(position).getAddTime());
+        String date = "";
+        try {
+            date = DateUtil.getYYYY_MM_DD(scheduleDatas.get(position).getAddTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        holder.addTime.setText(date + " 添加");
         holder.startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -135,7 +145,7 @@ public class SchedulePagerAdapter extends PagerAdapter {
         public LinearLayout topLayout;
         public TextView title;
         public TextView addTime;
-        public Button startBtn;
+        public ImageView startBtn;
     }
 
     public interface OnViewClickListener {

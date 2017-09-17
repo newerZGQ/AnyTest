@@ -318,28 +318,29 @@ public class PaperDaoImpl extends BaseRealmProvider<NormalExamPaper> implements 
                 searchQstFromList(
                         query,
                         (List) paper.getFillInQuestions(),
-                        paper.getPaperInfo(), QuestionType.FILLIN.getValue()),
+                        paper.getPaperInfo(), QuestionType.FILLIN),
                 searchQstFromList(
                         query,
                         (List) paper.getTfQuestions(),
                         paper.getPaperInfo(),
-                        QuestionType.TF.getValue()),
+                        QuestionType.TF),
                 searchQstFromList(
                         query,
                         (List) paper.getSglChoQuestions(),
                         paper.getPaperInfo(),
-                        QuestionType.SINGLECHOOSE.getValue()),
+                        QuestionType.SINGLECHOOSE),
                 searchQstFromList(
                         query,
                         (List) paper.getMultChoQuestions(),
                         paper.getPaperInfo(),
-                        QuestionType.MUTTICHOOSE.getValue()),
+                        QuestionType.MUTTICHOOSE),
                 searchQstFromList(
                         query,
                         (List) paper.getDiscussQuestions(),
                         paper.getPaperInfo(),
-                        QuestionType.DISCUSS.getValue())
+                        QuestionType.DISCUSS)
         );
+
         return results;
     }
 
@@ -352,7 +353,7 @@ public class PaperDaoImpl extends BaseRealmProvider<NormalExamPaper> implements 
     }
 
     private List<SearchQstItem> searchQstFromList(String query, List<IQuestion> list,
-                                                  ExamPaperInfo info, int qstType) {
+                                                  ExamPaperInfo info, QuestionType qstType) {
         List<SearchQstItem> results = new ArrayList<>();
         for (IQuestion tmp : list) {
             if (tmp.getBody().getContent().contains(query)) {
