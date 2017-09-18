@@ -31,21 +31,23 @@ public class SearchResultsListAdapter extends RecyclerView.Adapter<SearchResults
     private int mLastAnimatedItemPosition = -1;
 
     public interface OnItemClickListener {
-//        void onClick(ColorWrapper colorWrapper);
+        void onClick(Searchable item);
     }
 
     private OnItemClickListener mItemsOnClickListener;
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public final TextView mColorName;
-        public final TextView mColorValue;
-        public final View mTextContainer;
+    public class ViewHolder extends RecyclerView.ViewHolder{
+        public final TextView itemType;
+        public final TextView itemContent;
+        public final View textContainer;
+        public final TextView itemTip;
 
         public ViewHolder(View view) {
             super(view);
-            mColorName = (TextView) view.findViewById(R.id.color_name);
-            mColorValue = (TextView) view.findViewById(R.id.color_value);
-            mTextContainer = view.findViewById(R.id.text_container);
+            itemType = (TextView) view.findViewById(R.id.item_type);
+            itemContent = (TextView) view.findViewById(R.id.item_content);
+            textContainer = view.findViewById(R.id.text_container);
+            itemTip = (TextView) view.findViewById(R.id.item_tip);
         }
     }
 
@@ -70,37 +72,24 @@ public class SearchResultsListAdapter extends RecyclerView.Adapter<SearchResults
 
         Searchable tmp = mDataSet.get(position);
         if (tmp instanceof SearchInfoItem) {
-//            Log.d(TAG,"SearchInfoItem");
             SearchInfoItem infoItem = (SearchInfoItem) tmp;
-            holder.mColorName.setText(infoItem.getInfo().getAuthor());
+            holder.itemType.setText("试卷");
+            holder.itemContent.setText(infoItem.getInfo().getTitle());
+            holder.itemTip.setText("");
         }
         if (tmp instanceof SearchQstItem) {
-            Log.d(TAG, "SearchQstItem");
             SearchQstItem qstItem = (SearchQstItem) tmp;
-            holder.mColorName.setText(qstItem.getQst().getBody().getContent());
+            holder.itemType.setText(qstItem.getQstType().getName());
+            holder.itemContent.setText(qstItem.getQst().getBody().getContent());
+            holder.itemTip.setText(qstItem.getInfo().getTitle());
         }
-//        Log.d(TAG,"bindview");
-
-//        holder.mColorName.setText(colorSuggestion.getName());
-//        holder.mColorValue.setText(colorSuggestion.getHex());
-//
-//        int color = Color.parseColor(colorSuggestion.getHex());
-//        holder.mColorName.setTextColor(color);
-//        holder.mColorValue.setTextColor(color);
-//
-//        if(mLastAnimatedItemPosition < position){
-//            animateItem(holder.itemView);
-//            mLastAnimatedItemPosition = position;
-//        }
-//
-//        if(mItemsOnClickListener != null){
-//            holder.itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    mItemsOnClickListener.onClick(mDataSet.get(position));
-//                }
-//            });
-//        }
+        holder.textContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG,"click");
+                mItemsOnClickListener.onClick(mDataSet.get(position));
+            }
+        });
     }
 
     @Override
@@ -108,13 +97,5 @@ public class SearchResultsListAdapter extends RecyclerView.Adapter<SearchResults
         return mDataSet.size();
     }
 
-    private void animateItem(View view) {
-        view.setTranslationY(Util.getScreenHeight((Activity) view.getContext()));
-        view.animate()
-                .translationY(0)
-                .setInterpolator(new DecelerateInterpolator(3.f))
-                .setDuration(700)
-                .start();
-    }
 }
 

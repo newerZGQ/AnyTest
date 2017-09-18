@@ -1,12 +1,9 @@
 package com.zgq.wokao.ui.activity;
 
-import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -134,7 +131,7 @@ public class HomeActivity extends BaseActivity implements
     private void initTabStrip() {
         tabStrip.setTitles("日程", "试卷");
         tabStrip.setTabIndex(0, true);
-        tabStrip.setTitleSize(50);
+        tabStrip.setTitleSize(70);
         tabStrip.setStripColor(Color.TRANSPARENT);
         tabStrip.setStripWeight(10);
         tabStrip.setStripFactor(5f);
@@ -148,7 +145,7 @@ public class HomeActivity extends BaseActivity implements
 
     private void initSlideUp() {
         slideUp = new SlideUp.Builder(menuLayout)
-                .withListeners(new SlideUp.Listener() {
+                .withListener(new SlideUp.Listener() {
                     @Override
                     public void onSlide(float percent) {
                     }
@@ -164,10 +161,12 @@ public class HomeActivity extends BaseActivity implements
                             ObjectAnimator.ofFloat(mainLayout, "translationY",
                                     menuLayout.getHeight(), 0).
                                     setDuration(300).start();
+                            animateToolbarRight(350);
                         } else {
                             ObjectAnimator.ofFloat(mainLayout, "translationY",
                                     0, menuLayout.getHeight()).
                                     setDuration(300).start();
+                            animateToolbarLeft(350);
                         }
                     }
                 })
@@ -241,11 +240,6 @@ public class HomeActivity extends BaseActivity implements
         StudySummary studySummary = StudySummaryAction.getInstance().getStudySummary();
         totalCount.setText(String.valueOf(studySummary.getStudyCount()));
         totalAccuracy.setText(String.valueOf(studySummary.getCorrectCount()));
-    }
-
-    @Override
-    public void setSlideaMenuLayout(StudySummary studySummary) {
-
     }
 
     @Override
@@ -327,7 +321,7 @@ public class HomeActivity extends BaseActivity implements
 
     @Override
     public void startFromScheduleFrag(String paperId, QuestionType type, int qstNum) {
-        startStudy(paperId, type, qstNum);
+        startStudy(paperId, type, qstNum, true);
     }
 
     @Override
@@ -344,10 +338,8 @@ public class HomeActivity extends BaseActivity implements
     public void changeSlideUpState() {
         if (slideUp.isVisible()) {
             slideUp.hide();
-            animateToolbarRight(350);
         } else {
             slideUp.show();
-            animateToolbarLeft(350);
         }
     }
 
@@ -418,18 +410,9 @@ public class HomeActivity extends BaseActivity implements
 
     @Override
     public void startFromQuestionFrag(String paperId, QuestionType type) {
-        startStudy(paperId, type, 0);
+        startStudy(paperId, type, 0, true);
     }
 
-
-    private void startStudy(String paperId, QuestionType type, int qstNum) {
-        Intent intent = new Intent(this, AnswerStudyActivity.class);
-        intent.putExtra("paperId", paperId);
-        intent.putExtra("qstType", (Parcelable) type);
-        intent.putExtra("qstNum", qstNum);
-        startActivity(intent);
-        finish();
-    }
 
     public class HomeFragmentPagerAdapter extends FragmentPagerAdapter {
         ArrayList<Fragment> fragments;

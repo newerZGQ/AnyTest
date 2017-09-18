@@ -1,5 +1,6 @@
 package com.zgq.wokao.model.search;
 
+import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.paper.info.ExamPaperInfo;
 import com.zgq.wokao.model.paper.question.IQuestion;
 
@@ -9,7 +10,7 @@ import com.zgq.wokao.model.paper.question.IQuestion;
 
 public class SearchQstItem implements Searchable {
     private ExamPaperInfo info;
-    private int qstType;
+    private QuestionType qstType;
     private int qstId;
     private IQuestion qst;
 
@@ -29,11 +30,11 @@ public class SearchQstItem implements Searchable {
         this.qstId = qstId;
     }
 
-    public int getQstType() {
+    public QuestionType getQstType() {
         return qstType;
     }
 
-    public void setQstType(int qstType) {
+    public void setQstType(QuestionType qstType) {
         this.qstType = qstType;
     }
 

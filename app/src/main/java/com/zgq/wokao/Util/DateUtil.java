@@ -1,5 +1,7 @@
 package com.zgq.wokao.Util;
 
+import android.util.Log;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -9,6 +11,9 @@ import java.util.Date;
  * Created by zgq on 16-7-10.
  */
 public class DateUtil {
+
+    private static final String TAG = DateUtil.class.getSimpleName();
+
     public static String getCurrentDate() {
         return getFormatData("yyyy-MM-dd HH:mm:ss");
     }
@@ -27,9 +32,9 @@ public class DateUtil {
     public static String getYYYY_MM_DD(String dateString) throws ParseException {
         SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = format1.parse(dateString);
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-DD");
-        String string = format.format(date);
-        return string;
+        SimpleDateFormat format = new SimpleDateFormat("yyyy"+" 年 "+"MM"+" 月 ");
+        String result = format.format(date);
+        return result;
     }
 
     /**

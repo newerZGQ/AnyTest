@@ -18,8 +18,6 @@ public interface IHomeView {
 
     void showQuestionsFragment(String paperId);
 
-    void setSlideaMenuLayout(StudySummary studySummary);
-
     void setViewPagerScrollble(boolean scrollble);
 
     void hideToolBar(int duration);
