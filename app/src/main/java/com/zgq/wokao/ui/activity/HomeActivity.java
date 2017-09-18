@@ -2,15 +2,14 @@ package com.zgq.wokao.ui.activity;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -146,7 +145,7 @@ public class HomeActivity extends BaseActivity implements
 
     private void initSlideUp() {
         slideUp = new SlideUp.Builder(menuLayout)
-                .withListeners(new SlideUp.Listener() {
+                .withListener(new SlideUp.Listener() {
                     @Override
                     public void onSlide(float percent) {
                     }
@@ -162,10 +161,12 @@ public class HomeActivity extends BaseActivity implements
                             ObjectAnimator.ofFloat(mainLayout, "translationY",
                                     menuLayout.getHeight(), 0).
                                     setDuration(300).start();
+                            animateToolbarRight(350);
                         } else {
                             ObjectAnimator.ofFloat(mainLayout, "translationY",
                                     0, menuLayout.getHeight()).
                                     setDuration(300).start();
+                            animateToolbarLeft(350);
                         }
                     }
                 })
@@ -239,11 +240,6 @@ public class HomeActivity extends BaseActivity implements
         StudySummary studySummary = StudySummaryAction.getInstance().getStudySummary();
         totalCount.setText(String.valueOf(studySummary.getStudyCount()));
         totalAccuracy.setText(String.valueOf(studySummary.getCorrectCount()));
-    }
-
-    @Override
-    public void setSlideaMenuLayout(StudySummary studySummary) {
-
     }
 
     @Override
@@ -342,10 +338,8 @@ public class HomeActivity extends BaseActivity implements
     public void changeSlideUpState() {
         if (slideUp.isVisible()) {
             slideUp.hide();
-            animateToolbarRight(350);
         } else {
             slideUp.show();
-            animateToolbarLeft(350);
         }
     }
 
