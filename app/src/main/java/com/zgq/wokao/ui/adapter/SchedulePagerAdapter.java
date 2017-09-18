@@ -1,8 +1,11 @@
 package com.zgq.wokao.ui.adapter;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.view.PagerAdapter;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -92,16 +95,7 @@ public class SchedulePagerAdapter extends PagerAdapter {
         View convertView = null;
         if (mViewCache.size() == 0) {
             convertView = this.layoutInflater.inflate(R.layout.viewpager_schedule_item, null, false);
-            LinearLayout topLayout = (LinearLayout) convertView.findViewById(R.id.top_layout);
-            TextView title = (TextView) convertView.findViewById(R.id.question_type);
-            title.setTypeface(FontsUtil.getSans_serif_thin());
-            TextView addTime = (TextView) convertView.findViewById(R.id.add_time);
-            ImageView startBtn = (ImageView) convertView.findViewById(R.id.start_study);
-            holder = new ViewHolder();
-            holder.topLayout = topLayout;
-            holder.title = title;
-            holder.addTime = addTime;
-            holder.startBtn = startBtn;
+            holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         } else {
             convertView = mViewCache.removeFirst();
@@ -128,24 +122,31 @@ public class SchedulePagerAdapter extends PagerAdapter {
             }
         });
 
-        ArrayList<Integer> models = new ArrayList<>();
-        for (int i = 0; i < 5; ++i) {
-            Random random = new Random();
-            random.setSeed(i);
-            int color = Color.argb(255, random.nextInt(255), random.nextInt(255), random.nextInt(255));
-            models.add(color);
-        }
-
+        ObjectAnimator animator = ObjectAnimator.
+                ofFloat(holder.startBtn,"alpha",0.7f,0.6f,0.4f,0.2f,0f,0.3f,0.5f,0.7f).
+                setDuration(3000);
+        animator.setRepeatCount(-1);
+        animator.setRepeatMode(ValueAnimator.RESTART);
+        animator.start();
         container.addView(convertView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         return convertView;
     }
 
 
-    public final class ViewHolder {
+    public final class ViewHolder extends RecyclerView.ViewHolder{
         public LinearLayout topLayout;
         public TextView title;
         public TextView addTime;
         public ImageView startBtn;
+        public ObjectAnimator animator;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            topLayout = (LinearLayout) itemView.findViewById(R.id.top_layout);
+            title = (TextView) itemView.findViewById(R.id.question_type);
+            addTime = (TextView) itemView.findViewById(R.id.add_time);
+            startBtn = (ImageView) itemView.findViewById(R.id.start_study);
+        }
     }
 
     public interface OnViewClickListener {
