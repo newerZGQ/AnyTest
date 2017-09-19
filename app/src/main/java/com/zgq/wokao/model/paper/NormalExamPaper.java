@@ -13,32 +13,19 @@ import java.util.ArrayList;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by zgq on 16-6-18.
  */
 public class NormalExamPaper extends RealmObject implements IExamPaper, CascadeDeleteable {
     private ExamPaperInfo paperInfo = new ExamPaperInfo();
-    private RealmList<FillInQuestion> fillInQuestions;
-    private RealmList<TFQuestion> tfQuestions;
-    private RealmList<SglChoQuestion> sglChoQuestions;
-    private RealmList<MultChoQuestion> multChoQuestions;
-    private RealmList<DiscussQuestion> discussQuestions;
+    private RealmList<FillInQuestion> fillInQuestions = new RealmList<>();
+    private RealmList<TFQuestion> tfQuestions = new RealmList<>();
+    private RealmList<SglChoQuestion> sglChoQuestions = new RealmList<>();
+    private RealmList<MultChoQuestion> multChoQuestions = new RealmList<>();
+    private RealmList<DiscussQuestion> discussQuestions = new RealmList<>();
 
     public NormalExamPaper() {
-    }
-
-    public NormalExamPaper(ExamPaperInfo paperInfo, RealmList<FillInQuestion> fillInQuestions,
-                           RealmList<TFQuestion> tfQuestions, RealmList<SglChoQuestion> sglChoQuestions,
-                           RealmList<MultChoQuestion> multChoQuestions,
-                           RealmList<DiscussQuestion> discussQuestions) {
-        this.paperInfo = paperInfo;
-        this.fillInQuestions = fillInQuestions;
-        this.tfQuestions = tfQuestions;
-        this.sglChoQuestions = sglChoQuestions;
-        this.multChoQuestions = multChoQuestions;
-        this.discussQuestions = discussQuestions;
     }
 
     @Override

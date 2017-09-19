@@ -38,8 +38,6 @@ public class ParserThread extends Thread {
                     realm.copyToRealm(paper);
                 }
             });
-            Log.d("---->>", paper.getPaperInfo().getTitle());
-            Log.d("---->>", paper.getDiscussQuestions().get(0).getBody().getContent());
 
             listener.onCompleted(paper);
         } catch (FileNotFoundException e) {

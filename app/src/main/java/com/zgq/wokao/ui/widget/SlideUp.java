@@ -541,7 +541,8 @@ public class SlideUp implements View.OnTouchListener, ValueAnimator.AnimatorUpda
             notifyVisibilityChanged(VISIBLE);
             notifyStartAnimate(toBottom);
         } else {
-            notifyStartAnimate(toUp);
+            if (slideAnimationTo != 0)
+                notifyStartAnimate(toUp);
         }
     }
 
