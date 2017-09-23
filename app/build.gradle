@@ -77,4 +77,6 @@ dependencies {
     compile 'com.xw.repo:bubbleseekbar:3.4-lite'
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.1.0'
+
+    compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
 }

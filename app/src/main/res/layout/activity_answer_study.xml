@@ -84,6 +84,7 @@
                 android:layout_height="56dp"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="16dp"
+                android:visibility="gone"
                 android:background="@drawable/toolbar_edit_background"/>
             <TextView
                 android:id="@+id/toolbar_done"

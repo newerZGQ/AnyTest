@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.gigamole.navigationtabstrip.NavigationTabStrip;
 import com.zgq.linechart.ChartView;
 import com.zgq.wokao.R;
+import com.zgq.wokao.Util.WXShare;
 import com.zgq.wokao.action.paper.impl.StudySummaryAction;
 import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.total.StudySummary;
@@ -60,6 +61,8 @@ public class HomeActivity extends BaseActivity implements
     RelativeLayout menuLayout;
     @BindView(R.id.toolbar_menu)
     Button menuBtn;
+    @BindView(R.id.share)
+    Button shareApp;
     @BindView(R.id.toolbar_search)
     Button searchBtn;
     @BindView(R.id.toolbar_opt_layout)
@@ -91,6 +94,7 @@ public class HomeActivity extends BaseActivity implements
         StudySummaryAction.getInstance().initStudySummary();
         homePresenter = new HomePresenterImpl(this);
         initView();
+        WXShare.regToWx(this);
     }
 
     @Override
@@ -131,7 +135,7 @@ public class HomeActivity extends BaseActivity implements
     private void initTabStrip() {
         tabStrip.setTitles("日程", "试卷");
         tabStrip.setTabIndex(0, true);
-        tabStrip.setTitleSize(70);
+        tabStrip.setTitleSize(50);
         tabStrip.setStripColor(Color.TRANSPARENT);
         tabStrip.setStripWeight(10);
         tabStrip.setStripFactor(5f);
@@ -234,6 +238,7 @@ public class HomeActivity extends BaseActivity implements
         menuBtn.setOnClickListener(this);
         searchBtn.setOnClickListener(this);
         parseBtn.setOnClickListener(this);
+        shareApp.setOnClickListener(this);
     }
 
     private void initContent() {
@@ -377,6 +382,9 @@ public class HomeActivity extends BaseActivity implements
             case R.id.toolbar_add:
                 finish();
                 openActivity(FileSelectorActivity.class);
+                break;
+            case R.id.share:
+                WXShare.shareApp(this);
                 break;
             default:
                 break;
