@@ -86,8 +86,6 @@ public class HomeActivity extends BaseActivity implements
     private ScheduleFragment scheduleFragment;
     private PapersFragment papersFragment;
 
-    private WXShare wxShare;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,8 +94,7 @@ public class HomeActivity extends BaseActivity implements
         StudySummaryAction.getInstance().initStudySummary();
         homePresenter = new HomePresenterImpl(this);
         initView();
-        wxShare = new WXShare();
-        wxShare.regToWx(this);
+        WXShare.regToWx(this);
     }
 
     @Override
@@ -387,7 +384,7 @@ public class HomeActivity extends BaseActivity implements
                 openActivity(FileSelectorActivity.class);
                 break;
             case R.id.share:
-                wxShare.shareApp();
+                WXShare.shareApp(this);
                 break;
             default:
                 break;
