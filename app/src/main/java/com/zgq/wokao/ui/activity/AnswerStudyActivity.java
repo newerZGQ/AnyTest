@@ -562,6 +562,7 @@ public class AnswerStudyActivity extends BaseActivity implements IStudyAnswerVie
                 showQuestionList();
                 break;
             case R.id.toolbar_back:
+                openActivity(HomeActivity.class);
                 finish();
                 break;
             case R.id.all_question:
