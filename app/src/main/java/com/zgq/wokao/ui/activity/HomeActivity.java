@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.gigamole.navigationtabstrip.NavigationTabStrip;
 import com.zgq.linechart.ChartView;
 import com.zgq.wokao.R;
+import com.zgq.wokao.Util.WXShare;
 import com.zgq.wokao.action.paper.impl.StudySummaryAction;
 import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.total.StudySummary;
@@ -60,6 +61,8 @@ public class HomeActivity extends BaseActivity implements
     RelativeLayout menuLayout;
     @BindView(R.id.toolbar_menu)
     Button menuBtn;
+    @BindView(R.id.share)
+    Button shareApp;
     @BindView(R.id.toolbar_search)
     Button searchBtn;
     @BindView(R.id.toolbar_opt_layout)
@@ -83,6 +86,8 @@ public class HomeActivity extends BaseActivity implements
     private ScheduleFragment scheduleFragment;
     private PapersFragment papersFragment;
 
+    private WXShare wxShare;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,6 +96,8 @@ public class HomeActivity extends BaseActivity implements
         StudySummaryAction.getInstance().initStudySummary();
         homePresenter = new HomePresenterImpl(this);
         initView();
+        wxShare = new WXShare();
+        wxShare.regToWx(this);
     }
 
     @Override
@@ -234,6 +241,7 @@ public class HomeActivity extends BaseActivity implements
         menuBtn.setOnClickListener(this);
         searchBtn.setOnClickListener(this);
         parseBtn.setOnClickListener(this);
+        shareApp.setOnClickListener(this);
     }
 
     private void initContent() {
@@ -377,6 +385,9 @@ public class HomeActivity extends BaseActivity implements
             case R.id.toolbar_add:
                 finish();
                 openActivity(FileSelectorActivity.class);
+                break;
+            case R.id.share:
+                wxShare.shareApp();
                 break;
             default:
                 break;

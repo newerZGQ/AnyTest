@@ -31,6 +31,14 @@
             android:layout_below="@+id/app_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/share"
+            android:text="分享"
+            android:layout_marginTop="65dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="64dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
         <com.zgq.linechart.ChartView
             android:id="@+id/line_chart"
             android:layout_below="@+id/jilu"
