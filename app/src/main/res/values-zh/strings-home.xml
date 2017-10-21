@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_activity_home">HomeActivity</string>
+    <string-array name="TabStripTitle">
+        <item>日程</item>
+        <item>试卷</item>
+    </string-array>
+    <string name="menulayout_title">试卷工厂</string>
+    <string name="menulayout_subtitle">最近一周每天学习量</string>
+    <string name="menulayout_study_count">共学习</string>
+    <string name="menulayout_correct_count">正确</string>
+</resources>
