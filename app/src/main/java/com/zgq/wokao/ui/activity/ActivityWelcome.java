@@ -35,7 +35,9 @@ public class ActivityWelcome extends BaseActivity {
     @BindView(R.id.tips)
     TextView tip;
 
-    private int[] tips = new int[5];
+    //private int[] tips = new int[5];
+
+    private String[] tips;
 
     private MyHandler myHandler;
 
@@ -46,7 +48,7 @@ public class ActivityWelcome extends BaseActivity {
         ButterKnife.bind(this);
         initData();
         int i = (int) (Math.random() * 5);
-        tip.setText(getResources().getString(tips[i]));
+        tip.setText(tips[i]);
 
         TimerTask task = new TimerTask() {
             public void run() {
@@ -72,11 +74,7 @@ public class ActivityWelcome extends BaseActivity {
     }
 
     private void initData() {
-        tips[0] = R.string.tips1;
-        tips[1] = R.string.tips2;
-        tips[2] = R.string.tips3;
-        tips[3] = R.string.tips4;
-        tips[4] = R.string.tips5;
+        tips = getResources().getStringArray(R.array.welcome_tips);
         myHandler = new MyHandler(this);
     }
 

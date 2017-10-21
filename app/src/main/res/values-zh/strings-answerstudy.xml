@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="correct">正确</string>
+    <string name="wrong">错误</string>
+    <string name="all_question_mode">全部</string>
+    <string name="star_question_mode">收藏</string>
+</resources>

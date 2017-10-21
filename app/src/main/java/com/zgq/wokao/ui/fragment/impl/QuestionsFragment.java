@@ -132,5 +132,4 @@ public class QuestionsFragment extends BaseFragment {
             }
         }));
     }
-
 }

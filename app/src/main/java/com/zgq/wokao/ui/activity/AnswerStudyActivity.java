@@ -185,8 +185,6 @@ public class AnswerStudyActivity extends BaseActivity implements IStudyAnswerVie
         Intent intent = getIntent();
         String paperId = intent.getStringExtra("paperId");
         currentQuestionType = intent.getParcelableExtra("qstType");
-        Log.d(TAG,"current "+currentQuestionType);
-        Log.d(TAG,"current "+paperId);
         normalExamPaper = (NormalExamPaper) PaperAction.getInstance().queryById(paperId);
     }
 
@@ -333,11 +331,11 @@ public class AnswerStudyActivity extends BaseActivity implements IStudyAnswerVie
 
     private void setQuestionStudyInfo(int position) {
         if (currentMode == ALLQUESTIONMODE) {
-            String info = "正确" + currentAllQuestions.get(position).getRecord().getCorrectNumber() + "/"
+            String info = getResources().getString(R.string.correct) + currentAllQuestions.get(position).getRecord().getCorrectNumber() + "/"
                     + currentAllQuestions.get(position).getRecord().getStudyNumber();
             studyInfo.setText(info);
         } else {
-            String info = "正确" + currentStarQuestions.get(position).getRecord().getCorrectNumber() + "/"
+            String info = getResources().getString(R.string.wrong) + currentStarQuestions.get(position).getRecord().getCorrectNumber() + "/"
                     + currentAllQuestions.get(position).getRecord().getStudyNumber();
             studyInfo.setText(info);
         }

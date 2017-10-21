@@ -132,7 +132,8 @@ public class HomeActivity extends BaseActivity implements
     }
 
     private void initTabStrip() {
-        tabStrip.setTitles("日程", "试卷");
+        String[] titles = getResources().getStringArray(R.array.TabStripTitle);
+        tabStrip.setTitles(titles[0], titles[1]);
         tabStrip.setTabIndex(0, true);
         tabStrip.setTitleSize(50);
         tabStrip.setStripColor(Color.TRANSPARENT);

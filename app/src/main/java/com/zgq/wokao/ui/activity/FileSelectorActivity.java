@@ -45,13 +45,13 @@ public class FileSelectorActivity extends BaseActivity implements IFileSelectorV
 
     @Override
     public void notifyParseFailed() {
-        showToast("解析错误");
+        showToast(getResources().getString(R.string.parse_failed));
         startHomeActivity(2000);
     }
 
     @Override
     public void notifyParseSuccess() {
-        showToast("解析成功");
+        showToast(getResources().getString(R.string.parse_success));
         startHomeActivity(2000);
     }
 
