@@ -21,10 +21,10 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
                 android:elevation="8dp"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="8dp">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -33,12 +33,12 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="28dp"
+                    android:layout_height="38dp"
                     android:text="@string/tip_document_subtitle" />
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
+                    android:layout_height="120dp"
                     android:text="@string/tip_document_content" />
 
             </LinearLayout>
@@ -50,10 +50,10 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
                 android:elevation="8dp"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="10dp">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -62,7 +62,7 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="28dp"
+                    android:layout_height="38dp"
                     android:text="@string/tip_fillin_subtitle" />
 
                 <TextView
@@ -79,10 +79,10 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
                 android:elevation="8dp"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="10dp">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -108,7 +108,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
                 android:elevation="8dp"
                 android:orientation="vertical"
                 android:padding="16dp">
@@ -120,7 +120,7 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="28dp"
+                    android:layout_height="38dp"
                     android:text="@string/tip_sglcho_subtitle" />
 
                 <TextView
@@ -137,7 +137,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
                 android:elevation="8dp"
                 android:orientation="vertical"
                 android:padding="16dp">
@@ -149,7 +149,7 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="28dp"
+                    android:layout_height="38dp"
                     android:text="@string/tip_muticho_subtitle" />
 
                 <TextView
