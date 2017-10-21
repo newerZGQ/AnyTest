@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="教程">
+
+        <Preference
+            android:title="开始学习"
+            android:key="setting_to_learning"
+            android:summary="学习如何把文档装进手机"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="分享">
+
+        <Preference
+            android:title="微信分享"
+            android:key="setting_to_share_app"
+            android:summary="分享应用即可无限制使用"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="开发者信息">
+
+        <Preference
+            android:title="作者"
+            android:key="setting_author"
+            android:summary="亥姆霍兹"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>

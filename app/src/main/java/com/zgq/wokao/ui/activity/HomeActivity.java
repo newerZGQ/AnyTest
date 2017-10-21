@@ -94,7 +94,6 @@ public class HomeActivity extends BaseActivity implements
         StudySummaryAction.getInstance().initStudySummary();
         homePresenter = new HomePresenterImpl(this);
         initView();
-        WXShare.regToWx(this);
     }
 
     @Override
@@ -384,7 +383,7 @@ public class HomeActivity extends BaseActivity implements
                 openActivity(FileSelectorActivity.class);
                 break;
             case R.id.share:
-                WXShare.shareApp(this);
+                openActivity(SettingsActivity.class);
                 break;
             default:
                 break;

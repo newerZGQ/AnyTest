@@ -49,6 +49,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activity.FileSelectorActivity" />
+        <activity android:name=".ui.activity.SettingsActivity" />
+        <activity android:name=".ui.activity.LearningActivity" />
 
         <activity android:name=".wxapi.WXEntryActivity"
             android:label="@string/app_name"
