@@ -94,7 +94,7 @@ public class TFAdapter extends BaseAdapter implements ITFAdapter {
         StringBuilder builder = new StringBuilder();
         for (String tmp : resArray) {
             tmp = tmp.trim();
-            if (tmp.startsWith("答案") || tmp.substring(0,6).toLowerCase().startsWith("answer")) {
+            if (checkIsAnswerTitle(tmp)) {
                 question.getBody().setContent(builder.toString());
                 inContext(QuestionItemType.body);
                 String answerTmp = tmp.substring(2).trim();

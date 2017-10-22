@@ -54,9 +54,7 @@ public class PaperParser extends BaseParser implements IPaperParser {
         boolean hasAuthor = true;
         QuestionType topicType = QuestionType.FILLIN;
         StringBuilder ctBuilder = new StringBuilder();
-//        int count = 0;
         while ((line = br.readLine()) != null) {
-//            System.out.println("----->>"+count++);
             if (line.equals("")) continue;
             if (hasTitle && getTopicType(line) == QuestionType.NOTQUESTION) {
                 parseTitle(line);
@@ -84,6 +82,10 @@ public class PaperParser extends BaseParser implements IPaperParser {
                 ctBuilder.append("\n" + line);
             }
         }
+
+        if (ctBuilder.toString().equals("")){
+            return topicLists;
+        }
         Topic topic = new Topic(topicType, ctBuilder.toString());
         topicLists.add(topic);
         return topicLists;
@@ -103,21 +105,19 @@ public class PaperParser extends BaseParser implements IPaperParser {
     }
 
     private QuestionType getTopicType(String line) {
-        if (line.contains("填空") &&
+        if (isFillInTitle(line) &&
                 isTopicNumber(line))
             return QuestionType.FILLIN;
-        if (line.contains("判断") &&
+        if (isTFTitle(line) &&
                 isTopicNumber(line))
             return QuestionType.TF;
-        if (line.contains("单")
-                && line.contains("选")
+        if (isSglChoTitle(line)
                 && isTopicNumber(line))
             return QuestionType.SINGLECHOOSE;
-        if (line.contains("多")
-                && line.contains("选")
+        if (isMutiChoTitle(line)
                 && isTopicNumber(line))
             return QuestionType.MUTTICHOOSE;
-        if ((line.contains("简答") || line.contains("问答"))
+        if ((isDiscusTitle(line))
                 && isTopicNumber(line))
             return QuestionType.DISCUSS;
         return QuestionType.NOTQUESTION;
@@ -143,7 +143,12 @@ public class PaperParser extends BaseParser implements IPaperParser {
                 s.startsWith("7") ||
                 s.startsWith("8") ||
                 s.startsWith("9") ||
-                s.startsWith("10")
+                s.startsWith("10") ||
+                s.startsWith("I") ||
+                s.startsWith("II") ||
+                s.startsWith("III") ||
+                s.startsWith("IV") ||
+                s.startsWith("V")
                 ) {
             return true;
         }
@@ -152,14 +157,14 @@ public class PaperParser extends BaseParser implements IPaperParser {
 
     private void parseTitle(String s) {
         if (getTopicType(s) == QuestionType.NOTQUESTION &&
-                !s.startsWith("作者")) {
+                !isAuthorTitle(s)) {
             info.setTitle(s);
         }
     }
 
     private void parseAuthor(String s) {
         if (getTopicType(s) == QuestionType.NOTQUESTION &&
-                s.startsWith("作者")) {
+                isAuthorTitle(s)) {
             info.setAuthor(s);
         }
     }

@@ -104,4 +104,17 @@ public abstract class BaseAdapter implements IAdapter {
         }
         return false;
     }
+
+    protected boolean checkIsAnswerTitle(String source){
+        if (source.startsWith("答案")){
+            return true;
+        }
+
+        if (source.matches("[a-zA-z]+") && source.length() >= 6 &&
+                source.substring(0,6).toLowerCase().startsWith("answer")){
+            return true;
+        }
+
+        return false;
+    }
 }
