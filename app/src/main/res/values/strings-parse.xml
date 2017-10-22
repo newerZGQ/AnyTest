@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="parse_answer_zh">答案</string>
+    <string name="parse_answer_en">answer</string>
+
+    <string name="parse_colon_zh">：</string>
+    <string name="parse_colon_en">:</string>
+
+    <string name="parse_comma_zh">，</string>
+    <string name="parse_comma_en">,</string>
+
+    <string name="parse_bracket_left_zh">（</string>
+    <string name="parse_bracket_left_en">(</string>
+    <string name="parse_bracket_right_zh">）</string>
+    <string name="parse_bracket_right_en">)</string>
+
+    <string name="parse_format_suffix_txt">.txt</string>
+    <string name="parse_format_suffix_doc">.doc</string>
+    <string name="parse_format_suffix_docx">.docx</string>
+</resources>

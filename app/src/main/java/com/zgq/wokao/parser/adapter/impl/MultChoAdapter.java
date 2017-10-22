@@ -116,7 +116,7 @@ public class MultChoAdapter extends BaseAdapter implements IMultChoAdapter {
                 builder.append(getOptionContent(tmp));
                 continue;
             }
-            if (tmp.startsWith("答案")) {
+            if (tmp.startsWith("答案") || tmp.substring(0,6).toLowerCase().startsWith("answer")) {
                 String optionContent = builder.toString();
                 String tag = StringUtil.char2String((char) headBack);
                 question.getOptions().addOption(new Option.Builder()
