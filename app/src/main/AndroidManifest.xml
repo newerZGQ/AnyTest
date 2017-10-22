@@ -55,6 +55,7 @@
         <activity android:name=".wxapi.WXEntryActivity"
             android:label="@string/app_name"
             android:exported="true"/>
+        <activity android:name=".ui.activity.QuestionsActivity" />
 
         <service android:name=".executor.ParserService"></service>
 

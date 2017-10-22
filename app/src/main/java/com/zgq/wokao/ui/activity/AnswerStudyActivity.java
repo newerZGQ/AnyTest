@@ -480,7 +480,7 @@ public class AnswerStudyActivity extends BaseActivity implements IStudyAnswerVie
     public void onBackPressed() {
         super.onBackPressed();
         updateLastStudyPosition();
-        openActivity(HomeActivity.class);
+        finish();
     }
 
     private void updateLastStudyPosition() {
@@ -560,7 +560,6 @@ public class AnswerStudyActivity extends BaseActivity implements IStudyAnswerVie
                 showQuestionList();
                 break;
             case R.id.toolbar_back:
-                openActivity(HomeActivity.class);
                 finish();
                 break;
             case R.id.all_question:

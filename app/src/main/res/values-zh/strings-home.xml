@@ -9,4 +9,6 @@
     <string name="menulayout_subtitle">最近一周每天学习量</string>
     <string name="menulayout_study_count">共学习</string>
     <string name="menulayout_correct_count">正确</string>
+
+    <string name="questions_title">试卷详情</string>
 </resources>

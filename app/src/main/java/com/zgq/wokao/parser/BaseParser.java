@@ -38,7 +38,7 @@ public abstract class BaseParser implements IParser {
 
     @Override
     public boolean isSglChoTitle(String source) {
-        if (source.contains("单选")){
+        if (source.contains("单") && source.contains("选")){
             return true;
         }
 
@@ -52,7 +52,7 @@ public abstract class BaseParser implements IParser {
 
     @Override
     public boolean isMutiChoTitle(String source) {
-        if (source.contains("多选")){
+        if (source.contains("多") && source.contains("选")){
             return true;
         }
 

@@ -123,7 +123,8 @@ public class QuestionsFragment extends BaseFragment {
         LinearLayout.LayoutParams lp = new LinearLayout.
                 LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         qstPager.setLayoutParams(lp);
-        qstPager.setAdapter(new QuestionsInfoAdapter(presenter.getQstLists(), new QuestionsInfoAdapter.ItemClickListener() {
+        qstPager.setAdapter(new QuestionsInfoAdapter(getActivity().getApplication(),
+                presenter.getQstLists(), presenter.getPaperInfo(),new QuestionsInfoAdapter.ItemClickListener() {
             @Override
             public void onItemClicked(int position) {
                 QstData qstData = presenter.getQstLists().get(position);
