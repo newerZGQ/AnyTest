@@ -31,17 +31,17 @@ public class QuestionsPresenterImpl implements IQuestionsPresenter {
 
     public QuestionsPresenterImpl(String paperId) {
         this.paperId = paperId;
-        qstLists = ViewDataAction.getInstance().getQstData(PaperAction.getInstance().queryById(paperId));
-        paperInfo = PaperAction.getInstance().queryById(paperId).getPaperInfo();
     }
 
     @Override
     public ArrayList<QstData> getQstLists() {
+        qstLists = ViewDataAction.getInstance().getQstData(PaperAction.getInstance().queryById(paperId));
         return qstLists;
     }
 
     @Override
     public IPaperInfo getPaperInfo() {
+        paperInfo = PaperAction.getInstance().queryById(paperId).getPaperInfo();
         return paperInfo;
     }
 }
