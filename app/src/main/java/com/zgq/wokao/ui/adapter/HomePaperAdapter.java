@@ -52,11 +52,11 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
         final MyViewHolder holder1 = (MyViewHolder) holder;
         final IPaperInfo info = paperInfos.get(position);
         if (info.isInSchedule()) {
-            ((MyViewHolder) holder).frontLayout.setBackground(context.getResources()
-                    .getDrawable(R.drawable.rectangle_blue));
+            ((MyViewHolder) holder).frontLayoutColorLayout.setBackgroundColor(context.getResources()
+                    .getColor(R.color.color_accuracy_circle_2_hard));
         } else {
-            ((MyViewHolder) holder).frontLayout.setBackground(context.getResources()
-                    .getDrawable(R.drawable.rectangle_red));
+            ((MyViewHolder) holder).frontLayoutColorLayout.setBackgroundColor(context.getResources()
+                    .getColor(R.color.color_accuracy_circle_1_hard));
         }
 
         //title
@@ -137,6 +137,8 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
         public RelativeLayout frontLayout;
         public RelativeLayout backLayout;
 
+        public RelativeLayout frontLayoutColorLayout;
+
         public MyViewHolder(View itemView) {
             super(itemView);
             item = (RelativeLayout) itemView.findViewById(R.id.list_item);
@@ -149,6 +151,7 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
             statusIcon = itemView.findViewById(R.id.schedule_status_icon);
             frontLayout = (RelativeLayout) itemView.findViewById(R.id.front_layout);
             backLayout = (RelativeLayout) itemView.findViewById(R.id.back_layout);
+            frontLayoutColorLayout = (RelativeLayout) itemView.findViewById(R.id.front_layout_content);
             paperName = (TextView) itemView.findViewById(R.id.paper_name);
             frontLayout.setOnClickListener(this);
             exitBtn.setOnClickListener(this);

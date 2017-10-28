@@ -102,7 +102,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_toLeftOf="@+id/separator"
-                    android:gravity="right"
+                    android:gravity="left|bottom"
                     android:text="45"
                     android:textColor="@color/color_accuracy_circle_2_hard"
                     android:textSize="20sp" />
@@ -114,7 +114,7 @@
                     android:layout_toEndOf="@+id/separator"
                     android:gravity="left|bottom"
                     android:text="65"
-                    android:textColor="@color/color_accuracy_text_light" />
+                    android:textColor="@color/color_accuracy_circle_1_hard" />
             </RelativeLayout>
 
             <TextView

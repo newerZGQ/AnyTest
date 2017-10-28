@@ -12,12 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </android.support.v7.widget.RecyclerView>
-    <View
-        android:id="@+id/cover_view"
-        android:background="@drawable/fragment_papers_cover_back"
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"/>
+
 
     <ViewStub
         android:id="@+id/no_paper_stub"

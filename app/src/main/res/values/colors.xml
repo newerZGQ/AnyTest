@@ -19,7 +19,7 @@
 
 
     //状态栏
-    <color name="colorStatusBar">#031027</color>
+    <color name="colorStatusBar">#29263e</color>
     <color name="colorTransparent">#00000000</color>
 
     <color name="colorFirstLevelText">#DE000000</color>
@@ -32,12 +32,12 @@
 
     //schedulefragment
     <color name="color_top_layout_background">#13ffffff</color>
-    <color name="color_accuracy_circle_1_hard">#611921</color>
-    <color name="color_accuracy_circle_1_light">#14e50041</color>
-    <color name="color_accuracy_circle_2_hard">#806919</color>
-    <color name="color_accuracy_circle_2_light">#20ffd437</color>
+    <color name="color_accuracy_circle_1_hard">#a1464f</color>
+    <color name="color_accuracy_circle_1_light">#14fb717e</color>
+    <color name="color_accuracy_circle_2_hard">#3d6094</color>
+    <color name="color_accuracy_circle_2_light">#206195e3</color>
 
-    <color name="color_accuracy_text_light">#85ffd437</color>
+    <color name="color_accuracy_text_light">#1e3250</color>
 
     <color name="color_task_setting_backgroung">#c2000000</color>
 
@@ -49,9 +49,9 @@
 
 
     //homeactivity
-    <color name="color_home_activity_background">#031027</color>
-    <color name="color_home_activity_selected_tab">#19b99a</color>
-    <color name="color_home_inactivity_selected_tab">#84acbfb9</color>
+    <color name="color_home_activity_background">#2a2a3e</color>
+    <color name="color_home_activity_selected_tab">#ffffff</color>
+    <color name="color_home_inactivity_selected_tab">#32ffffff</color>
     <color name="color_home_loading_background">#b8000000</color>
 
     //searchactivity

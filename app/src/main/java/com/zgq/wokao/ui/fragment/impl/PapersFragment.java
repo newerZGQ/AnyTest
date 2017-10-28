@@ -31,8 +31,8 @@ public class PapersFragment extends BaseFragment implements IPapersView {
     private PaperFragmentListener mListener;
     @BindView(R.id.paper_list)
     RecyclerView paperList;
-    @BindView(R.id.cover_view)
-    View coverView;
+//    @BindView(R.id.cover_view)
+//    View coverView;
     @BindView(R.id.no_paper_stub)
     ViewStub noPaperStub;
 
@@ -154,7 +154,7 @@ public class PapersFragment extends BaseFragment implements IPapersView {
 
     private void onEmptyPapers() {
         paperList.setVisibility(View.GONE);
-        coverView.setVisibility(View.GONE);
+//        coverView.setVisibility(View.GONE);
         if (noContentLayout == null) {
             noPaperStub.inflate();
             noContentLayout = (LinearLayout) rootView.findViewById(R.id.no_paper_layout);
@@ -165,7 +165,7 @@ public class PapersFragment extends BaseFragment implements IPapersView {
 
     private void onNoneEmptyPapers() {
         paperList.setVisibility(View.VISIBLE);
-        coverView.setVisibility(View.VISIBLE);
+//        coverView.setVisibility(View.VISIBLE);
         if (noContentLayout != null) {
             noContentLayout.setVisibility(View.GONE);
         }
