@@ -27,9 +27,6 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
     private ArrayList<IPaperInfo> paperInfos = null;
 
     private PaperAdapterListener listener;
-    private int lastBackground = 0;
-    private PaperAction paperAction = PaperAction.getInstance();
-
     ExpandableViewHoldersUtil.KeepOneH<MyViewHolder> keepOne = new ExpandableViewHoldersUtil.KeepOneH<MyViewHolder>();
 
     public HomePaperAdapter(ArrayList<IPaperInfo> paperInfos, PaperAdapterListener listener) {
@@ -70,7 +67,26 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
         for (int i = 0; i < qstTypes.getChildCount(); i++) {
             if (i < qstList.size()) {
                 qstTypes.getChildAt(i).setVisibility(View.VISIBLE);
-                ((TextView) qstTypes.getChildAt(i)).setText(qstList.get(i).getName());
+                TextView qstType = (TextView)qstTypes.getChildAt(i);
+                switch (qstList.get(i)){
+                    case FILLIN:
+                        qstType.setText(context.getResources().getString(R.string.fillin_question_short));
+                        break;
+                    case TF:
+                        qstType.setText(context.getResources().getString(R.string.tf_question_short));
+                        break;
+                    case SINGLECHOOSE:
+                        qstType.setText(context.getResources().getString(R.string.sglcho_question_short));
+                        break;
+                    case MUTTICHOOSE:
+                        qstType.setText(context.getResources().getString(R.string.multicho_question_short));
+                        break;
+                    case DISCUSS:
+                        qstType.setText(context.getResources().getString(R.string.discus_question_short));
+                        break;
+                    default:
+                        break;
+                }
             } else {
                 qstTypes.getChildAt(i).setVisibility(View.INVISIBLE);
             }

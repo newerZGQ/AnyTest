@@ -6,8 +6,6 @@
     <string name="fillin_question">Fill The Blanks</string>
     <string name="tf_question">True/False</string>
     <string name="sglcho_question">Multiple Choice(Single Answer)</string>
-    <string name="sglcho_question_short">Single Answer</string>
     <string name="multicho_question">Multiple Choice(Mutiple Answer)</string>
-    <string name="multicho_question_short">Mutiple Answer</string>
     <string name="discus_question">Short Answer</string>
 </resources>

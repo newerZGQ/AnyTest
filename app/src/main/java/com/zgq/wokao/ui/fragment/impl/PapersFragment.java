@@ -107,7 +107,9 @@ public class PapersFragment extends BaseFragment implements IPapersView {
 
             @Override
             public void onDeleteClick(final int position, final IPaperInfo info) {
-                Snackbar.make(rootView, "确定要删除么", Snackbar.LENGTH_LONG).setAction("确定", new View.OnClickListener() {
+                Snackbar.make(rootView, getResources().getString(R.string.delete_speer),
+                        Snackbar.LENGTH_LONG).setAction(getResources().getString(R.string.delete),
+                        new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         mListener.onPaperDeleted(info.getId());
@@ -119,7 +121,9 @@ public class PapersFragment extends BaseFragment implements IPapersView {
 
             @Override
             public void onExitClick(final int position, final IPaperInfo info) {
-                Snackbar.make(rootView, "确定退出学习该试卷么", Snackbar.LENGTH_LONG).setAction("确定", new View.OnClickListener() {
+                Snackbar.make(rootView, getResources().getString(R.string.exit_speer),
+                        Snackbar.LENGTH_LONG).setAction(getResources().getString(R.string.confirm),
+                        new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         presenter.removeFromSchedule(info.getId());
@@ -131,7 +135,9 @@ public class PapersFragment extends BaseFragment implements IPapersView {
 
             @Override
             public void onStartClick(final int position, final IPaperInfo info) {
-                Snackbar.make(rootView, "确定开始学习么", Snackbar.LENGTH_LONG).setAction("确定", new View.OnClickListener() {
+                Snackbar.make(rootView, getResources().getString(R.string.start_speer),
+                        Snackbar.LENGTH_LONG).setAction(getResources().getString(R.string.confirm),
+                        new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         presenter.addToSchedule(info.getId());
