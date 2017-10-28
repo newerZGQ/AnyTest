@@ -103,6 +103,7 @@ public class HomeActivity extends BaseActivity implements
     @Override
     protected void onResume() {
         super.onResume();
+        initContent();
         switch (currentItem) {
             case 0:
                 showScheduleFragment();

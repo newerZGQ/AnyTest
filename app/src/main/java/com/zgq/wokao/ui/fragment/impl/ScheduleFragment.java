@@ -96,10 +96,17 @@ public class ScheduleFragment extends BaseFragment implements IScheduleView, Vie
         scheduleInfoView.setOnClickListener(this);
         infoLayout.setOnClickListener(this);
         taskSettingLayout.setOnTaskSettingListener(this);
+
+        return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.updateDatas();
         initViewPager();
         updateScheduleInfo(presenter.getScheduleInfo(0),false);
         checkPaperCount();
-        return rootView;
     }
 
     @Override
