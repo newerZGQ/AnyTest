@@ -35,11 +35,7 @@ public class ActivityWelcome extends BaseActivity {
     @BindView(R.id.tips)
     TextView tip;
 
-    //private int[] tips = new int[5];
-
     private String[] tips;
-
-    private MyHandler myHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +55,7 @@ public class ActivityWelcome extends BaseActivity {
             }
         };
         Timer timer = new Timer(true);
-        timer.schedule(task, 1000);
+        timer.schedule(task, 500);
     }
 
     public void onResume() {
@@ -75,38 +71,6 @@ public class ActivityWelcome extends BaseActivity {
 
     private void initData() {
         tips = getResources().getStringArray(R.array.welcome_tips);
-        myHandler = new MyHandler(this);
-    }
-
-    private boolean isFirstTimeLogin() {
-        SharedPreferences sp = getSharedPreferences("setting", 0);
-        boolean first = sp.getBoolean("first_time", true);
-        if (first) {
-            sp.edit().putBoolean("first_time", false).apply();
-        }
-        return first;
-    }
-
-    private File createFileFromInputStream(InputStream inputStream) {
-
-        try {
-            File f = new File(StorageUtils.getRootPath(ActivityWelcome.this) + "wokao/tmp.txt");
-            OutputStream outputStream = new FileOutputStream(f);
-            byte buffer[] = new byte[1024];
-            int length = 0;
-
-            while ((length = inputStream.read(buffer)) > 0) {
-                outputStream.write(buffer, 0, length);
-            }
-
-            outputStream.close();
-            inputStream.close();
-
-            return f;
-        } catch (IOException e) {
-            //Logging exception
-        }
-        return null;
     }
 
     /**
@@ -116,29 +80,5 @@ public class ActivityWelcome extends BaseActivity {
         MarketChecker.WoringCounter.increase(this);
     }
 
-
-    static class MyHandler extends Handler {
-        WeakReference<ActivityWelcome> mWeakActivity;
-
-        public MyHandler(ActivityWelcome activity) {
-            mWeakActivity = new WeakReference<ActivityWelcome>(activity);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case 0X1111:
-                    Toast.makeText(mWeakActivity.get(), "解析成功", Toast.LENGTH_SHORT).show();
-                    break;
-                case 0X1112:
-                    Toast.makeText(mWeakActivity.get(), "解析错误，请检查文档标题和作者", Toast.LENGTH_SHORT).show();
-                    break;
-                case 0X1113:
-                    Toast.makeText(mWeakActivity.get(), "解析错误，请检查文档格式", Toast.LENGTH_SHORT).show();
-                    break;
-            }
-            super.handleMessage(msg);
-        }
-    }
 
 }

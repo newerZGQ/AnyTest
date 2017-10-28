@@ -75,7 +75,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:gravity="center_horizontal"
-                    android:text="正确率%"
+                    android:text="@string/accuracy_title"
                     android:textColor="@color/colorWhiteTransparent"
                     android:textSize="10sp" />
             </LinearLayout>
@@ -122,7 +122,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="6dp"
-                android:text="今日进度"
+                android:text="@string/today_progress"
                 android:textColor="@color/colorWhiteTransparent"
                 android:textSize="10sp" />
         </LinearLayout>

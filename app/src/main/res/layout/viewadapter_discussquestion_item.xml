@@ -26,7 +26,7 @@
                 android:id="@+id/question_type_tv"
                 android:textSize="15sp"
                 android:background="@color/colorWhite"
-                android:text="简答题"
+                android:text="@string/discus_question"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
                 android:layout_centerVertical="true"

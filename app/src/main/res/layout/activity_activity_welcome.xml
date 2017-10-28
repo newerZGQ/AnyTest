@@ -2,10 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorTeal">
+    android:background="@color/colorStatusBar">
     <TextView
         android:id="@+id/tips"
-        android:text="aaaaaaaaaaaaaaaaaaaaa"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:textSize="20sp"
@@ -22,7 +21,7 @@
         android:layout_marginRight="48dp"
         android:textColor="@color/colorYellow"
         android:textSize="20sp"
-        android:text="—  厂长"
+        android:text="@string/author_tag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView" />

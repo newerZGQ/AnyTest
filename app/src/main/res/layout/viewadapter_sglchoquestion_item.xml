@@ -36,7 +36,7 @@
                 android:background="@color/colorWhite"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
-                android:text="单选题"
+                android:text="@string/sglcho_question"
                 android:textSize="15sp" />
 
         </RelativeLayout>

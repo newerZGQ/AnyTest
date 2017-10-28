@@ -21,7 +21,7 @@
                 android:layout_width="16dp"
                 android:layout_height="16dp" />
             <TextView
-                android:text="收藏"
+                android:text="@string/bottom_star_action"
                 android:layout_marginLeft="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -39,7 +39,7 @@
                 android:layout_width="16dp"
                 android:layout_height="16dp" />
             <TextView
-                android:text="答案"
+                android:text="@string/bottom_answer_action"
                 android:layout_marginLeft="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -60,7 +60,7 @@
                 android:layout_marginLeft="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="列表"/>
+                android:text="@string/bottom_list_action"/>
         </LinearLayout>
     </LinearLayout>
     <View

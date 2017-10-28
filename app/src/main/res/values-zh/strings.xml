@@ -2,4 +2,10 @@
 <resources>
     <string name="app_name">试卷工厂</string>
     <string name="settings">设置</string>
+
+    <string name="fillin_question">填空题</string>
+    <string name="tf_question">判断题</string>
+    <string name="sglcho_question">单选题</string>
+    <string name="multicho_question">多选题</string>
+    <string name="discus_question">简答题</string>
 </resources>

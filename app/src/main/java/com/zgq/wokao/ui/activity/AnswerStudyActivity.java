@@ -331,11 +331,17 @@ public class AnswerStudyActivity extends BaseActivity implements IStudyAnswerVie
 
     private void setQuestionStudyInfo(int position) {
         if (currentMode == ALLQUESTIONMODE) {
-            String info = getResources().getString(R.string.correct) + currentAllQuestions.get(position).getRecord().getCorrectNumber() + "/"
+            String info = getResources().getString(R.string.correct) + currentAllQuestions
+                    .get(position)
+                    .getRecord()
+                    .getCorrectNumber() + "/"
                     + currentAllQuestions.get(position).getRecord().getStudyNumber();
             studyInfo.setText(info);
         } else {
-            String info = getResources().getString(R.string.wrong) + currentStarQuestions.get(position).getRecord().getCorrectNumber() + "/"
+            String info = getResources().getString(R.string.wrong) + currentStarQuestions
+                    .get(position)
+                    .getRecord()
+                    .getCorrectNumber() + "/"
                     + currentAllQuestions.get(position).getRecord().getStudyNumber();
             studyInfo.setText(info);
         }

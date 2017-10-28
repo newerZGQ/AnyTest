@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="accuracy_title">正确率%</string>
-    <string name="today_progress">今日进度</string>
+    <string name="accuracy_title">Accuracy</string>
+    <string name="today_progress">Progress</string>
 </resources>

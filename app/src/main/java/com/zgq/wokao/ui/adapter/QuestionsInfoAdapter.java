@@ -69,7 +69,28 @@ public class QuestionsInfoAdapter extends RecyclerView.Adapter {
 
         } else {
             int realPosition = position-1;
-            ((CommonViewHolder) holder).qstType.setText(qstDatas.get(realPosition).getType().getName() + "题");
+
+            TextView qstType = ((CommonViewHolder) holder).qstType;
+            switch (qstDatas.get(realPosition).getType()){
+                case FILLIN:
+                    qstType.setText(context.getResources().getString(R.string.fillin_question));
+                    break;
+                case TF:
+                    qstType.setText(context.getResources().getString(R.string.tf_question));
+                    break;
+                case SINGLECHOOSE:
+                    qstType.setText(context.getResources().getString(R.string.sglcho_question));
+                    break;
+                case MUTTICHOOSE:
+                    qstType.setText(context.getResources().getString(R.string.multicho_question));
+                    break;
+                case DISCUSS:
+                    qstType.setText(context.getResources().getString(R.string.discus_question));
+                    break;
+                default:
+                    break;
+            }
+
             ((CommonViewHolder) holder).qstInfo.
                     setText("共" + qstDatas.get(realPosition).getQstCount() +
                             "题，收藏" + qstDatas.get(realPosition).getStarCount() + "题");
@@ -77,25 +98,18 @@ public class QuestionsInfoAdapter extends RecyclerView.Adapter {
             switch (qstDatas.get(realPosition).getType()){
                 case FILLIN:
                     icon.setBackgroundColor(context.getResources().getColor(R.color.colorLime));
-                    //icon.setImageResource(R.drawable.test);
                     break;
                 case TF:
                     icon.setBackgroundColor(context.getResources().getColor(R.color.colorTeal));
-                    //icon.setImageResource(R.drawable.test);
                     break;
                 case SINGLECHOOSE:
                     icon.setBackgroundColor(context.getResources().getColor(R.color.colorYellow));
-                    //icon.setImageResource(R.drawable.test);
-
                     break;
                 case MUTTICHOOSE:
                     icon.setBackgroundColor(context.getResources().getColor(R.color.colorBlue));
-                    //icon.setImageResource(R.drawable.test);
-
                     break;
                 case DISCUSS:
                     icon.setBackgroundColor(context.getResources().getColor(R.color.colorCyan));
-                    //icon.setImageResource(R.drawable.test);
                     break;
                 default:
                     break;
