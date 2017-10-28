@@ -1,10 +1,13 @@
 package com.zgq.wokao.ui.fragment.impl;
 
+import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 
 import com.zgq.wokao.R;
@@ -56,6 +59,19 @@ public class SettingsFragment extends PreferenceFragment {
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement PaperFragmentListener");
+        }
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            if (activity instanceof SettingsFragmentListener) {
+                mListener = (SettingsFragmentListener) activity;
+            } else {
+                throw new RuntimeException(activity.toString()
+                        + " must implement ABC_Listener");
+            }
         }
     }
 

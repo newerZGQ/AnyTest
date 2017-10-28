@@ -134,7 +134,7 @@ public class HomeActivity extends BaseActivity implements
         String[] titles = getResources().getStringArray(R.array.TabStripTitle);
         tabStrip.setTitles(titles[0], titles[1]);
         tabStrip.setTabIndex(0, true);
-        tabStrip.setTitleSize(50);
+        tabStrip.setTitleSize(60);
         tabStrip.setStripColor(Color.TRANSPARENT);
         tabStrip.setStripWeight(10);
         tabStrip.setStripFactor(5f);
