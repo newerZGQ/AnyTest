@@ -93,7 +93,7 @@ public class FillInAdapter extends BaseAdapter implements IFillInAdapter {
         StringBuilder builder = new StringBuilder();
         for (String tmp : resArray) {
             tmp = tmp.trim();
-            if (tmp.startsWith("答案")) {
+            if (checkIsAnswerTitle(tmp)) {
                 question.getBody().setContent(builder.toString());
                 inContext(QuestionItemType.body);
                 String answerTmp = tmp.substring(2).trim();

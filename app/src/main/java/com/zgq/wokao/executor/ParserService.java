@@ -54,7 +54,10 @@ public class ParserService extends Service {
             @Override
             public void onCompleted(final NormalExamPaper paper) {
                 if (paper == null) {
-                    Log.d("---->>paper null", "");
+                    Intent intent = new Intent();
+                    intent.setAction("parse_action");
+                    intent.putExtra("parse_result", "failed");
+                    sendBroadcast(intent);
                     return;
                 }
 

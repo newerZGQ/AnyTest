@@ -35,7 +35,7 @@
                 android:background="@color/colorWhite"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
-                android:text="判断题"
+                android:text="@string/tf_question"
                 android:textSize="15sp" />
 
         </RelativeLayout>

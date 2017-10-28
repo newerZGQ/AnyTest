@@ -1,5 +1,7 @@
 package com.zgq.wokao.ui.presenter;
 
+import com.zgq.wokao.model.paper.info.IPaperInfo;
+import com.zgq.wokao.model.paper.question.info.IQuestionInfo;
 import com.zgq.wokao.model.viewdate.QstData;
 
 import java.util.ArrayList;
@@ -10,4 +12,5 @@ import java.util.ArrayList;
 
 public interface IQuestionsPresenter {
     ArrayList<QstData> getQstLists();
+    IPaperInfo getPaperInfo();
 }

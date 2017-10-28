@@ -31,7 +31,6 @@
     <TextView
         android:id="@+id/study_info"
         android:textSize="12sp"
-        android:text="正确10／12"
         android:background="@drawable/activity_answer_study_qstinfo_background"
         android:gravity="right"
         android:layout_alignParentRight="true"
@@ -63,7 +62,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="@color/colorTeal">
+        android:background="@color/color_home_activity_background">
         <View
             android:background="@color/colorStatusBar"
             android:layout_width="match_parent"
@@ -105,7 +104,7 @@
                 android:layout_centerHorizontal="true">
                 <TextView
                     android:id="@+id/all_question"
-                    android:text="全部"
+                    android:text="@string/all_question_mode"
                     android:textSize="16sp"
                     android:textColor="@color/colorTeal"
                     android:gravity="center_vertical|center_horizontal"
@@ -113,7 +112,7 @@
                     android:layout_height="28dp"/>
                 <TextView
                     android:id="@+id/stared_question"
-                    android:text="收藏"
+                    android:text="@string/star_question_mode"
                     android:textSize="16sp"
                     android:layout_width="65dp"
                     android:layout_height="28dp"

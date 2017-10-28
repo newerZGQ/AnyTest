@@ -2,6 +2,7 @@ package com.zgq.wokao.ui.activity;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,7 +10,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -19,7 +19,6 @@ import android.widget.TextView;
 import com.gigamole.navigationtabstrip.NavigationTabStrip;
 import com.zgq.linechart.ChartView;
 import com.zgq.wokao.R;
-import com.zgq.wokao.Util.WXShare;
 import com.zgq.wokao.action.paper.impl.StudySummaryAction;
 import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.total.StudySummary;
@@ -43,7 +42,6 @@ import butterknife.ButterKnife;
 public class HomeActivity extends BaseActivity implements
         ScheduleFragment.ScheduleFragmentListener,
         PapersFragment.PaperFragmentListener,
-        QuestionsFragment.QuestionsFragmentListener,
         IHomeView,
         View.OnClickListener {
 
@@ -94,7 +92,6 @@ public class HomeActivity extends BaseActivity implements
         StudySummaryAction.getInstance().initStudySummary();
         homePresenter = new HomePresenterImpl(this);
         initView();
-        WXShare.regToWx(this);
     }
 
     @Override
@@ -106,6 +103,7 @@ public class HomeActivity extends BaseActivity implements
     @Override
     protected void onResume() {
         super.onResume();
+        initContent();
         switch (currentItem) {
             case 0:
                 showScheduleFragment();
@@ -133,7 +131,8 @@ public class HomeActivity extends BaseActivity implements
     }
 
     private void initTabStrip() {
-        tabStrip.setTitles("日程", "试卷");
+        String[] titles = getResources().getStringArray(R.array.TabStripTitle);
+        tabStrip.setTitles(titles[0], titles[1]);
         tabStrip.setTabIndex(0, true);
         tabStrip.setTitleSize(50);
         tabStrip.setStripColor(Color.TRANSPARENT);
@@ -321,7 +320,7 @@ public class HomeActivity extends BaseActivity implements
 
     @Override
     public void goQuestionsList(String paperId) {
-        showQuestionsFragment(paperId);
+        showQuestionsList(paperId);
     }
 
     @Override
@@ -360,14 +359,10 @@ public class HomeActivity extends BaseActivity implements
 
 
     @Override
-    public void showQuestionsFragment(String paperId) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        QuestionsFragment questionsFragment = QuestionsFragment.newInstance(paperId);
-        transaction.replace(R.id.questions_frag_2, questionsFragment);
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        transaction.addToBackStack(null);
-        transaction.commit();
-        hideToolBar(300);
+    public void showQuestionsList(String paperId) {
+        Bundle bundle = new Bundle();
+        bundle.putString("paperId", paperId);
+        openActivity(QuestionsActivity.class, bundle);
     }
 
     @Override
@@ -384,7 +379,7 @@ public class HomeActivity extends BaseActivity implements
                 openActivity(FileSelectorActivity.class);
                 break;
             case R.id.share:
-                WXShare.shareApp(this);
+                openActivity(SettingsActivity.class);
                 break;
             default:
                 break;
@@ -414,11 +409,6 @@ public class HomeActivity extends BaseActivity implements
     @Override
     public void onPaperInSchedule(String paperId) {
         scheduleFragment.onPaperDataChanged();
-    }
-
-    @Override
-    public void startFromQuestionFrag(String paperId, QuestionType type) {
-        startStudy(paperId, type, 0, true);
     }
 
 

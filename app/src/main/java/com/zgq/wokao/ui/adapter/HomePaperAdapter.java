@@ -27,9 +27,6 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
     private ArrayList<IPaperInfo> paperInfos = null;
 
     private PaperAdapterListener listener;
-    private int lastBackground = 0;
-    private PaperAction paperAction = PaperAction.getInstance();
-
     ExpandableViewHoldersUtil.KeepOneH<MyViewHolder> keepOne = new ExpandableViewHoldersUtil.KeepOneH<MyViewHolder>();
 
     public HomePaperAdapter(ArrayList<IPaperInfo> paperInfos, PaperAdapterListener listener) {
@@ -52,11 +49,11 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
         final MyViewHolder holder1 = (MyViewHolder) holder;
         final IPaperInfo info = paperInfos.get(position);
         if (info.isInSchedule()) {
-            ((MyViewHolder) holder).frontLayout.setBackground(context.getResources()
-                    .getDrawable(R.drawable.rectangle_blue));
+            ((MyViewHolder) holder).frontLayoutColorLayout.setBackgroundColor(context.getResources()
+                    .getColor(R.color.color_accuracy_circle_2_hard));
         } else {
-            ((MyViewHolder) holder).frontLayout.setBackground(context.getResources()
-                    .getDrawable(R.drawable.rectangle_red));
+            ((MyViewHolder) holder).frontLayoutColorLayout.setBackgroundColor(context.getResources()
+                    .getColor(R.color.color_accuracy_circle_1_hard));
         }
 
         //title
@@ -70,7 +67,26 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
         for (int i = 0; i < qstTypes.getChildCount(); i++) {
             if (i < qstList.size()) {
                 qstTypes.getChildAt(i).setVisibility(View.VISIBLE);
-                ((TextView) qstTypes.getChildAt(i)).setText(qstList.get(i).getName());
+                TextView qstType = (TextView)qstTypes.getChildAt(i);
+                switch (qstList.get(i)){
+                    case FILLIN:
+                        qstType.setText(context.getResources().getString(R.string.fillin_question_short));
+                        break;
+                    case TF:
+                        qstType.setText(context.getResources().getString(R.string.tf_question_short));
+                        break;
+                    case SINGLECHOOSE:
+                        qstType.setText(context.getResources().getString(R.string.sglcho_question_short));
+                        break;
+                    case MUTTICHOOSE:
+                        qstType.setText(context.getResources().getString(R.string.multicho_question_short));
+                        break;
+                    case DISCUSS:
+                        qstType.setText(context.getResources().getString(R.string.discus_question_short));
+                        break;
+                    default:
+                        break;
+                }
             } else {
                 qstTypes.getChildAt(i).setVisibility(View.INVISIBLE);
             }
@@ -137,6 +153,8 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
         public RelativeLayout frontLayout;
         public RelativeLayout backLayout;
 
+        public RelativeLayout frontLayoutColorLayout;
+
         public MyViewHolder(View itemView) {
             super(itemView);
             item = (RelativeLayout) itemView.findViewById(R.id.list_item);
@@ -149,6 +167,7 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
             statusIcon = itemView.findViewById(R.id.schedule_status_icon);
             frontLayout = (RelativeLayout) itemView.findViewById(R.id.front_layout);
             backLayout = (RelativeLayout) itemView.findViewById(R.id.back_layout);
+            frontLayoutColorLayout = (RelativeLayout) itemView.findViewById(R.id.front_layout_content);
             paperName = (TextView) itemView.findViewById(R.id.paper_name);
             frontLayout.setOnClickListener(this);
             exitBtn.setOnClickListener(this);

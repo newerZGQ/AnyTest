@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#031027</color>
-    <color name="colorPrimaryDark">#1D4547</color>
+    <color name="colorPrimary">#2a2a3e</color>
+    <color name="colorPrimaryDark">#1c1c29</color>
     <color name="colorAccent">#42897D</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBlack">#000000</color>
     <color name="colorOrange">#ff8a65</color>
     <color name="colorGreen">#aed581</color>
-    <color name="colorBlue">#7baaf7</color>
-    <color name="colorYellow">#fdd835</color>
-    <color name="colorTeal">#031027</color>
-    <color name="colorCyan">#00bcd4</color>
-    <color name="colorLime">#cddc39</color>
+
+    <color name="colorBlue">#9e7baaf7</color>
+    <color name="colorYellow">#9cfdd835</color>
+    <color name="colorTeal">#9c031027</color>
+    <color name="colorCyan">#8d00bcd4</color>
+    <color name="colorLime">#a3cddc39</color>
 
 
     <color name="colorRed">#6CCF6E</color>
 
 
     //状态栏
-    <color name="colorStatusBar">#031027</color>
+    <color name="colorStatusBar">#29263e</color>
     <color name="colorTransparent">#00000000</color>
 
     <color name="colorFirstLevelText">#DE000000</color>
@@ -31,12 +32,12 @@
 
     //schedulefragment
     <color name="color_top_layout_background">#13ffffff</color>
-    <color name="color_accuracy_circle_1_hard">#611921</color>
-    <color name="color_accuracy_circle_1_light">#14e50041</color>
-    <color name="color_accuracy_circle_2_hard">#806919</color>
-    <color name="color_accuracy_circle_2_light">#20ffd437</color>
+    <color name="color_accuracy_circle_1_hard">#a1464f</color>
+    <color name="color_accuracy_circle_1_light">#14fb717e</color>
+    <color name="color_accuracy_circle_2_hard">#3d6094</color>
+    <color name="color_accuracy_circle_2_light">#206195e3</color>
 
-    <color name="color_accuracy_text_light">#85ffd437</color>
+    <color name="color_accuracy_text_light">#1e3250</color>
 
     <color name="color_task_setting_backgroung">#c2000000</color>
 
@@ -48,9 +49,9 @@
 
 
     //homeactivity
-    <color name="color_home_activity_background">#031027</color>
-    <color name="color_home_activity_selected_tab">#19b99a</color>
-    <color name="color_home_inactivity_selected_tab">#84acbfb9</color>
+    <color name="color_home_activity_background">#2a2a3e</color>
+    <color name="color_home_activity_selected_tab">#ffffff</color>
+    <color name="color_home_inactivity_selected_tab">#32ffffff</color>
     <color name="color_home_loading_background">#b8000000</color>
 
     //searchactivity

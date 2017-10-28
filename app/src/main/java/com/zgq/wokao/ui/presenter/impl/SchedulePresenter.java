@@ -27,7 +27,7 @@ public class SchedulePresenter implements ISchedulePresenter {
     private ArrayList<ArrayList<QstData>> qstDatasList = new ArrayList<>();
 
     public SchedulePresenter(IScheduleView scheduleView, Context context) {
-        getData();
+
     }
 
     private void getData() {

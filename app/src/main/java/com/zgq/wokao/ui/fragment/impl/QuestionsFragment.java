@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.zgq.wokao.R;
 import com.zgq.wokao.model.paper.QuestionType;
@@ -39,6 +40,7 @@ public class QuestionsFragment extends BaseFragment {
     private QuestionsFragmentListener mListener;
 
     private RecyclerView qstPager;
+    private TextView back;
 
     private QuestionsPresenterImpl presenter;
 
@@ -75,10 +77,22 @@ public class QuestionsFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_questions_layout, container, false);
-        initQstList(view);
+        back = (TextView) view.findViewById(R.id.toolbar_back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
+        qstPager = (RecyclerView) view.findViewById(R.id.questions_list);
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        initQstList();
+    }
 
     @Override
     protected void onAttachToContext(Context context) {
@@ -115,15 +129,15 @@ public class QuestionsFragment extends BaseFragment {
         void startFromQuestionFrag(String paperId, QuestionType type);
     }
 
-    private void initQstList(View parent) {
-        qstPager = (RecyclerView) parent.findViewById(R.id.questions_list);
+    private void initQstList() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),
                 OrientationHelper.VERTICAL, false);
         qstPager.setLayoutManager(layoutManager);
         LinearLayout.LayoutParams lp = new LinearLayout.
                 LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         qstPager.setLayoutParams(lp);
-        qstPager.setAdapter(new QuestionsInfoAdapter(presenter.getQstLists(), new QuestionsInfoAdapter.ItemClickListener() {
+        qstPager.setAdapter(new QuestionsInfoAdapter(getActivity().getApplication(),
+                presenter.getQstLists(), presenter.getPaperInfo(),new QuestionsInfoAdapter.ItemClickListener() {
             @Override
             public void onItemClicked(int position) {
                 QstData qstData = presenter.getQstLists().get(position);
@@ -132,5 +146,4 @@ public class QuestionsFragment extends BaseFragment {
             }
         }));
     }
-
 }

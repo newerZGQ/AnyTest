@@ -11,7 +11,7 @@ public abstract class BaseAdapter implements IAdapter {
         int numberCount = 0;
         int index = 0;
         for (char tmp : chars) {
-            if (tmp >= 48 && tmp <= 57) {
+            if (tmp >= '0' && tmp <= '9') {
                 numberCount++;
                 index++;
             } else {
@@ -30,11 +30,11 @@ public abstract class BaseAdapter implements IAdapter {
         if (chars.length == 0) {
             return s;
         }
-        if (chars[0] >= 48 && chars[0] <= 57) {
+        if (chars[0] >= '0' && chars[0] <= '9') {
             int index = 0;
             for (char tmp : chars) {
                 index++;
-                if ((int) tmp >= 48 && (int) tmp <= 57) {
+                if ((int) tmp >= '0' && (int) tmp <= '9') {
                     continue;
                 } else {
                     break;
@@ -54,7 +54,7 @@ public abstract class BaseAdapter implements IAdapter {
             int index = 0;
             for (char tmp : chars2) {
                 index++;
-                if ((int) tmp >= 48 && (int) tmp <= 57) {
+                if ((int) tmp >= '0' && (int) tmp <= '9') {
                     numberCount++;
                     continue;
                 } else {
@@ -93,7 +93,7 @@ public abstract class BaseAdapter implements IAdapter {
         char[] chars = s.trim().toCharArray();
         int letterCount = 0;
         for (char tmp : chars) {
-            if ((tmp >= 65 && tmp <= 90) || (tmp >= 97 && tmp <= 122)) {
+            if ((tmp >= 'A' && tmp <= 'Z') || (tmp >= 'a' && tmp <= 'z')) {
                 letterCount++;
             } else {
                 break;
@@ -102,6 +102,19 @@ public abstract class BaseAdapter implements IAdapter {
         if (letterCount > 1) {
             return true;
         }
+        return false;
+    }
+
+    protected boolean checkIsAnswerTitle(String source){
+        if (source.startsWith("答案")){
+            return true;
+        }
+
+        if (source.matches("[a-zA-z]+") && source.length() >= 6 &&
+                source.substring(0,6).toLowerCase().startsWith("answer")){
+            return true;
+        }
+
         return false;
     }
 }

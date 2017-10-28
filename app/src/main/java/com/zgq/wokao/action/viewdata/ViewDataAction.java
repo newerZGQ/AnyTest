@@ -4,9 +4,11 @@ import com.zgq.wokao.action.BaseAction;
 import com.zgq.wokao.action.paper.impl.PaperAction;
 import com.zgq.wokao.model.paper.IExamPaper;
 import com.zgq.wokao.model.paper.QuestionType;
+import com.zgq.wokao.model.paper.question.IQuestion;
 import com.zgq.wokao.model.viewdate.QstData;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by zgq on 2017/3/19.
@@ -27,11 +29,31 @@ public class ViewDataAction extends BaseAction implements IViewDataAction {
     @Override
     public ArrayList<QstData> getQstData(IExamPaper paper) {
         ArrayList<QstData> qstDatas = new ArrayList<>();
-        qstDatas.add(QstData.Formator.format(PaperAction.getInstance().getQuestins(paper, QuestionType.FILLIN), paper.getPaperInfo()));
-        qstDatas.add(QstData.Formator.format(PaperAction.getInstance().getQuestins(paper, QuestionType.TF), paper.getPaperInfo()));
-        qstDatas.add(QstData.Formator.format(PaperAction.getInstance().getQuestins(paper, QuestionType.SINGLECHOOSE), paper.getPaperInfo()));
-        qstDatas.add(QstData.Formator.format(PaperAction.getInstance().getQuestins(paper, QuestionType.MUTTICHOOSE), paper.getPaperInfo()));
-        qstDatas.add(QstData.Formator.format(PaperAction.getInstance().getQuestins(paper, QuestionType.DISCUSS), paper.getPaperInfo()));
+        ArrayList<IQuestion> questions = null;
+        questions = PaperAction.getInstance().getQuestins(paper, QuestionType.FILLIN);
+        if (questions.size() != 0){
+            qstDatas.add(QstData.Formator.format(questions, paper.getPaperInfo()));
+        }
+
+        questions = PaperAction.getInstance().getQuestins(paper, QuestionType.TF);
+        if (questions.size() != 0){
+            qstDatas.add(QstData.Formator.format(questions, paper.getPaperInfo()));
+        }
+
+        questions = PaperAction.getInstance().getQuestins(paper, QuestionType.SINGLECHOOSE);
+        if (questions.size() != 0){
+            qstDatas.add(QstData.Formator.format(questions, paper.getPaperInfo()));
+        }
+
+        questions = PaperAction.getInstance().getQuestins(paper, QuestionType.MUTTICHOOSE);
+        if (questions.size() != 0){
+            qstDatas.add(QstData.Formator.format(questions, paper.getPaperInfo()));
+        }
+
+        questions = PaperAction.getInstance().getQuestins(paper, QuestionType.DISCUSS);
+        if (questions.size() != 0){
+            qstDatas.add(QstData.Formator.format(questions, paper.getPaperInfo()));
+        }
         return qstDatas;
     }
 }

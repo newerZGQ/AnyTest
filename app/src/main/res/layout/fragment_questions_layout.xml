@@ -2,8 +2,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/color_home_activity_background"
     android:orientation="vertical"
     tools:context="com.zgq.wokao.ui.fragment.impl.QuestionsFragment">
+
+    <RelativeLayout
+        android:id="@+id/toolbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:gravity="center_vertical"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:id="@+id/toolbar_back"
+            android:layout_marginLeft="8dp"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:background="@drawable/toolbar_back_background"/>
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:text="@string/questions_title"
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/questions_list"

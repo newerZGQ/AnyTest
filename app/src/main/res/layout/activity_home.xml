@@ -14,7 +14,7 @@
         android:orientation="vertical">
         <TextView
             android:id="@+id/app_name"
-            android:text="试卷工厂"
+            android:text="@string/app_name"
             android:layout_marginTop="65dp"
             android:layout_marginLeft="32dp"
             android:textSize="20sp"
@@ -23,7 +23,7 @@
             android:layout_height="30dp" />
         <TextView
             android:id="@+id/jilu"
-            android:text="最近一周每天学习量"
+            android:text="@string/menulayout_subtitle"
             android:textSize="13sp"
             android:textColor="@color/colorWhite"
             android:layout_marginLeft="32dp"
@@ -62,7 +62,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical">
                 <TextView
-                    android:text="共学习"
+                    android:text="@string/menulayout_study_count"
                     android:textColor="@color/colorWhiteTransparent"
                     android:textSize="13sp"
                     android:gravity="center_horizontal"
@@ -84,7 +84,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical">
                 <TextView
-                    android:text="正确"
+                    android:text="@string/menulayout_correct_count"
                     android:textColor="@color/colorWhiteTransparent"
                     android:textSize="13sp"
                     android:gravity="center_horizontal"
@@ -120,7 +120,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="24dp"
-                android:background="@color/color_home_activity_background"/>
+                android:background="@color/colorStatusBar"/>
 
             <RelativeLayout
                 android:id="@+id/toolbar_opt_layout"

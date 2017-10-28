@@ -71,15 +71,22 @@ public class ParserHelper {
 
     public NormalExamPaper parse(String fileStr) throws FileNotFoundException, com.zgq.wokao.exception.ParseException {
         this.fileString = fileStr;
+        NormalExamPaper paper = null;
         switch (checkFile(fileString)) {
             case TXT:
                 File txtFile = new File(fileString);
-                return parse(new FileInputStream(txtFile));
+                paper =  parse(new FileInputStream(txtFile));
+                break;
             case WORD:
                 String wordStr = MSDocFormater.getInstance().getContent(fileString);
-                return parse(new ByteArrayInputStream(wordStr.getBytes()));
+                paper =  parse(new ByteArrayInputStream(wordStr.getBytes()));
+                break;
             default:
                 break;
+        }
+
+        if (checkPaperUseful(paper)){
+            return paper;
         }
         return null;
     }
@@ -91,6 +98,9 @@ public class ParserHelper {
         NormalExamPaper paper = new NormalExamPaper();
         PaperParser paperParser = new PaperParser();
         ArrayList<PaperParser.Topic> topics = paperParser.parse(inputStream);
+        if (topics.size() == 0){
+            return null;
+        }
         paper.setPaperInfo(paperParser.getInfo());
         if (topics.size() == 0) {
             throw new com.zgq.wokao.exception.ParseException("请检查大标题");
@@ -122,6 +132,18 @@ public class ParserHelper {
         paper.getPaperInfo().setId(UUIDUtil.getID());
         initPaperData(paper);
         return paper;
+    }
+
+    private boolean checkPaperUseful(NormalExamPaper paper){
+        if (paper == null || (
+        paper.getFillInQuestions().size() == 0 &&
+                paper.getTfQuestions().size() == 0 &&
+                paper.getSglChoQuestions().size() == 0 &&
+                paper.getMultChoQuestions().size() == 0 &&
+                paper.getDiscussQuestions().size() == 0)){
+            return false;
+        }
+        return true;
     }
 
     private void initPaperData(IExamPaper paper) {

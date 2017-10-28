@@ -35,7 +35,9 @@ public class ParserThread extends Thread {
             realm.executeTransaction(new Realm.Transaction() {
                 @Override
                 public void execute(Realm realm) {
-                    realm.copyToRealm(paper);
+                    if (paper != null) {
+                        realm.copyToRealm(paper);
+                    }
                 }
             });
 

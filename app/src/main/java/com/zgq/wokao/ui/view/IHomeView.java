@@ -16,7 +16,7 @@ public interface IHomeView {
 
     void showPapersFragment();
 
-    void showQuestionsFragment(String paperId);
+    void showQuestionsList(String paperId);
 
     void setViewPagerScrollble(boolean scrollble);
 

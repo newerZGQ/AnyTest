@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="welcome_tips">
+        <item>  打造你的专属试题库</item>
+        <item>  在地铁上拿着书复习好麻烦</item>
+        <item>  虽然第一次制作有点麻烦，但是做好受用无穷呦</item>
+        <item>  我要把我的试卷分享给朋友</item>
+        <item>  为了考试打印好多张纸，用完就扔了，好浪费</item>
+    </string-array>
+    <string name="author_name">— Author</string>
+    <string name="author_tag"> - Author</string>
+</resources>

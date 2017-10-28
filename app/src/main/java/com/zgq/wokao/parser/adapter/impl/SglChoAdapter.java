@@ -116,7 +116,7 @@ public class SglChoAdapter extends BaseAdapter implements ISglChoAdapter {
                 builder.append(getOptionContent(tmp));
                 continue;
             }
-            if (tmp.startsWith("答案")) {
+            if (checkIsAnswerTitle(tmp)) {
                 String optionContent = builder.toString();
                 String tag = StringUtil.char2String((char) headBack);
                 question.getOptions().addOption(new Option.Builder()
