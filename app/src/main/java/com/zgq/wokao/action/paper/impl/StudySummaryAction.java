@@ -1,5 +1,8 @@
 package com.zgq.wokao.action.paper.impl;
 
+import android.support.design.widget.TabLayout;
+import android.util.Log;
+
 import com.zgq.wokao.action.paper.IStudySummaryAction;
 import com.zgq.wokao.data.realm.Paper.impl.StudySummaryDaoImpl;
 import com.zgq.wokao.model.paper.QuestionType;
