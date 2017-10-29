@@ -13,6 +13,8 @@ import com.zgq.wokao.model.total.StudySummary;
  */
 
 public class StudySummaryAction implements IStudySummaryAction {
+    private static String TAG = StudySummaryAction.class.getSimpleName();
+
     private StudySummaryDaoImpl studySummaryDao = StudySummaryDaoImpl.getInstance();
 
     private StudySummaryAction() {
@@ -31,6 +33,7 @@ public class StudySummaryAction implements IStudySummaryAction {
         if (studySummaryDao.getStudySummary() != null){
             return;
         }
+        Log.d(TAG, "initStudySummary");
         studySummaryDao.addStudySummary(new StudySummary());
         studySummaryDao.initStudySummary(studySummaryDao.getStudySummary());
     }
