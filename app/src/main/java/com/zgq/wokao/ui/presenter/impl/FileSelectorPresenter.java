@@ -31,8 +31,8 @@ public class FileSelectorPresenter implements IFileSelectorPresenter {
                     selectorView.notifyParseFailed();
                 }
             }).parseFromFile(filePath);
-        } catch (ParseException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            selectorView.notifyParseFailed();
         }
         return null;
     }

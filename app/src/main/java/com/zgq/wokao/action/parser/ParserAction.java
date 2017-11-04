@@ -92,7 +92,7 @@ public class ParserAction implements IParserAction {
     };
 
     @Override
-    public IExamPaper parseFromFile(String fileString) throws ParseException {
+    public IExamPaper parseFromFile(String fileString) throws ParseException, Exception {
         registerReceiver();
         if (listener == null) return null;
         Intent intent = new Intent(context, ParserService.class);

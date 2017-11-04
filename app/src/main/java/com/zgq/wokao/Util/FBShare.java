@@ -47,8 +47,4 @@ public class FBShare {
             shareDialog.show(linkContent);
         }
     }
-
-    public void shareToFacebook() {
-
-    }
 }

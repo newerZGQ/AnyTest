@@ -1,5 +1,6 @@
 package com.zgq.wokao.parser.formater.impl;
 
+import com.tencent.mm.opensdk.utils.Log;
 import com.zgq.wokao.parser.formater.BaseFormater;
 import com.zgq.wokao.parser.formater.IMSDocFormater;
 
@@ -48,7 +49,7 @@ public class MSDocFormater extends BaseFormater implements IMSDocFormater {
 
     @Override
     public boolean fileAvailable(File file) {
-        if (file.getName().endsWith(".doc") || file.getName().endsWith(".docx")) {
+        if (file.getName().toLowerCase().endsWith(".doc")) {
             return true;
         }
         return false;

@@ -245,7 +245,8 @@ public class PaperAction extends BaseAction implements IPaperAction, IQuestionAc
     }
 
     @Override
-    public IExamPaper parseAndSave(String filePath) throws FileNotFoundException, ParseException {
+    public IExamPaper parseAndSave(String filePath) throws FileNotFoundException,
+            ParseException,Exception{
         NormalExamPaper paper = parserHelper.parse(filePath);
         addExamPaper(paper);
         return paper;
