@@ -14,7 +14,7 @@
         android:title="@string/settings_share">
 
         <Preference
-            android:title="@string/settings_share_wechat"
+            android:title="@string/settings_share_app"
             android:key="setting_to_share_app"
             android:summary="@string/settings_share_content"/>
     </PreferenceCategory>

@@ -7,7 +7,7 @@
     <string name="settings_start_learning_content">学习如何把文档装进手机</string>
 
     <string name="settings_share">分享</string>
-    <string name="settings_share_wechat">微信分享</string>
+    <string name="settings_share_app">微信分享</string>
     <string name="settings_share_content">分享应用即可无限制使用</string>
 
     <string name="settings_developer_info">开发者信息</string>
