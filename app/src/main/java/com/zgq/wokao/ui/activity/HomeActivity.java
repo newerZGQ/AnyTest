@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gigamole.navigationtabstrip.NavigationTabStrip;
+import com.tencent.mm.opensdk.utils.Log;
 import com.zgq.linechart.ChartView;
 import com.zgq.wokao.R;
 import com.zgq.wokao.action.paper.impl.StudySummaryAction;
@@ -103,6 +104,7 @@ public class HomeActivity extends BaseActivity implements
     @Override
     protected void onResume() {
         super.onResume();
+        initLineChart(homePresenter.getDailyRecords());
         initContent();
         switch (currentItem) {
             case 0:
@@ -126,8 +128,8 @@ public class HomeActivity extends BaseActivity implements
         initViewPager();
         setListener();
         initTabStrip();
-        initLineChart(homePresenter.getDailyRecords());
-        initContent();
+        //initLineChart(homePresenter.getDailyRecords());
+        //initContent();
     }
 
     private void initTabStrip() {
@@ -217,6 +219,9 @@ public class HomeActivity extends BaseActivity implements
     }
 
     private void initLineChart(List<TotalDailyCount> dailyRecords) {
+        for (int i = 0; i < dailyRecords.size(); i++) {
+            Log.d(TAG, "count " + dailyRecords.get(i).getDate() + " " +dailyRecords.get(i).getDailyCount());
+        }
         dailyRecords.add(0, dailyRecords.get(0));
         dailyRecords.add(dailyRecords.get(dailyRecords.size() - 1));
         List<String> xValue = new ArrayList<>();

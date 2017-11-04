@@ -8,4 +8,7 @@
     <string name="sglcho_question">Multiple Choice(Single Answer)</string>
     <string name="multicho_question">Multiple Choice(Mutiple Answer)</string>
     <string name="discus_question">Short Answer</string>
+
+    <string name="parse_success">Parse Success</string>
+    <string name="parse_failed">Parse Failed</string>
 </resources>
