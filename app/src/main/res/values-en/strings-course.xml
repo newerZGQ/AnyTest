@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="tip_title">Turorial</string>
+    <string name="tip_sample_file_title">Sample File</string>
+    <string name="tip_sample_file_title_content">You can get a sample file in the folder named wokao </string>
     <string name="tip_document_title">Example 1：Title And Author</string>
     <string name="tip_document_subtitle">The first line in the document is TITLE，second line is AUTHOR</string>
     <string name="tip_document_content">Mathematics \nAuthor：Michael\nI. Fill The Blanks\n1.Who is the singer of Beat it?（）\nAnswer：Michael Jackson"</string>

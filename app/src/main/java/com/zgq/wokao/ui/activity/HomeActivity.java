@@ -17,9 +17,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gigamole.navigationtabstrip.NavigationTabStrip;
+import com.orhanobut.logger.Logger;
 import com.tencent.mm.opensdk.utils.Log;
 import com.zgq.linechart.ChartView;
 import com.zgq.wokao.R;
+import com.zgq.wokao.Util.FileUtil;
 import com.zgq.wokao.action.paper.impl.StudySummaryAction;
 import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.total.StudySummary;
@@ -32,6 +34,8 @@ import com.zgq.wokao.ui.view.IHomeView;
 import com.zgq.wokao.ui.widget.CustomViewPager;
 import com.zgq.wokao.ui.widget.SlideUp;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,6 +43,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.qqtheme.framework.util.StorageUtils;
 
 public class HomeActivity extends BaseActivity implements
         ScheduleFragment.ScheduleFragmentListener,
