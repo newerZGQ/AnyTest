@@ -92,8 +92,8 @@ public class QuestionsInfoAdapter extends RecyclerView.Adapter {
             }
 
             ((CommonViewHolder) holder).qstInfo.
-                    setText(context.getString(R.string.total) + qstDatas.get(realPosition).getQstCount() +
-                            " " + context.getString(R.string.star) + qstDatas.get(realPosition).getStarCount());
+                    setText(context.getString(R.string.total) + " " + qstDatas.get(realPosition).getQstCount() +
+                            ",   " + context.getString(R.string.star) + " " + qstDatas.get(realPosition).getStarCount());
             ImageView icon = ((CommonViewHolder) holder).titleIcon;
             switch (qstDatas.get(realPosition).getType()){
                 case FILLIN:

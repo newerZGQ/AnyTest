@@ -24,6 +24,7 @@ import com.zgq.wokao.model.viewdate.ScheduleData;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Locale;
 import java.util.Random;
 
 
@@ -114,7 +115,12 @@ public class SchedulePagerAdapter extends PagerAdapter {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        holder.addTime.setText(date + " 添加");
+
+        if (Locale.getDefault().getLanguage().equals(new Locale("zh").getLanguage())){
+            holder.addTime.setText(date + " 添加");
+        }else{
+            holder.addTime.setText("Added " + date);
+        }
         holder.startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
