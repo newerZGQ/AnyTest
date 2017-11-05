@@ -6,7 +6,12 @@
     android:id="@+id/no_schedule_layout">
     <TextView
         android:textSize="25sp"
-        android:background="@drawable/empty_schedule_icon"
+        android:background="@drawable/empty_papers_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:text="@string/no_schedule"
+        android:textColor="@color/color_home_no_paper_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

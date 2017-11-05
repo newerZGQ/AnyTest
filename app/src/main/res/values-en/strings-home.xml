@@ -30,4 +30,7 @@
     <string name="discus_question_short">SA</string>
 
     <string name="daily_task">Daily Task</string>
+
+    <string name="no_schedule">No Sked</string>
+    <string name="no_paper">No Paper</string>
 </resources>

@@ -29,16 +29,18 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="28dp"
+                    android:textSize="16sp"
                     android:text="@string/tip_document_title" />
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="38dp"
+                    android:layout_height="wrap_content"
                     android:text="@string/tip_document_subtitle" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="120dp"
+                    android:layout_marginLeft="16dp"
                     android:text="@string/tip_document_content" />
 
             </LinearLayout>
@@ -58,16 +60,18 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="28dp"
+                    android:textSize="16sp"
                     android:text="@string/tip_fillin_title" />
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="38dp"
+                    android:layout_height="wrap_content"
                     android:text="@string/tip_fillin_subtitle" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
+                    android:layout_marginLeft="16dp"
                     android:text="@string/tip_fillin_content" />
 
             </LinearLayout>
@@ -87,16 +91,18 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="28dp"
+                    android:textSize="16sp"
                     android:text="@string/tip_tf_title" />
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="28dp"
+                    android:layout_height="wrap_content"
                     android:text="@string/tip_tf_subtitle" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
+                    android:layout_marginLeft="16dp"
                     android:text="@string/tip_tf_content" />
 
             </LinearLayout>
@@ -116,16 +122,18 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="28dp"
+                    android:textSize="16sp"
                     android:text="@string/tip_sglcho_title" />
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="38dp"
+                    android:layout_height="wrap_content"
                     android:text="@string/tip_sglcho_subtitle" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
                     android:text="@string/tip_sglcho_content" />
 
             </LinearLayout>
@@ -145,16 +153,18 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="28dp"
+                    android:textSize="16sp"
                     android:text="@string/tip_muticho_title" />
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="38dp"
+                    android:layout_height="wrap_content"
                     android:text="@string/tip_muticho_subtitle" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
                     android:text="@string/tip_muticho_content" />
 
             </LinearLayout>
@@ -174,16 +184,18 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="28dp"
+                    android:textSize="16sp"
                     android:text="@string/tip_discus_title" />
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="28dp"
+                    android:layout_height="wrap_content"
                     android:text="@string/tip_discus_subtitle" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
                     android:text="@string/tip_discus_content" />
 
             </LinearLayout>
