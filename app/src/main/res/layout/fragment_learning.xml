@@ -41,6 +41,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="120dp"
                     android:layout_marginLeft="16dp"
+                    android:textColor="@color/colorAccent"
                     android:text="@string/tip_document_content" />
 
             </LinearLayout>
@@ -72,6 +73,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
                     android:layout_marginLeft="16dp"
+                    android:textColor="@color/colorAccent"
                     android:text="@string/tip_fillin_content" />
 
             </LinearLayout>
@@ -103,6 +105,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
                     android:layout_marginLeft="16dp"
+                    android:textColor="@color/colorAccent"
                     android:text="@string/tip_tf_content" />
 
             </LinearLayout>
@@ -134,6 +137,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
+                    android:textColor="@color/colorAccent"
                     android:text="@string/tip_sglcho_content" />
 
             </LinearLayout>
@@ -165,6 +169,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
+                    android:textColor="@color/colorAccent"
                     android:text="@string/tip_muticho_content" />
 
             </LinearLayout>
@@ -196,6 +201,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
+                    android:textColor="@color/colorAccent"
                     android:text="@string/tip_discus_content" />
 
             </LinearLayout>
