@@ -1,5 +1,6 @@
 package com.zgq.wokao.parser.adapter.impl;
 
+import com.orhanobut.logger.Logger;
 import com.zgq.wokao.Util.ListUtil;
 import com.zgq.wokao.Util.StringUtil;
 import com.zgq.wokao.Util.UUIDUtil;
@@ -39,6 +40,7 @@ public class SglChoAdapter extends BaseAdapter implements ISglChoAdapter {
 
     @Override
     public ArrayList<SglChoQuestion> parse(String resource) {
+        Logger.d("parse sgkcho" + resource);
         String[] strings = resource.split("\n");
         content = (ArrayList<String>) ListUtil.array2list(strings);
         parseRes(content);
@@ -85,6 +87,7 @@ public class SglChoAdapter extends BaseAdapter implements ISglChoAdapter {
     }
 
     private SglChoQuestion parseSingle(int number, String questionRes) {
+        Logger.d("parse sglcho single " + questionRes);
         SglChoQuestion question = new SglChoQuestion.Builder().build();
         question.getInfo().setQstId(number);
         question.getInfo().setId(UUIDUtil.getID());
@@ -94,8 +97,9 @@ public class SglChoAdapter extends BaseAdapter implements ISglChoAdapter {
         int headBack = 0;
         for (String tmp : resArray) {
             tmp = tmp.trim();
-            int head = tmp.substring(0, 1).toUpperCase().charAt(0);
-            if (head == 65) {
+            char head = tmp.toUpperCase().charAt(1);
+            char headTag = tmp.toUpperCase().charAt(0);
+            if (head == 'A' && headTag == '*') {
                 String body = builder.toString();
                 builder.delete(0, builder.length());
                 question.getBody().setContent(body);
@@ -103,7 +107,7 @@ public class SglChoAdapter extends BaseAdapter implements ISglChoAdapter {
                 builder.append(getOptionContent(tmp));
                 continue;
             }
-            if (head > 65 && head <= 77) {
+            if (head > 'A' && head <= 'G' && headTag == '*') {
                 String optionContent = builder.toString();
                 String tag = StringUtil.char2String((char) (head - 1));
                 headBack = head;
@@ -140,7 +144,7 @@ public class SglChoAdapter extends BaseAdapter implements ISglChoAdapter {
     }
 
     private String getOptionContent(String s) {
-        s = s.trim().substring(1).trim();
+        s = s.trim().substring(2).trim();
         if (s.startsWith(":") || s.startsWith("：")) {
             s = s.trim().substring(1).trim();
         }

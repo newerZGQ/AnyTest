@@ -1,5 +1,6 @@
 package com.zgq.wokao.parser.adapter.impl;
 
+import com.orhanobut.logger.Logger;
 import com.zgq.wokao.Util.ListUtil;
 import com.zgq.wokao.Util.UUIDUtil;
 import com.zgq.wokao.model.paper.QuestionType;
@@ -90,14 +91,14 @@ public class TFAdapter extends BaseAdapter implements ITFAdapter {
         question.getInfo().setQstId(number);
         question.getInfo().setId(UUIDUtil.getID());
         inContext(QuestionItemType.number);
-        String[] resArray = trimNum(questionRes).split("\n");
+        String[] resArray = questionRes.split("\n");
         StringBuilder builder = new StringBuilder();
         for (String tmp : resArray) {
             tmp = tmp.trim();
             if (checkIsAnswerTitle(tmp)) {
                 question.getBody().setContent(builder.toString());
                 inContext(QuestionItemType.body);
-                String answerTmp = tmp.substring(2).trim();
+                String answerTmp = parseRealAnswer(tmp);
                 if (answerTmp.startsWith(":") || answerTmp.startsWith("：")) {
                     question.getAnswer().setContent(answerTmp.substring(1).trim());
                 } else {

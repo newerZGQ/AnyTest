@@ -94,8 +94,9 @@ public class MultChoAdapter extends BaseAdapter implements IMultChoAdapter {
         int headBack = 0;
         for (String tmp : resArray) {
             tmp = tmp.trim();
-            int head = tmp.substring(0, 1).toUpperCase().charAt(0);
-            if (head == 65 && !startWithWord(tmp)) {
+            int head = tmp.toUpperCase().charAt(1);
+            char headTag = tmp.toUpperCase().charAt(0);
+            if (head == 'A' && !startWithWord(tmp) && headTag == '*') {
                 String body = builder.toString();
                 builder.delete(0, builder.length());
                 question.getBody().setContent(body);
@@ -103,7 +104,7 @@ public class MultChoAdapter extends BaseAdapter implements IMultChoAdapter {
                 builder.append(getOptionContent(tmp));
                 continue;
             }
-            if (head > 65 && head <= 77 && !startWithWord(tmp)) {
+            if (head > 'A' && head <= 'G' && !startWithWord(tmp) && headTag == '*') {
                 String optionContent = builder.toString();
                 String tag = StringUtil.char2String((char) (head - 1));
                 headBack = head;
@@ -140,7 +141,7 @@ public class MultChoAdapter extends BaseAdapter implements IMultChoAdapter {
     }
 
     private String getOptionContent(String s) {
-        s = s.trim().substring(1).trim();
+        s = s.trim().substring(2).trim();
         if (s.startsWith(":") || s.startsWith("：")) {
             s = s.trim().substring(1).trim();
         }

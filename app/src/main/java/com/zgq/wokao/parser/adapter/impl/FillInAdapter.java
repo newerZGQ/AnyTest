@@ -96,7 +96,7 @@ public class FillInAdapter extends BaseAdapter implements IFillInAdapter {
             if (checkIsAnswerTitle(tmp)) {
                 question.getBody().setContent(builder.toString());
                 inContext(QuestionItemType.body);
-                String answerTmp = tmp.substring(2).trim();
+                String answerTmp = parseRealAnswer(tmp);
                 if (answerTmp.startsWith(":") || answerTmp.startsWith("：")) {
                     question.getAnswer().setContent(answerTmp.substring(1).trim());
                 } else {

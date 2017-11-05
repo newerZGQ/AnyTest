@@ -10,7 +10,9 @@ import com.zgq.wokao.parser.context.QuestionContext;
 import com.zgq.wokao.parser.context.item.QuestionItem;
 import com.zgq.wokao.parser.context.item.QuestionItemType;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * Created by zgq on 2017/2/19.
@@ -97,7 +99,9 @@ public class DiscussAdapter extends BaseAdapter implements IDiscussAdapter {
             if (checkIsAnswerTitle(tmp)) {
                 question.getBody().setContent(builder.toString());
                 inContext(QuestionItemType.body);
-                String answerTmp = tmp.substring(2).trim();
+
+                String answerTmp = parseRealAnswer(tmp);
+
                 if (answerTmp.startsWith(":") || answerTmp.startsWith("：")) {
                     question.getAnswer().setContent(answerTmp.substring(1).trim());
                 } else {
