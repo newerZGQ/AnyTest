@@ -1,5 +1,7 @@
 package com.zgq.wokao.parser;
 
+import android.util.Log;
+
 import com.zgq.wokao.Util.DateUtil;
 import com.zgq.wokao.Util.UUIDUtil;
 import com.zgq.wokao.exception.ParseException;
@@ -29,6 +31,8 @@ import io.realm.RealmList;
  */
 
 public class ParserHelper {
+    private static String TAG = ParserHelper.class.getSimpleName();
+
     private String fileString;
 
     private ParserHelper() {
@@ -69,7 +73,8 @@ public class ParserHelper {
         return FileFormat.ERRORFORMAT;
     }
 
-    public NormalExamPaper parse(String fileStr) throws FileNotFoundException, com.zgq.wokao.exception.ParseException {
+    public NormalExamPaper parse(String fileStr) throws FileNotFoundException,
+            com.zgq.wokao.exception.ParseException, Exception {
         this.fileString = fileStr;
         NormalExamPaper paper = null;
         switch (checkFile(fileString)) {

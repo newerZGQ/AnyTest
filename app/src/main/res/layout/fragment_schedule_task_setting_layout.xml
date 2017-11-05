@@ -29,7 +29,7 @@
         app:bsb_show_thumb_text="true"
         app:bsb_track_color="@color/colorCyan" />
     <TextView
-        android:text="每日任务"
+        android:text="@string/daily_task"
         android:layout_marginBottom="50dp"
         android:textColor="@color/colorWhiteTransparent"
         android:textSize="16sp"

@@ -26,7 +26,8 @@ public interface IPaperAction extends IPaperInfoAction, IPaperSchdlAction {
 
     IExamPaper queryById(String id);
 
-    IExamPaper parseAndSave(String filePath) throws FileNotFoundException, ParseException;
+    IExamPaper parseAndSave(String filePath) throws FileNotFoundException,
+            ParseException, Exception;
 
     IExamPaper parseAndSave(InputStream inputStream) throws ParseException;
 

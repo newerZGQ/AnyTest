@@ -27,4 +27,9 @@
     <string name="sglcho_question_short">单选</string>
     <string name="multicho_question_short">多选</string>
     <string name="discus_question_short">简答</string>
+
+    <string name="daily_task">每日任务</string>
+
+    <string name="no_schedule">没有学习日程</string>
+    <string name="no_paper">无试卷信息</string>
 </resources>

@@ -67,7 +67,7 @@
                 android:textSize="16sp"
                 android:background="@drawable/activity_answer_study_option_circle_base"/>
             <TextView
-                android:text="正确"
+                android:text="@string/correct"
                 android:textSize="16sp"
                 android:gravity="center_vertical"
                 android:layout_marginLeft="16dp"
@@ -93,7 +93,7 @@
                 android:background="@drawable/activity_answer_study_option_circle_base"/>
             <TextView
                 android:gravity="center_vertical"
-                android:text="错误"
+                android:text="@string/wrong"
                 android:textSize="16sp"
                 android:layout_marginLeft="16dp"
                 android:layout_width="wrap_content"

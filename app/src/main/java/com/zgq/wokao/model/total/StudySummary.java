@@ -40,17 +40,17 @@ public class StudySummary extends RealmObject implements IStudySummary {
     @Override
     public void updateSummary(boolean isCorrect) {
         studyCount++;
-        if (isCorrect){
+        if (isCorrect) {
             correctCount++;
         }
         updateLastWeekRecords();
     }
 
-    private void updateLastWeekRecords(){
+    private void updateLastWeekRecords() {
         if (lastWeekRecords.size() == 0) {
             initLastWeekRecords();
         }
-        if (!lastRecordIsCurrent()){
+        if (!lastRecordIsCurrent()) {
             addTodayRecord();
         }
         checkDateAvailiable();
@@ -58,24 +58,24 @@ public class StudySummary extends RealmObject implements IStudySummary {
         lastWeekRecords.last().setDailyCount(todayCount + 1);
     }
 
-    private void initLastWeekRecords(){
+    private void initLastWeekRecords() {
         lastWeekRecords = new RealmList<>();
         String data = DateUtil.getYYYY_MM_DD();
-        for (int i = 0; i < 7 ; i++){
+        for (int i = 0; i < 7; i++) {
             TotalDailyCount totalDailyCount = new TotalDailyCount();
             totalDailyCount.setDate(data);
             totalDailyCount.setDailyCount(0);
-            lastWeekRecords.add(i,totalDailyCount);
+            lastWeekRecords.add(i, totalDailyCount);
         }
         TotalDailyCount totalDailyCount;
-        for (int i = 5; i >=0 ; i--){
+        for (int i = 5; i >= 0; i--) {
             totalDailyCount = lastWeekRecords.get(i);
             data = DateUtil.getSpecifiedDayBefore(data);
             totalDailyCount.setDate(data);
         }
     }
 
-    private void addTodayRecord(){
+    private void addTodayRecord() {
         lastWeekRecords.remove(0);
         TotalDailyCount totalDailyCount = new TotalDailyCount();
         totalDailyCount.setDate(DateUtil.getYYYY_MM_DD());
@@ -83,20 +83,20 @@ public class StudySummary extends RealmObject implements IStudySummary {
         lastWeekRecords.add(totalDailyCount);
     }
 
-    private void checkDateAvailiable(){
+    private void checkDateAvailiable() {
         String today = lastWeekRecords.last().getDate();
         String dateToCheck = DateUtil.getSpecifiedDayBefore(today);
-        for (int i = lastWeekRecords.size()-2; i >=0 ;i--){
-            if (!lastWeekRecords.get(i).getDate().equals(dateToCheck)){
-                for (int j = 1; j <= i; j++){
+        for (int i = lastWeekRecords.size() - 2; i >= 0; i--) {
+            if (!lastWeekRecords.get(i).getDate().equals(dateToCheck)) {
+                for (int j = 1; j <= i; j++) {
                     TotalDailyCount totalDailyCount = lastWeekRecords.get(j);
-                    lastWeekRecords.set(j-1, totalDailyCount);
+                    lastWeekRecords.set(j - 1, totalDailyCount);
                 }
             }
             TotalDailyCount totalDailyCount = new TotalDailyCount();
             totalDailyCount.setDate(dateToCheck);
             totalDailyCount.setDailyCount(0);
-            lastWeekRecords.set(i,totalDailyCount);
+            lastWeekRecords.set(i, totalDailyCount);
             dateToCheck = DateUtil.getSpecifiedDayBefore(dateToCheck);
         }
     }

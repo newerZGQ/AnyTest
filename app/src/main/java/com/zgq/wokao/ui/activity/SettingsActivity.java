@@ -3,6 +3,7 @@ package com.zgq.wokao.ui.activity;
 import android.os.Bundle;
 
 import com.zgq.wokao.R;
+import com.zgq.wokao.Util.FBShare;
 import com.zgq.wokao.Util.WXShare;
 import com.zgq.wokao.ui.fragment.impl.LearningFragment;
 import com.zgq.wokao.ui.fragment.impl.SettingsFragment;
@@ -27,7 +28,8 @@ public class SettingsActivity extends BaseActivity implements SettingsFragment.S
 
     @Override
     public void onShareAppClicked() {
-        WXShare.regToWx(this);
-        WXShare.shareApp(this);
+//        WXShare.regToWx(this);
+//        WXShare.shareApp(this);
+        FBShare.FacebookShare(this);
     }
 }

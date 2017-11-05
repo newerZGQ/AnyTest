@@ -57,6 +57,20 @@
             android:exported="true"/>
         <activity android:name=".ui.activity.QuestionsActivity" />
 
+        //facebook浏览器分享卡片,未安装客户端时弹出
+        <activity
+            android:name="com.facebook.CustomTabActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="fb1964233977152758" />//fb后的数字替换成自己的facebook_app_id
+            </intent-filter>
+        </activity>
+
         <service android:name=".executor.ParserService"></service>
 
         <meta-data
@@ -65,6 +79,13 @@
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="baidu" />
+
+        <provider android:authorities="com.facebook.app.FacebookContentProvider125563154784183"
+            android:name="com.facebook.FacebookContentProvider"
+            android:exported="true"/>
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
     </application>
 
 </manifest>

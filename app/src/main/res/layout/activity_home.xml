@@ -17,14 +17,14 @@
             android:text="@string/app_name"
             android:layout_marginTop="65dp"
             android:layout_marginLeft="32dp"
-            android:textSize="20sp"
+            android:textSize="25sp"
             android:textColor="@color/colorWhite"
             android:layout_width="wrap_content"
             android:layout_height="30dp" />
         <TextView
             android:id="@+id/jilu"
             android:text="@string/menulayout_subtitle"
-            android:textSize="13sp"
+            android:textSize="17sp"
             android:textColor="@color/colorWhite"
             android:layout_marginLeft="32dp"
             android:layout_marginTop="5dp"
@@ -33,8 +33,8 @@
             android:layout_height="wrap_content" />
         <Button
             android:id="@+id/share"
-            android:background="@drawable/ic_share_white_36dp"
-            android:layout_marginTop="65dp"
+            android:background="@drawable/ic_settings_white_36dp"
+            android:layout_marginTop="75dp"
             android:layout_alignParentRight="true"
             android:layout_marginRight="32dp"
             android:layout_width="30dp"

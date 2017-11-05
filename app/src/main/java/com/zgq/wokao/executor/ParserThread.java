@@ -46,6 +46,8 @@ public class ParserThread extends Thread {
             e.printStackTrace();
         } catch (ParseException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

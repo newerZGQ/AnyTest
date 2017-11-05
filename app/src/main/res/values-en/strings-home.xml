@@ -6,7 +6,7 @@
         <item>PAPER</item>
     </string-array>
     <string name="menulayout_title">Remember</string>
-    <string name="menulayout_subtitle">最近一周每天学习量</string>
+    <string name="menulayout_subtitle">Curve in recent days</string>
     <string name="menulayout_study_count">All Studied</string>
     <string name="menulayout_correct_count">Correct</string>
 
@@ -28,4 +28,9 @@
     <string name="sglcho_question_short">MC(S)</string>
     <string name="multicho_question_short">MC(M)</string>
     <string name="discus_question_short">SA</string>
+
+    <string name="daily_task">Daily Task</string>
+
+    <string name="no_schedule">No Sked</string>
+    <string name="no_paper">No Paper</string>
 </resources>
