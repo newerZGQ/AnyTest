@@ -63,7 +63,7 @@
                 android:paddingBottom="2dp"
                 android:layout_marginTop="4dp"
                 android:background="@drawable/activity_answer_study_aswlabel_stroke"
-                android:text="答案"
+                android:text="@string/answer"
                 android:textColor="@color/colorWhite"
                 android:textSize="10sp" />
             <TextView

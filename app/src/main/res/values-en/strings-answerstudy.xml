@@ -7,4 +7,6 @@
     <string name="bottom_star_action">STAR</string>
     <string name="bottom_answer_action">Answer</string>
     <string name="bottom_list_action">List</string>
+    <string name="my_answer">My Answer</string>
+    <string name="answer">Answer</string>
 </resources>
