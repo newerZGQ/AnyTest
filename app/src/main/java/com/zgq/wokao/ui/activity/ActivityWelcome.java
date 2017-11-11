@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.umeng.analytics.MobclickAgent;
 import com.zgq.wokao.R;
 
+import com.zgq.wokao.Util.FileUtil;
 import com.zgq.wokao.action.BaseAction;
 import com.zgq.wokao.data.realm.Paper.impl.PaperDaoImpl;
 import com.zgq.wokao.action.setting.MarketChecker;
@@ -40,6 +41,7 @@ public class ActivityWelcome extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        checkSample();
         setContentView(R.layout.activity_activity_welcome);
         ButterKnife.bind(this);
         initData();
@@ -78,6 +80,13 @@ public class ActivityWelcome extends BaseActivity {
      */
     private void incWorkingCount() {
         MarketChecker.WoringCounter.increase(this);
+    }
+
+    private void checkSample(){
+        File sample = new File(StorageUtils.getRootPath(this) + "/wokao/sample.txt");
+        if (!sample.exists()){
+            FileUtil.transAssets2SD("sample.txt", StorageUtils.getRootPath(this) + "/wokao/sample.txt");
+        }
     }
 
 

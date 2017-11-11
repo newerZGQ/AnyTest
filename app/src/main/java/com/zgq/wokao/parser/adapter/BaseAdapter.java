@@ -1,5 +1,7 @@
 package com.zgq.wokao.parser.adapter;
 
+import java.util.Locale;
+
 /**
  * Created by zgq on 2017/2/19.
  */
@@ -110,11 +112,27 @@ public abstract class BaseAdapter implements IAdapter {
             return true;
         }
 
-        if (source.matches("[a-zA-z]+") && source.length() >= 6 &&
+        if (source.length() >= 6 &&
                 source.substring(0,6).toLowerCase().startsWith("answer")){
             return true;
         }
 
         return false;
+    }
+
+    protected String parseRealAnswer(String source){
+        String pre = "";
+        String last = "";
+        if (Locale.getDefault().getLanguage().equals(new Locale("zh").getLanguage())){
+            pre = source.substring(0,3);
+            last = source.substring(3,source.length());
+        }else {
+            pre = source.substring(0,6);
+            last = source.substring(6,source.length());
+        }
+        String answerTmp = pre.replace("答案","").replace("Answer","").replace("answer","").replace(":","")
+                .replace("：","");
+
+        return answerTmp + last;
     }
 }

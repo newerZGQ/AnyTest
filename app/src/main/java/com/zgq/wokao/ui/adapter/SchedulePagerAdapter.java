@@ -3,14 +3,11 @@ package com.zgq.wokao.ui.adapter;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,13 +15,12 @@ import android.widget.TextView;
 import com.zgq.wokao.R;
 import com.zgq.wokao.Util.ContextUtil;
 import com.zgq.wokao.Util.DateUtil;
-import com.zgq.wokao.Util.FontsUtil;
 import com.zgq.wokao.model.viewdate.ScheduleData;
 
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Random;
+import java.util.Locale;
 
 
 /**
@@ -114,7 +110,12 @@ public class SchedulePagerAdapter extends PagerAdapter {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        holder.addTime.setText(date + " 添加");
+
+        if (Locale.getDefault().getLanguage().equals(new Locale("zh").getLanguage())){
+            holder.addTime.setText(date + " 添加");
+        }else{
+            holder.addTime.setText("Added " + date);
+        }
         holder.startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

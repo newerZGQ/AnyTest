@@ -1,9 +1,7 @@
 package com.zgq.wokao.action.paper.impl;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
-import com.zgq.wokao.Util.LogUtil;
 import com.zgq.wokao.action.BaseAction;
 import com.zgq.wokao.action.paper.IPaperAction;
 import com.zgq.wokao.action.paper.IQuestionAction;

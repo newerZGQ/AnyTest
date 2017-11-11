@@ -3,6 +3,8 @@ package com.zgq.wokao;
 import android.app.Activity;
 import android.app.Application;
 
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.Logger;
 import com.zgq.wokao.Util.ContextUtil;
 import com.zgq.wokao.Util.FileUtil;
 import com.zgq.wokao.Util.FontsUtil;
@@ -10,6 +12,7 @@ import com.zgq.wokao.Util.StringUtil;
 import com.zgq.wokao.data.sp.SharedPreferencesHelper;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Stack;
 
 import cn.qqtheme.framework.util.StorageUtils;
@@ -36,6 +39,8 @@ public class MyApplication extends Application {
         }
         ContextUtil.init(this);
         FontsUtil.init(this);
+
+        Logger.addLogAdapter(new AndroidLogAdapter());
 
         SharedPreferencesHelper.init(this);
         StringUtil.init(this);

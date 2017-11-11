@@ -23,6 +23,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import io.realm.RealmList;
 
@@ -103,9 +104,13 @@ public class ParserHelper {
         NormalExamPaper paper = new NormalExamPaper();
         PaperParser paperParser = new PaperParser();
         ArrayList<PaperParser.Topic> topics = paperParser.parse(inputStream);
-        if (topics.size() == 0){
+        if (topics == null || topics.size() == 0){
+            com.orhanobut.logger.Logger.d("parse no Topic");
             return null;
+        }else{
+            com.orhanobut.logger.Logger.d(topics);
         }
+
         paper.setPaperInfo(paperParser.getInfo());
         if (topics.size() == 0) {
             throw new com.zgq.wokao.exception.ParseException("请检查大标题");

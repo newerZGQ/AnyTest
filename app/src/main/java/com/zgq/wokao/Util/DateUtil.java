@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by zgq on 16-7-10.
@@ -32,7 +33,12 @@ public class DateUtil {
     public static String getYYYY_MM_DD(String dateString) throws ParseException {
         SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = format1.parse(dateString);
-        SimpleDateFormat format = new SimpleDateFormat("yyyy"+" 年 "+"MM"+" 月 ");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy"+" - "+"MM");
+        if (Locale.getDefault().getLanguage().equals(new Locale("zh").getLanguage())){
+            format = new SimpleDateFormat("yyyy"+" 年 "+"MM" + " 月 ");
+        }else {
+            format = new SimpleDateFormat("MM" + "-" + "yyyy");
+        }
         String result = format.format(date);
         return result;
     }
