@@ -130,7 +130,7 @@ public class MultChoAdapter extends BaseAdapter implements IMultChoAdapter {
             }
             builder.append(tmp);
         }
-        String answer = builder.toString();
+        String answer = builder.toString().substring(5);
         if (answer.startsWith(":") || answer.startsWith("：")) {
             question.getAnswer().setContent(answer.substring(1).trim());
         } else {
