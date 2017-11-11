@@ -1,5 +1,7 @@
 package com.zgq.wokao.model.total;
 
+import android.util.Log;
+
 import com.zgq.wokao.Util.DateUtil;
 import com.zgq.wokao.Util.ListUtil;
 
@@ -14,6 +16,7 @@ import io.realm.RealmObject;
  */
 
 public class StudySummary extends RealmObject implements IStudySummary {
+    private static String TAG = StudySummary.class.getSimpleName();
     private int studyCount;
     private int correctCount;
     private RealmList<TotalDailyCount> lastWeekRecords;
@@ -47,7 +50,7 @@ public class StudySummary extends RealmObject implements IStudySummary {
     }
 
     private void updateLastWeekRecords() {
-        if (lastWeekRecords.size() == 0) {
+        if (lastWeekRecords == null || lastWeekRecords.size() == 0) {
             initLastWeekRecords();
         }
         if (!lastRecordIsCurrent()) {
@@ -92,11 +95,11 @@ public class StudySummary extends RealmObject implements IStudySummary {
                     TotalDailyCount totalDailyCount = lastWeekRecords.get(j);
                     lastWeekRecords.set(j - 1, totalDailyCount);
                 }
+                TotalDailyCount totalDailyCount = new TotalDailyCount();
+                totalDailyCount.setDate(dateToCheck);
+                totalDailyCount.setDailyCount(0);
+                lastWeekRecords.set(i, totalDailyCount);
             }
-            TotalDailyCount totalDailyCount = new TotalDailyCount();
-            totalDailyCount.setDate(dateToCheck);
-            totalDailyCount.setDailyCount(0);
-            lastWeekRecords.set(i, totalDailyCount);
             dateToCheck = DateUtil.getSpecifiedDayBefore(dateToCheck);
         }
     }

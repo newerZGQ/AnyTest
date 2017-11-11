@@ -40,12 +40,7 @@ public class StudySummaryAction implements IStudySummaryAction {
 
     @Override
     public void updateSummary(QuestionType type, boolean correct) {
-        if ((type == QuestionType.TF || type == QuestionType.SINGLECHOOSE ||
-                type == QuestionType.MUTTICHOOSE) && correct) {
-            studySummaryDao.updateSummary(studySummaryDao.getStudySummary(), true);
-        }else {
-            studySummaryDao.updateSummary(studySummaryDao.getStudySummary(), false);
-        }
+        studySummaryDao.updateSummary(studySummaryDao.getStudySummary(), correct);
     }
 
     @Override
