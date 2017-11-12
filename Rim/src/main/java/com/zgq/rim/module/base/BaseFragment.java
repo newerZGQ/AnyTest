@@ -3,7 +3,6 @@ package com.zgq.rim.module.base;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +13,6 @@ import com.trello.rxlifecycle.components.support.RxFragment;
 import com.zgq.rim.R;
 import com.zgq.rim.RimApplication;
 import com.zgq.rim.injector.components.ApplicationComponent;
-import com.zgq.rim.util.SwipeRefreshHelper;
 import com.zgq.rim.widget.EmptyLayout;
 
 import javax.inject.Inject;
@@ -22,8 +20,8 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public abstract class BaseFragment<T extends IBasePresenter> extends RxFragment
-        implements IBaseView, EmptyLayout.OnRetryListener {
+public abstract class BaseFragment<T extends BasePresenter> extends RxFragment
+        implements BaseView, EmptyLayout.OnRetryListener {
     /**
      * 注意，资源的ID一定要一样
      */
@@ -79,21 +77,18 @@ public abstract class BaseFragment<T extends IBasePresenter> extends RxFragment
         }
     }
 
-    @Override
     public void showLoading() {
         if (emptyLayout != null) {
             emptyLayout.setEmptyStatus(EmptyLayout.STATUS_LOADING);
         }
     }
 
-    @Override
     public void hideLoading() {
         if (emptyLayout != null) {
             emptyLayout.hide();
         }
     }
 
-    @Override
     public void showNetError() {
         if (emptyLayout != null) {
             emptyLayout.setEmptyStatus(EmptyLayout.STATUS_NO_NET);
@@ -107,12 +102,17 @@ public abstract class BaseFragment<T extends IBasePresenter> extends RxFragment
     }
 
     @Override
-    public <T> LifecycleTransformer<T> bindToLife() {
+    public LifecycleTransformer bindToLife() {
         return this.<T>bindToLifecycle();
     }
 
     @Override
-    public void finishRefresh() {
+    public void setToolbar(int res) {
+
+    }
+
+    @Override
+    public void showToast(String message) {
 
     }
 
@@ -123,16 +123,6 @@ public abstract class BaseFragment<T extends IBasePresenter> extends RxFragment
      */
     protected ApplicationComponent getAppComponent() {
         return RimApplication.getAppComponent();
-    }
-
-    /**
-     * 初始化 Toolbar
-     *
-     * @param toolbar
-     * @param homeAsUpEnabled
-     */
-    protected void initToolBar(Toolbar toolbar, boolean homeAsUpEnabled) {
-        ((BaseActivity) getActivity()).initToolBar(toolbar, homeAsUpEnabled);
     }
 
     /**

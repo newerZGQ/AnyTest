@@ -18,7 +18,6 @@ public class RimApplication extends Application {
         super.onCreate();
         sContext = getApplicationContext();
         _initInjector();
-        _initConfig();
     }
 
     public static ApplicationComponent getAppComponent() {
@@ -37,12 +36,5 @@ public class RimApplication extends Application {
         sAppComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .build();
-    }
-
-    /**
-     * 初始化配置
-     */
-    private void _initConfig() {
-
     }
 }

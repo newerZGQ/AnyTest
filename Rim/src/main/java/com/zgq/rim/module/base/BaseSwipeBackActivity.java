@@ -14,7 +14,7 @@ import lombok.Getter;
  * 滑动退出Activity，参考：https://github.com/ikew0ng/SwipeBackLayout
  */
 
-public abstract class BaseSwipeBackActivity<T extends IBasePresenter> extends BaseActivity<T> {
+public abstract class BaseSwipeBackActivity<T extends BasePresenter> extends BaseActivity<T> {
 
     @Getter
     private SwipeBackLayout swipeBackLayout;

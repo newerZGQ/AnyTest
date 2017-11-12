@@ -33,4 +33,7 @@ ext {
     targetSdk = 26
     support = "26.0.1"
     buildTools = "26.0.1"
+
+    guavaVersion = '18.0'
+    daggerVersion = '2.11'
 }
