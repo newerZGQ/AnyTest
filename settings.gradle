@@ -1,1 +1,1 @@
-include ':app', ':linechart', ':shapeloading', ':RecyclerViewHelper'
+include ':app', ':linechart', ':shapeloading', ':RecyclerViewHelper', ':Rim'
