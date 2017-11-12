@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ToolBar -->
+    <dimen name="toolbar_margin_top">24dp</dimen>
+    <dimen name="toolbar_height">56dp</dimen>
+    <dimen name="tab_bar_margin_top">56dp</dimen>
+
+    <!-- TabLayout -->
+    <dimen name="tab_layout_height">48dp</dimen>
+
+    <dimen name="pull_critical_distance">70dp</dimen>
+</resources>
