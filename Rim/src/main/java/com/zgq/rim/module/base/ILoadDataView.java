@@ -5,7 +5,7 @@ package com.zgq.rim.module.base;
  * 加载数据的界面接口
  */
 
-public interface ILoadDataView<T> extends IBaseView {
+public interface ILoadDataView<T> extends BaseView {
     /**
      * 加载数据
      *

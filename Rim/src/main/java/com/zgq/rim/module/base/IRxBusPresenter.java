@@ -7,7 +7,7 @@ import rx.functions.Action1;
  * RxBus Presenter
  */
 
-public interface IRxBusPresenter extends IBasePresenter {
+public interface IRxBusPresenter extends BasePresenter {
     /**
      * 注册
      *

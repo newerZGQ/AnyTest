@@ -30,8 +30,8 @@ import butterknife.ButterKnife;
  * Created by wangyancong on 2017/8/22.
  * 基类Activity
  */
-public abstract class BaseActivity<T extends IBasePresenter> extends RxAppCompatActivity
-        implements IBaseView, EmptyLayout.OnRetryListener {
+public abstract class BaseActivity<T extends BasePresenter> extends RxAppCompatActivity
+        implements BaseView, EmptyLayout.OnRetryListener {
     /**
      * 把 EmptyLayout 放在基类统一处理，@Nullable 表明 View 可以为 null，详细可看 ButterKnife
      */
@@ -77,7 +77,6 @@ public abstract class BaseActivity<T extends IBasePresenter> extends RxAppCompat
         ButterKnife.bind(this);
         initInjector();
         initViews();
-        initSwipeRefresh();
         updateViews(false);
     }
 
@@ -93,45 +92,13 @@ public abstract class BaseActivity<T extends IBasePresenter> extends RxAppCompat
     }
 
     @Override
-    public void showLoading() {
-        if (emptyLayout != null) {
-            emptyLayout.setEmptyStatus(EmptyLayout.STATUS_LOADING);
-        }
-    }
-
-    @Override
-    public void hideLoading() {
-        if (emptyLayout != null) {
-            emptyLayout.hide();
-        }
-    }
-
-    @Override
-    public void showNetError() {
-        if (emptyLayout != null) {
-            emptyLayout.setEmptyStatus(EmptyLayout.STATUS_NO_NET);
-            emptyLayout.setRetryListener(this);
-        }
-    }
-
-    @Override
     public void onRetry() {
         updateViews(false);
     }
 
     @Override
-    public <T> LifecycleTransformer<T> bindToLife() {
-        return this.<T>bindToLifecycle();
-    }
-
-    @Override
-    public void finishRefresh() {
-    }
-
-    /**
-     * 初始化下拉刷新
-     */
-    private void initSwipeRefresh() {
+    public LifecycleTransformer bindToLife() {
+        return this.bindToLifecycle();
     }
 
     /**
@@ -150,18 +117,6 @@ public abstract class BaseActivity<T extends IBasePresenter> extends RxAppCompat
      */
     protected ActivityModule getActivityModule() {
         return new ActivityModule(this);
-    }
-
-    /**
-     * 初始化 Toolbar
-     *
-     * @param toolbar
-     * @param homeAsUpEnabled
-     */
-    protected void initToolBar(Toolbar toolbar, boolean homeAsUpEnabled) {
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(homeAsUpEnabled);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
     /**
@@ -226,12 +181,13 @@ public abstract class BaseActivity<T extends IBasePresenter> extends RxAppCompat
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+    public void setToolbar(int res) {
+
+    }
+
+    @Override
+    public void showToast(String message) {
+
     }
 
     @Override
