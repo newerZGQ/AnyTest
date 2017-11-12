@@ -3,7 +3,6 @@ package com.zgq.rim.module.base;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,7 @@ import com.trello.rxlifecycle.LifecycleTransformer;
 import com.trello.rxlifecycle.components.support.RxFragment;
 import com.zgq.rim.R;
 import com.zgq.rim.RimApplication;
-import com.zgq.rim.injector.components.ApplicationComponent;
+import com.zgq.rim.injector.components.AppComponent;
 import com.zgq.rim.widget.EmptyLayout;
 
 import javax.inject.Inject;
@@ -117,13 +116,13 @@ public abstract class BaseFragment<T extends BasePresenter> extends RxFragment
     }
 
     /**
-     * 获取 ApplicationComponent
+     * 获取 AppComponent
      *
-     * @return ApplicationComponent
+     * @return AppComponent
      */
-    protected ApplicationComponent getAppComponent() {
-        return RimApplication.getAppComponent();
-    }
+//    protected AppComponent getAppComponent() {
+//        return RimApplication.getAppComponent();
+//    }
 
     /**
      * 绑定布局文件

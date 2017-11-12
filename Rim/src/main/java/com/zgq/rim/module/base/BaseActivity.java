@@ -7,8 +7,6 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -17,7 +15,7 @@ import com.trello.rxlifecycle.LifecycleTransformer;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.zgq.rim.R;
 import com.zgq.rim.RimApplication;
-import com.zgq.rim.injector.components.ApplicationComponent;
+import com.zgq.rim.injector.components.AppComponent;
 import com.zgq.rim.injector.modules.ActivityModule;
 import com.zgq.rim.widget.EmptyLayout;
 
@@ -102,13 +100,13 @@ public abstract class BaseActivity<T extends BasePresenter> extends RxAppCompatA
     }
 
     /**
-     * 获取 ApplicationComponent
+     * 获取 AppComponent
      *
-     * @return ApplicationComponent
+     * @return AppComponent
      */
-    protected ApplicationComponent getAppComponent() {
-        return RimApplication.getAppComponent();
-    }
+//    protected AppComponent getAppComponent() {
+//        return RimApplication.getAppComponent();
+//    }
 
     /**
      * 获取 ActivityModule
