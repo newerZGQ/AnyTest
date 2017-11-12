@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'android-apt'
 
 android {
     compileSdkVersion rootProject.ext.compileSdk
@@ -36,11 +35,11 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
     //lombok
-    apt 'org.projectlombok:lombok:1.16.8'
+    annotationProcessor 'org.projectlombok:lombok:1.16.8'
     provided 'org.projectlombok:lombok:1.16.8'
     provided 'javax.annotation:jsr250-api:1.0'
     // butterknife
-    apt 'com.jakewharton:butterknife-compiler:8.2.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.2.1'
     compile 'com.jakewharton:butterknife:8.2.1'
     // rxjava
     compile 'io.reactivex:rxjava:1.1.9'
@@ -50,8 +49,6 @@ dependencies {
     compile 'com.trello:rxlifecycle-components:1.0'
     compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.1@aar'
     // dagger
-//    apt 'com.google.dagger:dagger-compiler:2.6'
-//    compile 'com.google.dagger:dagger:2.6'
     annotationProcessor "com.google.dagger:dagger-compiler:${rootProject.ext.daggerVersion}"
     provided 'org.glassfish:javax.annotation:10.0-b28'
     compile "com.google.dagger:dagger:${rootProject.ext.daggerVersion}"
