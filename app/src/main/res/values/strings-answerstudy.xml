@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="correct">T</string>
+    <string name="wrong">F</string>
+    <string name="all_question_mode">ALL</string>
+    <string name="star_question_mode">STAR</string>
+    <string name="bottom_star_action">STAR</string>
+    <string name="bottom_answer_action">Answer</string>
+    <string name="bottom_list_action">List</string>
+    <string name="my_answer">My Answer</string>
+    <string name="answer">Answer</string>
+</resources>

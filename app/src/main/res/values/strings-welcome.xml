@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="welcome_tips">
+        <item>Make your own test papers</item>
+        <item>Release your hand when you On the subway</item>
+        <item>Practice makes perfect</item>
+        <item>Share Rim with yout friends</item>
+        <item>Stop wasting printing paper</item>
+    </string-array>
+    <string name="author_name">— Author</string>
+    <string name="author_tag"> - Author</string>
+</resources>
