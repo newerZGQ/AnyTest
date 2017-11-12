@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tip_title">Turorial</string>
+    <string name="tip_sample_file_title">Sample File</string>
+    <string name="tip_sample_file_title_content">You can get a sample file in the folder named wokao </string>
+    <string name="tip_document_title">Example 1：Title And Author</string>
+    <string name="tip_document_subtitle">The first line in the document is TITLE，second line is AUTHOR</string>
+    <string name="tip_document_content">Mathematics \nAuthor：Michael\nI. Fill The Blanks\n1.Who is the singer of Beat it?（）\nAnswer：Michael Jackson"</string>
+    <string name="tip_fillin_title">Example 2：Fill The Blanks</string>
+    <string name="tip_fillin_subtitle">Question should be on the same line, and answer should be on the next line</string>
+    <string name="tip_fillin_content">I. Fill The Blanks\n1.Who is the singer of Beat it?（）\nAnswer：Michael Jackson</string>
+    <string name="tip_tf_title">Example 3：True/False</string>
+    <string name="tip_tf_subtitle">Question should be on the same line, and answer should be on the next line</string>
+    <string name="tip_tf_content">II.True/False\n1.Michael Jackson is the singer of Beat it\nAnswer：T\n2.1+1=3\nAnswer：F</string>
+    <string name="tip_sglcho_title">Example 4：Multiple Choice(Single Answer)</string>
+    <string name="tip_sglcho_subtitle">Question should be on the same line, answer or option should be on the next line, and add * before option line </string>
+    <string name="tip_sglcho_content">III.Multiple Choice(Single Answer) \n1.The singer of song Beat it is（）\n*A Bob\n*B Ted\n*C Shell\n*D Michael Jackson\nAnswer：A</string>
+    <string name="tip_muticho_title">Example 5：Multiple Choice(Mutiple Answer)</string>
+    <string name="tip_muticho_subtitle">Question should be on the same line, answer or option should be on the next line, and add * before option line</string>
+    <string name="tip_muticho_content">IV.Multiple Choice(Mutiple Answer) \n 1.The three primary colors are（）\n*A Red\n*B Blue\n*C Green\n*D Black\n*E White\nAnswer：ABC</string>
+    <string name="tip_discus_title">Example 6：Short Answer</string>
+    <string name="tip_discus_subtitle">Question should be on the same line, and answer should be on the next line</string>
+    <string name="tip_discus_content">V.Short Answer \n 1.How is the weather \nAnswer：Nice \n2.What sport do you like \nAnswer：Basketball</string>
+</resources>

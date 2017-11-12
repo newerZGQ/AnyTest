@@ -1,11 +1,8 @@
 package com.zgq.wokao.model.total;
 
-import android.util.Log;
-
 import com.zgq.wokao.Util.DateUtil;
 import com.zgq.wokao.Util.ListUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.RealmList;
