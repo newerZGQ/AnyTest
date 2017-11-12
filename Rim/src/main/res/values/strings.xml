@@ -1,33 +1,3 @@
 <resources>
-    //app name
-    <string name="app_name">奇遇VR助手</string>
-    //splash
-    <string name="splash_drop">跳过 </string>
-    //tab
-    <string name="tab_store_title">商店</string>
-    <string name="tab_vip_title">VIP会员</string>
-    <string name="tab_manager_title">管理</string>
-    //app type
-    <string name="type_app">应用</string>
-    <string name="type_game">游戏</string>
-    //app pay state
-    <string name="ready_pay_state">已购买</string>
-    <string name="wait_pay_state">购买</string>
-    //title
-    <string name="store_title">应用商店</string>
-    //zhao
-    <string name="size_m">M</string>
-    //download count
-    <string name="download_count">次下载</string>
-    //VrInteractiveWays
-    <string name="mouse">空鼠 </string>
-    <string name="handle">外接手柄 </string>
-    <string name="control">头控 </string>
-    //big photo title
-    <string name="big_photo_title">查看大图</string>
-    //支付提示
-    <string name="toast_wechat">请安装微信</string>
-    <string name="toast_alipay">请安装支付宝</string>
-    //reload
-    <string name="reload">重新加载</string>
+    <string name="app_name">Rim</string>
 </resources>

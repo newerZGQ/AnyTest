@@ -3,9 +3,4 @@
     <color name="colorPrimary">#009688</color>
     <color name="colorPrimaryDark">#009688</color>
     <color name="colorAccent">#5677fc</color>
-    <color name="qyGreen">#00caa7</color>
-    <color name="qyGray">#666666</color>
-    <color name="qyTextGray">#333333</color>
-    <color name="qyInfoGray">#999999</color>
-    <color name="qyLineWhite">#e7e7e7</color>
 </resources>
