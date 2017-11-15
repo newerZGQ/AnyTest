@@ -8,4 +8,5 @@
         <item>  为了考试打印好多张纸，用完就扔了，好浪费</item>
     </string-array>
     <string name="author_name">— 厂长</string>
+    <string name="author_tag"> - 作者</string>
 </resources>

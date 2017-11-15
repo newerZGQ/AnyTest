@@ -11,4 +11,6 @@
 
     <string name="parse_success">Parse Success</string>
     <string name="parse_failed">Parse Failed</string>
+
+    <string name="facebook_app_id">125563154784183</string>
 </resources>
