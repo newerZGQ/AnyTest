@@ -9,4 +9,6 @@
     </string-array>
     <string name="author_name">— 厂长</string>
     <string name="author_tag"> - 作者</string>
+
+    <string name="storage_waring">Rim无法继续运行</string>
 </resources>

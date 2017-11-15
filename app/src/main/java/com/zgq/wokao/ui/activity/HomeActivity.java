@@ -1,14 +1,17 @@
 package com.zgq.wokao.ui.activity;
 
+import android.Manifest;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.View;
@@ -17,25 +20,20 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gigamole.navigationtabstrip.NavigationTabStrip;
-import com.orhanobut.logger.Logger;
 import com.tencent.mm.opensdk.utils.Log;
 import com.zgq.linechart.ChartView;
 import com.zgq.wokao.R;
-import com.zgq.wokao.Util.FileUtil;
 import com.zgq.wokao.action.paper.impl.StudySummaryAction;
 import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.total.StudySummary;
 import com.zgq.wokao.model.total.TotalDailyCount;
 import com.zgq.wokao.ui.fragment.impl.PapersFragment;
-import com.zgq.wokao.ui.fragment.impl.QuestionsFragment;
 import com.zgq.wokao.ui.fragment.impl.ScheduleFragment;
 import com.zgq.wokao.ui.presenter.impl.HomePresenterImpl;
 import com.zgq.wokao.ui.view.IHomeView;
 import com.zgq.wokao.ui.widget.CustomViewPager;
 import com.zgq.wokao.ui.widget.SlideUp;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,7 +41,6 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.qqtheme.framework.util.StorageUtils;
 
 public class HomeActivity extends BaseActivity implements
         ScheduleFragment.ScheduleFragmentListener,
@@ -222,9 +219,6 @@ public class HomeActivity extends BaseActivity implements
     }
 
     private void initLineChart(List<TotalDailyCount> dailyRecords) {
-        for (int i = 0; i < dailyRecords.size(); i++) {
-            Log.d(TAG, "count " + dailyRecords.get(i).getDate() + " " +dailyRecords.get(i).getDailyCount());
-        }
         dailyRecords.add(0, dailyRecords.get(0));
         dailyRecords.add(dailyRecords.get(dailyRecords.size() - 1));
         List<String> xValue = new ArrayList<>();
@@ -383,8 +377,7 @@ public class HomeActivity extends BaseActivity implements
                 goSearch();
                 break;
             case R.id.toolbar_add:
-                finish();
-                openActivity(FileSelectorActivity.class);
+                goSelectFile();
                 break;
             case R.id.share:
                 openActivity(SettingsActivity.class);
@@ -392,6 +385,12 @@ public class HomeActivity extends BaseActivity implements
             default:
                 break;
         }
+    }
+
+
+    private void goSelectFile() {
+        finish();
+        openActivity(FileSelectorActivity.class);
     }
 
     @Override

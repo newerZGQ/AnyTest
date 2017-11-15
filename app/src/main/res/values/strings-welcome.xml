@@ -9,4 +9,6 @@
     </string-array>
     <string name="author_name">— Author</string>
     <string name="author_tag"> - Author</string>
+
+    <string name="storage_waring">Rim can not run without STORAGE permissions</string>
 </resources>

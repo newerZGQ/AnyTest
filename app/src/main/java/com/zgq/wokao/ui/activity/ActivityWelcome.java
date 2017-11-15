@@ -1,10 +1,15 @@
 package com.zgq.wokao.ui.activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -33,6 +38,7 @@ import cn.qqtheme.framework.util.StorageUtils;
 import io.realm.Realm;
 
 public class ActivityWelcome extends BaseActivity {
+    private static final int MY_PERMISSIONS_REQUEST_OPERATE_SDCARD = 972;
     @BindView(R.id.tips)
     TextView tip;
 
@@ -41,7 +47,6 @@ public class ActivityWelcome extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        checkSample();
         setContentView(R.layout.activity_activity_welcome);
         ButterKnife.bind(this);
         initData();
@@ -50,10 +55,7 @@ public class ActivityWelcome extends BaseActivity {
 
         TimerTask task = new TimerTask() {
             public void run() {
-                Intent intent = new Intent();
-                intent.setClass(ActivityWelcome.this, HomeActivity.class);
-                startActivity(intent);
-                finish();
+                checkPermissions();
             }
         };
         Timer timer = new Timer(true);
@@ -69,6 +71,50 @@ public class ActivityWelcome extends BaseActivity {
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);
+    }
+
+    private void checkPermissions() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            goHomeActivity();
+            return;
+        }
+        final String[] permissions = {"Manifest.permission.WRITE_EXTERNAL_STORAGE",
+                "Manifest.permission.READ_EXTERNAL_STORAGE"};
+        int i = ContextCompat.checkSelfPermission(this, permissions[0]);
+        if (i != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(ActivityWelcome.this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    MY_PERMISSIONS_REQUEST_OPERATE_SDCARD);
+            return;
+        }
+        goHomeActivity();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_OPERATE_SDCARD:
+                if (grantResults.length > 1
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                        && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                    checkSample();
+                    goHomeActivity();
+                }else {
+                    showToast(getResources().getString(R.string.storage_waring));
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void goHomeActivity(){
+                Intent intent = new Intent();
+                intent.setClass(ActivityWelcome.this, HomeActivity.class);
+                startActivity(intent);
+                finish();
     }
 
     private void initData() {
