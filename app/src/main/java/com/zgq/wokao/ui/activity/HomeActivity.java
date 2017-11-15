@@ -50,8 +50,6 @@ public class HomeActivity extends BaseActivity implements
 
     public static final String TAG = "HomeActivity";
 
-    private static final int MY_PERMISSIONS_REQUEST_OPERATE_SDCARD = 972;
-
     private HomePresenterImpl homePresenter;
 
     ArrayList<Fragment> fragments = new ArrayList<>();
@@ -379,7 +377,7 @@ public class HomeActivity extends BaseActivity implements
                 goSearch();
                 break;
             case R.id.toolbar_add:
-                checkPermissions();
+                goSelectFile();
                 break;
             case R.id.share:
                 openActivity(SettingsActivity.class);
@@ -389,37 +387,6 @@ public class HomeActivity extends BaseActivity implements
         }
     }
 
-    private void checkPermissions() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            goSelectFile();
-            return;
-        }
-        final String[] permissions = {"Manifest.permission.WRITE_EXTERNAL_STORAGE",
-                "Manifest.permission.READ_EXTERNAL_STORAGE"};
-        int i = ContextCompat.checkSelfPermission(this, permissions[0]);
-        if (i != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(HomeActivity.this,
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    MY_PERMISSIONS_REQUEST_OPERATE_SDCARD);
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_OPERATE_SDCARD:
-                if (grantResults.length > 1
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED
-                        && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                    goSelectFile();
-                }
-                break;
-            default:
-                break;
-        }
-    }
 
     private void goSelectFile() {
         finish();
