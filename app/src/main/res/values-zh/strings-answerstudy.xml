@@ -4,6 +4,9 @@
     <string name="wrong">错误</string>
     <string name="all_question_mode">全部</string>
     <string name="star_question_mode">收藏</string>
+    <string name="bottom_star_action"></string>
+    <string name="bottom_answer_action"></string>
+    <string name="bottom_list_action"></string>
     <string name="my_answer">我的答案</string>
     <string name="answer">答案</string>
 </resources>
