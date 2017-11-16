@@ -131,8 +131,8 @@ public class ParserAction implements IParserAction {
     }
 
     public interface ParseResultListener {
-        public void onParseSuccess(String paperId);
+        void onParseSuccess(String paperId);
 
-        public void onParseError(String error);
+        void onParseError(String error);
     }
 }

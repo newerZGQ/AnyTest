@@ -1,48 +1,40 @@
 Mathematics
 Author：Mike
 I Fill The Blanks
-1.Who is the singer of Beat it?（）
-Answer：Michael Jackson
-2.Who is the singer of eat?（）
-Answer：mike
-2.Who is the singer of foo?（）
-Answer：2pck
+1.What file types are supported on Rim?（）
+Answer：Txt and Word(1997-2003)
+2.What question types are supported on Rim?（）
+Answer：Fill The Blanks, True/False,Multiple Choice(Single Answer),Multiple Choice(Mutiple Answer),Short Answer
+2.Who is the singer of study?（）
+Answer：Rim
 II True/False
-1.Michael Jackson is the singer of Beat it
+1.The answer part need take up a Row
 Answer：T
-2.1+1=3
-Answer：F
+2.The stem need take up a Row
+Answer：T
+3.The option in multiple choice question need take up a Row
+Answer: T
+4.The answer part must start with word Answer
+Answer: T
 III Multiple Choice(Single Answer)
-1.The singer of song Beat it is（）
-*A Bob
-*B Ted
-*C Shell
-*D Michael Jackson
+1.Which file type is supported on Rim（）
+*A Txt
+*B avi
+*C mp4
+*D gl
 Answer：A
-2.The singer of song Beat it is（）
-*A Bob
-*B Ted
-*C Shell
-*D Michael Jackson
+2.Which file type is supported on Rim（）
+*A Word
+*B avi
+*C mp4
+*D gl
 Answer：A
-3.The singer of song Beat it is（）
-*A Bob
-*B Ted
-*C Shell
-*D Michael Jackson
-Answer：A
-4.The singer of song Beat it is（）
-*A Bob
-*B Ted
-*C Shell
-*D Michael Jackson
-Answer：A
-5.The singer of song Beat it is（）
-*A Bob
-*B Ted
-*C Shell
-*D Michael Jackson
-Answer：A
+3.Which file type is supported on Rim（）
+*A word(2017)
+*B word(2016)
+*C word(2015)
+*D word(2003)
+Answer：D
 IV Multiple Choice(Mutiple Answer)
 1.The three primary colors are（）
 *A Red
@@ -51,36 +43,7 @@ IV Multiple Choice(Mutiple Answer)
 *D Black
 *E White
 Answer：ABC
-1.The three primary colors are（）
-*A Red
-*B Blue
-*C Green
-*D Black
-*E White
-Answer：ABC
-2.The three primary colors are（）
-*A Red
-*B Blue
-*C Green
-*D Black
-*E White
-Answer：ABC
-3.The three primary colors are（）
-*A Red
-*B Blue
-*C Green
-*D Black
-*E White
-Answer：ABC
-4.The three primary colors are（）
-*A Red
-*B Blue
-*C Green
-*D Black
-*E White
-Answer：ABC
 V Short Answer
-1.How is the weather?
-Answer：Nice
-2.What sport do you like?
-Answer：Basketball
+1.Some tips of Rim?
+Answer：Answer must start with word "Answer",Rim support five question types, Fill The Blanks,True/False,Multiple Choice(Single Answer),Multiple Choice(Mutiple Answer),Short Answer,
+your question titles must equals these five types in your document.

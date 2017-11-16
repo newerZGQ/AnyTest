@@ -21,4 +21,8 @@
     <string name="tip_discus_title">示例6：简答题</string>
     <string name="tip_discus_subtitle">题干占一行，答案在题干下</string>
     <string name="tip_discus_content">五简答题 \n1谈谈你对天气的看法 \n答案：天气很好 \n2唐朝何时被灭国 \n答案：公元907年</string>
+
+    <string name="support_file_type">支持的文件类型</string>
+    <string name="txt_file">TXT文档</string>
+    <string name="word_file">Word文档(1997-2003)</string>
 </resources>

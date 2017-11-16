@@ -6,12 +6,14 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.os.Build;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,8 +22,10 @@ import com.zgq.wokao.R;
 
 import com.zgq.wokao.Util.FileUtil;
 import com.zgq.wokao.action.BaseAction;
+import com.zgq.wokao.action.parser.ParserAction;
 import com.zgq.wokao.data.realm.Paper.impl.PaperDaoImpl;
 import com.zgq.wokao.action.setting.MarketChecker;
+import com.zgq.wokao.model.paper.IExamPaper;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -52,6 +56,12 @@ public class ActivityWelcome extends BaseActivity {
         initData();
         int i = (int) (Math.random() * 5);
         tip.setText(tips[i]);
+    }
+
+    public void onResume() {
+        super.onResume();
+        incWorkingCount();
+        MobclickAgent.onResume(this);
 
         TimerTask task = new TimerTask() {
             public void run() {
@@ -60,12 +70,6 @@ public class ActivityWelcome extends BaseActivity {
         };
         Timer timer = new Timer(true);
         timer.schedule(task, 500);
-    }
-
-    public void onResume() {
-        super.onResume();
-        incWorkingCount();
-        MobclickAgent.onResume(this);
     }
 
     public void onPause() {
@@ -100,8 +104,7 @@ public class ActivityWelcome extends BaseActivity {
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED
                         && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                     checkSample();
-                    goHomeActivity();
-                }else {
+                } else {
                     showToast(getResources().getString(R.string.storage_waring));
                 }
                 break;
@@ -110,11 +113,26 @@ public class ActivityWelcome extends BaseActivity {
         }
     }
 
-    private void goHomeActivity(){
-                Intent intent = new Intent();
-                intent.setClass(ActivityWelcome.this, HomeActivity.class);
-                startActivity(intent);
-                finish();
+    private void parseAssetsFile(String filePath) throws Exception {
+        ParserAction.getInstance(new ParserAction.ParseResultListener() {
+            @Override
+            public void onParseSuccess(String paperId) {
+                goHomeActivity();
+            }
+
+            @Override
+            public void onParseError(String error) {
+                goHomeActivity();
+            }
+        }).parseFromFile(filePath);
+    }
+
+    private void goHomeActivity() {
+        Log.d("goHomeActivity","1");
+        Intent intent = new Intent();
+        intent.setClass(ActivityWelcome.this, HomeActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void initData() {
@@ -128,12 +146,27 @@ public class ActivityWelcome extends BaseActivity {
         MarketChecker.WoringCounter.increase(this);
     }
 
-    private void checkSample(){
+    private void checkSample() {
+
+        if (FileUtil.SdcardMountedRight()) {
+            File file = new File(Environment.getExternalStorageDirectory().getPath() + "/wokao");
+            if (!file.exists()) {
+                file.mkdir();
+            }
+        }
+
         File sample = new File(StorageUtils.getRootPath(this) + "/wokao/sample.txt");
-        if (!sample.exists()){
-            FileUtil.transAssets2SD("sample.txt", StorageUtils.getRootPath(this) + "/wokao/sample.txt");
+        if (sample.exists()) {
+            goHomeActivity();
+            return;
+        }
+        FileUtil.transAssets2SD("sample.txt",
+                StorageUtils.getRootPath(this) + "/wokao/sample.txt");
+
+        try {
+            parseAssetsFile(Environment.getExternalStorageDirectory().getPath() + "/wokao/sample.txt");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
-
-
 }
