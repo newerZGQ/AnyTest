@@ -48,8 +48,6 @@ public class ActivityWelcome extends BaseActivity {
 
     private String[] tips;
 
-    private boolean needToParseSample = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +56,12 @@ public class ActivityWelcome extends BaseActivity {
         initData();
         int i = (int) (Math.random() * 5);
         tip.setText(tips[i]);
+    }
+
+    public void onResume() {
+        super.onResume();
+        incWorkingCount();
+        MobclickAgent.onResume(this);
 
         TimerTask task = new TimerTask() {
             public void run() {
@@ -66,12 +70,6 @@ public class ActivityWelcome extends BaseActivity {
         };
         Timer timer = new Timer(true);
         timer.schedule(task, 500);
-    }
-
-    public void onResume() {
-        super.onResume();
-        incWorkingCount();
-        MobclickAgent.onResume(this);
     }
 
     public void onPause() {
@@ -106,14 +104,7 @@ public class ActivityWelcome extends BaseActivity {
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED
                         && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                     checkSample();
-                    if (needToParseSample){
-                        try {
-                            parseAssetsFile(Environment.getExternalStorageDirectory().getPath() + "/wokao/sample.txt");
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }else {
+                } else {
                     showToast(getResources().getString(R.string.storage_waring));
                 }
                 break;
@@ -122,7 +113,7 @@ public class ActivityWelcome extends BaseActivity {
         }
     }
 
-     private void parseAssetsFile(String filePath) throws Exception {
+    private void parseAssetsFile(String filePath) throws Exception {
         ParserAction.getInstance(new ParserAction.ParseResultListener() {
             @Override
             public void onParseSuccess(String paperId) {
@@ -136,11 +127,12 @@ public class ActivityWelcome extends BaseActivity {
         }).parseFromFile(filePath);
     }
 
-    private void goHomeActivity(){
-                Intent intent = new Intent();
-                intent.setClass(ActivityWelcome.this, HomeActivity.class);
-                startActivity(intent);
-                finish();
+    private void goHomeActivity() {
+        Log.d("goHomeActivity","1");
+        Intent intent = new Intent();
+        intent.setClass(ActivityWelcome.this, HomeActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void initData() {
@@ -154,14 +146,27 @@ public class ActivityWelcome extends BaseActivity {
         MarketChecker.WoringCounter.increase(this);
     }
 
-    private void checkSample(){
+    private void checkSample() {
+
+        if (FileUtil.SdcardMountedRight()) {
+            File file = new File(Environment.getExternalStorageDirectory().getPath() + "/wokao");
+            if (!file.exists()) {
+                file.mkdir();
+            }
+        }
+
         File sample = new File(StorageUtils.getRootPath(this) + "/wokao/sample.txt");
-        if (sample.exists()){
+        if (sample.exists()) {
             goHomeActivity();
             return;
         }
         FileUtil.transAssets2SD("sample.txt",
                 StorageUtils.getRootPath(this) + "/wokao/sample.txt");
-        needToParseSample = true;
+
+        try {
+            parseAssetsFile(Environment.getExternalStorageDirectory().getPath() + "/wokao/sample.txt");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

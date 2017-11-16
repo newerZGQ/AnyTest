@@ -2,6 +2,7 @@ package com.zgq.wokao;
 
 import android.app.Activity;
 import android.app.Application;
+import android.os.Environment;
 
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
@@ -31,12 +32,6 @@ public class MyApplication extends Application {
         RealmConfiguration config = new RealmConfiguration.Builder(this).build();
         Realm.setDefaultConfiguration(config);
 
-        if (FileUtil.SdcardMountedRight()) {
-            File file = new File(StorageUtils.getRootPath(this) + "/wokao");
-            if (!file.exists()) {
-                file.mkdir();
-            }
-        }
         ContextUtil.init(this);
         FontsUtil.init(this);
 
