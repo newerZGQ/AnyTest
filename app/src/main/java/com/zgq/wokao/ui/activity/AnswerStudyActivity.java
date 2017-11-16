@@ -145,7 +145,13 @@ public class AnswerStudyActivity extends BaseActivity implements IStudyAnswerVie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_answer_study);
+
+        int mScreenWidth = getWindowManager().getDefaultDisplay().getWidth();
+        int mScreenHeight = getWindowManager().getDefaultDisplay().getHeight();
+        View view = getLayoutInflater().inflate(R.layout.activity_answer_study, null);
+        setContentView(view, new ViewGroup.LayoutParams(mScreenWidth, mScreenHeight));
+
+        //setContentView(R.layout.activity_answer_study);
         ButterKnife.bind(this);
         initData();
         initView();

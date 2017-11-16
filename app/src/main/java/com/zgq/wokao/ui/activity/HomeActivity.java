@@ -15,6 +15,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -90,7 +91,12 @@ public class HomeActivity extends BaseActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        int mScreenWidth = getWindowManager().getDefaultDisplay().getWidth();
+        int mScreenHeight = getWindowManager().getDefaultDisplay().getHeight();
+        View view = getLayoutInflater().inflate(R.layout.activity_home, null);
+        setContentView(view, new ViewGroup.LayoutParams(mScreenWidth, mScreenHeight));
+
+        //setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
         StudySummaryAction.getInstance().initStudySummary();
         homePresenter = new HomePresenterImpl(this);
