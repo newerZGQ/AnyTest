@@ -19,6 +19,9 @@ public class FileSelectorPresenter implements IFileSelectorPresenter {
 
     @Override
     public IExamPaper parseFromFile(String filePath) {
+        if (!checkFileAvaliable(filePath)){
+            selectorView.notifyParseFailed();
+        }
         try {
             return ParserAction.getInstance(new ParserAction.ParseResultListener() {
                 @Override
@@ -35,5 +38,9 @@ public class FileSelectorPresenter implements IFileSelectorPresenter {
             selectorView.notifyParseFailed();
         }
         return null;
+    }
+
+    private boolean checkFileAvaliable(String path){
+        return path.toLowerCase().endsWith(".txt") || path.toLowerCase().endsWith(".doc");
     }
 }
