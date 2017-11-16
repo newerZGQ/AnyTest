@@ -6,12 +6,14 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.os.Build;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,8 +22,10 @@ import com.zgq.wokao.R;
 
 import com.zgq.wokao.Util.FileUtil;
 import com.zgq.wokao.action.BaseAction;
+import com.zgq.wokao.action.parser.ParserAction;
 import com.zgq.wokao.data.realm.Paper.impl.PaperDaoImpl;
 import com.zgq.wokao.action.setting.MarketChecker;
+import com.zgq.wokao.model.paper.IExamPaper;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -43,6 +47,8 @@ public class ActivityWelcome extends BaseActivity {
     TextView tip;
 
     private String[] tips;
+
+    private boolean needToParseSample = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +106,13 @@ public class ActivityWelcome extends BaseActivity {
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED
                         && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                     checkSample();
-                    goHomeActivity();
+                    if (needToParseSample){
+                        try {
+                            parseAssetsFile(Environment.getExternalStorageDirectory().getPath() + "/wokao/sample.txt");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }else {
                     showToast(getResources().getString(R.string.storage_waring));
                 }
@@ -108,6 +120,20 @@ public class ActivityWelcome extends BaseActivity {
             default:
                 break;
         }
+    }
+
+     private void parseAssetsFile(String filePath) throws Exception {
+        ParserAction.getInstance(new ParserAction.ParseResultListener() {
+            @Override
+            public void onParseSuccess(String paperId) {
+                goHomeActivity();
+            }
+
+            @Override
+            public void onParseError(String error) {
+                goHomeActivity();
+            }
+        }).parseFromFile(filePath);
     }
 
     private void goHomeActivity(){
@@ -130,10 +156,12 @@ public class ActivityWelcome extends BaseActivity {
 
     private void checkSample(){
         File sample = new File(StorageUtils.getRootPath(this) + "/wokao/sample.txt");
-        if (!sample.exists()){
-            FileUtil.transAssets2SD("sample.txt", StorageUtils.getRootPath(this) + "/wokao/sample.txt");
+        if (sample.exists()){
+            goHomeActivity();
+            return;
         }
+        FileUtil.transAssets2SD("sample.txt",
+                StorageUtils.getRootPath(this) + "/wokao/sample.txt");
+        needToParseSample = true;
     }
-
-
 }
