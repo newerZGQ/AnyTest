@@ -21,4 +21,8 @@
     <string name="tip_discus_title">Example 6：Short Answer</string>
     <string name="tip_discus_subtitle">Question should be on the same line, and answer should be on the next line</string>
     <string name="tip_discus_content">V.Short Answer \n 1.How is the weather \nAnswer：Nice \n2.What sport do you like \nAnswer：Basketball</string>
+
+    <string name="support_file_type">Support File Type</string>
+    <string name="txt_file">TXT Document</string>
+    <string name="word_file">Microsoft Word Document(1997-2003)</string>
 </resources>
