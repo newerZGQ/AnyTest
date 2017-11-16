@@ -91,12 +91,7 @@ public class HomeActivity extends BaseActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        int mScreenWidth = getWindowManager().getDefaultDisplay().getWidth();
-        int mScreenHeight = getWindowManager().getDefaultDisplay().getHeight();
-        View view = getLayoutInflater().inflate(R.layout.activity_home, null);
-        setContentView(view, new ViewGroup.LayoutParams(mScreenWidth, mScreenHeight));
-
-        //setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
         StudySummaryAction.getInstance().initStudySummary();
         homePresenter = new HomePresenterImpl(this);
