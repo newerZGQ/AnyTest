@@ -171,6 +171,16 @@ public abstract class AbsActivity extends AppCompatActivity {
         toast.show();
     }
 
+    protected void showToast(String msg, int duration){
+        if (toast == null) {
+            initToast();
+        }
+        TextView view = (TextView) toast.getView();
+        view.setText(msg);
+        toast.setDuration(duration);
+        toast.show();
+    }
+
     /**
      * toast 长 string
      *

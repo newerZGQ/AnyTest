@@ -1,29 +1,26 @@
 package com.zgq.wokao.ui.activity;
 
-import android.Manifest;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gigamole.navigationtabstrip.NavigationTabStrip;
-import com.tencent.mm.opensdk.utils.Log;
+import com.tencent.mm.opensdk.constants.Build;
 import com.zgq.linechart.ChartView;
+import com.zgq.wokao.BuildConfig;
 import com.zgq.wokao.R;
+import com.zgq.wokao.action.paper.impl.PaperAction;
 import com.zgq.wokao.action.paper.impl.StudySummaryAction;
 import com.zgq.wokao.model.paper.QuestionType;
 import com.zgq.wokao.model.total.StudySummary;
@@ -390,6 +387,10 @@ public class HomeActivity extends BaseActivity implements
 
 
     private void goSelectFile() {
+        if (BuildConfig.FREE_VERSION && PaperAction.getInstance().getAllPaper().size() >= 2){
+            showToast(getResources().getString(R.string.free_version_waring),2);
+            return;
+        }
         finish();
         openActivity(FileSelectorActivity.class);
     }

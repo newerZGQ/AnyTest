@@ -6,121 +6,116 @@
     android:layout_height="match_parent"
     tools:context="com.zgq.wokao.ui.activity.AnswerStudyActivity">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_alignParentBottom="true"
-        android:id="@+id/view" />
-
     <android.support.v4.view.ViewPager
         android:id="@+id/answer_study_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
         android:layout_above="@+id/view"
-        android:layout_below="@+id/toolbar_opt_layout">
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/toolbar">
     </android.support.v4.view.ViewPager>
+
     <ViewStub
         android:id="@+id/edit_fillin"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
         android:layout_above="@+id/view"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/toolbar_opt_layout"
-        android:layout="@layout/edit_fillinquestion_layout"/>
+        android:layout="@layout/edit_fillinquestion_layout" />
+
     <TextView
         android:id="@+id/study_info"
-        android:textSize="12sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/view"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="16dp"
         android:background="@drawable/activity_answer_study_qstinfo_background"
         android:gravity="right"
-        android:layout_alignParentRight="true"
-        android:paddingTop="5dp"
+        android:paddingBottom="3dp"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
-        android:paddingBottom="3dp"
-        android:layout_marginRight="16dp"
-        android:layout_above="@+id/view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:paddingTop="5dp"
+        android:textSize="12sp" />
+
     <LinearLayout
         android:id="@+id/background"
-        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:background="@color/colorAlphaBackground"
         android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:visibility="gone">
     </LinearLayout>
+
     <include
-        layout="@layout/activity_answer_study_bottom_menu"
         android:id="@+id/activity_study_bottom_menu"
+        layout="@layout/activity_answer_study_bottom_menu"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:layout_alignParentBottom="true"/>
-    <LinearLayout
-        android:id="@+id/toolbar_opt_layout"
-        android:elevation="4dp"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="@color/color_home_activity_background">
-        <View
-            android:background="@color/colorStatusBar"
-            android:layout_width="match_parent"
-            android:layout_height="24dp"/>
-        <RelativeLayout
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:gravity="center_vertical">
-            <TextView
-                android:id="@+id/toolbar_back"
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:background="@drawable/toolbar_back_background"/>
-            <TextView
-                android:id="@+id/toolbar_edit"
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="16dp"
-                android:visibility="gone"
-                android:background="@drawable/toolbar_edit_background"/>
-            <TextView
-                android:id="@+id/toolbar_done"
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="0dp"
-                android:background="@drawable/toolbar_done_background"
-                android:visibility="gone"/>
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="130dp"
-                android:layout_height="28dp"
-                android:layout_marginTop="14dp"
-                android:gravity="center_vertical|center_horizontal"
-                android:background="@drawable/activity_answer_study_rect_circle"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true">
-                <TextView
-                    android:id="@+id/all_question"
-                    android:text="@string/all_question_mode"
-                    android:textSize="16sp"
-                    android:textColor="@color/colorTeal"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:layout_width="65dp"
-                    android:layout_height="28dp"/>
-                <TextView
-                    android:id="@+id/stared_question"
-                    android:text="@string/star_question_mode"
-                    android:textSize="16sp"
-                    android:layout_width="65dp"
-                    android:layout_height="28dp"
-                    android:background="@drawable/activity_asstd_right_teal_halfrect_circle"
-                    android:textColor="@color/colorWhite"
-                    android:gravity="center_vertical|center_horizontal"/>
-            </LinearLayout>
+        android:layout_alignParentBottom="true" />
 
-        </RelativeLayout>
-    </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/color_home_activity_background"
+        android:elevation="4dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/toolbar_back"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:background="@drawable/toolbar_back_background" />
+
+        <TextView
+            android:id="@+id/toolbar_edit"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/toolbar_edit_background"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/toolbar_done"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="0dp"
+            android:background="@drawable/toolbar_done_background"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="130dp"
+            android:layout_height="28dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/activity_answer_study_rect_circle"
+            android:gravity="center_vertical|center_horizontal"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/all_question"
+                android:layout_width="65dp"
+                android:layout_height="28dp"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="@string/all_question_mode"
+                android:textColor="@color/colorTeal"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/stared_question"
+                android:layout_width="65dp"
+                android:layout_height="28dp"
+                android:background="@drawable/activity_asstd_right_teal_halfrect_circle"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="@string/star_question_mode"
+                android:textColor="@color/colorWhite"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+    </RelativeLayout>
 </RelativeLayout>
