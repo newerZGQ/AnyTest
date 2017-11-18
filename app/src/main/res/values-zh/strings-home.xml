@@ -32,4 +32,6 @@
 
     <string name="no_schedule">没有学习日程</string>
     <string name="no_paper">无试卷信息</string>
+
+    <string name="free_version_waring">免费版Rim最多支持两个文档，请购买完全版</string>
 </resources>

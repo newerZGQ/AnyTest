@@ -33,4 +33,6 @@
 
     <string name="no_schedule">No Sked</string>
     <string name="no_paper">No Paper</string>
+
+    <string name="free_version_waring">Free version Rim supports two documents at most\nPlease purchase Rim pro </string>
 </resources>
