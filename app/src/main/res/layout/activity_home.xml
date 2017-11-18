@@ -117,11 +117,6 @@
             android:elevation="4dp"
             android:orientation="vertical">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="24dp"
-                android:background="@color/colorStatusBar"/>
-
             <RelativeLayout
                 android:id="@+id/toolbar_opt_layout"
                 android:layout_width="match_parent"
