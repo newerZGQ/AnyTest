@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_title">设置</string>
+
+    <string name="settings_learning">教程</string>
+    <string name="settings_start_learning">开始学习</string>
+    <string name="settings_start_learning_content">学习如何把文档装进手机</string>
+
+    <string name="settings_share">分享</string>
+    <string name="settings_share_app">微信分享</string>
+    <string name="settings_share_content">分享应用即可无限制使用</string>
+
+    <string name="settings_developer_info">开发者信息</string>
+    <string name="app_author_title">作者</string>
+    <string name="app_author_name">亥姆霍兹</string>
+    <string name="app_author_details">亥姆霍兹 Bug请反馈至379020727@qq.com QQ群：519142680</string>
+</resources>

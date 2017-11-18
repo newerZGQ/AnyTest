@@ -9,7 +9,7 @@ android {
     buildToolsVersion "27.0.1"
 
     defaultConfig {
-        applicationId "com.zgq.wokao"
+        applicationId "com.zgq.wokaofree"
         minSdkVersion 21
         targetSdkVersion 27
         versionCode 6

@@ -1,0 +1,37 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorTransparent"
+    tools:context="com.zgq.wokaofree.ui.fragment.impl.ScheduleFragment">
+
+
+    <com.zgq.wokaofree.ui.widget.ScheduleInfoView
+        android:id="@+id/schedule_info_view"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:layout_marginTop="50dp" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/schedule_pager"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:layout_alignParentBottom="true">
+
+    </android.support.v4.view.ViewPager>
+
+    <com.zgq.wokaofree.ui.widget.TaskSettingLayout
+        android:id="@+id/task_setting_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </com.zgq.wokaofree.ui.widget.TaskSettingLayout>
+
+    <ViewStub
+        android:id="@+id/no_schedule_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout="@layout/fragment_schedule_noschedule_layout" />
+
+</RelativeLayout>
