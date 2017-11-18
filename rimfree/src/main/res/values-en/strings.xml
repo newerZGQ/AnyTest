@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Rim</string>
+    <string name="app_name">Rim(free)</string>
     <string name="settings">Settings</string>
 
     <string name="fillin_question">Fill The Blanks</string>
