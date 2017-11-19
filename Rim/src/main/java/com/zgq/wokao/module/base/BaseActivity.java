@@ -15,6 +15,8 @@ import com.trello.rxlifecycle.LifecycleTransformer;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.zgq.wokao.R;
 import com.zgq.wokao.injector.modules.ActivityModule;
+import com.zgq.wokao.module.BasePresenter;
+import com.zgq.wokao.module.BaseView;
 import com.zgq.wokao.widget.EmptyLayout;
 
 import javax.inject.Inject;
@@ -90,11 +92,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends RxAppCompatA
     @Override
     public void onRetry() {
         updateViews(false);
-    }
-
-    @Override
-    public LifecycleTransformer bindToLife() {
-        return this.bindToLifecycle();
     }
 
     /**
@@ -174,16 +171,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends RxAppCompatA
             // 存在则弹出在它上面的所有fragment，并显示对应fragment
             getSupportFragmentManager().popBackStack(tag, 0);
         }
-    }
-
-    @Override
-    public void setToolbar(int res) {
-
-    }
-
-    @Override
-    public void showToast(String message) {
-
     }
 
     @Override

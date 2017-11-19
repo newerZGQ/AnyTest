@@ -1,5 +1,7 @@
 package com.zgq.wokao.module.base;
 
+import com.zgq.wokao.module.BasePresenter;
+
 import rx.functions.Action1;
 
 /**

@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import com.trello.rxlifecycle.LifecycleTransformer;
 import com.trello.rxlifecycle.components.support.RxFragment;
 import com.zgq.wokao.R;
+import com.zgq.wokao.module.BasePresenter;
+import com.zgq.wokao.module.BaseView;
 import com.zgq.wokao.widget.EmptyLayout;
 
 import javax.inject.Inject;

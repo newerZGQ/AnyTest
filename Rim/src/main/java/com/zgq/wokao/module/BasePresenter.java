@@ -1,4 +1,4 @@
-package com.zgq.wokao.module.base;
+package com.zgq.wokao.module;
 
 /**
  * Created by wangyancong on 2017/8/23.

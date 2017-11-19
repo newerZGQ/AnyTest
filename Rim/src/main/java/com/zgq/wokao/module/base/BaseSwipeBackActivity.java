@@ -5,6 +5,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import com.zgq.wokao.module.BasePresenter;
 import com.zgq.wokao.widget.SwipeBackLayout;
 
 import lombok.Getter;
