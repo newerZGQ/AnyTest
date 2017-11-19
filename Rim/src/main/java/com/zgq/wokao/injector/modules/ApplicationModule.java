@@ -1,14 +1,22 @@
 package com.zgq.wokao.injector.modules;
 
-import android.app.Application;
 import android.content.Context;
+import com.zgq.wokao.RimApplication;
+import javax.inject.Singleton;
 
-import dagger.Binds;
 import dagger.Module;
+import dagger.Provides;
 
 @Module
-public abstract class ApplicationModule {
-    //expose Application as an injectable context
-    @Binds
-    abstract Context bindContext(Application application);
+public class ApplicationModule {
+    private final RimApplication application;
+    public ApplicationModule(RimApplication rimApplication){
+        application = rimApplication;
+    }
+
+    @Provides
+    @Singleton
+    Context provideApplicationContext(){
+        return application.getApplicationContext();
+    }
 }

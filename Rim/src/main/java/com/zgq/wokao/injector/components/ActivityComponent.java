@@ -8,7 +8,7 @@ import com.zgq.wokao.injector.modules.ActivityModule;
 import dagger.Component;
 
 @PerActivity
-@Component(dependencies = AppComponent.class, modules = ActivityModule.class)
+@Component(dependencies = ApplicationComponent.class, modules = ActivityModule.class)
 public interface ActivityComponent {
     Activity getActivity();
 }

@@ -1,25 +1,15 @@
 package com.zgq.wokao.module.base;
 
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 
-import com.trello.rxlifecycle.LifecycleTransformer;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.zgq.wokao.R;
 import com.zgq.wokao.injector.modules.ActivityModule;
 import com.zgq.wokao.module.BasePresenter;
-import com.zgq.wokao.module.BaseView;
-import com.zgq.wokao.widget.EmptyLayout;
-
-import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,14 +18,8 @@ import butterknife.ButterKnife;
  * Created by wangyancong on 2017/8/22.
  * 基类Activity
  */
-public abstract class BaseActivity<T extends BasePresenter> extends RxAppCompatActivity
-        implements EmptyLayout.OnRetryListener {
-    /**
-     * 把 EmptyLayout 放在基类统一处理，@Nullable 表明 View 可以为 null，详细可看 ButterKnife
-     */
-    @Nullable
-    @BindView(R.id.empty_layout)
-    protected EmptyLayout emptyLayout;
+public abstract class BaseActivity<T extends BasePresenter> extends RxAppCompatActivity {
+
 
     /**
      * 绑定布局文件
@@ -50,23 +34,12 @@ public abstract class BaseActivity<T extends BasePresenter> extends RxAppCompatA
      */
     protected abstract void initViews();
 
-    /**
-     * 更新视图控件
-     */
-    protected abstract void updateViews(boolean isRefresh);
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(attachLayoutRes());
         ButterKnife.bind(this);
         initViews();
-        updateViews(false);
-    }
-
-    @Override
-    public void onRetry() {
-        updateViews(false);
     }
 
     /**
