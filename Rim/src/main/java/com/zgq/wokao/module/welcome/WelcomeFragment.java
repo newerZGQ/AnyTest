@@ -10,18 +10,14 @@ import com.zgq.wokao.injector.components.WelcomeComponent;
 import com.zgq.wokao.injector.modules.WelcomeModule;
 import com.zgq.wokao.module.base.BaseFragment;
 
-import javax.inject.Inject;
 
 import butterknife.BindView;
 
-public class WelcomeFragment extends BaseFragment implements WelcomeContract.View{
+public class WelcomeFragment extends BaseFragment<WelcomeContract.Presenter> implements WelcomeContract.View{
 
     private static final String TAG = WelcomeFragment.class.getSimpleName();
 
     private String[] tips;
-
-    @Inject
-    WelcomeContract.Presenter presenter;
 
     @BindView(R.id.tips)
     TextView tip;

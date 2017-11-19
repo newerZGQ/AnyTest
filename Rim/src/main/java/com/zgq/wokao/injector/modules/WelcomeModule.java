@@ -17,8 +17,8 @@ public class WelcomeModule {
     public WelcomeModule(){}
 
     @Provides
-    public WelcomeContract.Presenter providePresenter(){
-        return new WelcomePresenter();
+    public WelcomeContract.Presenter providePresenter(WelcomePresenter presenter){
+        return presenter;
     }
 
     @Provides

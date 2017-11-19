@@ -1,5 +1,10 @@
 package com.zgq.wokao.module.welcome;
 
+import android.util.Log;
+
+import com.zgq.wokao.repository.RimDataSource;
+import com.zgq.wokao.repository.RimRepository;
+
 import javax.inject.Inject;
 
 /**
@@ -7,14 +12,20 @@ import javax.inject.Inject;
  */
 
 public class WelcomePresenter implements WelcomeContract.Presenter {
+    private static final String TAG = WelcomePresenter.class.getSimpleName();
+
     private WelcomeContract.View view;
+    private RimRepository repository;
 
     @Inject
-    public WelcomePresenter(){}
+    public WelcomePresenter(RimRepository repository){
+        this.repository = repository;
+    }
 
     @Override
     public void takeView(WelcomeContract.View view) {
         this.view = view;
+        Log.d(TAG,"clolor is" + repository.getColor(0));
     }
 
     @Override
