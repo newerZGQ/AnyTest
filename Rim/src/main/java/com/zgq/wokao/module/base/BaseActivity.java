@@ -8,6 +8,8 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.zgq.wokao.R;
+import com.zgq.wokao.RimApplication;
+import com.zgq.wokao.injector.components.ApplicationComponent;
 import com.zgq.wokao.injector.modules.ActivityModule;
 import com.zgq.wokao.module.BasePresenter;
 
@@ -41,6 +43,16 @@ public abstract class BaseActivity<T extends BasePresenter> extends RxAppCompatA
         ButterKnife.bind(this);
         initViews();
     }
+
+    /**
+     * 获取 ApplicationComponent
+     *
+     * @return ApplicationComponent
+     */
+    protected ApplicationComponent getAppComponent() {
+        return RimApplication.getAppComponent();
+    }
+
 
     /**
      * 获取 ActivityModule

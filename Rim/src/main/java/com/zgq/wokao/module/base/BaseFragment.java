@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 
 import com.trello.rxlifecycle.LifecycleTransformer;
 import com.trello.rxlifecycle.components.support.RxFragment;
+import com.zgq.wokao.RimApplication;
+import com.zgq.wokao.injector.components.ApplicationComponent;
+import com.zgq.wokao.injector.modules.ActivityModule;
 import com.zgq.wokao.module.BasePresenter;
 
 import butterknife.ButterKnife;
@@ -44,5 +47,14 @@ public abstract class BaseFragment<T extends BasePresenter> extends RxFragment {
      * 初始化视图控件
      */
     protected abstract void initViews();
+
+    /**
+     * 获取 ApplicationComponent
+     *
+     * @return ApplicationComponent
+     */
+    protected ApplicationComponent getAppComponent() {
+        return RimApplication.getAppComponent();
+    }
 
 }

@@ -14,11 +14,7 @@ import dagger.Provides;
  */
 @Module
 public class WelcomeModule {
-    private final WelcomeActivity activity;
-
-    public WelcomeModule(WelcomeActivity activity){
-        this.activity = activity;
-    }
+    public WelcomeModule(){}
 
     @Provides
     public WelcomeContract.Presenter providePresenter(){

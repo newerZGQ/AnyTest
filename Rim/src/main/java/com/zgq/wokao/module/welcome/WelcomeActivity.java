@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.zgq.wokao.R;
-import com.zgq.wokao.injector.components.ApplicationComponent;
 import com.zgq.wokao.injector.components.DaggerWelcomeComponent;
 import com.zgq.wokao.injector.modules.WelcomeModule;
 import com.zgq.wokao.module.base.BaseActivity;
@@ -17,6 +16,8 @@ public class WelcomeActivity extends BaseActivity {
     WelcomeFragment fragment;
     @Inject
     Context context;
+    @Inject
+    WelcomeContract.Presenter presenter;
 
     @Override
     protected int attachLayoutRes() {
@@ -32,13 +33,10 @@ public class WelcomeActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         DaggerWelcomeComponent.builder()
-                .welcomeModule(new WelcomeModule(this))
-                .applicationComponent(new ApplicationComponent() {
-                    @Override
-                    public Context getContext() {
-                        return getApplicationContext();
-                    }
-                }).build().inject(this);
+                .welcomeModule(new WelcomeModule())
+                .applicationComponent(getAppComponent())
+                .build()
+                .inject(this);
         addFragment(R.id.contentFrame,fragment);
     }
 }
