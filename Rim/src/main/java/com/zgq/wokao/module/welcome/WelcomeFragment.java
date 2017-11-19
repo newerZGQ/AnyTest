@@ -2,15 +2,11 @@ package com.zgq.wokao.module.welcome;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.zgq.wokao.R;
 import com.zgq.wokao.injector.components.DaggerWelcomeComponent;
+import com.zgq.wokao.injector.components.WelcomeComponent;
 import com.zgq.wokao.injector.modules.WelcomeModule;
 import com.zgq.wokao.module.base.BaseFragment;
 
@@ -22,11 +18,15 @@ public class WelcomeFragment extends BaseFragment implements WelcomeContract.Vie
 
     private static final String TAG = WelcomeFragment.class.getSimpleName();
 
+    private String[] tips;
+
     @Inject
     WelcomeContract.Presenter presenter;
 
     @BindView(R.id.tips)
     TextView tip;
+
+    private WelcomeComponent component;
 
     @Override
     protected int attachLayoutRes() {
@@ -41,25 +41,29 @@ public class WelcomeFragment extends BaseFragment implements WelcomeContract.Vie
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        DaggerWelcomeComponent.builder()
+        component = DaggerWelcomeComponent.builder()
                 .welcomeModule(new WelcomeModule())
                 .applicationComponent(getAppComponent())
-                .build()
-                .inject(this);
+                .build();
+        component.inject(this);
+        presenter.takeView(this);
+        tips = getAppComponent().getContext().getResources().getStringArray(R.array.welcome_tips);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (presenter == null){
-            Log.d(TAG, "null presenter");
-        }
-        presenter.takeView(this);
-        presenter.loadTip();
+        presenter.selectTip(tips);
     }
 
     @Override
     public void setTip(String message) {
         tip.setText(message);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.dropView();
     }
 }

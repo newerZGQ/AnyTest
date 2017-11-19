@@ -13,6 +13,6 @@ public interface WelcomeContract {
     }
 
     interface Presenter extends BasePresenter<View> {
-        void loadTip();
+        void selectTip(String[] tips);
     }
 }

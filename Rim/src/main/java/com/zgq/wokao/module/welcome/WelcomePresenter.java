@@ -19,11 +19,12 @@ public class WelcomePresenter implements WelcomeContract.Presenter {
 
     @Override
     public void dropView() {
-
+        view = null;
     }
 
     @Override
-    public void loadTip() {
-        view.setTip("this is a test");
+    public void selectTip(String[] tips) {
+        int i = (int) (Math.random() * 5);
+        view.setTip(tips[i]);
     }
 }
