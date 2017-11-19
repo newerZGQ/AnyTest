@@ -1,6 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#009688</color>
-    <color name="colorPrimaryDark">#009688</color>
-    <color name="colorAccent">#5677fc</color>
+    <color name="colorPrimary">#2a2a3e</color>
+    <color name="colorPrimaryDark">#252a36</color>
+    <color name="colorAccent">#42897D</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorOrange">#ff8a65</color>
+    <color name="colorGreen">#aed581</color>
+
+    <color name="colorBlue">#9e7baaf7</color>
+    <color name="colorYellow">#9cfdd835</color>
+    <color name="colorTeal">#9c031027</color>
+    <color name="colorCyan">#8d00bcd4</color>
+    <color name="colorLime">#a3cddc39</color>
+
+
+    <color name="colorRed">#6CCF6E</color>
+
+
+    //状态栏
+    <color name="colorStatusBar">#29263e</color>
+    <color name="colorTransparent">#00000000</color>
+
+    <color name="colorFirstLevelText">#DE000000</color>
+
+    <color name="colorRecyclerViewDivider">#32504f4f</color>
+
+    <color name="colorAlphaBackground">#33000000</color>
+
+    <color name="black_overlay">#66000000</color>
+
+    //schedulefragment
+    <color name="color_top_layout_background">#13ffffff</color>
+    <color name="color_accuracy_circle_1_hard">#a1464f</color>
+    <color name="color_accuracy_circle_1_light">#14fb717e</color>
+    <color name="color_accuracy_circle_2_hard">#3d6094</color>
+    <color name="color_accuracy_circle_2_light">#206195e3</color>
+
+    <color name="color_accuracy_text_light">#1e3250</color>
+
+    <color name="color_task_setting_backgroung">#c2000000</color>
+
+    //papersfragment
+    <color name="color_paperitem_qsttype_text">#9bffffff</color>
+    <color name="color_paperitem_qsttype_back">#3fffffff</color>
+    <color name="color_paper_list_cover_back_1">#031027</color>
+    <color name="color_paper_list_cover_back_2">#00031027</color>
+
+
+    //homeactivity
+    <color name="color_home_activity_background">#2a2a3e</color>
+    <color name="color_home_activity_selected_tab">#ffffff</color>
+    <color name="color_home_inactivity_selected_tab">#32ffffff</color>
+    <color name="color_home_loading_background">#b8000000</color>
+    <color name="color_home_no_paper_text">#6bffffff</color>
+
+    //searchactivity
+    <color name="color_search_activity_tip">#d421544c</color>
+
+    //studyactivity
+    <color name="color_study_activity_qstinfo_back">#40031027</color>
+
 </resources>

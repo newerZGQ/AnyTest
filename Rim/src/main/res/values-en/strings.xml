@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Rim</string>
     <string name="settings">Settings</string>
@@ -12,8 +13,4 @@
     <string name="parse_failed">Parse Failed</string>
 
     <string name="facebook_app_id">125563154784183</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
 </resources>

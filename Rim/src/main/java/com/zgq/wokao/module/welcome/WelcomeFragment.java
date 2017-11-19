@@ -1,15 +1,17 @@
 package com.zgq.wokao.module.welcome;
 
-import com.zgq.wokao.R;
-import com.zgq.wokao.module.base.BaseActivity;
+import android.support.v4.app.Fragment;
 
-public class WelcomeActivity extends BaseActivity {
+import com.zgq.wokao.module.base.BaseFragment;
+
+public class WelcomeFragment extends BaseFragment {
+
 
     @Override
     protected int attachLayoutRes() {
-        return R.layout.activity_welcome;
+        return 0;
     }
-
+    
     @Override
     protected void initViews() {
 

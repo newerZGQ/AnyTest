@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_title">Settings</string>
+
+    <string name="settings_learning">Help Center</string>
+    <string name="settings_start_learning">Tutorial</string>
+    <string name="settings_start_learning_content">Learn how to save documents into your cellphone</string>
+
+    <string name="settings_share">Share</string>
+    <string name="settings_share_app">FaceBook</string>
+    <string name="settings_share_content">Share Rim with yout friends</string>
+
+    <string name="settings_developer_info">About Rim</string>
+    <string name="app_author_title">Developer</string>
+    <string name="app_author_name">ZGQ</string>
+    <string name="app_author_details">Report bugs: 379020727@qq.com</string>
+</resources>

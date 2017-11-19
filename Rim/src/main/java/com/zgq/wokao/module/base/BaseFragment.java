@@ -9,37 +9,25 @@ import android.view.ViewGroup;
 
 import com.trello.rxlifecycle.LifecycleTransformer;
 import com.trello.rxlifecycle.components.support.RxFragment;
-import com.zgq.wokao.R;
 import com.zgq.wokao.module.BasePresenter;
-import com.zgq.wokao.module.BaseView;
 import com.zgq.wokao.widget.EmptyLayout;
-
-import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public abstract class BaseFragment<T extends BasePresenter> extends RxFragment
-        implements BaseView, EmptyLayout.OnRetryListener {
+        implements EmptyLayout.OnRetryListener {
     /**
      * 注意，资源的ID一定要一样
      */
-    @Nullable
-    @BindView(R.id.empty_layout)
-    EmptyLayout emptyLayout;
-    @Inject
-    protected T presenter;
+//    @Nullable
+//    @BindView(R.id.empty_layout)
+//    EmptyLayout emptyLayout;
 
-    protected Context mContext;
     //缓存Fragment view
     private View mRootView;
     private boolean mIsMulti = false;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mContext = getActivity();
-    }
 
     @Nullable
     @Override
@@ -47,7 +35,6 @@ public abstract class BaseFragment<T extends BasePresenter> extends RxFragment
         if (mRootView == null) {
             mRootView = inflater.inflate(attachLayoutRes(), null);
             ButterKnife.bind(this, mRootView);
-            initInjector();
             initViews();
         }
         ViewGroup parent = (ViewGroup) mRootView.getParent();
@@ -76,53 +63,14 @@ public abstract class BaseFragment<T extends BasePresenter> extends RxFragment
         }
     }
 
-    public void showLoading() {
-        if (emptyLayout != null) {
-            emptyLayout.setEmptyStatus(EmptyLayout.STATUS_LOADING);
-        }
-    }
-
-    public void hideLoading() {
-        if (emptyLayout != null) {
-            emptyLayout.hide();
-        }
-    }
-
-    public void showNetError() {
-        if (emptyLayout != null) {
-            emptyLayout.setEmptyStatus(EmptyLayout.STATUS_NO_NET);
-            emptyLayout.setRetryListener(this);
-        }
-    }
-
     @Override
     public void onRetry() {
         updateViews(false);
     }
 
-    @Override
-    public LifecycleTransformer bindToLife() {
+    protected LifecycleTransformer bindToLife() {
         return this.<T>bindToLifecycle();
     }
-
-    @Override
-    public void setToolbar(int res) {
-
-    }
-
-    @Override
-    public void showToast(String message) {
-
-    }
-
-    /**
-     * 获取 AppComponent
-     *
-     * @return AppComponent
-     */
-//    protected AppComponent getAppComponent() {
-//        return RimApplication.getAppComponent();
-//    }
 
     /**
      * 绑定布局文件
@@ -131,10 +79,6 @@ public abstract class BaseFragment<T extends BasePresenter> extends RxFragment
      */
     protected abstract int attachLayoutRes();
 
-    /**
-     * Dagger 注入
-     */
-    protected abstract void initInjector();
 
     /**
      * 初始化视图控件
