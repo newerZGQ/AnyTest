@@ -2,8 +2,8 @@ package com.zgq.wokao.parser.adapter.impl;
 
 import com.zgq.wokao.Util.ListUtil;
 import com.zgq.wokao.Util.UUIDUtil;
-import com.zgq.wokao.model.paper.QuestionType;
-import com.zgq.wokao.model.paper.question.impl.FillInQuestion;
+import com.zgq.wokao.entity.paper.question.QuestionType;
+import com.zgq.wokao.entity.paper.question.FillInQuestion;
 import com.zgq.wokao.parser.adapter.BaseAdapter;
 import com.zgq.wokao.parser.adapter.IFillInAdapter;
 import com.zgq.wokao.parser.context.QuestionContext;
