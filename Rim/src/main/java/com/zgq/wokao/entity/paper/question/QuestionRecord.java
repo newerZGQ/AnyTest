@@ -1,4 +1,4 @@
-package com.zgq.wokao.entity.paper.question.record;
+package com.zgq.wokao.entity.paper.question;
 
 import com.zgq.wokao.entity.CascadeDeleteable;
 

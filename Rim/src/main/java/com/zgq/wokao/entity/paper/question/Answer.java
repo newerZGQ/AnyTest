@@ -1,4 +1,4 @@
-package com.zgq.wokao.entity.paper.question.body;
+package com.zgq.wokao.entity.paper.question;
 
 import com.zgq.wokao.entity.CascadeDeleteable;
 
@@ -12,12 +12,13 @@ import lombok.NoArgsConstructor;
 /**
  * Created by zgq on 2017/2/27.
  */
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class QuestionBody extends RealmObject implements CascadeDeleteable {
+public class Answer extends RealmObject implements CascadeDeleteable {
     private String content;
 
     @Override
