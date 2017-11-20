@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
  * Created by zgq on 16-6-18.
  */
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
