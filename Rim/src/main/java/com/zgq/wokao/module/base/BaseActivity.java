@@ -37,7 +37,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends RxAppCompatA
         setContentView(attachLayoutRes());
         ButterKnife.bind(this);
         initViews();
-
     }
 
     /**
