@@ -1,11 +1,6 @@
 package com.zgq.wokao.entity.paper.question;
 
 import com.zgq.wokao.entity.CascadeDeleteable;
-import com.zgq.wokao.entity.paper.question.answer.Answer;
-import com.zgq.wokao.entity.paper.question.body.QuestionBody;
-import com.zgq.wokao.entity.paper.question.info.QuestionInfo;
-import com.zgq.wokao.entity.paper.question.option.Options;
-import com.zgq.wokao.entity.paper.question.record.QuestionRecord;
 
 import io.realm.RealmObject;
 import lombok.AllArgsConstructor;

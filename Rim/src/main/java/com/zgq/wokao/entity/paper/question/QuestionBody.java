@@ -1,8 +1,7 @@
-package com.zgq.wokao.entity.paper.question.option;
+package com.zgq.wokao.entity.paper.question;
 
 import com.zgq.wokao.entity.CascadeDeleteable;
 
-import io.realm.RealmList;
 import io.realm.RealmObject;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,14 +17,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Options extends RealmObject implements CascadeDeleteable {
-    private RealmList<Option> optionList;
+public class QuestionBody extends RealmObject implements CascadeDeleteable {
+    private String content;
 
     @Override
     public void cascadeDelete() {
-        for (Option option : optionList) {
-            option.cascadeDelete();
-        }
         deleteFromRealm();
     }
 }

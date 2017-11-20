@@ -1,4 +1,4 @@
-package com.zgq.wokao.entity.paper.question.option;
+package com.zgq.wokao.entity.paper.question;
 
 import com.zgq.wokao.entity.CascadeDeleteable;
 
@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
- * Created by zgq on 16-6-18.
+ * Created by zgq on 2017/2/27.
  */
 
 @Data
@@ -18,13 +18,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Option extends RealmObject implements CascadeDeleteable {
-    private String option;
-    private String tag;
+public class QuestionInfo extends RealmObject implements CascadeDeleteable {
+
+    private String id;
+    private String type;
+    private int qstId;
+    private boolean isStared;
 
     @Override
     public void cascadeDelete() {
         deleteFromRealm();
     }
-
 }
