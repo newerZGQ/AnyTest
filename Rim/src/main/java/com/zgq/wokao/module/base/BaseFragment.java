@@ -38,24 +38,10 @@ public abstract class BaseFragment<T extends BasePresenter> extends RxFragment {
         return this.<T>bindToLifecycle();
     }
 
-    /**
-     * 绑定布局文件
-     *
-     * @return 布局文件ID
-     */
     protected abstract int attachLayoutRes();
 
-
-    /**
-     * 初始化视图控件
-     */
     protected abstract void initViews();
 
-    /**
-     * 获取 ApplicationComponent
-     *
-     * @return ApplicationComponent
-     */
     protected ApplicationComponent getAppComponent() {
         return RimApplication.getAppComponent();
     }
