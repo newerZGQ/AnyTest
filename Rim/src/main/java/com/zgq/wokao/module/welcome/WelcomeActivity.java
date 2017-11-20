@@ -53,7 +53,7 @@ public class WelcomeActivity extends BaseActivity {
             }
         };
         Timer timer = new Timer(true);
-        timer.schedule(task, 500);
+        timer.schedule(task, 1000);
     }
 
     private void checkPermissions(){

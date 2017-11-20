@@ -123,15 +123,15 @@
 
         <include
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="56dp"
             layout="@layout/home_toolbar"/>
 
-        <com.zgq.wokao.ui.widget.CustomViewPager
+        <com.zgq.wokao.widget.CustomViewPager
             android:id="@+id/viewpaper"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/toolbar_opt_layout">
-        </com.zgq.wokao.ui.widget.CustomViewPager>
+        </com.zgq.wokao.widget.CustomViewPager>
 
         <FrameLayout
             android:id="@+id/questions_frag_1"

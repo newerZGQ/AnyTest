@@ -62,4 +62,7 @@ ext {
     androidgifdrawable = '1.2.8'
     facebook = '[4,5)'
     wechatsdk = '+'
+
+    navigationtabstrip = '1.0.4'
+    bubbleseekbar = '3.4-lite'
 }
