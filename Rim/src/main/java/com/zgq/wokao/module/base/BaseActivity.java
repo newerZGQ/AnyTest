@@ -16,10 +16,6 @@ import com.zgq.wokao.module.BasePresenter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Created by wangyancong on 2017/8/22.
- * 基类Activity
- */
 public abstract class BaseActivity<T extends BasePresenter> extends RxAppCompatActivity {
 
 
