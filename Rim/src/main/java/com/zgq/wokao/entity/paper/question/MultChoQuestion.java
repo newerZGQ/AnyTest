@@ -8,9 +8,17 @@ import com.zgq.wokao.entity.paper.question.option.Options;
 import com.zgq.wokao.entity.paper.question.record.QuestionRecord;
 
 import io.realm.RealmObject;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class MultChoQuestion extends RealmObject implements CascadeDeleteable {
     private QuestionBody body;
     private Answer answer;

@@ -10,20 +10,24 @@ import com.zgq.wokao.entity.paper.question.TFQuestion;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-
-/**
- * Created by zgq on 16-6-18.
- */
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class NormalExamPaper extends RealmObject implements CascadeDeleteable {
-    private ExamPaperInfo paperInfo = new ExamPaperInfo();
-    private RealmList<FillInQuestion> fillInQuestions = new RealmList<>();
-    private RealmList<TFQuestion> tfQuestions = new RealmList<>();
-    private RealmList<SglChoQuestion> sglChoQuestions = new RealmList<>();
-    private RealmList<MultChoQuestion> multChoQuestions = new RealmList<>();
-    private RealmList<DiscussQuestion> discussQuestions = new RealmList<>();
+    private ExamPaperInfo paperInfo;
+    private RealmList<FillInQuestion> fillInQuestions;
+    private RealmList<TFQuestion> tfQuestions;
+    private RealmList<SglChoQuestion> sglChoQuestions;
+    private RealmList<MultChoQuestion> multChoQuestions;
+    private RealmList<DiscussQuestion> discussQuestions;
 
     @Override
     public void cascadeDelete() {
