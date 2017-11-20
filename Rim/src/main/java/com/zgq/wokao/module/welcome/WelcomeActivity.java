@@ -8,6 +8,10 @@ import com.zgq.wokao.R;
 import com.zgq.wokao.injector.components.DaggerWelcomeComponent;
 import com.zgq.wokao.injector.modules.WelcomeModule;
 import com.zgq.wokao.module.base.BaseActivity;
+import com.zgq.wokao.module.home.HomeActivity;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.inject.Inject;
 
@@ -38,5 +42,21 @@ public class WelcomeActivity extends BaseActivity {
                 .build()
                 .inject(this);
         addFragment(R.id.contentFrame,fragment);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        TimerTask task = new TimerTask() {
+            public void run() {
+                checkPermissions();
+            }
+        };
+        Timer timer = new Timer(true);
+        timer.schedule(task, 500);
+    }
+
+    private void checkPermissions(){
+        openActivity(HomeActivity.class);
     }
 }

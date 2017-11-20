@@ -1,5 +1,7 @@
 package com.zgq.wokao.module.base;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
@@ -69,6 +71,46 @@ public abstract class BaseActivity<T extends BasePresenter> extends RxAppCompatA
         } else {
             getSupportFragmentManager().popBackStack(tag, 0);
         }
+    }
+
+
+    protected void openActivity(Class<?> pClass) {
+        openActivity(pClass, null);
+    }
+
+    protected void openActivity(Class<?> pClass, Bundle pBundle) {
+        openActivity(pClass, pBundle, null);
+    }
+
+    protected void openActivity(Class<?> pClass, Bundle pBundle, Uri uri) {
+        Intent intent = new Intent(this, pClass);
+        if (pBundle != null) {
+            intent.putExtras(pBundle);
+        }
+        if (uri != null) {
+            intent.setData(uri);
+        }
+        startActivity(intent);
+    }
+
+    protected void openActivity(String pAction) {
+        openActivity(pAction, null);
+    }
+
+
+    protected void openActivity(String pAction, Bundle pBundle) {
+        openActivity(pAction, pBundle, null);
+    }
+
+    protected void openActivity(String pAction, Bundle pBundle, Uri uri) {
+        Intent intent = new Intent(pAction);
+        if (pBundle != null) {
+            intent.putExtras(pBundle);
+        }
+        if (uri != null) {
+            intent.setData(uri);
+        }
+        startActivity(intent);
     }
 
     @Override
