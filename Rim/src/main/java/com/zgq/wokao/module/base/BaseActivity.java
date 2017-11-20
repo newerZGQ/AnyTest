@@ -13,7 +13,6 @@ import com.zgq.wokao.injector.components.ApplicationComponent;
 import com.zgq.wokao.injector.modules.ActivityModule;
 import com.zgq.wokao.module.BasePresenter;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public abstract class BaseActivity<T extends BasePresenter> extends RxAppCompatActivity {
@@ -38,6 +37,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends RxAppCompatA
         setContentView(attachLayoutRes());
         ButterKnife.bind(this);
         initViews();
+
     }
 
     /**

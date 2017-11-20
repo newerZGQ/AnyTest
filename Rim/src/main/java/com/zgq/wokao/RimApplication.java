@@ -14,6 +14,7 @@ public class RimApplication extends Application {
     public void onCreate() {
         super.onCreate();
         initInjector();
+        config();
     }
 
     public static ApplicationComponent getAppComponent() {
@@ -26,7 +27,7 @@ public class RimApplication extends Application {
                 .build();
     }
 
-    private void initConfig() {
+    private void config() {
 
     }
 
