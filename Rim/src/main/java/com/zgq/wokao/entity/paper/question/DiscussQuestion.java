@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class DiscussQuestion extends RealmObject implements CascadeDeleteable {
+public class DiscussQuestion extends RealmObject implements CascadeDeleteable, IQuestion {
     private QuestionBody body;
     private Answer answer;
     private QuestionInfo info;

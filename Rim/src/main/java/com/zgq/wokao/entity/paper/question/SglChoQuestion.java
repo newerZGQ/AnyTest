@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class SglChoQuestion extends RealmObject implements CascadeDeleteable {
+public class SglChoQuestion extends RealmObject implements CascadeDeleteable , IQuestion{
 
     private QuestionBody body;
     private Answer answer;

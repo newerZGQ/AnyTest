@@ -22,7 +22,7 @@ public class QuestionInfo extends RealmObject implements CascadeDeleteable {
 
     private String id;
     private String type;
-    private int qstId;
+    private int index;
     private boolean isStared;
 
     @Override
