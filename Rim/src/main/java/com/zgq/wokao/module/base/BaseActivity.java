@@ -36,9 +36,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends RxAppCompatA
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         daggerInject();
-        if (presenter != null) {
-            presenter.takeView(this);
-        }
+        presenter.takeView(this);
         setContentView(attachLayoutRes());
         ButterKnife.bind(this);
         initViews();
@@ -47,9 +45,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends RxAppCompatA
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (presenter != null) {
-            presenter.dropView();
-        }
+        presenter.dropView();
     }
 
     protected ApplicationComponent getAppComponent() {
