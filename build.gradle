@@ -17,6 +17,10 @@ allprojects {
             url "https://maven.google.com"
         }
         maven { url 'https://jitpack.io' }
+
+        maven {
+            url  "http://dl.bintray.com/lukaville/maven"
+        }
     }
 }
 
@@ -66,4 +70,5 @@ ext {
 
     navigationtabstrip = '1.0.4'
     bubbleseekbar = '3.4-lite'
+    filepicker = '1.8'
 }

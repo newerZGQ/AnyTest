@@ -70,6 +70,8 @@ dependencies {
 
     compile "com.xw.repo:bubbleseekbar:${rootProject.ext.bubbleseekbar}"
 
+    compile "com.nbsp:library:${rootProject.ext.filepicker}"
+
     compile project(':RecyclerViewHelper')
     implementation project(':linechart')
     implementation project(':shapeloading')

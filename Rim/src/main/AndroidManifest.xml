@@ -23,6 +23,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".module.home.HomeActivity" />
+        <activity android:name=".module.parser.ParserActivity" />
     </application>
 
 </manifest>

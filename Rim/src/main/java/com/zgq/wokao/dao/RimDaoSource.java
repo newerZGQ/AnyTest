@@ -9,16 +9,11 @@ import javax.inject.Singleton;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
-/**
- * Created by zgq on 2017/11/22.
- */
-
 public class RimDaoSource implements RimDao {
 
     Realm realm = Realm.getDefaultInstance();
 
     @Inject
-    @Singleton
     public RimDaoSource(){}
 
     @Override
