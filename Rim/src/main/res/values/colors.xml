@@ -54,6 +54,7 @@
     <color name="color_home_inactivity_selected_tab">#32ffffff</color>
     <color name="color_home_loading_background">#b8000000</color>
     <color name="color_home_no_paper_text">#6bffffff</color>
+    <color name="color_home_summary_text">#3bffffff</color>
 
     //searchactivity
     <color name="color_search_activity_tip">#d421544c</color>

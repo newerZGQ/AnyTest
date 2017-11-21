@@ -8,11 +8,19 @@ import com.zgq.wokao.module.BaseView;
  */
 
 public interface WelcomeContract {
-    interface View extends BaseView<Presenter> {
+    interface MainView extends BaseView<MainPresenter> {
+
+    }
+
+    interface MainPresenter extends BasePresenter<MainView> {
+
+    }
+
+    interface SplashView extends BaseView<SplashPresenter>{
         void setTip(String message);
     }
 
-    interface Presenter extends BasePresenter<View> {
+    interface SplashPresenter extends BasePresenter<SplashView>{
         void selectTip(String[] tips);
     }
 }

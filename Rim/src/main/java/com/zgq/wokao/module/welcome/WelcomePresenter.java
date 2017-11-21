@@ -1,33 +1,23 @@
 package com.zgq.wokao.module.welcome;
 
-import com.zgq.wokao.repository.RimRepository;
-
 import javax.inject.Inject;
 
-public class WelcomePresenter implements WelcomeContract.Presenter {
-    private static final String TAG = WelcomePresenter.class.getSimpleName();
+/**
+ * Created by zhangguoqiang on 2017/11/21.
+ */
 
-    private WelcomeContract.View view;
-    private RimRepository repository;
+public class WelcomePresenter implements WelcomeContract.MainPresenter {
 
     @Inject
-    public WelcomePresenter(RimRepository repository){
-        this.repository = repository;
-    }
+    public WelcomePresenter (){}
 
     @Override
-    public void takeView(WelcomeContract.View view) {
-        this.view = view;
+    public void takeView(WelcomeContract.MainView view) {
+
     }
 
     @Override
     public void dropView() {
-        view = null;
-    }
 
-    @Override
-    public void selectTip(String[] tips) {
-        int i = (int) (Math.random() * 5);
-        view.setTip(tips[i]);
     }
 }

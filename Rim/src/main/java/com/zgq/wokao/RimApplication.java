@@ -2,6 +2,8 @@ package com.zgq.wokao;
 
 import android.app.Application;
 
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.Logger;
 import com.zgq.wokao.injector.components.ApplicationComponent;
 import com.zgq.wokao.injector.components.DaggerApplicationComponent;
 import com.zgq.wokao.injector.modules.ApplicationModule;
@@ -28,7 +30,7 @@ public class RimApplication extends Application {
     }
 
     private void config() {
-
+        Logger.addLogAdapter(new AndroidLogAdapter());
     }
 
 }

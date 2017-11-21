@@ -5,7 +5,7 @@ android {
     compileSdkVersion rootProject.ext.compileSdk
     buildToolsVersion rootProject.ext.buildTools
     defaultConfig {
-        applicationId "com.zgq.rim"
+        applicationId "com.zgq.wokao"
         minSdkVersion rootProject.ext.minSdk
         targetSdkVersion rootProject.ext.targetSdk
         versionCode 1
@@ -61,6 +61,15 @@ dependencies {
 
     // logger
     compile "com.orhanobut:logger:${rootProject.ext.loggerVersion}"
+
+    compile "com.github.devlight.navigationtabstrip:navigationtabstrip:${rootProject.ext.navigationtabstrip}"
+
+    compile "com.xw.repo:bubbleseekbar:${rootProject.ext.bubbleseekbar}"
+
     compile project(':RecyclerViewHelper')
+    implementation project(':linechart')
+    implementation project(':shapeloading')
+
     implementation files('libs/tm-extractors-0.4.jar')
+
 }
