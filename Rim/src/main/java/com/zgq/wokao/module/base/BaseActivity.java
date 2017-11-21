@@ -19,6 +19,8 @@ import butterknife.ButterKnife;
 
 public abstract class BaseActivity<T extends BasePresenter> extends RxAppCompatActivity {
 
+    protected abstract void daggerInject();
+
     @LayoutRes
     protected abstract int attachLayoutRes();
 
@@ -27,6 +29,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends RxAppCompatA
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        daggerInject();
         setContentView(attachLayoutRes());
         ButterKnife.bind(this);
         initViews();

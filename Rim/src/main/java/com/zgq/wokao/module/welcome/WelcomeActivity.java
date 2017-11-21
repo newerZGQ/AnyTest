@@ -24,23 +24,21 @@ public class WelcomeActivity extends BaseActivity {
     WelcomeContract.Presenter presenter;
 
     @Override
+    protected void daggerInject() {
+        DaggerWelcomeComponent.builder()
+                .welcomeModule(new WelcomeModule())
+                .applicationComponent(getAppComponent())
+                .build()
+                .inject(this);
+    }
+
+    @Override
     protected int attachLayoutRes() {
         return R.layout.activity_welcome;
     }
 
     @Override
     protected void initViews() {
-
-    }
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        DaggerWelcomeComponent.builder()
-                .welcomeModule(new WelcomeModule())
-                .applicationComponent(getAppComponent())
-                .build()
-                .inject(this);
         addFragment(R.id.contentFrame,fragment);
     }
 
