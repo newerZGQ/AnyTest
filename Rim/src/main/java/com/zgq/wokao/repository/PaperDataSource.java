@@ -8,5 +8,6 @@ import com.zgq.wokao.entity.paper.NormalExamPaper;
 
 public interface PaperDataSource {
     void saveExamPaper(NormalExamPaper examPaper);
-    void deleteExamPaper(String paperId);
+    void deleteExamPaper(NormalExamPaper examPaper);
+    NormalExamPaper queryPaper(String paperId);
 }

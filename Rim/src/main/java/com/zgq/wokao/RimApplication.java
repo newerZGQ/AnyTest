@@ -8,6 +8,8 @@ import com.zgq.wokao.injector.components.ApplicationComponent;
 import com.zgq.wokao.injector.components.DaggerApplicationComponent;
 import com.zgq.wokao.injector.modules.ApplicationModule;
 
+import io.realm.Realm;
+
 public class RimApplication extends Application {
 
     private static ApplicationComponent applicationComponent;
@@ -31,6 +33,7 @@ public class RimApplication extends Application {
 
     private void config() {
         Logger.addLogAdapter(new AndroidLogAdapter());
+        Realm.init(getApplicationContext());
     }
 
 }
