@@ -15,7 +15,7 @@ import javax.inject.Inject;
 
 public class WelcomeActivity extends BaseActivity<WelcomeContract.MainPresenter> implements WelcomeContract.MainView{
     @Inject
-    WelcomeFragment fragment;
+    SplashFragment fragment;
     @Inject
     Context context;
 

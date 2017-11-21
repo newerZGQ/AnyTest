@@ -1,8 +1,8 @@
 package com.zgq.wokao.injector.modules;
 
 import com.zgq.wokao.injector.PerActivity;
+import com.zgq.wokao.module.welcome.SplashFragment;
 import com.zgq.wokao.module.welcome.WelcomeContract;
-import com.zgq.wokao.module.welcome.WelcomeFragment;
 import com.zgq.wokao.module.welcome.SplashPresenter;
 import com.zgq.wokao.module.welcome.WelcomePresenter;
 
@@ -30,8 +30,8 @@ public class WelcomeModule {
 
     @PerActivity
     @Provides
-    public WelcomeFragment provideFragment(){
-        return new WelcomeFragment();
+    public SplashFragment provideFragment(){
+        return new SplashFragment();
     }
 
 }

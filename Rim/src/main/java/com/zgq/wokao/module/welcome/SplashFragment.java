@@ -14,9 +14,9 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 
-public class WelcomeFragment extends BaseFragment<WelcomeContract.SplashPresenter> implements WelcomeContract.SplashView{
+public class SplashFragment extends BaseFragment<WelcomeContract.SplashPresenter> implements WelcomeContract.SplashView{
 
-    private static final String TAG = WelcomeFragment.class.getSimpleName();
+    private static final String TAG = SplashFragment.class.getSimpleName();
 
     @BindView(R.id.tips)
     TextView tip;
