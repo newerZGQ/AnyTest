@@ -15,13 +15,11 @@ import java.util.TimerTask;
 
 import javax.inject.Inject;
 
-public class WelcomeActivity extends BaseActivity {
+public class WelcomeActivity extends BaseActivity<WelcomeContract.MainPresenter> implements WelcomeContract.MainView{
     @Inject
     WelcomeFragment fragment;
     @Inject
     Context context;
-    @Inject
-    WelcomeContract.Presenter presenter;
 
     @Override
     protected void daggerInject() {

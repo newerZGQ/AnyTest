@@ -1,7 +1,5 @@
 package com.zgq.wokao.module.welcome;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.widget.TextView;
 
 import com.zgq.wokao.R;
@@ -16,7 +14,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 
-public class WelcomeFragment extends BaseFragment<WelcomeContract.Presenter> implements WelcomeContract.View{
+public class WelcomeFragment extends BaseFragment<WelcomeContract.SplashPresenter> implements WelcomeContract.SplashView{
 
     private static final String TAG = WelcomeFragment.class.getSimpleName();
 
@@ -29,6 +27,15 @@ public class WelcomeFragment extends BaseFragment<WelcomeContract.Presenter> imp
     RimContextCompat contextCompat;
 
     @Override
+    protected void daggerInject() {
+        component = DaggerWelcomeComponent.builder()
+                .welcomeModule(new WelcomeModule())
+                .applicationComponent(getAppComponent())
+                .build();
+        component.inject(this);
+    }
+
+    @Override
     protected int attachLayoutRes() {
         return R.layout.fragment_welcome;
     }
@@ -36,17 +43,6 @@ public class WelcomeFragment extends BaseFragment<WelcomeContract.Presenter> imp
     @Override
     protected void initViews() {
 
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        component = DaggerWelcomeComponent.builder()
-                .welcomeModule(new WelcomeModule())
-                .applicationComponent(getAppComponent())
-                .build();
-        component.inject(this);
-        presenter.takeView(this);
     }
 
     @Override
@@ -58,11 +54,5 @@ public class WelcomeFragment extends BaseFragment<WelcomeContract.Presenter> imp
     @Override
     public void setTip(String message) {
         tip.setText(message);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        presenter.dropView();
     }
 }

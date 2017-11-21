@@ -19,6 +19,7 @@ import com.orhanobut.logger.Logger;
 import com.zgq.linechart.ChartView;
 import com.zgq.wokao.R;
 import com.zgq.wokao.entity.paper.info.Schedule;
+import com.zgq.wokao.entity.summary.StudySummary;
 import com.zgq.wokao.injector.components.DaggerHomeComponent;
 import com.zgq.wokao.injector.modules.HomeModule;
 import com.zgq.wokao.module.base.BaseActivity;
@@ -31,7 +32,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 
-public class HomeActivity extends BaseActivity {
+public class HomeActivity extends BaseActivity<HomeContract.MainPresenter> implements HomeContract.MainView{
 
     private static final String TAG = HomeActivity.class.getSimpleName();
 
@@ -138,6 +139,16 @@ public class HomeActivity extends BaseActivity {
         tabStrip.setInactiveColor(getResources().getColor(R.color.color_home_inactivity_selected_tab));
         tabStrip.setActiveColor(getResources().getColor(R.color.color_home_activity_selected_tab));
         tabStrip.setViewPager(viewPager);
+    }
+
+    @Override
+    public void showDayCurve(StudySummary studySummary) {
+
+    }
+
+    @Override
+    public void showTotalRecord(StudySummary studySummary) {
+
     }
 
     public class HomeFragmentPagerAdapter extends FragmentPagerAdapter {

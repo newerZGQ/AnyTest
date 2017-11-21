@@ -14,15 +14,21 @@ import com.zgq.wokao.RimApplication;
 import com.zgq.wokao.injector.components.ApplicationComponent;
 import com.zgq.wokao.injector.modules.ActivityModule;
 import com.zgq.wokao.module.BasePresenter;
+import com.zgq.wokao.module.BaseView;
+
+import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 
-public abstract class BaseActivity<T extends BasePresenter> extends RxAppCompatActivity {
+public abstract class BaseActivity<T extends BasePresenter> extends RxAppCompatActivity implements BaseView<T> {
 
     protected abstract void daggerInject();
 
     @LayoutRes
     protected abstract int attachLayoutRes();
+
+    @Inject
+    protected T presenter;
 
     protected abstract void initViews();
 
@@ -30,9 +36,20 @@ public abstract class BaseActivity<T extends BasePresenter> extends RxAppCompatA
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         daggerInject();
+        if (presenter != null) {
+            presenter.takeView(this);
+        }
         setContentView(attachLayoutRes());
         ButterKnife.bind(this);
         initViews();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (presenter != null) {
+            presenter.dropView();
+        }
     }
 
     protected ApplicationComponent getAppComponent() {

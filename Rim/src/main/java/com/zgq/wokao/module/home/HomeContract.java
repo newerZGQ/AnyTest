@@ -1,23 +1,30 @@
 package com.zgq.wokao.module.home;
 
 import com.zgq.wokao.entity.summary.StudySummary;
-import com.zgq.wokao.entity.summary.TotalDailyCount;
 import com.zgq.wokao.module.BasePresenter;
 import com.zgq.wokao.module.BaseView;
 
-import io.realm.RealmList;
-
-/**
- * Created by zhangguoqiang on 2017/11/12.
- */
-
 public interface HomeContract {
-    interface View extends BaseView<Presenter>{
+    interface MainView extends BaseView<MainPresenter> {
         void showDayCurve(StudySummary studySummary);
+
         void showTotalRecord(StudySummary studySummary);
     }
 
-    interface Presenter extends BasePresenter<View> {
+    interface ScheduleView extends BaseView<SchedulePresenter>{
+    }
 
+    interface PaperView extends BaseView<PaperPresenter> {
+    }
+
+    interface MainPresenter extends BasePresenter<MainView> {
+    }
+
+
+    interface SchedulePresenter extends BasePresenter<ScheduleView> {
+    }
+
+
+    interface PaperPresenter extends BasePresenter<PaperView> {
     }
 }
