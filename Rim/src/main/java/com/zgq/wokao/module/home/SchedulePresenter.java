@@ -13,11 +13,21 @@ public class SchedulePresenter implements HomeContract.SchedulePresenter {
 
     @Override
     public void subscribe() {
-
+        loadSchedule();
     }
 
     @Override
     public void unsubscribe() {
+
+    }
+
+    @Override
+    public void loadSchedule() {
+
+    }
+
+    @Override
+    public void updateDetail(int index) {
 
     }
 }
