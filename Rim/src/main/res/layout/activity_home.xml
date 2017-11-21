@@ -119,8 +119,6 @@
         android:id="@+id/main_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-
         <include
             android:layout_width="wrap_content"
             android:layout_height="56dp"
@@ -130,14 +128,14 @@
             android:id="@+id/viewpaper"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/toolbar_opt_layout">
+            android:layout_below="@+id/toolbar_layout">
         </com.zgq.wokao.widget.CustomViewPager>
 
         <FrameLayout
             android:id="@+id/questions_frag_1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/toolbar_opt_layout">
+            android:layout_below="@+id/toolbar_layout">
         </FrameLayout>
     </RelativeLayout>
 
