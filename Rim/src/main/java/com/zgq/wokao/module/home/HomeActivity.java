@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -28,6 +27,8 @@ import javax.inject.Inject;
 import butterknife.BindView;
 
 public class HomeActivity extends BaseActivity {
+
+    private static final String TAG = HomeActivity.class.getSimpleName();
 
     @BindView(R.id.root_view)
     View rootView;
