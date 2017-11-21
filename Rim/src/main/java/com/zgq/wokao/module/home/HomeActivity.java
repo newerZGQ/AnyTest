@@ -1,5 +1,6 @@
 package com.zgq.wokao.module.home;
 
+import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -15,10 +16,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gigamole.navigationtabstrip.NavigationTabStrip;
-import com.orhanobut.logger.Logger;
 import com.zgq.linechart.ChartView;
 import com.zgq.wokao.R;
-import com.zgq.wokao.entity.paper.info.Schedule;
 import com.zgq.wokao.entity.summary.StudySummary;
 import com.zgq.wokao.injector.components.DaggerHomeComponent;
 import com.zgq.wokao.injector.modules.HomeModule;
@@ -32,7 +31,8 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 
-public class HomeActivity extends BaseActivity<HomeContract.MainPresenter> implements HomeContract.MainView{
+public class HomeActivity extends BaseActivity<HomeContract.MainPresenter>
+        implements HomeContract.MainView, View.OnClickListener{
 
     private static final String TAG = HomeActivity.class.getSimpleName();
 
@@ -88,8 +88,10 @@ public class HomeActivity extends BaseActivity<HomeContract.MainPresenter> imple
 
     @Override
     protected void initViews() {
+        initSlideUp();
         initViewPager();
         initTabStrip();
+        setListener();
     }
 
     private void initViewPager() {
@@ -141,6 +143,90 @@ public class HomeActivity extends BaseActivity<HomeContract.MainPresenter> imple
         tabStrip.setViewPager(viewPager);
     }
 
+    private void initSlideUp() {
+        slideUp = new SlideUp.Builder(menuLayout)
+                .withListener(new SlideUp.Listener() {
+                    @Override
+                    public void onAnimatorStarted(int direction) {
+                        if (direction == SlideUp.toUp) {
+                            ObjectAnimator.ofFloat(mainLayout, "translationY",
+                                    menuLayout.getHeight(), 0).
+                                    setDuration(300).start();
+                            animateToolbarRight(350);
+                        } else {
+                            ObjectAnimator.ofFloat(mainLayout, "translationY",
+                                    0, menuLayout.getHeight()).
+                                    setDuration(300).start();
+                            animateToolbarLeft(350);
+                        }
+                    }
+                })
+                .withStartState(SlideUp.State.HIDDEN)
+                .withStartGravity(Gravity.TOP)
+                .build();
+    }
+
+    private void setListener() {
+        menuBtn.setOnClickListener(this);
+        searchBtn.setOnClickListener(this);
+        parseBtn.setOnClickListener(this);
+        shareApp.setOnClickListener(this);
+    }
+
+    private void animateToolbarLeft(int duration) {
+        AnimatorSet hideSchedule = new AnimatorSet();
+        ObjectAnimator moveScheduleTab = ObjectAnimator.ofFloat(tabStrip, "translationX",
+                0, -tabStrip.getLeft() + menuBtn.getRight());
+        ObjectAnimator alphaSchedule = ObjectAnimator.ofFloat(tabStrip, "alpha",
+                1, 0);
+
+        View actionLayout = (View) searchBtn.getParent();
+        ObjectAnimator moveScheduleSea = ObjectAnimator.ofFloat(actionLayout, "translationX",
+                0, -actionLayout.getLeft() + menuBtn.getRight());
+        ObjectAnimator alphaScheduleSea = ObjectAnimator.ofFloat(actionLayout, "alpha",
+                1, 0);
+        hideSchedule.playTogether(moveScheduleTab, alphaSchedule, moveScheduleSea, alphaScheduleSea);
+        hideSchedule.setDuration(duration);
+        hideSchedule.setStartDelay(300);
+
+        tabStrip.setClickable(false);
+        searchBtn.setClickable(false);
+        parseBtn.setClickable(false);
+
+        hideSchedule.start();
+    }
+
+    private void animateToolbarRight(int duration) {
+        AnimatorSet hideSchedule = new AnimatorSet();
+        ObjectAnimator moveScheduleTab = ObjectAnimator.ofFloat(tabStrip, "translationX",
+                -tabStrip.getLeft() + menuBtn.getRight(), 0);
+        ObjectAnimator alphaSchedule = ObjectAnimator.ofFloat(tabStrip, "alpha",
+                0, 1);
+
+        View actionLayout = (View) searchBtn.getParent();
+        ObjectAnimator moveScheduleSea = ObjectAnimator.ofFloat(actionLayout, "translationX",
+                -actionLayout.getLeft() + menuBtn.getRight(), 0);
+        ObjectAnimator alphaScheduleSea = ObjectAnimator.ofFloat(actionLayout, "alpha",
+                0, 1);
+        hideSchedule.playTogether(moveScheduleTab, alphaSchedule, moveScheduleSea, alphaScheduleSea);
+        hideSchedule.setDuration(duration);
+        hideSchedule.setStartDelay(300);
+
+        tabStrip.setClickable(true);
+        searchBtn.setClickable(true);
+        parseBtn.setClickable(true);
+
+        hideSchedule.start();
+    }
+
+    private void changeSlideUpState() {
+        if (slideUp.isVisible()) {
+            slideUp.hide();
+        } else {
+            slideUp.show();
+        }
+    }
+
     @Override
     public void showDayCurve(StudySummary studySummary) {
 
@@ -151,7 +237,27 @@ public class HomeActivity extends BaseActivity<HomeContract.MainPresenter> imple
 
     }
 
-    public class HomeFragmentPagerAdapter extends FragmentPagerAdapter {
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.toolbar_menu:
+                changeSlideUpState();
+                break;
+            case R.id.toolbar_search:
+                //goSearch();
+                break;
+            case R.id.toolbar_add:
+                //goSelectFile();
+                break;
+            case R.id.share:
+                //openActivity(SettingsActivity.class);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private class HomeFragmentPagerAdapter extends FragmentPagerAdapter {
         ArrayList<Fragment> fragments;
 
         HomeFragmentPagerAdapter(FragmentManager fm, ArrayList<Fragment> fragments) {

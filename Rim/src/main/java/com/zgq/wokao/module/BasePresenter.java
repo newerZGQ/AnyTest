@@ -17,4 +17,9 @@ public interface BasePresenter<T extends BaseView> {
      * Drops the reference to the view when destroyed
      */
     void dropView();
+
+    void subscribe();
+
+    void unsubscribe();
+
 }

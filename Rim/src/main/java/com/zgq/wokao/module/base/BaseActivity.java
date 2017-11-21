@@ -36,15 +36,22 @@ public abstract class BaseActivity<T extends BasePresenter> extends RxAppCompatA
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         daggerInject();
-        presenter.takeView(this);
         setContentView(attachLayoutRes());
         ButterKnife.bind(this);
         initViews();
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        presenter.takeView(this);
+        presenter.subscribe();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
+        presenter.unsubscribe();
         presenter.dropView();
     }
 

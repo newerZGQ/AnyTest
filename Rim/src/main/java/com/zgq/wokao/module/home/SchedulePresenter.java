@@ -10,4 +10,14 @@ public class SchedulePresenter implements HomeContract.SchedulePresenter {
     public void dropView() {
 
     }
+
+    @Override
+    public void subscribe() {
+
+    }
+
+    @Override
+    public void unsubscribe() {
+
+    }
 }

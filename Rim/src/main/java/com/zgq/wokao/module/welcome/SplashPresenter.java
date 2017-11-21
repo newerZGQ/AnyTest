@@ -26,6 +26,16 @@ public class SplashPresenter implements WelcomeContract.SplashPresenter {
     }
 
     @Override
+    public void subscribe() {
+
+    }
+
+    @Override
+    public void unsubscribe() {
+
+    }
+
+    @Override
     public void selectTip(String[] tips) {
         int i = (int) (Math.random() * 5);
         view.setTip(tips[i]);

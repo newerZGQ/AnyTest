@@ -20,4 +20,14 @@ public class WelcomePresenter implements WelcomeContract.MainPresenter {
     public void dropView() {
 
     }
+
+    @Override
+    public void subscribe() {
+
+    }
+
+    @Override
+    public void unsubscribe() {
+
+    }
 }

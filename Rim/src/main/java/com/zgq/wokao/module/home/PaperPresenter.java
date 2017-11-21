@@ -14,4 +14,14 @@ public class PaperPresenter implements HomeContract.PaperPresenter {
     public void dropView() {
 
     }
+
+    @Override
+    public void subscribe() {
+
+    }
+
+    @Override
+    public void unsubscribe() {
+
+    }
 }
