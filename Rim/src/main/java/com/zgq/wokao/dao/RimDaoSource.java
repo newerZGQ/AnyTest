@@ -1,6 +1,7 @@
 package com.zgq.wokao.dao;
 
 import com.zgq.wokao.entity.paper.NormalExamPaper;
+import com.zgq.wokao.entity.summary.StudySummary;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -42,5 +43,18 @@ public class RimDaoSource implements RimDao {
         realm.beginTransaction();
         paper.getPaperInfo().getSchedule().setInSked(skedState);
         realm.commitTransaction();
+    }
+
+    @Override
+    public void saveSummary(StudySummary studySummary) {
+        realm.beginTransaction();
+        realm.copyToRealm(studySummary);
+        realm.commitTransaction();
+    }
+
+    @Override
+    public StudySummary getStudySummary() {
+        return realm.where(StudySummary.class)
+                .findFirst();
     }
 }

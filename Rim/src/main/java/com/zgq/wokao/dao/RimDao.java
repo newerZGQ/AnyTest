@@ -1,6 +1,7 @@
 package com.zgq.wokao.dao;
 
 import com.zgq.wokao.entity.paper.NormalExamPaper;
+import com.zgq.wokao.entity.summary.StudySummary;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -15,4 +16,7 @@ public interface RimDao {
     @Nullable
     NormalExamPaper queryExamPaper(@Nonnull String paperId);
     void setSked(@Nonnull NormalExamPaper paper, boolean skedState);
+
+    void saveSummary(StudySummary studySummary);
+    StudySummary getStudySummary();
 }

@@ -3,7 +3,9 @@ package com.zgq.wokao.repository;
 import com.google.common.base.Optional;
 import com.zgq.wokao.dao.RimDaoSource;
 import com.zgq.wokao.entity.paper.NormalExamPaper;
+import com.zgq.wokao.entity.summary.StudySummary;
 
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
 import io.reactivex.Flowable;
@@ -38,5 +40,15 @@ public class PaperRepository implements PaperDataSource {
     @Override
     public void setSked(NormalExamPaper paper, boolean skedState) {
         daoSource.setSked(paper,skedState);
+    }
+
+    @Override
+    public void saveSummary(@Nonnull StudySummary studySummary) {
+        daoSource.saveSummary(studySummary);
+    }
+
+    @Override
+    public Flowable<Optional<StudySummary>> getStudySummary() {
+        return Flowable.just(Optional.fromNullable(daoSource.getStudySummary()));
     }
 }

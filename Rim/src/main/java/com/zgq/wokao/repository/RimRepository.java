@@ -3,14 +3,12 @@ package com.zgq.wokao.repository;
 import com.zgq.wokao.entity.paper.NormalExamPaper;
 
 import com.google.common.base.Optional;
+import com.zgq.wokao.entity.summary.StudySummary;
 
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
 import io.reactivex.Flowable;
-
-/**
- * Created by zgq on 2017/11/20.
- */
 
 public class RimRepository implements RimDataSource {
 
@@ -39,5 +37,15 @@ public class RimRepository implements RimDataSource {
     @Override
     public void setSked(NormalExamPaper paper, boolean skedState) {
         paperRepository.setSked(paper, skedState);
+    }
+
+    @Override
+    public void saveSummary(@Nonnull StudySummary studySummary) {
+        paperRepository.saveSummary(studySummary);
+    }
+
+    @Override
+    public Flowable<Optional<StudySummary>> getStudySummary() {
+        return paperRepository.getStudySummary();
     }
 }
