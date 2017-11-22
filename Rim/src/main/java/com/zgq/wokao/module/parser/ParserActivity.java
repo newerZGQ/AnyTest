@@ -47,7 +47,6 @@ public class ParserActivity extends BaseActivity<ParserContract.Presenter>
         new MaterialFilePicker()
                 .withActivity(this)
                 .withRequestCode(1)
-                .withFilter(Pattern.compile(".*\\.txt$")) // Filtering files and directories by file name using regexp
                 .withFilterDirectories(true) // Set directories filterable (false by default)
                 .withHiddenFiles(true) // Show hidden files and folders
                 .start();
