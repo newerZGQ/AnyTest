@@ -7,6 +7,7 @@ import com.zgq.wokao.module.home.PaperFragment;
 import com.zgq.wokao.module.home.PaperPresenter;
 import com.zgq.wokao.module.home.ScheduleFragment;
 import com.zgq.wokao.module.home.SchedulePresenter;
+import com.zgq.wokao.repository.RimRepository;
 
 import dagger.Module;
 import dagger.Provides;
@@ -39,8 +40,8 @@ public class HomeModule {
 
     @PerActivity
     @Provides
-    public HomeContract.SchedulePresenter provideSchedulePresenter(){
-        return new SchedulePresenter();
+    public HomeContract.SchedulePresenter provideSchedulePresenter(RimRepository repository){
+        return new SchedulePresenter(repository);
     }
 
     @PerActivity

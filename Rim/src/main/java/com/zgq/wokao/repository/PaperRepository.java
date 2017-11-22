@@ -32,6 +32,6 @@ public class PaperRepository implements PaperDataSource {
 
     @Override
     public Flowable<Optional<NormalExamPaper>> queryPaper(String paperId) {
-        return Flowable.just(Optional.of(daoSource.queryExamPaper(paperId)));
+        return Flowable.just(Optional.fromNullable(daoSource.queryExamPaper(paperId)));
     }
 }

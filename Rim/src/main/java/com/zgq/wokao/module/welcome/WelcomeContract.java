@@ -1,26 +1,22 @@
 package com.zgq.wokao.module.welcome;
 
-import com.zgq.wokao.module.BasePresenter;
-import com.zgq.wokao.module.BaseView;
-
-/**
- * Created by zhangguoqiang on 2017/11/19.
- */
+import com.zgq.wokao.module.IPresenter;
+import com.zgq.wokao.module.IView;
 
 public interface WelcomeContract {
-    interface MainView extends BaseView<MainPresenter> {
+    interface MainView extends IView<MainPresenter> {
 
     }
 
-    interface MainPresenter extends BasePresenter<MainView> {
+    interface MainPresenter extends IPresenter<MainView> {
 
     }
 
-    interface SplashView extends BaseView<SplashPresenter>{
+    interface SplashView extends IView<SplashPresenter> {
         void setTip(String message);
     }
 
-    interface SplashPresenter extends BasePresenter<SplashView>{
+    interface SplashPresenter extends IPresenter<SplashView> {
         void selectTip(String[] tips);
     }
 }

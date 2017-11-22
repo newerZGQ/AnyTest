@@ -18,16 +18,6 @@ import android.view.View;
 
 import com.zgq.wokao.R;
 
-
-/**
- * AccuracyView custom view.
- * <p>
- * https://github.com/passsy/android-AccuracyView
- *
- * @author Pascal.Welsch
- * @version 1.3 (03.10.2014)
- * @since 05.03.2013
- */
 public class AccuracyView extends View {
 
     /**
@@ -573,7 +563,7 @@ public class AccuracyView extends View {
      *  ______________________
      * |_________dx/2_________|
      * |......| /'''''\|......|
-     * |-dx/2-|| View ||-dx/2-|
+     * |-dx/2-|| IView ||-dx/2-|
      * |______| \_____/|______|
      * |________ dx/2_________|
      * </pre>

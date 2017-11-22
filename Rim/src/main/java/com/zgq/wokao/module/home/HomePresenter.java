@@ -1,7 +1,5 @@
 package com.zgq.wokao.module.home;
 
-import com.zgq.wokao.module.BaseView;
-
 /**
  * Created by zhangguoqiang on 2017/11/21.
  */

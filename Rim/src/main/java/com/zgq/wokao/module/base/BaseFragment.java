@@ -9,14 +9,14 @@ import android.view.ViewGroup;
 
 import com.zgq.wokao.RimApplication;
 import com.zgq.wokao.injector.components.ApplicationComponent;
-import com.zgq.wokao.module.BasePresenter;
-import com.zgq.wokao.module.BaseView;
+import com.zgq.wokao.module.IPresenter;
+import com.zgq.wokao.module.IView;
 
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 
-public abstract class BaseFragment<T extends BasePresenter> extends Fragment implements BaseView<T> {
+public abstract class BaseFragment<T extends IPresenter> extends Fragment implements IView<T> {
 
     private View mRootView;
 

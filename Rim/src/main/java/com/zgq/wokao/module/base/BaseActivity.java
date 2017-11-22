@@ -17,14 +17,14 @@ import com.zgq.wokao.R;
 import com.zgq.wokao.RimApplication;
 import com.zgq.wokao.injector.components.ApplicationComponent;
 import com.zgq.wokao.injector.modules.ActivityModule;
-import com.zgq.wokao.module.BasePresenter;
-import com.zgq.wokao.module.BaseView;
+import com.zgq.wokao.module.IPresenter;
+import com.zgq.wokao.module.IView;
 
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 
-public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity implements BaseView<T> {
+public abstract class BaseActivity<T extends IPresenter> extends AppCompatActivity implements IView<T> {
 
     private Toast toast;
 
