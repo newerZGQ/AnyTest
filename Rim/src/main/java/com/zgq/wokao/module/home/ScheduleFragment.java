@@ -9,7 +9,8 @@ import com.zgq.wokao.module.base.BaseFragment;
 
 import io.realm.RealmList;
 
-public class ScheduleFragment extends BaseFragment<HomeContract.SchedulePresenter> implements HomeContract.ScheduleView {
+public class ScheduleFragment extends BaseFragment<HomeContract.SchedulePresenter>
+        implements HomeContract.ScheduleView {
     @Override
     protected void daggerInject() {
         DaggerHomeComponent.builder()

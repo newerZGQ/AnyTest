@@ -5,7 +5,8 @@ import com.zgq.wokao.repository.RimRepository;
 
 import javax.inject.Inject;
 
-public class ParserPresenter extends BasePresenter<ParserContract.View> implements ParserContract.Presenter {
+public class ParserPresenter extends BasePresenter<ParserContract.View>
+        implements ParserContract.Presenter {
 
     @Inject
     RimRepository repository;

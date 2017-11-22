@@ -9,7 +9,8 @@ import com.zgq.wokao.module.base.BaseFragment;
  * Created by zhangguoqiang on 2017/11/21.
  */
 
-public class PaperFragment extends BaseFragment<HomeContract.PaperPresenter> implements HomeContract.PaperView {
+public class PaperFragment extends BaseFragment<HomeContract.PaperPresenter>
+        implements HomeContract.PaperView {
     @Override
     protected void daggerInject() {
         DaggerHomeComponent.builder()

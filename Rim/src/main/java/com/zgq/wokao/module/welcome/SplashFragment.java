@@ -14,7 +14,8 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 
-public class SplashFragment extends BaseFragment<WelcomeContract.SplashPresenter> implements WelcomeContract.SplashView{
+public class SplashFragment extends BaseFragment<WelcomeContract.SplashPresenter>
+        implements WelcomeContract.SplashView{
 
     private static final String TAG = SplashFragment.class.getSimpleName();
 

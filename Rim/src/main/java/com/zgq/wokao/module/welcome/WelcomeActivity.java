@@ -13,7 +13,8 @@ import java.util.TimerTask;
 
 import javax.inject.Inject;
 
-public class WelcomeActivity extends BaseActivity<WelcomeContract.MainPresenter> implements WelcomeContract.MainView{
+public class WelcomeActivity extends BaseActivity<WelcomeContract.MainPresenter>
+        implements WelcomeContract.MainView{
     @Inject
     SplashFragment fragment;
     @Inject

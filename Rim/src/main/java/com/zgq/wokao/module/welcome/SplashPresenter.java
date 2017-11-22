@@ -5,7 +5,8 @@ import com.zgq.wokao.repository.RimRepository;
 
 import javax.inject.Inject;
 
-public class SplashPresenter extends BasePresenter<WelcomeContract.SplashView> implements WelcomeContract.SplashPresenter {
+public class SplashPresenter extends BasePresenter<WelcomeContract.SplashView>
+        implements WelcomeContract.SplashPresenter {
     private static final String TAG = SplashPresenter.class.getSimpleName();
     private RimRepository repository;
 
