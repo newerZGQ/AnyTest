@@ -5,10 +5,6 @@ import com.zgq.wokao.repository.RimRepository;
 
 import javax.inject.Inject;
 
-/**
- * Created by zgq on 2017/11/22.
- */
-
 public class ParserPresenter extends BasePresenter<ParserContract.View> implements ParserContract.Presenter {
 
     @Inject
