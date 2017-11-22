@@ -1,11 +1,12 @@
 package com.zgq.wokao.repository;
 
-import android.content.Context;
-
 import com.zgq.wokao.entity.paper.NormalExamPaper;
 
+import com.google.common.base.Optional;
+
 import javax.inject.Inject;
-import javax.inject.Singleton;
+
+import io.reactivex.Flowable;
 
 /**
  * Created by zgq on 2017/11/20.
@@ -31,7 +32,7 @@ public class RimRepository implements RimDataSource {
     }
 
     @Override
-    public NormalExamPaper queryPaper(String paperId) {
+    public Flowable<Optional<NormalExamPaper>> queryPaper(String paperId) {
         return paperRepository.queryPaper(paperId);
     }
 }

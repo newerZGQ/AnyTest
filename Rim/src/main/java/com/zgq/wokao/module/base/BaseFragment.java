@@ -2,12 +2,11 @@ package com.zgq.wokao.module.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.trello.rxlifecycle.LifecycleTransformer;
-import com.trello.rxlifecycle.components.support.RxFragment;
 import com.zgq.wokao.RimApplication;
 import com.zgq.wokao.injector.components.ApplicationComponent;
 import com.zgq.wokao.module.BasePresenter;
@@ -17,7 +16,7 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 
-public abstract class BaseFragment<T extends BasePresenter> extends RxFragment implements BaseView<T> {
+public abstract class BaseFragment<T extends BasePresenter> extends Fragment implements BaseView<T> {
 
     private View mRootView;
 
@@ -46,10 +45,6 @@ public abstract class BaseFragment<T extends BasePresenter> extends RxFragment i
         super.onDestroy();
         presenter.unsubscribe();
         presenter.dropView();
-    }
-
-    protected LifecycleTransformer bindToLife() {
-        return this.<T>bindToLifecycle();
     }
 
     protected abstract void daggerInject();

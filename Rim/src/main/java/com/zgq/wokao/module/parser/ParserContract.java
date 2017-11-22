@@ -8,6 +8,11 @@ import com.zgq.wokao.module.BaseView;
  */
 
 public interface ParserContract {
-    interface View extends BaseView<Presenter>{}
-    interface Presenter extends BasePresenter<View>{}
+    interface View extends BaseView<Presenter>{
+        void showLoading();
+        void showParseResult(String message);
+    }
+    interface Presenter extends BasePresenter<View>{
+        void parseDocument(String filePath);
+    }
 }

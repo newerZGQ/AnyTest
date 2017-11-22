@@ -1,6 +1,9 @@
 package com.zgq.wokao.repository;
 
+import com.google.common.base.Optional;
 import com.zgq.wokao.entity.paper.NormalExamPaper;
+
+import io.reactivex.Flowable;
 
 /**
  * Created by zgq on 2017/11/20.
@@ -9,5 +12,5 @@ import com.zgq.wokao.entity.paper.NormalExamPaper;
 public interface PaperDataSource {
     void saveExamPaper(NormalExamPaper examPaper);
     void deleteExamPaper(NormalExamPaper examPaper);
-    NormalExamPaper queryPaper(String paperId);
+    Flowable<Optional<NormalExamPaper>> queryPaper(String paperId);
 }

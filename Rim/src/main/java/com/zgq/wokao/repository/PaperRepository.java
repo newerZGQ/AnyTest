@@ -1,9 +1,12 @@
 package com.zgq.wokao.repository;
 
+import com.google.common.base.Optional;
 import com.zgq.wokao.dao.RimDaoSource;
 import com.zgq.wokao.entity.paper.NormalExamPaper;
 
 import javax.inject.Inject;
+
+import io.reactivex.Flowable;
 
 /**
  * Created by zgq on 2017/11/20.
@@ -28,9 +31,7 @@ public class PaperRepository implements PaperDataSource {
     }
 
     @Override
-    public NormalExamPaper queryPaper(String paperId) {
-        return daoSource.queryExamPaper(paperId);
+    public Flowable<Optional<NormalExamPaper>> queryPaper(String paperId) {
+        return Flowable.just(Optional.of(daoSource.queryExamPaper(paperId)));
     }
-
-
 }
