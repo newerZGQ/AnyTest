@@ -23,6 +23,7 @@ public interface HomeContract {
     }
 
     interface MainPresenter extends IPresenter<MainView> {
+        void loadSummary();
     }
 
 

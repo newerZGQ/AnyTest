@@ -235,7 +235,8 @@ public class HomeActivity extends BaseActivity<HomeContract.MainPresenter>
 
     @Override
     public void showTotalRecord(StudySummary studySummary) {
-
+        totalCount.setText("" + studySummary.getStudyCount());
+        totalAccuracy.setText("" + studySummary.getCorrectCount());
     }
 
     @Override

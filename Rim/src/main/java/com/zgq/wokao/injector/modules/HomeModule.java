@@ -34,14 +34,14 @@ public class HomeModule {
 
     @PerActivity
     @Provides
-    public HomeContract.MainPresenter provideHomePresenter(){
-        return new HomePresenter();
+    public HomeContract.MainPresenter provideHomePresenter(HomePresenter presenter){
+        return presenter;
     }
 
     @PerActivity
     @Provides
-    public HomeContract.SchedulePresenter provideSchedulePresenter(RimRepository repository){
-        return new SchedulePresenter(repository);
+    public HomeContract.SchedulePresenter provideSchedulePresenter(SchedulePresenter presenter){
+        return presenter;
     }
 
     @PerActivity
