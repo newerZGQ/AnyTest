@@ -9,9 +9,6 @@ import com.zgq.wokao.module.welcome.WelcomePresenter;
 import dagger.Module;
 import dagger.Provides;
 
-/**
- * Created by zhangguoqiang on 2017/11/19.
- */
 @Module
 public class WelcomeModule {
     public WelcomeModule(){}

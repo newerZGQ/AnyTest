@@ -1,27 +1,12 @@
 package com.zgq.wokao.module.home;
 
+import com.zgq.wokao.module.base.BasePresenter;
+
 /**
  * Created by zhangguoqiang on 2017/11/21.
  */
 
-public class PaperPresenter implements HomeContract.PaperPresenter {
-    @Override
-    public void takeView(HomeContract.PaperView view) {
+public class PaperPresenter extends BasePresenter<HomeContract.PaperView>
+        implements HomeContract.PaperPresenter {
 
-    }
-
-    @Override
-    public void dropView() {
-
-    }
-
-    @Override
-    public void subscribe() {
-
-    }
-
-    @Override
-    public void unsubscribe() {
-
-    }
 }
