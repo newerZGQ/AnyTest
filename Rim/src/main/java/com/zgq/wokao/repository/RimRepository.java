@@ -35,4 +35,9 @@ public class RimRepository implements RimDataSource {
     public Flowable<Optional<NormalExamPaper>> queryPaper(String paperId) {
         return paperRepository.queryPaper(paperId);
     }
+
+    @Override
+    public void setSked(NormalExamPaper paper, boolean skedState) {
+        paperRepository.setSked(paper, skedState);
+    }
 }

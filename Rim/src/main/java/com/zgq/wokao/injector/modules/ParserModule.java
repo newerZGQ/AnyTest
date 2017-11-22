@@ -17,8 +17,8 @@ public class ParserModule {
 
     @Provides
     @PerActivity
-    public ParserContract.Presenter provideMainPresenter(){
-        return new ParserPresenter();
+    public ParserContract.Presenter provideMainPresenter(ParserPresenter presenter){
+        return presenter;
     }
 
 }

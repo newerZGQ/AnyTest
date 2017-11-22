@@ -13,4 +13,5 @@ public interface PaperDataSource {
     void saveExamPaper(NormalExamPaper examPaper);
     void deleteExamPaper(NormalExamPaper examPaper);
     Flowable<Optional<NormalExamPaper>> queryPaper(String paperId);
+    void setSked(NormalExamPaper paper, boolean skedState);
 }

@@ -49,8 +49,18 @@ public class ParserActivity extends BaseActivity<ParserContract.Presenter>
     }
 
     @Override
-    public void showParseResult(String message) {
-        showToast(message);
+    public void destoryView() {
+        openActivity(HomeActivity.class);
+    }
+
+    @Override
+    public void showSuccessToast() {
+        showToast(getString(R.string.parse_success));
+    }
+
+    @Override
+    public void showFailedToast() {
+        showToast(getString(R.string.parse_failed));
     }
 
     @Override

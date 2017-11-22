@@ -2,9 +2,9 @@ package com.zgq.wokao.dao;
 
 import com.zgq.wokao.entity.paper.NormalExamPaper;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -17,23 +17,30 @@ public class RimDaoSource implements RimDao {
     public RimDaoSource(){}
 
     @Override
-    public void saveExamPaper(NormalExamPaper paper) {
+    public void saveExamPaper(@Nonnull NormalExamPaper paper) {
         realm.beginTransaction();
-        realm.copyFromRealm(paper);
+        realm.copyToRealm(paper);
         realm.commitTransaction();
     }
 
     @Override
-    public void deleteExamPaper(NormalExamPaper paper) {
+    public void deleteExamPaper(@Nonnull NormalExamPaper paper) {
         realm.beginTransaction();
         paper.cascadeDelete();
         realm.commitTransaction();
     }
 
     @Override
-    public @Nullable NormalExamPaper queryExamPaper(String paperId) {
+    public @Nullable NormalExamPaper queryExamPaper(@Nonnull String paperId) {
         return realm.where(NormalExamPaper.class)
                 .equalTo("paperInfo.id", paperId)
                 .findFirst();
+    }
+
+    @Override
+    public void setSked(@Nonnull NormalExamPaper paper, boolean skedState) {
+        realm.beginTransaction();
+        paper.getPaperInfo().getSchedule().setInSked(skedState);
+        realm.commitTransaction();
     }
 }

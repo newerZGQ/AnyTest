@@ -34,4 +34,9 @@ public class PaperRepository implements PaperDataSource {
     public Flowable<Optional<NormalExamPaper>> queryPaper(String paperId) {
         return Flowable.just(Optional.fromNullable(daoSource.queryExamPaper(paperId)));
     }
+
+    @Override
+    public void setSked(NormalExamPaper paper, boolean skedState) {
+        daoSource.setSked(paper,skedState);
+    }
 }
