@@ -129,18 +129,6 @@ public class SlideUp implements View.OnTouchListener, ValueAnimator.AnimatorUpda
      * <p>Interface to listen to all handled events taking place in the slider</p>
      */
     public interface Listener {
-
-        /**
-         * @param percent percents of complete slide <b color="#EF6C00">(100 = HIDDEN, 0 = SHOWED)</b>
-         */
-        void onSlide(float percent);
-
-        /**
-         * @param visibility (<b>GONE</b> or <b>VISIBLE</b>)
-         */
-        void onVisibilityChanged(int visibility);
-
-
         void onAnimatorStarted(int direction);
     }
 
@@ -511,11 +499,9 @@ public class SlideUp implements View.OnTouchListener, ValueAnimator.AnimatorUpda
         percent = percent < 0 ? 0 : percent;
         if (slideAnimationTo == 0 && hideKeyboard)
             hideSoftInput();
-        listener.onSlide(percent);
     }
 
     private void notifyVisibilityChanged(int visibility) {
-        listener.onVisibilityChanged(visibility);
         switch (visibility) {
             case VISIBLE:
                 currentState = SHOWED;

@@ -1,23 +1,13 @@
 package com.zgq.wokao.module.welcome;
 
+import com.zgq.wokao.module.base.BasePresenter;
+
 import javax.inject.Inject;
 
-/**
- * Created by zhangguoqiang on 2017/11/21.
- */
-
-public class WelcomePresenter implements WelcomeContract.MainPresenter {
+public class WelcomePresenter extends BasePresenter<WelcomeContract.MainView>
+        implements WelcomeContract.MainPresenter {
 
     @Inject
     public WelcomePresenter (){}
 
-    @Override
-    public void takeView(WelcomeContract.MainView view) {
-
-    }
-
-    @Override
-    public void dropView() {
-
-    }
 }

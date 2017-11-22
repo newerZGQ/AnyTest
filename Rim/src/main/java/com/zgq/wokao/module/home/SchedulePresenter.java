@@ -1,13 +1,25 @@
 package com.zgq.wokao.module.home;
 
-public class SchedulePresenter implements HomeContract.SchedulePresenter {
+import com.zgq.wokao.module.base.BasePresenter;
+import com.zgq.wokao.repository.RimRepository;
+
+public class SchedulePresenter extends BasePresenter<HomeContract.ScheduleView>
+        implements HomeContract.SchedulePresenter {
+
+    private RimRepository repository;
+
+    public SchedulePresenter(RimRepository repository){
+        this.repository = repository;
+    }
+
+
     @Override
-    public void takeView(HomeContract.ScheduleView view) {
+    public void loadSchedule() {
 
     }
 
     @Override
-    public void dropView() {
+    public void updateDetail(int index) {
 
     }
 }

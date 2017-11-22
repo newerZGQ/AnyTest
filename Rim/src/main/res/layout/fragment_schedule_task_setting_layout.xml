@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/task_setting_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorTransparent"
+    android:gravity="center_vertical|center_horizontal"
+    android:orientation="vertical"
+    android:visibility="visible">
+
+    <com.xw.repo.BubbleSeekBar
+        android:id="@+id/seekbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="64dp"
+        android:layout_marginRight="64dp"
+        android:layout_marginTop="300dp"
+        app:bsb_bubble_color="@color/colorCyan"
+        app:bsb_bubble_text_color="@color/colorWhite"
+        app:bsb_max="200"
+        app:bsb_min="0"
+        app:bsb_progress="0"
+        app:bsb_second_track_color="@color/colorCyan"
+        app:bsb_section_count="5"
+        app:bsb_section_text_position="bottom_sides"
+        app:bsb_show_progress_in_float="false"
+        app:bsb_show_section_mark="true"
+        app:bsb_show_thumb_text="true"
+        app:bsb_track_color="@color/colorCyan" />
+    <TextView
+        android:text="@string/daily_task"
+        android:layout_marginBottom="50dp"
+        android:textColor="@color/colorWhiteTransparent"
+        android:textSize="16sp"
+        android:layout_marginTop="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+</LinearLayout>

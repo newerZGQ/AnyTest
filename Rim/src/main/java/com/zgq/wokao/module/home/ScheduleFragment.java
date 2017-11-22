@@ -1,14 +1,13 @@
 package com.zgq.wokao.module.home;
 
 import com.zgq.wokao.R;
+import com.zgq.wokao.entity.paper.info.ExamPaperInfo;
 import com.zgq.wokao.entity.summary.StudySummary;
 import com.zgq.wokao.injector.components.DaggerHomeComponent;
 import com.zgq.wokao.injector.modules.HomeModule;
 import com.zgq.wokao.module.base.BaseFragment;
 
-/**
- * Created by zhangguoqiang on 2017/11/21.
- */
+import io.realm.RealmList;
 
 public class ScheduleFragment extends BaseFragment<HomeContract.SchedulePresenter> implements HomeContract.ScheduleView {
     @Override
@@ -27,6 +26,16 @@ public class ScheduleFragment extends BaseFragment<HomeContract.SchedulePresente
 
     @Override
     protected void initViews() {
+
+    }
+
+    @Override
+    public void setDetail() {
+
+    }
+
+    @Override
+    public void setSchedulePaper(RealmList<ExamPaperInfo> examPaperInfos) {
 
     }
 }

@@ -1,20 +1,14 @@
 package com.zgq.wokao.module.home;
 
-import com.zgq.wokao.module.BaseView;
+import com.zgq.wokao.module.base.BasePresenter;
+
+import javax.inject.Inject;
 
 /**
  * Created by zhangguoqiang on 2017/11/21.
  */
 
-public class HomePresenter implements HomeContract.MainPresenter {
+public class HomePresenter extends BasePresenter<HomeContract.MainView>
+        implements HomeContract.MainPresenter {
 
-    @Override
-    public void takeView(HomeContract.MainView view) {
-
-    }
-
-    @Override
-    public void dropView() {
-
-    }
 }

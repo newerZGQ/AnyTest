@@ -2,22 +2,21 @@ package com.zgq.wokao.module.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.trello.rxlifecycle.LifecycleTransformer;
-import com.trello.rxlifecycle.components.support.RxFragment;
 import com.zgq.wokao.RimApplication;
 import com.zgq.wokao.injector.components.ApplicationComponent;
-import com.zgq.wokao.module.BasePresenter;
-import com.zgq.wokao.module.BaseView;
+import com.zgq.wokao.module.IPresenter;
+import com.zgq.wokao.module.IView;
 
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 
-public abstract class BaseFragment<T extends BasePresenter> extends RxFragment implements BaseView<T> {
+public abstract class BaseFragment<T extends IPresenter> extends Fragment implements IView<T> {
 
     private View mRootView;
 
@@ -29,20 +28,23 @@ public abstract class BaseFragment<T extends BasePresenter> extends RxFragment i
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mRootView = inflater.inflate(attachLayoutRes(), null);
         daggerInject();
-        presenter.takeView(this);
         ButterKnife.bind(this, mRootView);
         initViews();
         return mRootView;
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        presenter.dropView();
+    public void onResume() {
+        super.onResume();
+        presenter.takeView(this);
+        presenter.subscribe();
     }
 
-    protected LifecycleTransformer bindToLife() {
-        return this.<T>bindToLifecycle();
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.unsubscribe();
+        presenter.dropView();
     }
 
     protected abstract void daggerInject();

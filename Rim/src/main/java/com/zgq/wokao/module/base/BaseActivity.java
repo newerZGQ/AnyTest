@@ -1,5 +1,6 @@
 package com.zgq.wokao.module.base;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -7,20 +8,25 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 import com.zgq.wokao.R;
 import com.zgq.wokao.RimApplication;
 import com.zgq.wokao.injector.components.ApplicationComponent;
 import com.zgq.wokao.injector.modules.ActivityModule;
-import com.zgq.wokao.module.BasePresenter;
-import com.zgq.wokao.module.BaseView;
+import com.zgq.wokao.module.IPresenter;
+import com.zgq.wokao.module.IView;
 
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 
-public abstract class BaseActivity<T extends BasePresenter> extends RxAppCompatActivity implements BaseView<T> {
+public abstract class BaseActivity<T extends IPresenter> extends AppCompatActivity implements IView<T> {
+
+    private Toast toast;
 
     protected abstract void daggerInject();
 
@@ -36,20 +42,23 @@ public abstract class BaseActivity<T extends BasePresenter> extends RxAppCompatA
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         daggerInject();
-        if (presenter != null) {
-            presenter.takeView(this);
-        }
         setContentView(attachLayoutRes());
         ButterKnife.bind(this);
         initViews();
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        presenter.takeView(this);
+        presenter.subscribe();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (presenter != null) {
-            presenter.dropView();
-        }
+        presenter.unsubscribe();
+        presenter.dropView();
     }
 
     protected ApplicationComponent getAppComponent() {
@@ -131,6 +140,54 @@ public abstract class BaseActivity<T extends BasePresenter> extends RxAppCompatA
             intent.setData(uri);
         }
         startActivity(intent);
+    }
+
+    @SuppressLint("ShowToast")
+    private void initToast() {
+        toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
+        TextView textView = new TextView(getApplicationContext());
+        //自定义toast背景色
+//        textView.setBackgroundResource(R.drawable.pop);
+        textView.setPadding(15, 10, 15, 10);
+        textView.setGravity(Gravity.CENTER);
+        textView.setTextColor(0xffffffff);
+        toast.setView(textView);
+        toast.setGravity(Gravity.BOTTOM, 0, 50);
+
+    }
+
+    protected void showLongToast(int pResId) {
+        showLongToast(getString(pResId));
+    }
+
+    protected void showToast(String pMsg) {
+        if (toast == null) {
+            initToast();
+        }
+        TextView view = (TextView) toast.getView();
+        view.setText(pMsg);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
+    protected void showToast(String msg, int duration){
+        if (toast == null) {
+            initToast();
+        }
+        TextView view = (TextView) toast.getView();
+        view.setText(msg);
+        toast.setDuration(duration);
+        toast.show();
+    }
+
+    protected void showLongToast(String pMsg) {
+        if (toast == null) {
+            initToast();
+        }
+        TextView view = (TextView) toast.getView();
+        view.setText(pMsg);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.show();
     }
 
     @Override
