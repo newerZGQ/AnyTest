@@ -11,17 +11,8 @@ import com.zgq.wokao.injector.components.DaggerParserComponent;
 import com.zgq.wokao.injector.modules.ParserModule;
 import com.zgq.wokao.module.base.BaseActivity;
 import com.zgq.wokao.module.home.HomeActivity;
-import com.zgq.wokao.module.home.HomeContract;
-
-import java.util.regex.Pattern;
-
-import javax.inject.Inject;
 
 import butterknife.BindView;
-
-/**
- * Created by zgq on 2017/11/22.
- */
 
 public class ParserActivity extends BaseActivity<ParserContract.Presenter>
         implements ParserContract.View {
@@ -47,8 +38,8 @@ public class ParserActivity extends BaseActivity<ParserContract.Presenter>
         new MaterialFilePicker()
                 .withActivity(this)
                 .withRequestCode(1)
-                .withFilterDirectories(true) // Set directories filterable (false by default)
-                .withHiddenFiles(true) // Show hidden files and folders
+                .withFilterDirectories(true)
+                .withHiddenFiles(true)
                 .start();
     }
 
@@ -58,8 +49,18 @@ public class ParserActivity extends BaseActivity<ParserContract.Presenter>
     }
 
     @Override
-    public void showParseResult(String message) {
-        showToast(message);
+    public void destoryView() {
+        openActivity(HomeActivity.class);
+    }
+
+    @Override
+    public void showSuccessToast() {
+        showToast(getString(R.string.parse_success));
+    }
+
+    @Override
+    public void showFailedToast() {
+        showToast(getString(R.string.parse_failed));
     }
 
     @Override

@@ -8,5 +8,5 @@ import java.util.ArrayList;
  */
 
 public interface IPaperParser extends IParser {
-    ArrayList<PaperParser.Topic> parse(InputStream is);
+    ArrayList<PaperParser.Topic> parseTopic(InputStream is);
 }

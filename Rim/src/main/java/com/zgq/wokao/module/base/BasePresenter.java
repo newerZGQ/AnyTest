@@ -12,7 +12,7 @@ public abstract class BasePresenter<T extends IView> implements IPresenter<T> {
     protected T view;
 
     @NonNull
-    private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    protected CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Override
     public void takeView(IView view) {

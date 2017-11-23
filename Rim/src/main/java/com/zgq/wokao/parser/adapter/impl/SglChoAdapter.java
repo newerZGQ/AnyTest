@@ -46,7 +46,7 @@ public class SglChoAdapter extends BaseAdapter implements ISglChoAdapter {
 
     @Override
     public ArrayList<SglChoQuestion> parse(String resource) {
-        Logger.d("parse sgkcho" + resource);
+        Logger.d("parseTopic sgkcho" + resource);
         String[] strings = resource.split("\n");
         content = (ArrayList<String>) ListUtil.array2list(strings);
         parseRes(content);
@@ -93,7 +93,7 @@ public class SglChoAdapter extends BaseAdapter implements ISglChoAdapter {
     }
 
     private SglChoQuestion parseSingle(int number, String questionRes) {
-        Logger.d("parse sglcho single " + questionRes);
+        Logger.d("parseTopic sglcho single " + questionRes);
         SglChoQuestion question = SglChoQuestion.builder()
                 .answer(new Answer())
                 .body(new QuestionBody())

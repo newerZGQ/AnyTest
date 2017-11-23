@@ -3,8 +3,6 @@ package com.zgq.wokao.module.home;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.graphics.Color;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -19,6 +17,7 @@ import com.gigamole.navigationtabstrip.NavigationTabStrip;
 import com.zgq.linechart.ChartView;
 import com.zgq.wokao.R;
 import com.zgq.wokao.entity.summary.StudySummary;
+import com.zgq.wokao.entity.summary.TotalDailyCount;
 import com.zgq.wokao.injector.components.DaggerHomeComponent;
 import com.zgq.wokao.injector.modules.HomeModule;
 import com.zgq.wokao.module.base.BaseActivity;
@@ -26,11 +25,19 @@ import com.zgq.wokao.module.parser.ParserActivity;
 import com.zgq.wokao.widget.CustomViewPager;
 import com.zgq.wokao.widget.SlideUp;
 
+import org.reactivestreams.Publisher;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import io.reactivex.Flowable;
+import io.reactivex.functions.Function;
+import io.realm.RealmList;
 
 public class HomeActivity extends BaseActivity<HomeContract.MainPresenter>
         implements HomeContract.MainView, View.OnClickListener{
@@ -146,20 +153,17 @@ public class HomeActivity extends BaseActivity<HomeContract.MainPresenter>
 
     private void initSlideUp() {
         slideUp = new SlideUp.Builder(menuLayout)
-                .withListener(new SlideUp.Listener() {
-                    @Override
-                    public void onAnimatorStarted(int direction) {
-                        if (direction == SlideUp.toUp) {
-                            ObjectAnimator.ofFloat(mainLayout, "translationY",
-                                    menuLayout.getHeight(), 0).
-                                    setDuration(300).start();
-                            animateToolbarRight(350);
-                        } else {
-                            ObjectAnimator.ofFloat(mainLayout, "translationY",
-                                    0, menuLayout.getHeight()).
-                                    setDuration(300).start();
-                            animateToolbarLeft(350);
-                        }
+                .withListener(direction -> {
+                    if (direction == SlideUp.toUp) {
+                        ObjectAnimator.ofFloat(mainLayout, "translationY",
+                                menuLayout.getHeight(), 0).
+                                setDuration(300).start();
+                        animateToolbarRight(350);
+                    } else {
+                        ObjectAnimator.ofFloat(mainLayout, "translationY",
+                                0, menuLayout.getHeight()).
+                                setDuration(300).start();
+                        animateToolbarLeft(350);
                     }
                 })
                 .withStartState(SlideUp.State.HIDDEN)
@@ -229,13 +233,26 @@ public class HomeActivity extends BaseActivity<HomeContract.MainPresenter>
     }
 
     @Override
-    public void showDayCurve(StudySummary studySummary) {
-
+    public void showTotalRecord(StudySummary studySummary) {
+        totalCount.setText(String.valueOf(studySummary.getStudyCount()));
+        totalAccuracy.setText(String.valueOf(studySummary.getCorrectCount()));
+        setLineChart(studySummary.getLastWeekRecords());
     }
 
-    @Override
-    public void showTotalRecord(StudySummary studySummary) {
-
+    private void setLineChart(RealmList<TotalDailyCount> dailyRecords) {
+        dailyRecords.add(0, dailyRecords.get(0));
+        dailyRecords.add(dailyRecords.get(dailyRecords.size() - 1));
+        List<String> xValue = new ArrayList<>();
+        List<Integer> yValue = new ArrayList<>();
+        Map<String, Integer> value = new HashMap<>();
+        for (int i = 0; i < dailyRecords.size(); i++) {
+            xValue.add("" + i);
+            value.put(xValue.get(i), dailyRecords.get(i).getDailyCount());
+        }
+        for (int i = 0; i < 9; i++) {
+            yValue.add(i * 60);
+        }
+        lineChart.setValue(value, xValue, yValue, 350);
     }
 
     @Override

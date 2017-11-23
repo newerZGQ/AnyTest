@@ -1,5 +1,6 @@
 package com.zgq.wokao.util;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -14,31 +15,15 @@ public class DateUtil {
     private static final String TAG = DateUtil.class.getSimpleName();
 
     public static String getCurrentDate() {
-        return getFormatData("yyyy-MM-dd HH:mm:ss");
+        DateFormat formatter = DateFormat.getDateInstance();
+        Date curDate = new Date(System.currentTimeMillis());
+        return formatter.format(curDate);
     }
 
-    public static String getYYYY_MM_DD() {
-        return getFormatData("yyyy-MM-dd");
-    }
-
-    public static String getFormatData(String format) {
-        SimpleDateFormat formatter = new SimpleDateFormat(format);
-        Date curDate = new Date(System.currentTimeMillis());//获取当前时间
-        String str = formatter.format(curDate);
-        return str;
-    }
-
-    public static String getYYYY_MM_DD(String dateString) throws ParseException {
-        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date date = format1.parse(dateString);
-        SimpleDateFormat format = new SimpleDateFormat("yyyy"+" - "+"MM");
-        if (Locale.getDefault().getLanguage().equals(new Locale("zh").getLanguage())){
-            format = new SimpleDateFormat("yyyy"+" 年 "+"MM" + " 月 ");
-        }else {
-            format = new SimpleDateFormat("MM" + "-" + "yyyy");
-        }
-        String result = format.format(date);
-        return result;
+    public static String toLocalDateFormat(String source) throws ParseException {
+        DateFormat format = DateFormat.getDateInstance();
+        Date date = format.parse(source);
+        return format.format(date);
     }
 
     /**
@@ -95,50 +80,23 @@ public class DateUtil {
         return display;
     }
 
-    public static long getMSDate(String date) throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return sdf.parse(date).getTime();
-    }
-
     /**
-     * 获得指定日期的前一天
+     * 获得距离指定日期一定天数的那一天
      * @param specifiedDay
-     * @return
-     * @throws Exception
+     * @param from 正数为后几天，负数为前几天
+     * @return String
      */
-    public static String getSpecifiedDayBefore(String specifiedDay){
-        Calendar c = Calendar.getInstance();
-        Date date=null;
+    public static String getTargetDateApart(String specifiedDay, int from){
+        Calendar calendar = Calendar.getInstance();
         try {
-            date = new SimpleDateFormat("yy-MM-dd").parse(specifiedDay);
+            Date date = DateFormat.getDateInstance().parse(specifiedDay);
+            calendar.setTime(date);
+            int day=calendar.get(Calendar.DATE);
+            calendar.set(Calendar.DATE,day+from);
+            return DateFormat.getDateInstance().format(calendar.getTime());
         } catch (ParseException e) {
             e.printStackTrace();
+            return null;
         }
-        c.setTime(date);
-        int day=c.get(Calendar.DATE);
-        c.set(Calendar.DATE,day-1);
-
-        String dayBefore=new SimpleDateFormat("yyyy-MM-dd").format(c.getTime());
-        return dayBefore;
-    }
-    /**
-     * 获得指定日期的后一天
-     * @param specifiedDay
-     * @return
-     */
-    public static String getSpecifiedDayAfter(String specifiedDay){
-        Calendar c = Calendar.getInstance();
-        Date date=null;
-        try {
-            date = new SimpleDateFormat("yy-MM-dd").parse(specifiedDay);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        c.setTime(date);
-        int day=c.get(Calendar.DATE);
-        c.set(Calendar.DATE,day+1);
-
-        String dayAfter=new SimpleDateFormat("yyyy-MM-dd").format(c.getTime());
-        return dayAfter;
     }
 }

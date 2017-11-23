@@ -1,16 +1,29 @@
 package com.zgq.wokao.parser;
 
+import com.zgq.wokao.entity.paper.NormalExamPaper;
+import com.zgq.wokao.entity.paper.info.DailyRecord;
 import com.zgq.wokao.entity.paper.info.ExamPaperInfo;
+import com.zgq.wokao.entity.paper.info.Schedule;
+import com.zgq.wokao.entity.paper.question.DiscussQuestion;
+import com.zgq.wokao.entity.paper.question.FillInQuestion;
+import com.zgq.wokao.entity.paper.question.IQuestion;
+import com.zgq.wokao.entity.paper.question.MultChoQuestion;
 import com.zgq.wokao.entity.paper.question.QuestionType;
+import com.zgq.wokao.entity.paper.question.SglChoQuestion;
+import com.zgq.wokao.entity.paper.question.TFQuestion;
 import com.zgq.wokao.exception.ParseException;
 import com.zgq.wokao.parser.context.PaperContext;
 import com.zgq.wokao.parser.context.item.PaperItemType;
+import com.zgq.wokao.util.DateUtil;
+import com.zgq.wokao.util.UUIDUtil;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+
+import io.realm.RealmList;
 
 
 /**
@@ -22,7 +35,7 @@ public class PaperParser extends BaseParser implements IPaperParser {
     private InputStream is;
     private PaperContext context = new PaperContext();
     private ArrayList<Topic> topicLists = new ArrayList<>();
-    private ExamPaperInfo info = new ExamPaperInfo();
+    private NormalExamPaper paper;
 
     private int contextLength = 5;
 
@@ -32,15 +45,14 @@ public class PaperParser extends BaseParser implements IPaperParser {
 
     public PaperParser initParam() {
         context.init(contextLength);
+        paper = NormalExamPaper.builder()
+                .paperInfo(
+                        ExamPaperInfo.builder().schedule(
+                                Schedule.builder().dailyRecords(new RealmList<DailyRecord>()).build()
+                        ).build()
+                )
+                .build();
         return this;
-    }
-
-    public ArrayList<Topic> getTopicLists() {
-        return topicLists;
-    }
-
-    public ExamPaperInfo getInfo() {
-        return info;
     }
 
     private ArrayList<Topic> parse() throws ParseException, IOException {
@@ -83,7 +95,7 @@ public class PaperParser extends BaseParser implements IPaperParser {
             }
         }
 
-        if (ctBuilder.toString().equals("")){
+        if (ctBuilder.toString().equals("")) {
             return topicLists;
         }
         Topic topic = new Topic(topicType, ctBuilder.toString());
@@ -92,7 +104,7 @@ public class PaperParser extends BaseParser implements IPaperParser {
     }
 
     @Override
-    public ArrayList<Topic> parse(InputStream is) {
+    public ArrayList<Topic> parseTopic(InputStream is) {
         this.is = is;
         try {
             return parse();
@@ -158,14 +170,14 @@ public class PaperParser extends BaseParser implements IPaperParser {
     private void parseTitle(String s) {
         if (getTopicType(s) == QuestionType.NOTQUESTION &&
                 !isAuthorTitle(s)) {
-            //info.setTitle(s);
+            paper.getPaperInfo().setTitle(s);
         }
     }
 
     private void parseAuthor(String s) {
         if (getTopicType(s) == QuestionType.NOTQUESTION &&
                 isAuthorTitle(s)) {
-            //info.setAuthor(s);
+            paper.getPaperInfo().setAuthor(s);
         }
     }
 
@@ -181,6 +193,105 @@ public class PaperParser extends BaseParser implements IPaperParser {
             }
         }
         return false;
+    }
+
+
+    public NormalExamPaper parse(InputStream inputStream) throws ParseException {
+        ArrayList<PaperParser.Topic> topics = parseTopic(inputStream);
+        if (topics == null || topics.size() == 0) {
+            return null;
+        }
+
+        if (topics.size() == 0) {
+            throw new com.zgq.wokao.exception.ParseException("请检查大标题");
+        }
+        for (PaperParser.Topic tmp : topics) {
+            switch (tmp.getType()) {
+                case FILLIN:
+                    paper.setFillInQuestions(parseFillin(tmp));
+                    break;
+                case TF:
+                    paper.setTfQuestions(parseTF(tmp));
+                    break;
+                case SINGLECHOOSE:
+                    paper.setSglChoQuestions(parseSgl(tmp));
+                    break;
+                case MUTTICHOOSE:
+                    paper.setMultChoQuestions(parseMult(tmp));
+                    break;
+                case DISCUSS:
+                    paper.setDiscussQuestions(parseDis(tmp));
+                    break;
+                case NOTQUESTION:
+                    break;
+                default:
+                    break;
+            }
+        }
+        paper.getPaperInfo().setCreateDate(DateUtil.getCurrentDate());
+        paper.getPaperInfo().setId(UUIDUtil.getID());
+        initPaperData(paper);
+        return paper;
+    }
+
+    private void initPaperData(NormalExamPaper paper) {
+        //默认加入学习计划
+        paper.getPaperInfo().getSchedule().setInSked(true);
+    }
+
+    private RealmList<FillInQuestion> parseFillin(PaperParser.Topic resource) {
+        QuestionParser parser = new QuestionParser();
+        parser.setAdapter(QuestionType.FILLIN);
+        ArrayList<IQuestion> list = parser.parse(resource);
+        RealmList<FillInQuestion> results = new RealmList<>();
+        for (IQuestion tmp : list) {
+            results.add((FillInQuestion) tmp);
+        }
+        return results;
+    }
+
+    private RealmList<TFQuestion> parseTF(PaperParser.Topic resource) {
+        QuestionParser parser = new QuestionParser();
+        parser.setAdapter(QuestionType.TF);
+        ArrayList<IQuestion> list = parser.parse(resource);
+        RealmList<TFQuestion> results = new RealmList<>();
+        for (IQuestion tmp : list) {
+            results.add((TFQuestion) tmp);
+        }
+        return results;
+    }
+
+    private RealmList<SglChoQuestion> parseSgl(PaperParser.Topic resource) {
+        QuestionParser parser = new QuestionParser();
+        parser.setAdapter(QuestionType.SINGLECHOOSE);
+        ArrayList<IQuestion> list = parser.parse(resource);
+        RealmList<SglChoQuestion> results = new RealmList<>();
+        for (IQuestion tmp : list) {
+            results.add((SglChoQuestion) tmp);
+        }
+        return results;
+    }
+
+    private RealmList<MultChoQuestion> parseMult(PaperParser.Topic resource) {
+        QuestionParser parser = new QuestionParser();
+        parser.setAdapter(QuestionType.MUTTICHOOSE);
+        ArrayList<IQuestion> list = parser.parse(resource);
+        RealmList<MultChoQuestion> results = new RealmList<>();
+        for (IQuestion tmp : list) {
+            results.add((MultChoQuestion) tmp);
+        }
+        return results;
+    }
+
+    private RealmList<DiscussQuestion> parseDis(PaperParser.Topic resource) {
+        QuestionParser parser = new QuestionParser();
+        parser.setAdapter(QuestionType.DISCUSS);
+        ArrayList<IQuestion> list = parser.parse(resource);
+        RealmList<DiscussQuestion> results = new RealmList<>();
+        for (IQuestion tmp : list) {
+            results.add((DiscussQuestion) tmp);
+        }
+        return results;
     }
 
 
