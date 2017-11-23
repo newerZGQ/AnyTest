@@ -16,13 +16,11 @@ public class DateUtilTest {
 
     @Test
     public void getCurrentDate() throws Exception {
-        System.out.print("getCurrentDate " + DateUtil.getCurrentDate());
         Assert.assertNotNull(DateUtil.getCurrentDate());
     }
 
     @Test
     public void toLocalDateFormat() throws Exception {
-        System.out.print("to local format " + DateUtil.toLocalDateFormat("2016-12-12"));
         Assert.assertNotNull(DateUtil.toLocalDateFormat("2016-12-12"));
     }
 
