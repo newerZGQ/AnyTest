@@ -95,7 +95,7 @@ public class PaperParser extends BaseParser implements IPaperParser {
             }
         }
 
-        if (ctBuilder.toString().equals("")){
+        if (ctBuilder.toString().equals("")) {
             return topicLists;
         }
         Topic topic = new Topic(topicType, ctBuilder.toString());
@@ -198,7 +198,7 @@ public class PaperParser extends BaseParser implements IPaperParser {
 
     public NormalExamPaper parse(InputStream inputStream) throws ParseException {
         ArrayList<PaperParser.Topic> topics = parseTopic(inputStream);
-        if (topics == null || topics.size() == 0){
+        if (topics == null || topics.size() == 0) {
             return null;
         }
 

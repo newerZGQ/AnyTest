@@ -3,8 +3,6 @@ package com.zgq.wokao.module.home;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.graphics.Color;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -235,8 +233,8 @@ public class HomeActivity extends BaseActivity<HomeContract.MainPresenter>
 
     @Override
     public void showTotalRecord(StudySummary studySummary) {
-        totalCount.setText("" + studySummary.getStudyCount());
-        totalAccuracy.setText("" + studySummary.getCorrectCount());
+        totalCount.setText(String.valueOf(studySummary.getStudyCount()));
+        totalAccuracy.setText(String.valueOf(studySummary.getCorrectCount()));
     }
 
     @Override
