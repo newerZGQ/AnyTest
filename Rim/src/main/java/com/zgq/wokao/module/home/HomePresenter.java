@@ -2,12 +2,14 @@ package com.zgq.wokao.module.home;
 
 import com.google.common.base.Optional;
 import com.zgq.wokao.entity.summary.StudySummary;
+import com.zgq.wokao.entity.summary.TotalDailyCount;
 import com.zgq.wokao.module.base.BasePresenter;
 import com.zgq.wokao.repository.RimRepository;
 
 import javax.inject.Inject;
 
 import io.reactivex.functions.Consumer;
+import io.realm.RealmList;
 
 public class HomePresenter extends BasePresenter<HomeContract.MainView>
         implements HomeContract.MainPresenter {
@@ -25,7 +27,9 @@ public class HomePresenter extends BasePresenter<HomeContract.MainView>
             @Override
             public void accept(Optional<StudySummary> studySummaryOptional) throws Exception {
                 if (studySummaryOptional.isPresent()){
-                    view.showTotalRecord(studySummaryOptional.get());
+                    StudySummary persist = studySummaryOptional.get();
+                    repository.copyFromRealm(persist)
+                            .subscribe(free -> view.showTotalRecord(free));
                 }
             }
         });

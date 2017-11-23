@@ -9,8 +9,6 @@ import io.realm.RealmList;
 
 public interface HomeContract {
     interface MainView extends IView<MainPresenter> {
-        void showDayCurve(StudySummary studySummary);
-
         void showTotalRecord(StudySummary studySummary);
     }
 
