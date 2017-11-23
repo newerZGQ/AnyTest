@@ -3,8 +3,14 @@ package com.zgq.wokao.dao;
 import com.zgq.wokao.entity.paper.NormalExamPaper;
 import com.zgq.wokao.entity.summary.StudySummary;
 
+import java.util.List;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
+import io.realm.RealmList;
+import io.realm.RealmModel;
+import io.realm.RealmObject;
 
 /**
  * Created by zgq on 2017/11/22.
@@ -19,4 +25,7 @@ public interface RimDao {
 
     void saveSummary(StudySummary studySummary);
     StudySummary getStudySummary();
+
+    <T extends RealmModel> T copyFromRealm(T  t);
+    <T extends RealmModel> List<T> copyFromRealm(Iterable<T> realmObjects);
 }
