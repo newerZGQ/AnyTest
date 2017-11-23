@@ -26,6 +26,10 @@ android {
     realm {
         syncEnabled = true;
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -65,17 +69,11 @@ dependencies {
 
     // logger
     implementation "com.orhanobut:logger:${rootProject.ext.loggerVersion}"
-
     implementation "com.github.devlight.navigationtabstrip:navigationtabstrip:${rootProject.ext.navigationtabstrip}"
-
     implementation "com.xw.repo:bubbleseekbar:${rootProject.ext.bubbleseekbar}"
-
     implementation "com.nbsp:library:${rootProject.ext.filepicker}"
-
     implementation project(':RecyclerViewHelper')
     implementation project(':linechart')
     implementation project(':shapeloading')
-
     implementation files('libs/tm-extractors-0.4.jar')
-
 }
