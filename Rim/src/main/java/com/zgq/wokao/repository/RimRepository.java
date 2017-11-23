@@ -9,6 +9,7 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
 import io.reactivex.Flowable;
+import io.reactivex.functions.Consumer;
 
 public class RimRepository implements RimDataSource {
 
@@ -40,8 +41,15 @@ public class RimRepository implements RimDataSource {
     }
 
     @Override
-    public void saveSummary(@Nonnull StudySummary studySummary) {
-        paperRepository.saveSummary(studySummary);
+    public void saveSummary(@Nonnull final StudySummary studySummary) {
+        getStudySummary().subscribe(new Consumer<Optional<StudySummary>>() {
+            @Override
+            public void accept(Optional<StudySummary> studySummaryOptional) throws Exception {
+                if (!studySummaryOptional.isPresent()){
+                    paperRepository.saveSummary(studySummary);
+                }
+            }
+        });
     }
 
     @Override
