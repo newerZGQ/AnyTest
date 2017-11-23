@@ -4,6 +4,7 @@ import com.zgq.wokao.entity.summary.StudySummary;
 import com.zgq.wokao.entity.summary.TotalDailyCount;
 import com.zgq.wokao.module.base.BasePresenter;
 import com.zgq.wokao.repository.RimRepository;
+import com.zgq.wokao.util.DateUtil;
 
 import javax.inject.Inject;
 
@@ -15,7 +16,7 @@ public class WelcomePresenter extends BasePresenter<WelcomeContract.MainView>
     private RimRepository repository;
 
     @Inject
-    public WelcomePresenter (RimRepository repository){
+    public WelcomePresenter(RimRepository repository) {
         this.repository = repository;
     }
 
@@ -25,9 +26,18 @@ public class WelcomePresenter extends BasePresenter<WelcomeContract.MainView>
         checkStudySummary();
     }
 
-    private void checkStudySummary(){
+    private void checkStudySummary() {
+        RealmList<TotalDailyCount> realmList = new RealmList<>();
+        String today = DateUtil.getCurrentDate();
+        for (int i = 0; i < 7; i++) {
+            TotalDailyCount totalDailyCount = TotalDailyCount
+                    .builder()
+                    .date(DateUtil.getTargetDateApart(today, -i))
+                    .build();
+            realmList.add(0, totalDailyCount);
+        }
         repository.saveSummary(StudySummary.builder()
-                .lastWeekRecords(new RealmList<TotalDailyCount>())
+                .lastWeekRecords(realmList)
                 .build());
     }
 }
