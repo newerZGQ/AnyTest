@@ -45,10 +45,12 @@ public class PaperParser extends BaseParser implements IPaperParser {
 
     public PaperParser initParam() {
         context.init(contextLength);
+        RealmList<DailyRecord> dailyRecords = new RealmList<>();
+        dailyRecords.add(DailyRecord.builder().date(DateUtil.getCurrentDate()).build());
         paper = NormalExamPaper.builder()
                 .paperInfo(
                         ExamPaperInfo.builder().schedule(
-                                Schedule.builder().dailyRecords(new RealmList<>()).build()
+                                Schedule.builder().dailyRecords(dailyRecords).build()
                         ).build()
                 )
                 .build();

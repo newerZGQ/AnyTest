@@ -18,7 +18,6 @@ public class SchedulePresenter extends BasePresenter<HomeContract.ScheduleView>
     public void subscribe() {
         super.subscribe();
         loadSchedules();
-        updateDetail(0);
     }
 
     @Inject
@@ -30,7 +29,14 @@ public class SchedulePresenter extends BasePresenter<HomeContract.ScheduleView>
     @Override
     public void loadSchedules() {
         repository.getAllExamPaperInfo()
-                .subscribe(examPaperInfos -> view.setSchedulePapers(examPaperInfos));
+                .subscribe(examPaperInfos -> {
+                    if (examPaperInfos.size() != 0) {
+                        view.setSchedulePapers(examPaperInfos);
+                        updateDetail(0);
+                    }else{
+                        
+                    }
+                });
     }
 
     @Override
