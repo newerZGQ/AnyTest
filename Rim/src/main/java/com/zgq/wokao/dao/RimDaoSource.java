@@ -1,6 +1,7 @@
 package com.zgq.wokao.dao;
 
 import com.zgq.wokao.entity.paper.NormalExamPaper;
+import com.zgq.wokao.entity.paper.info.ExamPaperInfo;
 import com.zgq.wokao.entity.summary.StudySummary;
 
 import java.util.List;
@@ -41,6 +42,13 @@ public class RimDaoSource implements RimDao {
         return realm.where(NormalExamPaper.class)
                 .equalTo("paperInfo.id", paperId)
                 .findFirst();
+    }
+
+    @Nonnull
+    @Override
+    public RealmResults<ExamPaperInfo> getAllExamPaperInfo() {
+        return realm.where(ExamPaperInfo.class)
+                .findAll();
     }
 
     @Override
