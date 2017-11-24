@@ -48,7 +48,7 @@ public class PaperParser extends BaseParser implements IPaperParser {
         paper = NormalExamPaper.builder()
                 .paperInfo(
                         ExamPaperInfo.builder().schedule(
-                                Schedule.builder().dailyRecords(new RealmList<DailyRecord>()).build()
+                                Schedule.builder().dailyRecords(new RealmList<>()).build()
                         ).build()
                 )
                 .build();

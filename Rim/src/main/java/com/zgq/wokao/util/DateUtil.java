@@ -20,9 +20,14 @@ public class DateUtil {
         return formatter.format(curDate);
     }
 
-    public static String toLocalDateFormat(String source) throws ParseException {
+    public static String toLocalDateFormat(String source) {
         DateFormat format = DateFormat.getDateInstance();
-        Date date = format.parse(source);
+        Date date = null;
+        try {
+            date = format.parse(source);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         return format.format(date);
     }
 

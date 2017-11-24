@@ -18,8 +18,10 @@ import lombok.NoArgsConstructor;
 public class Schedule extends RealmObject implements CascadeDeleteable {
 
     private boolean isInSked;
-
     private int dailyTask;
+
+    private int totalCount;
+    private int correctCount;
 
     private String lastStudyType;
     private int lastStudyNum;
