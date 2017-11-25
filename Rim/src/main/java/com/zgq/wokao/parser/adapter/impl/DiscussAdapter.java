@@ -12,9 +12,9 @@ import com.zgq.wokao.parser.context.QuestionContext;
 import com.zgq.wokao.parser.context.item.QuestionItem;
 import com.zgq.wokao.parser.context.item.QuestionItemType;
 import com.zgq.wokao.util.ListUtil;
-import com.zgq.wokao.util.UUIDUtil;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class DiscussAdapter extends BaseAdapter implements IDiscussAdapter {
 
@@ -87,13 +87,14 @@ public class DiscussAdapter extends BaseAdapter implements IDiscussAdapter {
 
     private DiscussQuestion parseSingle(int number, String questionRes) {
         DiscussQuestion question = DiscussQuestion.builder()
-                .answer(Answer.builder().build())
-                .body(QuestionBody.builder().build())
-                .info(QuestionInfo.builder().build())
-                .record(QuestionRecord.builder().build())
+                .id(UUID.randomUUID().toString())
+                .answer(Answer.builder().id(UUID.randomUUID().toString()).build())
+                .body(QuestionBody.builder().id(UUID.randomUUID().toString()).build())
+                .info(QuestionInfo.builder().id(UUID.randomUUID().toString()).build())
+                .record(QuestionRecord.builder().id(UUID.randomUUID().toString()).build())
                 .build();
         question.getInfo().setIndex(number);
-        question.getInfo().setId(UUIDUtil.getID());
+        question.getInfo().setId(UUID.randomUUID().toString());
         inContext(QuestionItemType.number);
         String[] resArray = trimNum(questionRes).split("\n");
         StringBuilder builder = new StringBuilder();

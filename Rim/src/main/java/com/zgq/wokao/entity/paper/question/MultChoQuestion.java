@@ -3,6 +3,7 @@ package com.zgq.wokao.entity.paper.question;
 import com.zgq.wokao.entity.CascadeDeleteable;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,6 +16,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class MultChoQuestion extends RealmObject implements CascadeDeleteable, IQuestion {
+    @PrimaryKey
+    private String id;
     private QuestionBody body;
     private Answer answer;
     private QuestionInfo info;

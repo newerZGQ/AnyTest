@@ -4,6 +4,7 @@ import com.zgq.wokao.entity.CascadeDeleteable;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,6 +20,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class Options extends RealmObject implements CascadeDeleteable {
+    @PrimaryKey
+    private String id;
     private RealmList<Option> optionList;
 
     @Override
