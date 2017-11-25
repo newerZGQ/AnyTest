@@ -16,11 +16,6 @@ import com.zgq.wokao.util.UUIDUtil;
 
 import java.util.ArrayList;
 
-
-/**
- * Created by zgq on 2017/2/19.
- */
-
 public class DiscussAdapter extends BaseAdapter implements IDiscussAdapter {
 
     private QuestionType type = QuestionType.DISCUSS;
@@ -92,10 +87,10 @@ public class DiscussAdapter extends BaseAdapter implements IDiscussAdapter {
 
     private DiscussQuestion parseSingle(int number, String questionRes) {
         DiscussQuestion question = DiscussQuestion.builder()
-                .answer(new Answer())
-                .body(new QuestionBody())
-                .info(new QuestionInfo())
-                .record(new QuestionRecord())
+                .answer(Answer.builder().build())
+                .body(QuestionBody.builder().build())
+                .info(QuestionInfo.builder().build())
+                .record(QuestionRecord.builder().build())
                 .build();
         question.getInfo().setIndex(number);
         question.getInfo().setId(UUIDUtil.getID());

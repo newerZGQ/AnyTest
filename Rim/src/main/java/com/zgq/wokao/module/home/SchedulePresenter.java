@@ -34,7 +34,7 @@ public class SchedulePresenter extends BasePresenter<HomeContract.ScheduleView>
                         view.setSchedulePapers(examPaperInfos);
                         updateDetail(0);
                     }else{
-                        
+                        view.showEmptyView();
                     }
                 });
     }

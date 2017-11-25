@@ -1,5 +1,6 @@
 package com.zgq.wokao.module.home;
 
+import com.orhanobut.logger.Logger;
 import com.zgq.wokao.entity.paper.NormalExamPaper;
 import com.zgq.wokao.module.base.BasePresenter;
 import com.zgq.wokao.repository.RimDataSource;
@@ -26,7 +27,13 @@ public class PaperPresenter extends BasePresenter<HomeContract.PaperView>
     @Override
     public void loadAllPapers() {
         repository.getAllExamPaper()
-                .subscribe(papers -> view.setPaperListData(papers));
+                .subscribe(papers -> {
+                    if (papers.size() == 0){
+                        view.showEmptyView();
+                    }else {
+                        view.setPaperListData(papers);
+                    }
+                });
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.zgq.wokao.parser.adapter.impl;
 
+import com.orhanobut.logger.Logger;
 import com.zgq.wokao.entity.paper.question.Answer;
 import com.zgq.wokao.entity.paper.question.FillInQuestion;
 import com.zgq.wokao.entity.paper.question.QuestionBody;
@@ -90,10 +91,10 @@ public class FillInAdapter extends BaseAdapter implements IFillInAdapter {
 
     private FillInQuestion parseSingle(int number, String questionRes) {
         FillInQuestion question = FillInQuestion.builder()
-                .answer(new Answer())
-                .body(new QuestionBody())
-                .info(new QuestionInfo())
-                .record(new QuestionRecord())
+                .answer(Answer.builder().build())
+                .body(QuestionBody.builder().build())
+                .info(QuestionInfo.builder().build())
+                .record(QuestionRecord.builder().build())
                 .build();
         question.getInfo().setIndex(number);
         question.getInfo().setId(UUIDUtil.getID());

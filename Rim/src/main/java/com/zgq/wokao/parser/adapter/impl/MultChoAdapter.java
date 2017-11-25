@@ -92,11 +92,13 @@ public class MultChoAdapter extends BaseAdapter implements IMultChoAdapter {
 
     private MultChoQuestion parseSingle(int number, String questionRes) {
         MultChoQuestion question = MultChoQuestion.builder()
-                .answer(new Answer())
-                .body(new QuestionBody())
-                .info(new QuestionInfo())
-                .options(new Options(new RealmList<Option>()))
-                .record(new QuestionRecord())
+                .answer(Answer.builder().build())
+                .body(QuestionBody.builder().build())
+                .info(QuestionInfo.builder().build())
+                .record(QuestionRecord.builder().build())
+                .options(Options.builder()
+                        .optionList(new RealmList<>())
+                        .build())
                 .build();
         question.getInfo().setIndex(number);
         question.getInfo().setId(UUIDUtil.getID());

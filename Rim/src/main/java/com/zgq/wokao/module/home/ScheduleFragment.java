@@ -75,6 +75,28 @@ public class ScheduleFragment extends BaseFragment<HomeContract.SchedulePresente
         schedulePagerAdapter.replaceData(examPaperInfos);
     }
 
+    @Override
+    public void showEmptyView() {
+        paperInfoList.setVisibility(View.GONE);
+        scheduleInfoView.setVisibility(View.GONE);
+        if (noContentStub == null) {
+            noContentStub.inflate();
+        } else {
+            noContentStub.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void hideEmptyView() {
+        paperInfoList.setVisibility(View.VISIBLE);
+        scheduleInfoView.setVisibility(View.VISIBLE);
+        if (noContentStub == null) {
+            noContentStub.inflate();
+        } else {
+            noContentStub.setVisibility(View.GONE);
+        }
+    }
+
     SchedulePagerAdapter.OnClickListener pagerItemListener = new SchedulePagerAdapter.OnClickListener() {
         @Override
         public void onClickTopLayout(int position) {

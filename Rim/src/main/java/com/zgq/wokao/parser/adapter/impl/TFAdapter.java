@@ -89,10 +89,10 @@ public class TFAdapter extends BaseAdapter implements ITFAdapter {
 
     private TFQuestion parseSingle(int number, String questionRes) {
         TFQuestion question = TFQuestion.builder()
-                .answer(new Answer())
-                .body(new QuestionBody())
-                .info(new QuestionInfo())
-                .record(new QuestionRecord())
+                .answer(Answer.builder().build())
+                .body(QuestionBody.builder().build())
+                .info(QuestionInfo.builder().build())
+                .record(QuestionRecord.builder().build())
                 .build();
         question.getInfo().setIndex(number);
         question.getInfo().setId(UUIDUtil.getID());

@@ -1,5 +1,6 @@
 package com.zgq.wokao.entity.paper.question;
 
+import com.orhanobut.logger.Logger;
 import com.zgq.wokao.entity.CascadeDeleteable;
 
 import io.realm.RealmObject;
@@ -9,9 +10,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-/**
- * Created by zgq on 16-6-18.
- */
 @Data
 @Builder
 @NoArgsConstructor

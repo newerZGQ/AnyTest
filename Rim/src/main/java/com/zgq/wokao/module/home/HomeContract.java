@@ -20,11 +20,15 @@ public interface HomeContract {
     interface ScheduleView extends IView<SchedulePresenter> {
         void setDetail(Schedule schedule);
         void setSchedulePapers(RealmResults<ExamPaperInfo> examPaperInfos);
+        void showEmptyView();
+        void hideEmptyView();
     }
 
     interface PaperView extends IView<PaperPresenter> {
         void setPaperListData(List<NormalExamPaper> examPapers);
         void notifyDataChanged();
+        void showEmptyView();
+        void hideEmptyView();
     }
 
     interface MainPresenter extends IPresenter<MainView> {

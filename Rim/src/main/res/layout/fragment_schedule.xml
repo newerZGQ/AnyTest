@@ -30,6 +30,7 @@
     <ViewStub
         android:id="@+id/no_schedule_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout="@layout/fragment_schedule_noschedule_layout" />
 
 </RelativeLayout>

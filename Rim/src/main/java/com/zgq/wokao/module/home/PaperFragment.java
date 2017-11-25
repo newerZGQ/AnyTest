@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStub;
 
 import com.zgq.wokao.R;
 import com.zgq.wokao.adapter.HomePaperAdapter;
@@ -30,6 +31,8 @@ public class PaperFragment extends BaseFragment<HomeContract.PaperPresenter>
 
     @BindView(R.id.paper_list)
     RecyclerView paperList;
+    @BindView(R.id.no_paper_layout)
+    ViewStub noContentStub;
 
     private View rootView;
 
@@ -67,6 +70,18 @@ public class PaperFragment extends BaseFragment<HomeContract.PaperPresenter>
     @Override
     public void notifyDataChanged() {
         homePaperAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showEmptyView() {
+        paperList.setVisibility(View.GONE);
+        noContentStub.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideEmptyView() {
+        paperList.setVisibility(View.VISIBLE);
+        noContentStub.setVisibility(View.GONE);
     }
 
     private void initPaperList() {

@@ -32,7 +32,6 @@ public class RimDaoSource implements RimDao {
     public void deleteExamPaper(@Nonnull NormalExamPaper paper) {
         realm.beginTransaction();
         paper.cascadeDelete();
-        realm.copyFromRealm(paper);
         realm.commitTransaction();
     }
 
