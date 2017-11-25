@@ -12,7 +12,6 @@ import javax.inject.Inject;
 
 import io.realm.Realm;
 import io.realm.RealmModel;
-import io.realm.RealmObject;
 import io.realm.RealmResults;
 
 public class RimDaoSource implements RimDao {
@@ -42,6 +41,13 @@ public class RimDaoSource implements RimDao {
         return realm.where(NormalExamPaper.class)
                 .equalTo("paperInfo.id", paperId)
                 .findFirst();
+    }
+
+    @Nullable
+    @Override
+    public RealmResults<NormalExamPaper> getAllExamPaper() {
+        return realm.where(NormalExamPaper.class)
+                .findAll();
     }
 
     @Nonnull

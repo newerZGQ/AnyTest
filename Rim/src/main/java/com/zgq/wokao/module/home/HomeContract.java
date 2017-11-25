@@ -1,10 +1,13 @@
 package com.zgq.wokao.module.home;
 
+import com.zgq.wokao.entity.paper.NormalExamPaper;
 import com.zgq.wokao.entity.paper.info.ExamPaperInfo;
 import com.zgq.wokao.entity.paper.info.Schedule;
 import com.zgq.wokao.entity.summary.StudySummary;
 import com.zgq.wokao.module.IPresenter;
 import com.zgq.wokao.module.IView;
+
+import java.util.List;
 
 import io.realm.RealmList;
 import io.realm.RealmResults;
@@ -20,6 +23,7 @@ public interface HomeContract {
     }
 
     interface PaperView extends IView<PaperPresenter> {
+        void setPaperListData(List<NormalExamPaper> examPapers);
     }
 
     interface MainPresenter extends IPresenter<MainView> {
@@ -34,5 +38,9 @@ public interface HomeContract {
 
 
     interface PaperPresenter extends IPresenter<PaperView> {
+        void loadAllPapers();
+        void deletePaper(NormalExamPaper paper);
+        void removeFromSchedule(NormalExamPaper paper);
+        void addToSchedule(NormalExamPaper paper);
     }
 }

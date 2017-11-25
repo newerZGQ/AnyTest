@@ -147,7 +147,7 @@ public abstract class BaseActivity<T extends IPresenter> extends AppCompatActivi
         toast = Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT);
         TextView textView = new TextView(getApplicationContext());
         //自定义toast背景色
-//        textView.setBackgroundResource(R.drawable.pop);
+        //textView.setBackgroundResource(R.drawable.home_activity_background);
         textView.setPadding(15, 10, 15, 10);
         textView.setGravity(Gravity.CENTER);
         textView.setTextColor(0xffffffff);

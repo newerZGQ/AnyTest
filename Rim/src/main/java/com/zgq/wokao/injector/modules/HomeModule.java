@@ -46,7 +46,7 @@ public class HomeModule {
 
     @PerActivity
     @Provides
-    public HomeContract.PaperPresenter providePaperPresenter(){
-        return new PaperPresenter();
+    public HomeContract.PaperPresenter providePaperPresenter(PaperPresenter presenter){
+        return presenter;
     }
 }

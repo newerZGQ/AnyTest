@@ -18,6 +18,7 @@ public interface PaperDataSource {
     void saveExamPaper(NormalExamPaper examPaper);
     void deleteExamPaper(NormalExamPaper examPaper);
     Flowable<Optional<NormalExamPaper>> queryPaper(String paperId);
+    Flowable<RealmResults<NormalExamPaper>> getAllExamPaper();
     @Nonnull
     Flowable<RealmResults<ExamPaperInfo>> getAllExamPaperInfo();
     void setSked(NormalExamPaper paper, boolean skedState);

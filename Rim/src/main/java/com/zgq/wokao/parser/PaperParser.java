@@ -37,13 +37,12 @@ public class PaperParser extends BaseParser implements IPaperParser {
     private ArrayList<Topic> topicLists = new ArrayList<>();
     private NormalExamPaper paper;
 
-    private int contextLength = 5;
-
     public PaperParser() {
         initParam();
     }
 
     public PaperParser initParam() {
+        int contextLength = 5;
         context.init(contextLength);
         RealmList<DailyRecord> dailyRecords = new RealmList<>();
         dailyRecords.add(DailyRecord.builder().date(DateUtil.getCurrentDate()).build());
@@ -53,6 +52,11 @@ public class PaperParser extends BaseParser implements IPaperParser {
                                 Schedule.builder().dailyRecords(dailyRecords).build()
                         ).build()
                 )
+                .fillInQuestions(new RealmList<>())
+                .tfQuestions(new RealmList<>())
+                .sglChoQuestions(new RealmList<>())
+                .multChoQuestions(new RealmList<>())
+                .discussQuestions(new RealmList<>())
                 .build();
         return this;
     }
