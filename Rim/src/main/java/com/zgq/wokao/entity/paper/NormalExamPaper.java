@@ -1,5 +1,6 @@
 package com.zgq.wokao.entity.paper;
 
+import com.orhanobut.logger.Logger;
 import com.zgq.wokao.entity.CascadeDeleteable;
 import com.zgq.wokao.entity.paper.info.ExamPaperInfo;
 import com.zgq.wokao.entity.paper.question.DiscussQuestion;
@@ -35,6 +36,7 @@ public class NormalExamPaper extends RealmObject implements CascadeDeleteable {
             paperInfo.cascadeDelete();
         }
         for (int i = 0; i < fillInQuestions.size(); i++) {
+            Logger.d("fillin delete count " + i);
             fillInQuestions.get(i).cascadeDelete();
         }
         for (int i = 0; i < tfQuestions.size(); i++) {

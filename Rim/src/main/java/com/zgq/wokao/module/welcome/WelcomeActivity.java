@@ -1,6 +1,11 @@
 package com.zgq.wokao.module.welcome;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 
 import com.zgq.wokao.R;
 import com.zgq.wokao.injector.components.DaggerWelcomeComponent;
@@ -15,6 +20,9 @@ import javax.inject.Inject;
 
 public class WelcomeActivity extends BaseActivity<WelcomeContract.MainPresenter>
         implements WelcomeContract.MainView{
+
+    private static final int MY_PERMISSIONS_REQUEST_OPERATE_SDCARD = 972;
+
     @Inject
     SplashFragment fragment;
     @Inject
@@ -51,7 +59,44 @@ public class WelcomeActivity extends BaseActivity<WelcomeContract.MainPresenter>
         timer.schedule(task, 1000);
     }
 
-    private void checkPermissions(){
+    private void checkPermissions() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            goHomeActivity();
+            return;
+        }
+        final String[] permissions = {"Manifest.permission.WRITE_EXTERNAL_STORAGE",
+                "Manifest.permission.READ_EXTERNAL_STORAGE"};
+        int i = ContextCompat.checkSelfPermission(this, permissions[0]);
+        if (i != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(WelcomeActivity.this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    MY_PERMISSIONS_REQUEST_OPERATE_SDCARD);
+            return;
+        }
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_OPERATE_SDCARD:
+                if (grantResults.length > 1
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                        && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                    presenter.checkSample(getApplicationContext());
+                } else {
+                    showToast(getResources().getString(R.string.storage_waring));
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void goHomeActivity() {
         openActivity(HomeActivity.class);
     }
 }
