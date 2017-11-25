@@ -24,6 +24,7 @@ public interface HomeContract {
 
     interface PaperView extends IView<PaperPresenter> {
         void setPaperListData(List<NormalExamPaper> examPapers);
+        void notifyDataChanged();
     }
 
     interface MainPresenter extends IPresenter<MainView> {

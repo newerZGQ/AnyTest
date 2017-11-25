@@ -32,7 +32,7 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
         this.papers = paperInfos;
     }
 
-    public void replaceData(RealmResults<NormalExamPaper> papers) {
+    public void replaceData(List<NormalExamPaper> papers) {
         this.papers = papers;
         notifyDataSetChanged();
     }

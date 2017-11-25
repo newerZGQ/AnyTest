@@ -61,79 +61,52 @@ public class PaperFragment extends BaseFragment<HomeContract.PaperPresenter>
 
     @Override
     public void setPaperListData(List<NormalExamPaper> examPapers) {
+        homePaperAdapter.replaceData(examPapers);
+    }
+
+    @Override
+    public void notifyDataChanged() {
+        homePaperAdapter.notifyDataSetChanged();
+    }
+
+    private void initPaperList() {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         paperList.setLayoutManager(layoutManager);
-        paperList.setAdapter(new HomePaperAdapter(examPapers, new HomePaperAdapter.PaperAdapterListener() {
-            @Override
-            public void onItemClick(int position, NormalExamPaper paper) {
-
-            }
-
-            @Override
-            public void onItemLongClick(int position, NormalExamPaper paper) {
-
-            }
-
-            @Override
-            public void onDeleteClick(int position, NormalExamPaper paper) {
-                Snackbar.make(rootView, getResources().getString(R.string.delete_speer),
-                        Snackbar.LENGTH_LONG).setAction(getResources().getString(R.string.delete),
-                        view -> presenter.deletePaper(paper)).setActionTextColor(0xfff44336).show();
-            }
-
-            @Override
-            public void onExitClick(int position, NormalExamPaper paper) {
-                Snackbar.make(rootView, getResources().getString(R.string.exit_speer),
-                        Snackbar.LENGTH_LONG).setAction(getResources().getString(R.string.confirm),
-                        view -> presenter.removeFromSchedule(paper)).show();
-            }
-
-            @Override
-            public void onStartClick(int position, NormalExamPaper paper) {
-                Snackbar.make(rootView, getResources().getString(R.string.start_speer),
-                        Snackbar.LENGTH_LONG).setAction(getResources().getString(R.string.confirm),
-                        view -> presenter.addToSchedule(paper)).show();
-            }
-        }));
+        paperList.setAdapter(homePaperAdapter);
         paperList.setItemViewCacheSize(1);
     }
 
-    private void initPaperList(){
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-        paperList.setLayoutManager(layoutManager);
-        paperList.setAdapter(new HomePaperAdapter(new ArrayList<>(0),
-                new HomePaperAdapter.PaperAdapterListener() {
-            @Override
-            public void onItemClick(int position, NormalExamPaper paper) {
+    private HomePaperAdapter homePaperAdapter = new HomePaperAdapter(new ArrayList<>(0),
+            new HomePaperAdapter.PaperAdapterListener() {
+                @Override
+                public void onItemClick(int position, NormalExamPaper paper) {
 
-            }
+                }
 
-            @Override
-            public void onItemLongClick(int position, NormalExamPaper paper) {
+                @Override
+                public void onItemLongClick(int position, NormalExamPaper paper) {
 
-            }
+                }
 
-            @Override
-            public void onDeleteClick(int position, NormalExamPaper paper) {
-                Snackbar.make(rootView, getResources().getString(R.string.delete_speer),
-                        Snackbar.LENGTH_LONG).setAction(getResources().getString(R.string.delete),
-                        view -> presenter.deletePaper(paper)).setActionTextColor(0xfff44336).show();
-            }
+                @Override
+                public void onDeleteClick(int position, NormalExamPaper paper) {
+                    Snackbar.make(rootView, getResources().getString(R.string.delete_speer),
+                            Snackbar.LENGTH_LONG).setAction(getResources().getString(R.string.delete),
+                            view -> presenter.deletePaper(paper)).setActionTextColor(0xfff44336).show();
+                }
 
-            @Override
-            public void onExitClick(int position, NormalExamPaper paper) {
-                Snackbar.make(rootView, getResources().getString(R.string.exit_speer),
-                        Snackbar.LENGTH_LONG).setAction(getResources().getString(R.string.confirm),
-                        view -> presenter.removeFromSchedule(paper)).show();
-            }
+                @Override
+                public void onExitClick(int position, NormalExamPaper paper) {
+                    Snackbar.make(rootView, getResources().getString(R.string.exit_speer),
+                            Snackbar.LENGTH_LONG).setAction(getResources().getString(R.string.confirm),
+                            view -> presenter.removeFromSchedule(paper)).show();
+                }
 
-            @Override
-            public void onStartClick(int position, NormalExamPaper paper) {
-                Snackbar.make(rootView, getResources().getString(R.string.start_speer),
-                        Snackbar.LENGTH_LONG).setAction(getResources().getString(R.string.confirm),
-                        view -> presenter.addToSchedule(paper)).show();
-            }
-        }));
-        paperList.setItemViewCacheSize(1);
-    }
+                @Override
+                public void onStartClick(int position, NormalExamPaper paper) {
+                    Snackbar.make(rootView, getResources().getString(R.string.start_speer),
+                            Snackbar.LENGTH_LONG).setAction(getResources().getString(R.string.confirm),
+                            view -> presenter.addToSchedule(paper)).show();
+                }
+            });
 }

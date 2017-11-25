@@ -32,15 +32,18 @@ public class PaperPresenter extends BasePresenter<HomeContract.PaperView>
     @Override
     public void deletePaper(NormalExamPaper paper) {
         repository.deleteExamPaper(paper);
+        view.notifyDataChanged();
     }
 
     @Override
     public void removeFromSchedule(NormalExamPaper paper) {
-
+        repository.setSked(paper, false);
+        view.notifyDataChanged();
     }
 
     @Override
     public void addToSchedule(NormalExamPaper paper) {
-
+        repository.setSked(paper, true);
+        view.notifyDataChanged();
     }
 }
