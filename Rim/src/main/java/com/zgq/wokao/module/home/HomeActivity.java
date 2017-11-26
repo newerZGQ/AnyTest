@@ -25,8 +25,6 @@ import com.zgq.wokao.module.parser.ParserActivity;
 import com.zgq.wokao.widget.CustomViewPager;
 import com.zgq.wokao.widget.SlideUp;
 
-import org.reactivestreams.Publisher;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,12 +33,10 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import io.reactivex.Flowable;
-import io.reactivex.functions.Function;
 import io.realm.RealmList;
 
 public class HomeActivity extends BaseActivity<HomeContract.MainPresenter>
-        implements HomeContract.MainView, View.OnClickListener{
+        implements HomeContract.MainView, View.OnClickListener, PaperFragment.Listener {
 
     private static final String TAG = HomeActivity.class.getSimpleName();
 
@@ -273,6 +269,11 @@ public class HomeActivity extends BaseActivity<HomeContract.MainPresenter>
             default:
                 break;
         }
+    }
+
+    @Override
+    public void notifyDataChanged() {
+        scheduleFragment.updateView();
     }
 
     private class HomeFragmentPagerAdapter extends FragmentPagerAdapter {

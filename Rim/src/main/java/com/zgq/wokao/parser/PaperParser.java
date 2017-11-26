@@ -15,13 +15,13 @@ import com.zgq.wokao.exception.ParseException;
 import com.zgq.wokao.parser.context.PaperContext;
 import com.zgq.wokao.parser.context.item.PaperItemType;
 import com.zgq.wokao.util.DateUtil;
-import com.zgq.wokao.util.UUIDUtil;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import io.realm.RealmList;
 
@@ -37,20 +37,36 @@ public class PaperParser extends BaseParser implements IPaperParser {
     private ArrayList<Topic> topicLists = new ArrayList<>();
     private NormalExamPaper paper;
 
-    private int contextLength = 5;
-
     public PaperParser() {
         initParam();
     }
 
     public PaperParser initParam() {
+        int contextLength = 5;
         context.init(contextLength);
-        paper = NormalExamPaper.builder()
+        RealmList<DailyRecord> dailyRecords = new RealmList<>();
+        dailyRecords.add(DailyRecord.builder()
+                .id(UUID.randomUUID().toString())
+                .date(DateUtil.getCurrentDate())
+                .build());
+        Schedule schedule = Schedule.builder()
+                .id(UUID.randomUUID().toString())
+                .dailyRecords(dailyRecords)
+                .build();
+        paper = NormalExamPaper
+                .builder()
+                .id(UUID.randomUUID().toString())
                 .paperInfo(
-                        ExamPaperInfo.builder().schedule(
-                                Schedule.builder().dailyRecords(new RealmList<DailyRecord>()).build()
-                        ).build()
+                        ExamPaperInfo.builder()
+                                .id(UUID.randomUUID().toString())
+                                .schedule(schedule)
+                                .build()
                 )
+                .fillInQuestions(new RealmList<>())
+                .tfQuestions(new RealmList<>())
+                .sglChoQuestions(new RealmList<>())
+                .multChoQuestions(new RealmList<>())
+                .discussQuestions(new RealmList<>())
                 .build();
         return this;
     }
@@ -229,7 +245,7 @@ public class PaperParser extends BaseParser implements IPaperParser {
             }
         }
         paper.getPaperInfo().setCreateDate(DateUtil.getCurrentDate());
-        paper.getPaperInfo().setId(UUIDUtil.getID());
+        paper.getPaperInfo().setId(UUID.randomUUID().toString());
         initPaperData(paper);
         return paper;
     }

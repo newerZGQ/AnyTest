@@ -15,9 +15,9 @@ import com.zgq.wokao.parser.context.QuestionContext;
 import com.zgq.wokao.parser.context.item.QuestionItem;
 import com.zgq.wokao.parser.context.item.QuestionItemType;
 import com.zgq.wokao.util.ListUtil;
-import com.zgq.wokao.util.UUIDUtil;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import io.realm.RealmList;
 
@@ -95,14 +95,18 @@ public class SglChoAdapter extends BaseAdapter implements ISglChoAdapter {
     private SglChoQuestion parseSingle(int number, String questionRes) {
         Logger.d("parseTopic sglcho single " + questionRes);
         SglChoQuestion question = SglChoQuestion.builder()
-                .answer(new Answer())
-                .body(new QuestionBody())
-                .info(new QuestionInfo())
-                .options(new Options(new RealmList<Option>()))
-                .record(new QuestionRecord())
+                .id(UUID.randomUUID().toString())
+                .answer(Answer.builder().id(UUID.randomUUID().toString()).build())
+                .body(QuestionBody.builder().id(UUID.randomUUID().toString()).build())
+                .info(QuestionInfo.builder().id(UUID.randomUUID().toString()).build())
+                .record(QuestionRecord.builder().id(UUID.randomUUID().toString()).build())
+                .options(Options.builder()
+                        .id(UUID.randomUUID().toString())
+                        .optionList(new RealmList<>())
+                        .build())
                 .build();
         question.getInfo().setIndex(number);
-        question.getInfo().setId(UUIDUtil.getID());
+        question.getInfo().setId(UUID.randomUUID().toString());
         inContext(QuestionItemType.number);
         String[] resArray = trimNum(questionRes).split("\n");
         StringBuilder builder = new StringBuilder();
@@ -124,6 +128,7 @@ public class SglChoAdapter extends BaseAdapter implements ISglChoAdapter {
                 String tag = String.valueOf((char) (head - 1));
                 headBack = head;
                 question.getOptions().getOptionList().add(Option.builder()
+                        .id(UUID.randomUUID().toString())
                         .option(optionContent)
                         .tag(tag)
                         .build());
@@ -136,6 +141,7 @@ public class SglChoAdapter extends BaseAdapter implements ISglChoAdapter {
                 String optionContent = builder.toString();
                 String tag = String.valueOf((char) headBack);
                 question.getOptions().getOptionList().add(Option.builder()
+                        .id(UUID.randomUUID().toString())
                         .option(optionContent)
                         .tag(tag)
                         .build());

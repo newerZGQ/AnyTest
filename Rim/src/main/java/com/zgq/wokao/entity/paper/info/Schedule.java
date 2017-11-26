@@ -4,6 +4,7 @@ import com.zgq.wokao.entity.CascadeDeleteable;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,10 +17,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class Schedule extends RealmObject implements CascadeDeleteable {
-
+    @PrimaryKey
+    private String id;
     private boolean isInSked;
-
     private int dailyTask;
+
+    private int totalCount;
+    private int correctCount;
 
     private String lastStudyType;
     private int lastStudyNum;

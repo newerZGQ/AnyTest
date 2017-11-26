@@ -12,9 +12,9 @@ import com.zgq.wokao.parser.context.QuestionContext;
 import com.zgq.wokao.parser.context.item.QuestionItem;
 import com.zgq.wokao.parser.context.item.QuestionItemType;
 import com.zgq.wokao.util.ListUtil;
-import com.zgq.wokao.util.UUIDUtil;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * Created by zgq on 2017/2/19.
@@ -90,13 +90,14 @@ public class FillInAdapter extends BaseAdapter implements IFillInAdapter {
 
     private FillInQuestion parseSingle(int number, String questionRes) {
         FillInQuestion question = FillInQuestion.builder()
-                .answer(new Answer())
-                .body(new QuestionBody())
-                .info(new QuestionInfo())
-                .record(new QuestionRecord())
+                .id(UUID.randomUUID().toString())
+                .answer(Answer.builder().id(UUID.randomUUID().toString()).build())
+                .body(QuestionBody.builder().id(UUID.randomUUID().toString()).build())
+                .info(QuestionInfo.builder().id(UUID.randomUUID().toString()).build())
+                .record(QuestionRecord.builder().id(UUID.randomUUID().toString()).build())
                 .build();
         question.getInfo().setIndex(number);
-        question.getInfo().setId(UUIDUtil.getID());
+        question.getInfo().setId(UUID.randomUUID().toString());
         inContext(QuestionItemType.number);
         String[] resArray = trimNum(questionRes).split("\n");
         StringBuilder builder = new StringBuilder();

@@ -1,6 +1,7 @@
 package com.zgq.wokao.dao;
 
 import com.zgq.wokao.entity.paper.NormalExamPaper;
+import com.zgq.wokao.entity.paper.info.ExamPaperInfo;
 import com.zgq.wokao.entity.summary.StudySummary;
 
 import java.util.List;
@@ -11,7 +12,6 @@ import javax.inject.Inject;
 
 import io.realm.Realm;
 import io.realm.RealmModel;
-import io.realm.RealmObject;
 import io.realm.RealmResults;
 
 public class RimDaoSource implements RimDao {
@@ -32,7 +32,6 @@ public class RimDaoSource implements RimDao {
     public void deleteExamPaper(@Nonnull NormalExamPaper paper) {
         realm.beginTransaction();
         paper.cascadeDelete();
-        realm.copyFromRealm(paper);
         realm.commitTransaction();
     }
 
@@ -41,6 +40,20 @@ public class RimDaoSource implements RimDao {
         return realm.where(NormalExamPaper.class)
                 .equalTo("paperInfo.id", paperId)
                 .findFirst();
+    }
+
+    @Nullable
+    @Override
+    public RealmResults<NormalExamPaper> getAllExamPaper() {
+        return realm.where(NormalExamPaper.class)
+                .findAll();
+    }
+
+    @Nonnull
+    @Override
+    public RealmResults<ExamPaperInfo> getAllExamPaperInfo() {
+        return realm.where(ExamPaperInfo.class)
+                .findAll();
     }
 
     @Override

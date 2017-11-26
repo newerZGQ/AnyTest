@@ -4,6 +4,7 @@ import com.zgq.wokao.dao.RimDaoSource;
 import com.zgq.wokao.entity.paper.NormalExamPaper;
 
 import com.google.common.base.Optional;
+import com.zgq.wokao.entity.paper.info.ExamPaperInfo;
 import com.zgq.wokao.entity.summary.StudySummary;
 
 import java.util.List;
@@ -14,6 +15,7 @@ import javax.inject.Inject;
 import io.reactivex.Flowable;
 import io.realm.RealmModel;
 import io.realm.RealmObject;
+import io.realm.RealmResults;
 
 public class RimRepository implements RimDataSource {
 
@@ -40,6 +42,17 @@ public class RimRepository implements RimDataSource {
     @Override
     public Flowable<Optional<NormalExamPaper>> queryPaper(String paperId) {
         return paperRepository.queryPaper(paperId);
+    }
+
+    @Override
+    public Flowable<RealmResults<NormalExamPaper>> getAllExamPaper() {
+        return paperRepository.getAllExamPaper();
+    }
+
+    @Nonnull
+    @Override
+    public Flowable<RealmResults<ExamPaperInfo>> getAllExamPaperInfo() {
+        return paperRepository.getAllExamPaperInfo();
     }
 
     @Override

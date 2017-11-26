@@ -1,5 +1,6 @@
 package com.zgq.wokao.entity.paper;
 
+import com.orhanobut.logger.Logger;
 import com.zgq.wokao.entity.CascadeDeleteable;
 import com.zgq.wokao.entity.paper.info.ExamPaperInfo;
 import com.zgq.wokao.entity.paper.question.DiscussQuestion;
@@ -10,6 +11,7 @@ import com.zgq.wokao.entity.paper.question.TFQuestion;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,6 +24,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class NormalExamPaper extends RealmObject implements CascadeDeleteable {
+    @PrimaryKey
+    private String id;
+
     private ExamPaperInfo paperInfo;
     private RealmList<FillInQuestion> fillInQuestions;
     private RealmList<TFQuestion> tfQuestions;
@@ -34,12 +39,13 @@ public class NormalExamPaper extends RealmObject implements CascadeDeleteable {
         if (paperInfo != null) {
             paperInfo.cascadeDelete();
         }
-        for (int i = 0; i < fillInQuestions.size(); i++) {
-            fillInQuestions.get(i).cascadeDelete();
-        }
         for (int i = 0; i < tfQuestions.size(); i++) {
             tfQuestions.get(i).cascadeDelete();
         }
+        for (int i = 0; i < fillInQuestions.size(); i++) {
+            fillInQuestions.get(i).cascadeDelete();
+        }
+
         for (int i = 0; i < sglChoQuestions.size(); i++) {
             sglChoQuestions.get(i).cascadeDelete();
         }
