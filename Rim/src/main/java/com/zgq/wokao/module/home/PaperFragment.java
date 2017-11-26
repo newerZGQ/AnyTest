@@ -1,5 +1,6 @@
 package com.zgq.wokao.module.home;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -36,11 +37,21 @@ public class PaperFragment extends BaseFragment<HomeContract.PaperPresenter>
 
     private View rootView;
 
+    private Listener listener;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = super.onCreateView(inflater, container, savedInstanceState);
         return rootView;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof Listener){
+            listener = (Listener) context;
+        }
     }
 
     @Override
@@ -70,6 +81,7 @@ public class PaperFragment extends BaseFragment<HomeContract.PaperPresenter>
     @Override
     public void notifyDataChanged() {
         homePaperAdapter.notifyDataSetChanged();
+        listener.notifyDataChanged();
     }
 
     @Override
@@ -124,4 +136,8 @@ public class PaperFragment extends BaseFragment<HomeContract.PaperPresenter>
                             view -> presenter.addToSchedule(paper)).show();
                 }
             });
+
+    public interface Listener {
+        void notifyDataChanged();
+    }
 }

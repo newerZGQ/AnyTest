@@ -19,8 +19,6 @@ import com.zgq.wokao.widget.exprecyclerview.KeepOneH;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.realm.RealmResults;
-
 public class HomePaperAdapter extends RecyclerView.Adapter {
     private List<NormalExamPaper> papers;
     private Context context;
@@ -118,12 +116,9 @@ public class HomePaperAdapter extends RecyclerView.Adapter {
         }
 
         //recyclerView item长按事件
-        holder1.item.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                listener.onItemLongClick(positionTmp, papers.get(positionTmp));
-                return true;
-            }
+        holder1.item.setOnLongClickListener(v -> {
+            listener.onItemLongClick(positionTmp, papers.get(positionTmp));
+            return true;
         });
         //item backlayout 动画
         ((MyViewHolder) holder).bind(position);

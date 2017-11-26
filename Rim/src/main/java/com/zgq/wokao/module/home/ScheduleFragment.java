@@ -76,6 +76,11 @@ public class ScheduleFragment extends BaseFragment<HomeContract.SchedulePresente
     }
 
     @Override
+    public void notifyDataChanged() {
+        schedulePagerAdapter.notifyDataSetChanged();
+    }
+
+    @Override
     public void showEmptyView() {
         paperInfoList.setVisibility(View.GONE);
         scheduleInfoView.setVisibility(View.GONE);
@@ -95,6 +100,10 @@ public class ScheduleFragment extends BaseFragment<HomeContract.SchedulePresente
         } else {
             noContentStub.setVisibility(View.GONE);
         }
+    }
+
+    public void updateView(){
+        presenter.loadSchedules(false);
     }
 
     SchedulePagerAdapter.OnClickListener pagerItemListener = new SchedulePagerAdapter.OnClickListener() {

@@ -1,7 +1,9 @@
 package com.zgq.wokao.module.home;
 
+import com.google.common.eventbus.EventBus;
 import com.orhanobut.logger.Logger;
 import com.zgq.wokao.entity.paper.NormalExamPaper;
+import com.zgq.wokao.eventbus.EventBusCenter;
 import com.zgq.wokao.module.base.BasePresenter;
 import com.zgq.wokao.repository.RimDataSource;
 import com.zgq.wokao.repository.RimRepository;
@@ -21,24 +23,29 @@ public class PaperPresenter extends BasePresenter<HomeContract.PaperView>
     @Override
     public void subscribe() {
         super.subscribe();
-        loadAllPapers();
+        loadAllPapers(true);
     }
 
     @Override
-    public void loadAllPapers() {
-        repository.getAllExamPaper()
-                .subscribe(papers -> {
-                    if (papers.size() == 0){
-                        view.showEmptyView();
-                    }else {
-                        view.setPaperListData(papers);
-                    }
-                });
+    public void loadAllPapers(boolean forceUpdate) {
+        if (forceUpdate) {
+            repository.getAllExamPaper()
+                    .subscribe(papers -> {
+                        if (papers.size() == 0) {
+                            view.showEmptyView();
+                        } else {
+                            view.setPaperListData(papers);
+                        }
+                    });
+        }else{
+            view.notifyDataChanged();
+        }
     }
 
     @Override
     public void deletePaper(NormalExamPaper paper) {
         repository.deleteExamPaper(paper);
+        //EventBusCenter.post("update paper");
         view.notifyDataChanged();
     }
 
