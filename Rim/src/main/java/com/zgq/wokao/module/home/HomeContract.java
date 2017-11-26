@@ -40,6 +40,7 @@ public interface HomeContract {
     interface SchedulePresenter extends IPresenter<ScheduleView> {
         void loadSchedules(boolean forceUpdate);
         void updateDetail(int index);
+        void updateTask(int index, int task);
     }
 
 

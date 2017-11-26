@@ -85,4 +85,12 @@ public class RimDaoSource implements RimDao {
     public <T extends RealmModel> List<T> copyFromRealm(Iterable<T> realmObjects) {
         return realm.copyFromRealm(realmObjects);
     }
+
+    @Override
+    public <T extends RealmModel> T copyToRealmOrUpdate(T t) {
+        realm.beginTransaction();
+        T result = realm.copyToRealmOrUpdate(t);
+        realm.commitTransaction();
+        return result;
+    }
 }

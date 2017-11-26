@@ -29,4 +29,5 @@ public interface RimDao {
 
     <T extends RealmModel> T copyFromRealm(T  t);
     <T extends RealmModel> List<T> copyFromRealm(Iterable<T> realmObjects);
+    <T extends RealmModel> T copyToRealmOrUpdate(T t);
 }

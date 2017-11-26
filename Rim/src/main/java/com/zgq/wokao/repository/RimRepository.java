@@ -83,4 +83,9 @@ public class RimRepository implements RimDataSource {
     public <T extends RealmModel> Flowable<List<T>> copyFromRealm(Iterable<T> realmObjects) {
         return Flowable.just(daoSource.copyFromRealm(realmObjects));
     }
+
+    @Override
+    public <T extends RealmModel> Flowable<T> copyToRealmOrUpdate(T t) {
+        return Flowable.just(daoSource.copyToRealmOrUpdate(t));
+    }
 }
