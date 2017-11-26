@@ -1,10 +1,14 @@
 package com.zgq.wokao.module.home;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewStub;
 import android.widget.LinearLayout;
 
+import com.orhanobut.logger.Logger;
 import com.zgq.wokao.R;
 import com.zgq.wokao.adapter.SchedulePagerAdapter;
 import com.zgq.wokao.entity.paper.info.ExamPaperInfo;
@@ -38,6 +42,10 @@ public class ScheduleFragment extends BaseFragment<HomeContract.SchedulePresente
 
     private SchedulePagerAdapter schedulePagerAdapter;
 
+    private Listener listener;
+
+    private int viewPagerPos;
+
     @Override
     protected void daggerInject() {
         DaggerHomeComponent.builder()
@@ -60,6 +68,14 @@ public class ScheduleFragment extends BaseFragment<HomeContract.SchedulePresente
         scheduleInfoView.setOnClickListener(this);
         infoLayout.setOnClickListener(this);
         taskSettingLayout.setOnTaskSettingListener(taskSettingListener);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof Listener){
+            this.listener = (Listener) context;
+        }
     }
 
     @Override
@@ -106,6 +122,62 @@ public class ScheduleFragment extends BaseFragment<HomeContract.SchedulePresente
         presenter.loadSchedules(false);
     }
 
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.schedule_info_view:
+                break;
+            case R.id.schedule_info_layout:
+                startSettingDaily();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void startSettingDaily(){
+        actionViewPagerAndScheduleView(true,300);
+        taskSettingLayout.show();
+    }
+
+    private void actionViewPagerAndScheduleView(boolean toHide, int duration){
+        float viewPagerStartPos;
+        float viewPagerEndPos;
+        float scheduleStartPos;
+        float scheduleEndPos;
+        float scheduleStartScale;
+        float scheduleEndScale;
+        if (toHide) {
+            viewPagerStartPos = 0;
+            viewPagerEndPos = paperInfoList.getHeight();
+            scheduleStartPos = 0;
+            scheduleEndPos = -scheduleInfoView.getHeight()/10;
+            scheduleStartScale = 1;
+            scheduleEndScale = 0.9f;
+        }else{
+            viewPagerStartPos = paperInfoList.getHeight();
+            viewPagerEndPos = 0;
+            scheduleStartPos = -scheduleInfoView.getHeight()/10;
+            scheduleEndPos = 0;
+            scheduleStartScale = 0.9f;
+            scheduleEndScale = 1f;
+        }
+        ObjectAnimator hideViewPager = ObjectAnimator.ofFloat(paperInfoList, "translationY",
+                viewPagerStartPos, viewPagerEndPos).setDuration(duration);
+        hideViewPager.start();
+        AnimatorSet hideSchedule = new AnimatorSet();
+        ObjectAnimator moveSchedule = ObjectAnimator.ofFloat(scheduleInfoView, "translationY",
+                scheduleStartPos,scheduleEndPos);
+        ObjectAnimator scaleScheduleX = ObjectAnimator.ofFloat(scheduleInfoView, "scaleX",
+                scheduleStartScale,scheduleEndScale);
+        ObjectAnimator scaleScheduleY = ObjectAnimator.ofFloat(scheduleInfoView, "scaleY",
+                scheduleStartScale,scheduleEndScale);
+        hideSchedule.playTogether(moveSchedule, scaleScheduleX, scaleScheduleY);
+        hideSchedule.setDuration(duration);
+        hideSchedule.start();
+    }
+
     SchedulePagerAdapter.OnClickListener pagerItemListener = new SchedulePagerAdapter.OnClickListener() {
         @Override
         public void onClickTopLayout(int position) {
@@ -121,25 +193,24 @@ public class ScheduleFragment extends BaseFragment<HomeContract.SchedulePresente
     TaskSettingLayout.OnTaskSettingListener taskSettingListener = new TaskSettingLayout.OnTaskSettingListener() {
         @Override
         public void onHide() {
-
+            actionViewPagerAndScheduleView(false,300);
+            listener.onEndSettingDaily();
         }
 
         @Override
         public void onshow() {
-
+            listener.onStartSettingDaily();
+            Logger.d("seekbar height" + taskSettingLayout.findViewById(R.id.seekbar).getHeight());
         }
 
         @Override
         public void onTaskSelected(int task) {
-
+            scheduleInfoView.changDailyCount(task, 200);
+            actionViewPagerAndScheduleView(false,300);
+            listener.onEndSettingDaily();
+            presenter.updateTask(viewPagerPos, task);
         }
     };
-
-    @Override
-    public void onClick(View view) {
-
-    }
-
 
     public class SchedulePageChangeListener implements ViewPager.OnPageChangeListener {
 
@@ -150,11 +221,17 @@ public class ScheduleFragment extends BaseFragment<HomeContract.SchedulePresente
         @Override
         public void onPageSelected(int position) {
             presenter.updateDetail(position);
+            viewPagerPos = position;
         }
 
         @Override
         public void onPageScrollStateChanged(int state) {
 
         }
+    }
+
+    public interface Listener {
+        void onStartSettingDaily();
+        void onEndSettingDaily();
     }
 }

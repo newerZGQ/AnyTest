@@ -36,7 +36,7 @@ import butterknife.BindView;
 import io.realm.RealmList;
 
 public class HomeActivity extends BaseActivity<HomeContract.MainPresenter>
-        implements HomeContract.MainView, View.OnClickListener, PaperFragment.Listener {
+        implements HomeContract.MainView, View.OnClickListener, PaperFragment.Listener, ScheduleFragment.Listener {
 
     private static final String TAG = HomeActivity.class.getSimpleName();
 
@@ -274,6 +274,36 @@ public class HomeActivity extends BaseActivity<HomeContract.MainPresenter>
     @Override
     public void notifyDataChanged() {
         scheduleFragment.updateView();
+    }
+
+    @Override
+    public void onStartSettingDaily() {
+        setViewPagerScrollble(false);
+        hideToolBar(300);
+    }
+
+    @Override
+    public void onEndSettingDaily() {
+        setViewPagerScrollble(true);
+        showToolBar(300);
+    }
+
+    private void setViewPagerScrollble(boolean scrollble) {
+        viewPager.setScrollble(scrollble);
+    }
+
+    private void hideToolBar(int duration) {
+        ObjectAnimator hideTooBar = ObjectAnimator
+                .ofFloat(toolbarLayout, "rotationX",
+                0, 90).setDuration(300);
+        hideTooBar.start();
+    }
+
+    private void showToolBar(int duration) {
+        ObjectAnimator showTooBar = ObjectAnimator
+                .ofFloat(toolbarLayout, "rotationX",
+                90, 0).setDuration(300);
+        showTooBar.start();
     }
 
     private class HomeFragmentPagerAdapter extends FragmentPagerAdapter {
