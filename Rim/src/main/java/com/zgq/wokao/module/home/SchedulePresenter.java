@@ -24,7 +24,6 @@ public class SchedulePresenter extends BasePresenter<HomeContract.ScheduleView>
     @Override
     public void subscribe() {
         super.subscribe();
-        EventBusCenter.register(this);
         loadSchedules(true);
     }
 
@@ -32,7 +31,6 @@ public class SchedulePresenter extends BasePresenter<HomeContract.ScheduleView>
     public SchedulePresenter(RimRepository repository){
         this.repository = repository;
     }
-
 
     @Override
     public void loadSchedules(boolean forceUpdate) {
@@ -73,13 +71,5 @@ public class SchedulePresenter extends BasePresenter<HomeContract.ScheduleView>
                     repository.copyToRealmOrUpdate(schedule);
                 });
         Logger.d("schedule " + paperInfos.get(index).getSchedule().getDailyTask());
-    }
-
-    @Subscribe
-    public void listen(@Nonnull String message){
-        Logger.d("update paper");
-        if (message.equals("update paper")){
-            view.notifyDataChanged();
-        }
     }
 }

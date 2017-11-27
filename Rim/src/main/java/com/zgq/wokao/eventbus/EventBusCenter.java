@@ -2,10 +2,6 @@ package com.zgq.wokao.eventbus;
 
 import com.google.common.eventbus.EventBus;
 
-/**
- * Created by zgq on 2017/11/26.
- */
-
 public class EventBusCenter {
 
     private static EventBus eventBus = new EventBus();
