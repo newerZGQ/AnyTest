@@ -13,6 +13,7 @@ import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
 import io.reactivex.Flowable;
+import io.reactivex.disposables.Disposable;
 import io.realm.RealmResults;
 
 public class SchedulePresenter extends BasePresenter<HomeContract.ScheduleView>
@@ -34,8 +35,9 @@ public class SchedulePresenter extends BasePresenter<HomeContract.ScheduleView>
 
     @Override
     public void loadSchedules(boolean forceUpdate) {
+        compositeDisposable.clear();
         if (forceUpdate) {
-            repository.getAllExamPaperInfo()
+            Disposable disposable = repository.getAllExamPaperInfo()
                     .subscribe(examPaperInfos -> {
                         paperInfos = examPaperInfos;
                         view.setSchedulePapers(paperInfos);
@@ -43,6 +45,7 @@ public class SchedulePresenter extends BasePresenter<HomeContract.ScheduleView>
                             updateDetail(0);
                         }
                     });
+            compositeDisposable.add(disposable);
         }else{
             view.notifyDataChanged();
         }
@@ -53,7 +56,7 @@ public class SchedulePresenter extends BasePresenter<HomeContract.ScheduleView>
 
     @Override
     public void updateDetail(int index) {
-        repository.getAllExamPaperInfo()
+        Disposable disposable = repository.getAllExamPaperInfo()
                 .flatMap(s -> Flowable.just(Optional.fromNullable(s.get(index).getSchedule()))
                 )
                 .subscribe(schedule -> {
@@ -61,15 +64,16 @@ public class SchedulePresenter extends BasePresenter<HomeContract.ScheduleView>
                         view.setDetail(schedule.get());
                     }
                 });
+        compositeDisposable.add(disposable);
     }
 
     @Override
     public void updateTask(int index, int task) {
-        repository.copyFromRealm(paperInfos.get(index).getSchedule())
+        Disposable disposable = repository.copyFromRealm(paperInfos.get(index).getSchedule())
                 .subscribe(schedule -> {
                     schedule.setDailyTask(task);
                     repository.copyToRealmOrUpdate(schedule);
                 });
-        Logger.d("schedule " + paperInfos.get(index).getSchedule().getDailyTask());
+        compositeDisposable.add(disposable);
     }
 }
