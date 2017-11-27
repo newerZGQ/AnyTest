@@ -24,6 +24,7 @@
         </activity>
         <activity android:name=".module.home.HomeActivity" />
         <activity android:name=".module.parser.ParserActivity" />
+        <activity android:name=".module.question.QuestionsActivity" />
     </application>
 
 </manifest>
