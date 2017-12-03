@@ -45,6 +45,11 @@ public class QuestionPresenter extends BasePresenter<QuestionContract.View> impl
                 });
     }
 
+    @Override
+    public void loadStudyQuestions(int position) {
+        view.startStudy(questionsInfos.get(position).getPaperId(),questionsInfos.get(position).getType());
+    }
+
     private <T extends IQuestion> QuestionsInfoAdapter.QuestionsInfo parseQuestionsInfo(String paperId,
                                                                                         List<T> questions){
         if (questions.size() == 0){
