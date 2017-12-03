@@ -23,6 +23,7 @@ public interface HomeContract {
         void notifyDataChanged();
         void showEmptyView();
         void hideEmptyView();
+        void startQuestionsActivity(String paperId);
     }
 
     interface PaperView extends IView<PaperPresenter> {
@@ -41,6 +42,7 @@ public interface HomeContract {
         void loadSchedules(boolean forceUpdate);
         void updateDetail(int index);
         void updateTask(int index, int task);
+        void loadQuestions(int position);
     }
 
 

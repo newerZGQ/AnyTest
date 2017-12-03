@@ -76,4 +76,9 @@ public class SchedulePresenter extends BasePresenter<HomeContract.ScheduleView>
                 });
         compositeDisposable.add(disposable);
     }
+
+    @Override
+    public void loadQuestions(int position) {
+        view.startQuestionsActivity(paperInfos.get(position).getId());
+    }
 }

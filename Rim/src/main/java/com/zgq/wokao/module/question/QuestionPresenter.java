@@ -45,7 +45,8 @@ public class QuestionPresenter extends BasePresenter<QuestionContract.View> impl
                 });
     }
 
-    private <T extends IQuestion> QuestionsInfoAdapter.QuestionsInfo parseQuestionsInfo(String paperId,List<T> questions){
+    private <T extends IQuestion> QuestionsInfoAdapter.QuestionsInfo parseQuestionsInfo(String paperId,
+                                                                                        List<T> questions){
         if (questions.size() == 0){
             return null;
         }

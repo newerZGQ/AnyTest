@@ -3,6 +3,7 @@ package com.zgq.wokao.module.home;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewStub;
@@ -16,6 +17,7 @@ import com.zgq.wokao.entity.paper.info.Schedule;
 import com.zgq.wokao.injector.components.DaggerHomeComponent;
 import com.zgq.wokao.injector.modules.HomeModule;
 import com.zgq.wokao.module.base.BaseFragment;
+import com.zgq.wokao.module.question.QuestionsActivity;
 import com.zgq.wokao.widget.ScheduleInfoView;
 import com.zgq.wokao.widget.TaskSettingLayout;
 
@@ -118,6 +120,14 @@ public class ScheduleFragment extends BaseFragment<HomeContract.SchedulePresente
         }
     }
 
+    @Override
+    public void startQuestionsActivity(String paperId) {
+        Intent intent = new Intent();
+        intent.putExtra("paperId", paperId);
+        intent.setClass(getAppComponent().getContext(), QuestionsActivity.class);
+        startActivity(intent);
+    }
+
     public void updateView(){
         presenter.loadSchedules(false);
     }
@@ -126,8 +136,6 @@ public class ScheduleFragment extends BaseFragment<HomeContract.SchedulePresente
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.schedule_info_view:
-                break;
             case R.id.schedule_info_layout:
                 startSettingDaily();
                 break;
@@ -181,7 +189,7 @@ public class ScheduleFragment extends BaseFragment<HomeContract.SchedulePresente
     SchedulePagerAdapter.OnClickListener pagerItemListener = new SchedulePagerAdapter.OnClickListener() {
         @Override
         public void onClickTopLayout(int position) {
-
+            presenter.loadQuestions(position);
         }
 
         @Override

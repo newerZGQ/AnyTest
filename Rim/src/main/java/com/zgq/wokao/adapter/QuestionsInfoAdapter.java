@@ -173,8 +173,11 @@ public class QuestionsInfoAdapter extends RecyclerView.Adapter {
     @Builder
     public static class QuestionsInfo{
         private String paperId;
+        @Builder.Default
         private QuestionType type = QuestionType.FILLIN;
-        private int qstCount;
-        private int starCount;
+        @Builder.Default
+        private int qstCount = 0;
+        @Builder.Default
+        private int starCount = 0;
     }
 }
