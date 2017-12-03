@@ -4,7 +4,7 @@ import com.zgq.wokao.module.base.BasePresenter;
 
 import javax.inject.Inject;
 
-public class StudyPresenter extends BasePresenter<StudyContract.View> implements StudyContract.Presenter {
+public class StudyPresenter extends BasePresenter<StudyContract.MainView> implements StudyContract.MainPresenter {
 
     @Inject
     public StudyPresenter(){}

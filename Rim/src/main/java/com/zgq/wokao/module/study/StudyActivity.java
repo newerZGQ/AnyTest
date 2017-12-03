@@ -5,7 +5,13 @@ import com.zgq.wokao.injector.components.DaggerStudyComponent;
 import com.zgq.wokao.injector.modules.StudyModule;
 import com.zgq.wokao.module.base.BaseActivity;
 
-public class StudyActivity extends BaseActivity<StudyContract.Presenter> implements StudyContract.View {
+import javax.inject.Inject;
+
+public class StudyActivity extends BaseActivity<StudyContract.MainPresenter> implements StudyContract.MainView {
+
+    @Inject
+    LearningFragment learningFragment;
+
     @Override
     protected void daggerInject() {
         DaggerStudyComponent.builder()
@@ -22,6 +28,6 @@ public class StudyActivity extends BaseActivity<StudyContract.Presenter> impleme
 
     @Override
     protected void initViews() {
-
+        addFragment(R.id.fragment_container,learningFragment);
     }
 }
