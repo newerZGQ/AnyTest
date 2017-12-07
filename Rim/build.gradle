@@ -69,9 +69,11 @@ dependencies {
 
     // logger
     implementation "com.orhanobut:logger:${rootProject.ext.loggerVersion}"
+
     implementation "com.github.devlight.navigationtabstrip:navigationtabstrip:${rootProject.ext.navigationtabstrip}"
     implementation "com.xw.repo:bubbleseekbar:${rootProject.ext.bubbleseekbar}"
     implementation "com.nbsp:library:${rootProject.ext.filepicker}"
+    implementation "pl.droidsonroids.gif:android-gif-drawable:${rootProject.ext.droidsonroidsgif}"
     implementation project(':RecyclerViewHelper')
     implementation project(':linechart')
     implementation project(':shapeloading')

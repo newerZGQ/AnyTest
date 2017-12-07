@@ -10,6 +10,8 @@ import com.zgq.wokao.repository.RimRepository;
 
 import javax.inject.Inject;
 
+import io.reactivex.disposables.Disposable;
+
 public class PaperPresenter extends BasePresenter<HomeContract.PaperView>
         implements HomeContract.PaperPresenter {
 
@@ -29,7 +31,7 @@ public class PaperPresenter extends BasePresenter<HomeContract.PaperView>
     @Override
     public void loadAllPapers(boolean forceUpdate) {
         if (forceUpdate) {
-            repository.getAllExamPaper()
+            Disposable disposable = repository.getAllExamPaper()
                     .subscribe(papers -> {
                         if (papers.size() == 0) {
                             view.showEmptyView();
@@ -37,6 +39,7 @@ public class PaperPresenter extends BasePresenter<HomeContract.PaperView>
                             view.setPaperListData(papers);
                         }
                     });
+            compositeDisposable.add(disposable);
         }else{
             view.notifyDataChanged();
         }
