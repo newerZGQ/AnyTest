@@ -67,6 +67,8 @@ public class LearningFragment extends BaseFragment<StudyContract.LearningPresent
     @BindView(R.id.background)
     LinearLayout background;
 
+
+
     @Override
     protected void daggerInject() {
         DaggerStudyComponent.builder()
