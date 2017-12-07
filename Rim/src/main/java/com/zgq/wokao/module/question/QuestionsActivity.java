@@ -66,9 +66,7 @@ public class QuestionsActivity extends BaseActivity<QuestionContract.Presenter>
     @Override
     protected void initViews() {
         initQuestionList();
-        back.setOnClickListener(view -> {
-            finish();
-        });
+        back.setOnClickListener(view -> finish());
     }
 
     @Override
