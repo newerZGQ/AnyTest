@@ -79,4 +79,5 @@ dependencies {
     implementation project(':linechart')
     implementation project(':shapeloading')
     implementation files('libs/tm-extractors-0.4.jar')
+    implementation "com.facebook.android:facebook-share:${rootProject.ext.facebook}"
 }

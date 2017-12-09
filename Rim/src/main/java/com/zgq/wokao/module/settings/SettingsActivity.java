@@ -7,6 +7,7 @@ import com.zgq.wokao.R;
 import com.zgq.wokao.injector.components.DaggerSettingsComponent;
 import com.zgq.wokao.injector.modules.SettingsModule;
 import com.zgq.wokao.module.base.BaseActivity;
+import com.zgq.wokao.util.ShareUtils;
 
 import javax.inject.Inject;
 
@@ -68,7 +69,7 @@ public class SettingsActivity extends BaseActivity<SettingsContract.MainPresente
 
     @Override
     public void onShareAppClicked() {
-
+        ShareUtils.FacebookShare(this);
     }
 
     private enum State{
