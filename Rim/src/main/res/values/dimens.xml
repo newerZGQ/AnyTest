@@ -9,4 +9,6 @@
     <dimen name="tab_layout_height">48dp</dimen>
 
     <dimen name="pull_critical_distance">70dp</dimen>
+
+    <dimen name="search_view_inset">5dp</dimen>
 </resources>

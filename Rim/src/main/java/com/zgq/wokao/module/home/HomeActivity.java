@@ -22,6 +22,7 @@ import com.zgq.wokao.injector.components.DaggerHomeComponent;
 import com.zgq.wokao.injector.modules.HomeModule;
 import com.zgq.wokao.module.base.BaseActivity;
 import com.zgq.wokao.module.parser.ParserActivity;
+import com.zgq.wokao.module.search.SearchActivity;
 import com.zgq.wokao.module.settings.SettingsActivity;
 import com.zgq.wokao.widget.CustomViewPager;
 import com.zgq.wokao.widget.SlideUp;
@@ -259,7 +260,7 @@ public class HomeActivity extends BaseActivity<HomeContract.MainPresenter>
                 changeSlideUpState();
                 break;
             case R.id.toolbar_search:
-                //goSearch();
+                openActivity(SearchActivity.class);
                 break;
             case R.id.toolbar_add:
                 openActivity(ParserActivity.class);

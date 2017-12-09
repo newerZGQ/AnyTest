@@ -11,6 +11,8 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -80,4 +82,5 @@ dependencies {
     implementation project(':shapeloading')
     implementation files('libs/tm-extractors-0.4.jar')
     implementation "com.facebook.android:facebook-share:${rootProject.ext.facebook}"
+    implementation "com.github.arimorty:floatingsearchview:${rootProject.ext.searchview}"
 }
