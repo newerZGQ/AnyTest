@@ -98,5 +98,6 @@ public class WelcomeActivity extends BaseActivity<WelcomeContract.MainPresenter>
     @Override
     public void goHomeActivity() {
         openActivity(HomeActivity.class);
+        finish();
     }
 }
