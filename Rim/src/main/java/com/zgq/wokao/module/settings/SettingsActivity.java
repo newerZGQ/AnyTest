@@ -1,6 +1,5 @@
 package com.zgq.wokao.module.settings;
 
-import android.view.View;
 import android.widget.TextView;
 
 import com.zgq.wokao.R;
