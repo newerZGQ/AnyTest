@@ -5,6 +5,7 @@ import com.zgq.wokao.module.settings.SettingsContract;
 import com.zgq.wokao.module.settings.SettingsFragment;
 import com.zgq.wokao.module.settings.SettingsMainPresenter;
 import com.zgq.wokao.module.settings.SettingsPresenter;
+import com.zgq.wokao.module.settings.TipsFragment;
 
 import dagger.Module;
 import dagger.Provides;
@@ -29,5 +30,11 @@ public class SettingsModule {
     @PerActivity
     public SettingsFragment providesSettingsFragment(){
         return new SettingsFragment();
+    }
+
+    @Provides
+    @PerActivity
+    public TipsFragment providesTipsFragment(){
+        return new TipsFragment();
     }
 }
