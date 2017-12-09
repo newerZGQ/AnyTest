@@ -22,6 +22,7 @@ import com.zgq.wokao.injector.components.DaggerHomeComponent;
 import com.zgq.wokao.injector.modules.HomeModule;
 import com.zgq.wokao.module.base.BaseActivity;
 import com.zgq.wokao.module.parser.ParserActivity;
+import com.zgq.wokao.module.settings.SettingsActivity;
 import com.zgq.wokao.widget.CustomViewPager;
 import com.zgq.wokao.widget.SlideUp;
 
@@ -48,7 +49,7 @@ public class HomeActivity extends BaseActivity<HomeContract.MainPresenter>
     RelativeLayout menuLayout;
     @BindView(R.id.toolbar_menu)
     Button menuBtn;
-    @BindView(R.id.share)
+    @BindView(R.id.settings)
     Button shareApp;
     @BindView(R.id.toolbar_search)
     Button searchBtn;
@@ -263,8 +264,8 @@ public class HomeActivity extends BaseActivity<HomeContract.MainPresenter>
             case R.id.toolbar_add:
                 openActivity(ParserActivity.class);
                 break;
-            case R.id.share:
-                //openActivity(SettingsActivity.class);
+            case R.id.settings:
+                openActivity(SettingsActivity.class);
                 break;
             default:
                 break;

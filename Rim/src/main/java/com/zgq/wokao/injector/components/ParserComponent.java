@@ -7,9 +7,6 @@ import com.zgq.wokao.module.parser.ParserActivity;
 
 import dagger.Component;
 
-/**
- * Created by zgq on 2017/11/22.
- */
 @PerActivity
 @Component(dependencies = ApplicationComponent.class, modules = {ParserModule.class, BaseModule.class})
 public interface ParserComponent {
