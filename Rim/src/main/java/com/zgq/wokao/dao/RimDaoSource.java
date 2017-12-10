@@ -2,6 +2,7 @@ package com.zgq.wokao.dao;
 
 import com.zgq.wokao.entity.paper.NormalExamPaper;
 import com.zgq.wokao.entity.paper.info.ExamPaperInfo;
+import com.zgq.wokao.entity.search.SearchHistory;
 import com.zgq.wokao.entity.summary.StudySummary;
 
 import java.util.List;
@@ -74,6 +75,17 @@ public class RimDaoSource implements RimDao {
     public StudySummary getStudySummary() {
         return realm.where(StudySummary.class)
                 .findFirst();
+    }
+
+    @Override
+    public void saveSearchHistory(@Nonnull SearchHistory SearchHistory) {
+
+    }
+
+    @Nonnull
+    @Override
+    public RealmResults<SearchHistory> getSearchHistory() {
+        return null;
     }
 
     @Override

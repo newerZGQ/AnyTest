@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = false)
 public class SearchQuestionItem implements Searchable {
     private ExamPaperInfo info;
-    private QuestionType qstType;
-    private int qstId;
-    private IQuestion qst;
+    private QuestionType questionType;
+    private int questionId;
+    private IQuestion question;
 }

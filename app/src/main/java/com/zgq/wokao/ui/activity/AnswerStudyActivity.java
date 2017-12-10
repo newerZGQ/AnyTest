@@ -184,7 +184,7 @@ public class AnswerStudyActivity extends BaseActivity implements IStudyAnswerVie
     private void initPaperData() {
         Intent intent = getIntent();
         String paperId = intent.getStringExtra("paperId");
-        currentQuestionType = intent.getParcelableExtra("qstType");
+        currentQuestionType = intent.getParcelableExtra("questionType");
         normalExamPaper = (NormalExamPaper) PaperAction.getInstance().queryById(paperId);
     }
 

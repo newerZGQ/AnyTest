@@ -2,7 +2,9 @@ package com.zgq.wokao.dao;
 
 import com.zgq.wokao.entity.paper.NormalExamPaper;
 import com.zgq.wokao.entity.paper.info.ExamPaperInfo;
+import com.zgq.wokao.entity.search.SearchHistory;
 import com.zgq.wokao.entity.summary.StudySummary;
+import com.zgq.wokao.module.search.entity.HistorySuggestion;
 
 import java.util.List;
 
@@ -26,6 +28,10 @@ public interface RimDao {
 
     void saveSummary(StudySummary studySummary);
     StudySummary getStudySummary();
+
+    void saveSearchHistory(@Nonnull SearchHistory SearchHistory);
+    @Nonnull
+    RealmResults<SearchHistory> getSearchHistory();
 
     <T extends RealmModel> T copyFromRealm(T  t);
     <T extends RealmModel> List<T> copyFromRealm(Iterable<T> realmObjects);

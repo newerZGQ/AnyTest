@@ -1,7 +1,6 @@
 package com.zgq.wokao.adapter;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +17,7 @@ import java.util.List;
 public class SearchResultsListAdapter extends RecyclerView.Adapter<SearchResultsListAdapter.ViewHolder> {
     private static final String TAG = "SearchListAdapter";
 
-
     private List<Searchable> mDataSet = new ArrayList<>();
-
-    private int mLastAnimatedItemPosition = -1;
 
     public interface OnItemClickListener {
         void onClick(Searchable item);
@@ -30,21 +26,21 @@ public class SearchResultsListAdapter extends RecyclerView.Adapter<SearchResults
     private OnItemClickListener mItemsOnClickListener;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        public final TextView itemType;
-        public final TextView itemContent;
-        public final View textContainer;
-        public final TextView itemTip;
+        final TextView itemType;
+        final TextView itemContent;
+        final View textContainer;
+        final TextView itemTip;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             super(view);
-            itemType = (TextView) view.findViewById(R.id.item_type);
-            itemContent = (TextView) view.findViewById(R.id.item_content);
+            itemType = view.findViewById(R.id.item_type);
+            itemContent = view.findViewById(R.id.item_content);
             textContainer = view.findViewById(R.id.text_container);
-            itemTip = (TextView) view.findViewById(R.id.item_tip);
+            itemTip = view.findViewById(R.id.item_tip);
         }
     }
 
-    public void swapData(List<Searchable> mNewDataSet) {
+    public void replaceData(List<Searchable> mNewDataSet) {
         mDataSet = mNewDataSet;
         notifyDataSetChanged();
     }
@@ -72,16 +68,11 @@ public class SearchResultsListAdapter extends RecyclerView.Adapter<SearchResults
         }
         if (tmp instanceof SearchQuestionItem) {
             SearchQuestionItem qstItem = (SearchQuestionItem) tmp;
-            holder.itemType.setText(qstItem.getQstType().getName());
-            //holder.itemContent.setText(qstItem.getQst().getBody().getContent());
+            holder.itemType.setText(qstItem.getQuestionType().getName());
+            //holder.itemContent.setText(qstItem.getQuestion().getBody().getContent());
             //holder.itemTip.setText(qstItem.getInfo().getTitle());
         }
-        holder.textContainer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mItemsOnClickListener.onClick(mDataSet.get(position));
-            }
-        });
+        holder.textContainer.setOnClickListener(view -> mItemsOnClickListener.onClick(mDataSet.get(position)));
     }
 
     @Override

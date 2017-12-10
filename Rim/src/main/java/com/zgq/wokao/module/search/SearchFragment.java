@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.arlib.floatingsearchview.FloatingSearchView;
 import com.arlib.floatingsearchview.suggestions.SearchSuggestionsAdapter;
 import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
+import com.google.common.base.Strings;
 import com.zgq.wokao.R;
 import com.zgq.wokao.adapter.SearchResultsListAdapter;
 import com.zgq.wokao.injector.components.DaggerSearchComponent;
@@ -22,6 +23,8 @@ import com.zgq.wokao.injector.modules.SearchModule;
 import com.zgq.wokao.module.base.BaseFragment;
 import com.zgq.wokao.module.search.entity.HistorySuggestion;
 import com.zgq.wokao.module.search.entity.Searchable;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -68,6 +71,11 @@ public class SearchFragment extends BaseFragment<SearchContract.SearchPresenter>
         setupDrawer();
     }
 
+    @Override
+    public void showHistory(List<HistorySuggestion> histories) {
+
+    }
+
 
     public interface SearchFragmentCallbacks {
         void onAttachSearchViewBack(FloatingSearchView searchView);
@@ -83,23 +91,13 @@ public class SearchFragment extends BaseFragment<SearchContract.SearchPresenter>
     }
 
     private void setupFloatingSearch() {
-        mSearchView.setOnQueryChangeListener(new FloatingSearchView.OnQueryChangeListener() {
+        mSearchView.setOnQueryChangeListener((oldQuery, newQuery) -> {
+            if (!Strings.isNullOrEmpty(oldQuery) && Strings.isNullOrEmpty(newQuery)){
+                mSearchView.clearSuggestions();
+            }else{
+                mSearchView.showProgress();
+                presenter.loadHistory();
 
-            @Override
-            public void onSearchTextChanged(String oldQuery, final String newQuery) {
-//                if (!oldQuery.equals("") && newQuery.equals("")) {
-//                    mSearchView.clearSuggestions();
-//                } else {
-//                    mSearchView.showProgress();
-//                    SearchAction.findSuggesions(newQuery, 10, new SearchAction.OnFindSuggestionsListener() {
-//                        @Override
-//                        public void onResults(List<HistorySuggestion> results) {
-//                            mSearchView.swapSuggestions(results);
-//
-//                            mSearchView.hideProgress();
-//                        }
-//                    });
-//                }
             }
         });
 

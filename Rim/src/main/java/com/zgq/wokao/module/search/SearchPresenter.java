@@ -8,4 +8,9 @@ public class SearchPresenter extends BasePresenter<SearchContract.SearchView>
         implements SearchContract.SearchPresenter {
     @Inject
     public SearchPresenter(){}
+
+    @Override
+    public void loadHistory() {
+
+    }
 }

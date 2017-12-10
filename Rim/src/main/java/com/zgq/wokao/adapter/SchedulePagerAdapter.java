@@ -25,11 +25,6 @@ import javax.annotation.Nonnull;
 
 import io.realm.RealmResults;
 
-
-/**
- * Created by zgq on 2017/3/5.
- */
-
 public class SchedulePagerAdapter extends PagerAdapter {
 
     public static final String TAG = SchedulePagerAdapter.class.getSimpleName();
