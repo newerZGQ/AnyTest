@@ -9,12 +9,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zgq.wokao.R;
-import com.zgq.wokao.Util.DensityUtil;
-import com.zgq.wokao.model.paper.question.answer.IAnswer;
-import com.zgq.wokao.model.paper.question.impl.MultChoQuestion;
-import com.zgq.wokao.model.paper.question.answer.MyAnswer;
-import com.zgq.wokao.model.paper.question.IQuestion;
-import com.zgq.wokao.ui.widget.QuestionOptionView;
+import com.zgq.wokao.entity.paper.question.IQuestion;
+import com.zgq.wokao.entity.paper.question.MultChoQuestion;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
