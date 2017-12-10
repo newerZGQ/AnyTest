@@ -16,10 +16,6 @@ import com.zgq.wokao.util.ListUtil;
 import java.util.ArrayList;
 import java.util.UUID;
 
-/**
- * Created by zgq on 2017/2/19.
- */
-
 public class FillInAdapter extends BaseAdapter implements IFillInAdapter {
     private QuestionType type = QuestionType.FILLIN;
     ArrayList<String> content = new ArrayList<>();

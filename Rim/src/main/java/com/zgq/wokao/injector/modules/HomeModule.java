@@ -12,10 +12,6 @@ import com.zgq.wokao.repository.RimRepository;
 import dagger.Module;
 import dagger.Provides;
 
-/**
- * Created by zhangguoqiang on 2017/11/21.
- */
-
 @Module
 public class HomeModule {
     public HomeModule(){}

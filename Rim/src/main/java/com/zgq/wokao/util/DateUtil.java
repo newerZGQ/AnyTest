@@ -7,9 +7,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-/**
- * Created by zgq on 16-7-10.
- */
 public class DateUtil {
 
     private static final String TAG = DateUtil.class.getSimpleName();

@@ -10,10 +10,6 @@ import javax.annotation.Nonnull;
 import io.reactivex.Flowable;
 import io.realm.RealmResults;
 
-/**
- * Created by zgq on 2017/11/20.
- */
-
 public interface PaperDataSource {
     void saveExamPaper(NormalExamPaper examPaper);
     void deleteExamPaper(NormalExamPaper examPaper);

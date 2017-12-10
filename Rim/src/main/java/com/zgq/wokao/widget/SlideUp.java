@@ -1,9 +1,5 @@
 package com.zgq.wokao.widget;
 
-/**
- * Created by zgq on 2017/2/22.
- */
-
 import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
 import android.animation.TimeInterpolator;

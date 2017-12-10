@@ -11,10 +11,6 @@ import android.widget.TextView;
 import com.xw.repo.BubbleSeekBar;
 import com.zgq.wokao.R;
 
-/**
- * Created by zgq on 2017/5/20.
- */
-
 public class TaskSettingLayout extends LinearLayout {
     private View rootView;
     private Context context;

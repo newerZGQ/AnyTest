@@ -3,10 +3,6 @@ package com.zgq.wokao.entity.paper.question;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by zgq on 2017/9/10.
- */
-
 public enum QuestionType implements Parcelable {
     NOTQUESTION("非问题", 0),
     FILLIN("填空", 1),

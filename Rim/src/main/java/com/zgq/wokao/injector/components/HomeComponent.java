@@ -9,10 +9,6 @@ import com.zgq.wokao.module.home.ScheduleFragment;
 
 import dagger.Component;
 
-/**
- * Created by zhangguoqiang on 2017/11/21.
- */
-
 @PerActivity
 @Component (dependencies = ApplicationComponent.class, modules = {HomeModule.class, BaseModule.class})
 public interface HomeComponent {

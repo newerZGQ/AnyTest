@@ -21,10 +21,6 @@ import java.util.UUID;
 
 import io.realm.RealmList;
 
-/**
- * Created by zgq on 2017/2/19.
- */
-
 public class SglChoAdapter extends BaseAdapter implements ISglChoAdapter {
     private QuestionType type = QuestionType.SINGLECHOOSE;
     ArrayList<String> content = new ArrayList<>();

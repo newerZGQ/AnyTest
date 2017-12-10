@@ -16,10 +16,6 @@ import com.zgq.wokao.util.ListUtil;
 import java.util.ArrayList;
 import java.util.UUID;
 
-/**
- * Created by zgq on 2017/2/19.
- */
-
 public class TFAdapter extends BaseAdapter implements ITFAdapter {
     private QuestionType type = QuestionType.TF;
     ArrayList<String> content = new ArrayList<>();

@@ -4,11 +4,6 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.util.AttributeSet;
 
-
-/**
- * Created by zgq on 2017/5/21.
- */
-
 public class NumberAniTextView extends android.support.v7.widget.AppCompatTextView {
     private Context context;
 

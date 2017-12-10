@@ -3,10 +3,6 @@ package com.zgq.wokao.parser.context;
 import com.zgq.wokao.parser.context.item.QuestionItem;
 import com.zgq.wokao.parser.context.item.QuestionItemType;
 
-/**
- * Created by zhangguoqiang on 2017/2/19.
- */
-
 public class QuestionContext extends BaseContext implements IQuestionContext {
     @Override
     public void deContext() {

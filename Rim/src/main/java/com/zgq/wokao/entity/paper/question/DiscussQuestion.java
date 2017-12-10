@@ -10,10 +10,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-/**
- * Created by zgq on 16-6-18.
- */
-
 @Data
 @Builder
 @NoArgsConstructor

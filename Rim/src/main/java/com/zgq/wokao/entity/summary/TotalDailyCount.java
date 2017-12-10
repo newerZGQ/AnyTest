@@ -7,10 +7,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-/**
- * Created by zhangguoqiang on 2017/4/9.
- */
-
 @Data
 @Builder
 @NoArgsConstructor

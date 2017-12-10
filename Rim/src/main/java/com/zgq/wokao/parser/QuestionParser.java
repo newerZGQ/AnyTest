@@ -11,10 +11,6 @@ import com.zgq.wokao.parser.adapter.impl.TFAdapter;
 
 import java.util.ArrayList;
 
-/**
- * Created by zgq on 2017/2/19.
- */
-
 public class QuestionParser extends BaseParser implements IQuestionParser {
 
     private QuestionType type;

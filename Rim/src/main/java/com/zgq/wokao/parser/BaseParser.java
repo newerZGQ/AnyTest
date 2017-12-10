@@ -2,10 +2,6 @@ package com.zgq.wokao.parser;
 
 import com.orhanobut.logger.Logger;
 
-/**
- * Created by zgq on 2017/2/9.
- */
-
 public abstract class BaseParser implements IParser {
     @Override
     public boolean isFillInTitle(String source) {
