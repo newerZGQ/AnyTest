@@ -5,11 +5,13 @@ import com.zgq.wokao.entity.paper.NormalExamPaper;
 
 import com.google.common.base.Optional;
 import com.zgq.wokao.entity.paper.info.ExamPaperInfo;
+import com.zgq.wokao.entity.search.SearchHistory;
 import com.zgq.wokao.entity.summary.StudySummary;
 
 import java.util.List;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 
 import io.reactivex.Flowable;
@@ -87,5 +89,33 @@ public class RimRepository implements RimDataSource {
     @Override
     public <T extends RealmModel> Flowable<T> copyToRealmOrUpdate(T t) {
         return Flowable.just(daoSource.copyToRealmOrUpdate(t));
+    }
+
+    @Override
+    public void saveSearchHistory(@Nonnull SearchHistory searchHistory) {
+        daoSource.saveSearchHistory(searchHistory);
+    }
+
+    @Override
+    public void updateSearchHistory(SearchHistory entity) {
+        daoSource.updateSearchHistory(entity);
+    }
+
+    @Nullable
+    @Override
+    public Flowable<Optional<SearchHistory>> querySearchHistory(String content) {
+        return Flowable.just(Optional.fromNullable(daoSource.querySearchHistory(content)));
+    }
+
+    @Nonnull
+    @Override
+    public Flowable<SearchHistory> getLastestSearchHistory(int limit) {
+        return Flowable.fromIterable(daoSource.getLastestSearchHistory(limit));
+    }
+
+    @Nonnull
+    @Override
+    public Flowable<RealmResults<SearchHistory>> findRelativeSearchHistory(String query, Integer limit) {
+        return Flowable.just(daoSource.findRelativeSearchHistory(query,limit));
     }
 }

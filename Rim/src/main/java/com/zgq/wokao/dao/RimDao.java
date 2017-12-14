@@ -20,18 +20,24 @@ public interface RimDao {
     void deleteExamPaper(@Nonnull NormalExamPaper paper);
     @Nullable
     NormalExamPaper queryExamPaper(@Nonnull String paperId);
-    @Nullable
+    @Nonnull
     RealmResults<NormalExamPaper> getAllExamPaper();
     @Nonnull
     RealmResults<ExamPaperInfo> getAllExamPaperInfo();
     void setSked(@Nonnull NormalExamPaper paper, boolean skedState);
 
     void saveSummary(StudySummary studySummary);
+    @Nullable
     StudySummary getStudySummary();
 
-    void saveSearchHistory(@Nonnull SearchHistory SearchHistory);
+    void saveSearchHistory(@Nonnull SearchHistory searchHistory);
+    void updateSearchHistory(SearchHistory entity);
+    @Nullable
+    SearchHistory querySearchHistory(String content);
     @Nonnull
-    RealmResults<SearchHistory> getSearchHistory();
+    RealmResults<SearchHistory> getLastestSearchHistory(int limit);
+    @Nonnull
+    RealmResults<SearchHistory> findRelativeSearchHistory(String query, Integer limit);
 
     <T extends RealmModel> T copyFromRealm(T  t);
     <T extends RealmModel> List<T> copyFromRealm(Iterable<T> realmObjects);

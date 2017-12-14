@@ -20,6 +20,6 @@ public interface SearchContract {
     }
 
     interface SearchPresenter extends IPresenter<SearchView>{
-        void loadHistory();
+        void loadHistory(String query);
     }
 }
