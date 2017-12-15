@@ -7,12 +7,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.zgq.wokao.R;
+import com.zgq.wokao.entity.paper.info.ExamPaperInfo;
+import com.zgq.wokao.entity.paper.question.IQuestion;
+import com.zgq.wokao.entity.paper.question.QuestionType;
 import com.zgq.wokao.module.search.entity.SearchInfoItem;
 import com.zgq.wokao.module.search.entity.SearchQuestionItem;
 import com.zgq.wokao.module.search.entity.Searchable;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import lombok.Data;
 
 public class SearchResultsListAdapter extends RecyclerView.Adapter<SearchResultsListAdapter.ViewHolder> {
     private static final String TAG = "SearchListAdapter";
@@ -78,6 +83,18 @@ public class SearchResultsListAdapter extends RecyclerView.Adapter<SearchResults
     @Override
     public int getItemCount() {
         return mDataSet.size();
+    }
+
+    @Data
+    public static class PaperInfoItem{
+        private ExamPaperInfo info;
+    }
+    @Data
+    public static class QuestionItem{
+        private ExamPaperInfo info;
+        private QuestionType questionType;
+        private int questionId;
+        private IQuestion question;
     }
 
 }

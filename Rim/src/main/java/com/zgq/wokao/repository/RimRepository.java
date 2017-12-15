@@ -115,7 +115,7 @@ public class RimRepository implements RimDataSource {
 
     @Nonnull
     @Override
-    public Flowable<RealmResults<SearchHistory>> findRelativeSearchHistory(String query, Integer limit) {
-        return Flowable.just(daoSource.findRelativeSearchHistory(query,limit));
+    public Flowable<SearchHistory> findRelativeSearchHistory(String query, Integer limit) {
+        return Flowable.fromIterable(daoSource.findRelativeSearchHistory(query,limit));
     }
 }

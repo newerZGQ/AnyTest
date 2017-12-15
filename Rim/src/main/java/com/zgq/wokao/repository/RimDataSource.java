@@ -26,5 +26,5 @@ public interface RimDataSource extends PaperDataSource {
     @Nonnull
     Flowable<SearchHistory> getLastestSearchHistory(int limit);
     @Nonnull
-    Flowable<RealmResults<SearchHistory>> findRelativeSearchHistory(String query, Integer limit);
+    Flowable<SearchHistory> findRelativeSearchHistory(String query, Integer limit);
 }

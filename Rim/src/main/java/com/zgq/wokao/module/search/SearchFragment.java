@@ -73,9 +73,13 @@ public class SearchFragment extends BaseFragment<SearchContract.SearchPresenter>
 
     @Override
     public void showHistory(List<HistorySuggestion> histories) {
-
+        mSearchView.swapSuggestions(histories);
     }
 
+    @Override
+    public void showSearchResult(List<Searchable> searchables) {
+        mSearchResultsAdapter.replaceData(searchables);
+    }
 
     public interface SearchFragmentCallbacks {
         void onAttachSearchViewBack(FloatingSearchView searchView);
@@ -96,8 +100,8 @@ public class SearchFragment extends BaseFragment<SearchContract.SearchPresenter>
                 mSearchView.clearSuggestions();
             }else{
                 mSearchView.showProgress();
-                presenter.loadHistory();
-
+                presenter.loadHistory(newQuery);
+                mSearchView.hideProgress();
             }
         });
 

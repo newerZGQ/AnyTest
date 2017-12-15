@@ -33,16 +33,18 @@ public class SearchPresenter extends BasePresenter<SearchContract.SearchView>
         ArrayList<HistorySuggestion> suggestions = new ArrayList<>();
         if (Strings.isNullOrEmpty(query)){
             repository.getLastestSearchHistory(10)
-                    .flatMap(new Function<SearchHistory, Publisher<HistorySuggestion>>() {
-                        @Override
-                        public Publisher<HistorySuggestion> apply(SearchHistory searchHistory) throws Exception {
-                            return Flowable.just(new HistorySuggestion(searchHistory.getContent()));
-                        }
-                    })
+                    .flatMap(searchHistory -> Flowable.just(new HistorySuggestion(searchHistory.getContent())))
                     .subscribe(suggestion -> suggestions.add(suggestion));
         }else{
-
+            repository.findRelativeSearchHistory(query,10)
+                    .flatMap(searchHistory -> Flowable.just(new HistorySuggestion(searchHistory.getContent())))
+                    .subscribe(suggestion -> suggestions.add(suggestion));
         }
         view.showHistory(suggestions);
+    }
+
+    @Override
+    public void search(String query) {
+        
     }
 }
