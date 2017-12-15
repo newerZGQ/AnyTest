@@ -1,23 +1,22 @@
 package com.zgq.wokao.module.search;
 
 import com.google.common.base.Strings;
-import com.zgq.wokao.entity.search.SearchHistory;
+import com.zgq.wokao.entity.paper.NormalExamPaper;
+import com.zgq.wokao.entity.paper.question.QuestionType;
 import com.zgq.wokao.module.base.BasePresenter;
 import com.zgq.wokao.module.search.entity.HistorySuggestion;
+import com.zgq.wokao.module.search.entity.SearchInfoItem;
+import com.zgq.wokao.module.search.entity.SearchQuestionItem;
+import com.zgq.wokao.module.search.entity.Searchable;
 import com.zgq.wokao.repository.RimRepository;
 
-import org.reactivestreams.Publisher;
-import org.reactivestreams.Subscriber;
-
 import java.util.ArrayList;
+import java.util.List;
 
+import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
 import io.reactivex.Flowable;
-import io.reactivex.Observable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
-import io.realm.RealmResults;
 
 public class SearchPresenter extends BasePresenter<SearchContract.SearchView>
         implements SearchContract.SearchPresenter {
@@ -45,6 +44,32 @@ public class SearchPresenter extends BasePresenter<SearchContract.SearchView>
 
     @Override
     public void search(String query) {
-        
+        if (Strings.isNullOrEmpty(query)){
+            return;
+        }
+        ArrayList<Searchable> searchResult = new ArrayList<>();
+        repository.getAllExamPaper()
+                .flatMap(normalExamPapers -> Flowable.fromIterable(normalExamPapers))
+                .flatMap(examPaper -> Flowable.fromIterable(parseSearchable(examPaper,query)))
+                .subscribe(searchable -> searchResult.add(searchable));
+        view.showSearchResult(searchResult);
+    }
+
+    @Nonnull
+    private List<Searchable> parseSearchable(NormalExamPaper paper, String query){
+        ArrayList<Searchable> result = new ArrayList<>();
+        if (paper.getPaperInfo().getTitle().contains(query)){
+            result.add(new SearchInfoItem(paper.getPaperInfo()));
+        }
+        Flowable.fromIterable(paper.getFillInQuestions())
+                .filter(fillInQuestion -> fillInQuestion.getBody().getContent().contains(query)
+                )
+                .flatMap(fillInQuestion -> Flowable.just(
+                        new SearchQuestionItem(paper.getPaperInfo(),
+                                QuestionType.FILLIN,
+                                fillInQuestion.getInfo().getIndex(),
+                                fillInQuestion)))
+                .subscribe(searchQuestionItem ->  result.add(searchQuestionItem));
+        return result;
     }
 }

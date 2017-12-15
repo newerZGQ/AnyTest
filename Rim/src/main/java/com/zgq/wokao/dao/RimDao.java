@@ -4,14 +4,12 @@ import com.zgq.wokao.entity.paper.NormalExamPaper;
 import com.zgq.wokao.entity.paper.info.ExamPaperInfo;
 import com.zgq.wokao.entity.search.SearchHistory;
 import com.zgq.wokao.entity.summary.StudySummary;
-import com.zgq.wokao.module.search.entity.HistorySuggestion;
 
 import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import io.realm.RealmList;
 import io.realm.RealmModel;
 import io.realm.RealmResults;
 

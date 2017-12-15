@@ -10,7 +10,6 @@ import javax.annotation.Nullable;
 
 import io.reactivex.Flowable;
 import io.realm.RealmModel;
-import io.realm.RealmResults;
 
 public interface RimDataSource extends PaperDataSource {
     <T extends RealmModel> Flowable<T> copyFromRealm(T t);

@@ -12,6 +12,7 @@ import com.zgq.wokao.util.DateUtil;
 import com.zgq.wokao.util.FileUtil;
 
 import java.io.File;
+import java.util.UUID;
 
 import javax.inject.Inject;
 
@@ -48,6 +49,7 @@ public class WelcomePresenter extends BasePresenter<WelcomeContract.MainView>
         }
         repository.saveSummary(StudySummary.builder()
                 .lastWeekRecords(realmList)
+                .id(UUID.randomUUID().toString())
                 .build());
     }
 

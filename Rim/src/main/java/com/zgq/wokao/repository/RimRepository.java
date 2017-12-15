@@ -1,9 +1,8 @@
 package com.zgq.wokao.repository;
 
+import com.google.common.base.Optional;
 import com.zgq.wokao.dao.RimDaoSource;
 import com.zgq.wokao.entity.paper.NormalExamPaper;
-
-import com.google.common.base.Optional;
 import com.zgq.wokao.entity.paper.info.ExamPaperInfo;
 import com.zgq.wokao.entity.search.SearchHistory;
 import com.zgq.wokao.entity.summary.StudySummary;
@@ -16,7 +15,6 @@ import javax.inject.Inject;
 
 import io.reactivex.Flowable;
 import io.realm.RealmModel;
-import io.realm.RealmObject;
 import io.realm.RealmResults;
 
 public class RimRepository implements RimDataSource {

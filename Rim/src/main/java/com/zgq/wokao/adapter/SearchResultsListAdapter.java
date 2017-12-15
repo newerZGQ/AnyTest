@@ -7,17 +7,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.zgq.wokao.R;
-import com.zgq.wokao.entity.paper.info.ExamPaperInfo;
-import com.zgq.wokao.entity.paper.question.IQuestion;
-import com.zgq.wokao.entity.paper.question.QuestionType;
+import com.zgq.wokao.entity.paper.question.DiscussQuestion;
+import com.zgq.wokao.entity.paper.question.FillInQuestion;
+import com.zgq.wokao.entity.paper.question.MultChoQuestion;
+import com.zgq.wokao.entity.paper.question.SglChoQuestion;
+import com.zgq.wokao.entity.paper.question.TFQuestion;
 import com.zgq.wokao.module.search.entity.SearchInfoItem;
 import com.zgq.wokao.module.search.entity.SearchQuestionItem;
 import com.zgq.wokao.module.search.entity.Searchable;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import lombok.Data;
 
 public class SearchResultsListAdapter extends RecyclerView.Adapter<SearchResultsListAdapter.ViewHolder> {
     private static final String TAG = "SearchListAdapter";
@@ -74,8 +74,36 @@ public class SearchResultsListAdapter extends RecyclerView.Adapter<SearchResults
         if (tmp instanceof SearchQuestionItem) {
             SearchQuestionItem qstItem = (SearchQuestionItem) tmp;
             holder.itemType.setText(qstItem.getQuestionType().getName());
-            //holder.itemContent.setText(qstItem.getQuestion().getBody().getContent());
-            //holder.itemTip.setText(qstItem.getInfo().getTitle());
+            switch (qstItem.getQuestionType()){
+                case FILLIN:
+                    holder.itemContent.setText(((FillInQuestion)qstItem.getQuestion())
+                                    .getBody()
+                                    .getContent());
+                    break;
+                case TF:
+                    holder.itemContent.setText(((TFQuestion)qstItem.getQuestion())
+                            .getBody()
+                            .getContent());
+                    break;
+                case SINGLECHOOSE:
+                    holder.itemContent.setText(((SglChoQuestion)qstItem.getQuestion())
+                            .getBody()
+                            .getContent());
+                    break;
+                case MUTTICHOOSE:
+                    holder.itemContent.setText(((MultChoQuestion)qstItem.getQuestion())
+                            .getBody()
+                            .getContent());
+                    break;
+                case DISCUSS:
+                    holder.itemContent.setText(((DiscussQuestion)qstItem.getQuestion())
+                            .getBody()
+                            .getContent());
+                    break;
+                default:
+                    break;
+            }
+            holder.itemTip.setText(qstItem.getInfo().getTitle());
         }
         holder.textContainer.setOnClickListener(view -> mItemsOnClickListener.onClick(mDataSet.get(position)));
     }
@@ -84,18 +112,5 @@ public class SearchResultsListAdapter extends RecyclerView.Adapter<SearchResults
     public int getItemCount() {
         return mDataSet.size();
     }
-
-    @Data
-    public static class PaperInfoItem{
-        private ExamPaperInfo info;
-    }
-    @Data
-    public static class QuestionItem{
-        private ExamPaperInfo info;
-        private QuestionType questionType;
-        private int questionId;
-        private IQuestion question;
-    }
-
 }
 

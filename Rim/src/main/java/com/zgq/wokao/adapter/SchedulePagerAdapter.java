@@ -11,12 +11,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.common.base.Optional;
 import com.zgq.wokao.R;
 import com.zgq.wokao.entity.paper.info.ExamPaperInfo;
 import com.zgq.wokao.util.DateUtil;
 
-import java.text.ParseException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;

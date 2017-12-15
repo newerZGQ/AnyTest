@@ -4,9 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.preference.Preference;
-import android.view.View;
 
 import com.zgq.wokao.R;
 import com.zgq.wokao.injector.components.DaggerSettingsComponent;
