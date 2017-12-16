@@ -6,10 +6,6 @@ import java.util.List;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 
-/**
- * Created by zgq on 2017/2/11.
- */
-
 public class ListUtil {
     public static <T> List<T> assem(List<T>... args) {
         List<T> results = new ArrayList<>();

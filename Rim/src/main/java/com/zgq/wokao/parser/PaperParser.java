@@ -25,11 +25,6 @@ import java.util.UUID;
 
 import io.realm.RealmList;
 
-
-/**
- * Created by zgq on 2017/2/18.
- */
-
 public class PaperParser extends BaseParser implements IPaperParser {
 
     private InputStream is;

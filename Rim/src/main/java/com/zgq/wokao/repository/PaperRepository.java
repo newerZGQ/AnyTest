@@ -12,10 +12,6 @@ import javax.inject.Inject;
 import io.reactivex.Flowable;
 import io.realm.RealmResults;
 
-/**
- * Created by zgq on 2017/11/20.
- */
-
 public class PaperRepository implements PaperDataSource {
 
     @Inject

@@ -11,10 +11,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
-/**
- * Created by zgq on 2017/2/20.
- */
-
 public class ParserHelper {
     private static String TAG = ParserHelper.class.getSimpleName();
 

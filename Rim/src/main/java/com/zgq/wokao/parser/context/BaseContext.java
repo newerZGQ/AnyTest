@@ -5,10 +5,6 @@ import com.zgq.wokao.parser.context.item.ParserItem;
 import java.util.LinkedList;
 import java.util.Queue;
 
-/**
- * Created by zgq on 2017/2/20.
- */
-
 public abstract class BaseContext implements Context {
     private Queue<ParserItem> itemQueue;
     private int queueCapacity = 5;

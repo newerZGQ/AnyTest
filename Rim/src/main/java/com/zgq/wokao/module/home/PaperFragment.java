@@ -23,10 +23,6 @@ import java.util.List;
 
 import butterknife.BindView;
 
-/**
- * Created by zhangguoqiang on 2017/11/21.
- */
-
 public class PaperFragment extends BaseFragment<HomeContract.PaperPresenter>
         implements HomeContract.PaperView {
 

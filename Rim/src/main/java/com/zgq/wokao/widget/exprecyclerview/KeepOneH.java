@@ -6,8 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.zgq.wokao.util.DensityUtil;
 import com.zgq.wokao.adapter.HomePaperAdapter;
+import com.zgq.wokao.util.DensityUtil;
 
 public class KeepOneH {
     private int _opened = -1;

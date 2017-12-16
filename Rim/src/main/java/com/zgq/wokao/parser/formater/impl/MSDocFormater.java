@@ -9,10 +9,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-/**
- * Created by zgq on 2017/2/9.
- */
-
 public class MSDocFormater extends BaseFormater implements IMSDocFormater {
 
     public static final String TAG = "MSDocFormater";

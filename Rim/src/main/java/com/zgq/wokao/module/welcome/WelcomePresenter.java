@@ -12,6 +12,7 @@ import com.zgq.wokao.util.DateUtil;
 import com.zgq.wokao.util.FileUtil;
 
 import java.io.File;
+import java.util.UUID;
 
 import javax.inject.Inject;
 
@@ -43,11 +44,13 @@ public class WelcomePresenter extends BasePresenter<WelcomeContract.MainView>
             TotalDailyCount totalDailyCount = TotalDailyCount
                     .builder()
                     .date(DateUtil.getTargetDateApart(today, -i))
+                    .id(UUID.randomUUID().toString())
                     .build();
             realmList.add(0, totalDailyCount);
         }
         repository.saveSummary(StudySummary.builder()
                 .lastWeekRecords(realmList)
+                .id(UUID.randomUUID().toString())
                 .build());
     }
 

@@ -7,14 +7,9 @@ import com.zgq.wokao.module.home.PaperFragment;
 import com.zgq.wokao.module.home.PaperPresenter;
 import com.zgq.wokao.module.home.ScheduleFragment;
 import com.zgq.wokao.module.home.SchedulePresenter;
-import com.zgq.wokao.repository.RimRepository;
 
 import dagger.Module;
 import dagger.Provides;
-
-/**
- * Created by zhangguoqiang on 2017/11/21.
- */
 
 @Module
 public class HomeModule {

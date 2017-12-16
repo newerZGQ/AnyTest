@@ -7,10 +7,6 @@ import com.zgq.wokao.module.parser.ParserPresenter;
 import dagger.Module;
 import dagger.Provides;
 
-/**
- * Created by zgq on 2017/11/22.
- */
-
 @Module
 public class ParserModule {
     public ParserModule(){}

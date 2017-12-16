@@ -27,6 +27,7 @@
         <activity android:name=".module.question.QuestionsActivity" />
         <activity android:name=".module.study.StudyActivity" />
         <activity android:name=".module.settings.SettingsActivity" />
+        <activity android:name=".module.search.SearchActivity" />
 
         //facebook浏览器分享卡片,未安装客户端时弹出
         <activity

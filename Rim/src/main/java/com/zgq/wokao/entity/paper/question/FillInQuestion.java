@@ -1,6 +1,5 @@
 package com.zgq.wokao.entity.paper.question;
 
-import com.orhanobut.logger.Logger;
 import com.zgq.wokao.entity.CascadeDeleteable;
 
 import io.realm.RealmObject;

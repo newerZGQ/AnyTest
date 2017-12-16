@@ -12,10 +12,6 @@ import android.widget.TextView;
 
 import com.zgq.wokao.R;
 
-/**
- * Created by zgq on 2017/3/19.
- */
-
 public class ScheduleInfoView extends RelativeLayout {
 
     private View rootView;

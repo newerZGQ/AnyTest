@@ -70,4 +70,5 @@ ext {
     bubbleseekbar = '3.4-lite'
     filepicker = '1.09'
     droidsonroidsgif = '1.2.8'
+    searchview = '2.0.3'
 }

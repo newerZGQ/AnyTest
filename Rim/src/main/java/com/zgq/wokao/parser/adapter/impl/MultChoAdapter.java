@@ -20,10 +20,6 @@ import java.util.UUID;
 
 import io.realm.RealmList;
 
-/**
- * Created by zgq on 2017/2/19.
- */
-
 public class MultChoAdapter extends BaseAdapter implements IMultChoAdapter {
     private QuestionType type = QuestionType.MUTTICHOOSE;
     ArrayList<String> content = new ArrayList<>();

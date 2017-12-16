@@ -7,8 +7,6 @@ import com.zgq.wokao.module.IView;
 
 import java.util.List;
 
-import io.realm.RealmList;
-
 
 public interface StudyContract {
     interface MainView extends IView<MainPresenter>{}

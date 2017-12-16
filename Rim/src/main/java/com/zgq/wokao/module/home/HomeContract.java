@@ -9,7 +9,6 @@ import com.zgq.wokao.module.IView;
 
 import java.util.List;
 
-import io.realm.RealmList;
 import io.realm.RealmResults;
 
 public interface HomeContract {

@@ -1,9 +1,5 @@
 package com.zgq.wokao.widget;
 
-/**
- * Created by zgq on 2017/2/22.
- */
-
 import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
 import android.animation.TimeInterpolator;
@@ -17,7 +13,6 @@ import android.os.Parcelable;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -29,9 +24,6 @@ import com.zgq.wokao.R;
 import java.io.Serializable;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 import static android.view.Gravity.BOTTOM;
 import static android.view.Gravity.END;

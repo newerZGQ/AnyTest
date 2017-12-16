@@ -42,7 +42,7 @@ public class QuestionsActivity extends BaseActivity<QuestionContract.Presenter>
     public void startStudy(String paperId, QuestionType questionType) {
         Intent intent = new Intent(this, StudyActivity.class);
         intent.putExtra("paperId", paperId);
-        intent.putExtra("qstType", (Parcelable) questionType);
+        intent.putExtra("questionType", (Parcelable) questionType);
         intent.putExtra("qstNum", 0);
         startActivity(intent);
     }

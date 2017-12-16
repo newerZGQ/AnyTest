@@ -9,7 +9,6 @@ import com.zgq.wokao.injector.components.WelcomeComponent;
 import com.zgq.wokao.injector.modules.WelcomeModule;
 import com.zgq.wokao.module.base.BaseFragment;
 
-
 import javax.inject.Inject;
 
 import butterknife.BindView;

@@ -5,15 +5,9 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.xw.repo.BubbleSeekBar;
 import com.zgq.wokao.R;
-
-/**
- * Created by zgq on 2017/5/20.
- */
 
 public class TaskSettingLayout extends LinearLayout {
     private View rootView;

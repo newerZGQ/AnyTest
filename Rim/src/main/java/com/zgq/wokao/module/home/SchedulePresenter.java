@@ -1,15 +1,10 @@
 package com.zgq.wokao.module.home;
 
 import com.google.common.base.Optional;
-import com.google.common.eventbus.Subscribe;
-import com.orhanobut.logger.Logger;
 import com.zgq.wokao.entity.paper.info.ExamPaperInfo;
-import com.zgq.wokao.entity.paper.info.Schedule;
-import com.zgq.wokao.eventbus.EventBusCenter;
 import com.zgq.wokao.module.base.BasePresenter;
 import com.zgq.wokao.repository.RimRepository;
 
-import javax.annotation.Nonnull;
 import javax.inject.Inject;
 
 import io.reactivex.Flowable;

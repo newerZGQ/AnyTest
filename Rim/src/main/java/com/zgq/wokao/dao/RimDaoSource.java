@@ -2,7 +2,9 @@ package com.zgq.wokao.dao;
 
 import com.zgq.wokao.entity.paper.NormalExamPaper;
 import com.zgq.wokao.entity.paper.info.ExamPaperInfo;
+import com.zgq.wokao.entity.search.SearchHistory;
 import com.zgq.wokao.entity.summary.StudySummary;
+import com.zgq.wokao.util.DateUtil;
 
 import java.util.List;
 
@@ -13,6 +15,7 @@ import javax.inject.Inject;
 import io.realm.Realm;
 import io.realm.RealmModel;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 public class RimDaoSource implements RimDao {
 
@@ -74,6 +77,49 @@ public class RimDaoSource implements RimDao {
     public StudySummary getStudySummary() {
         return realm.where(StudySummary.class)
                 .findFirst();
+    }
+
+    @Override
+    public void saveSearchHistory(@Nonnull SearchHistory searchHistory) {
+        realm.beginTransaction();
+        realm.copyToRealm(searchHistory);
+        realm.commitTransaction();
+    }
+
+    @Override
+    public void updateSearchHistory(SearchHistory entity) {
+        realm.beginTransaction();
+        entity.setDate(DateUtil.getCurrentDate());
+        entity.setCount(entity.getCount() + 1);
+        realm.commitTransaction();
+    }
+
+    @Nullable
+    @Override
+    public SearchHistory querySearchHistory(String content) {
+        return realm.where(SearchHistory.class)
+                .equalTo("content", content)
+                .findAll()
+                .first();
+    }
+
+    @Nonnull
+    @Override
+    public List<SearchHistory> getLastestSearchHistory(int limit) {
+        RealmResults resluts = realm.where(SearchHistory.class)
+                .findAll()
+                .sort("date", Sort.DESCENDING);
+        return resluts.subList(0, Math.min(resluts.size(), limit));
+    }
+
+    @Nonnull
+    @Override
+    public List<SearchHistory> findRelativeSearchHistory(String query, Integer limit) {
+        RealmResults<SearchHistory> resluts = realm.where(SearchHistory.class).
+                contains("content", query).
+                findAll().
+                sort("count", Sort.DESCENDING);
+        return resluts.subList(0, Math.min(resluts.size(), limit));
     }
 
     @Override

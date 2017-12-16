@@ -1,9 +1,6 @@
 package com.zgq.wokao.module.home;
 
-import com.google.common.eventbus.EventBus;
-import com.orhanobut.logger.Logger;
 import com.zgq.wokao.entity.paper.NormalExamPaper;
-import com.zgq.wokao.eventbus.EventBusCenter;
 import com.zgq.wokao.module.base.BasePresenter;
 import com.zgq.wokao.repository.RimDataSource;
 import com.zgq.wokao.repository.RimRepository;
