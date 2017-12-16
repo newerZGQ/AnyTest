@@ -44,6 +44,7 @@ public class WelcomePresenter extends BasePresenter<WelcomeContract.MainView>
             TotalDailyCount totalDailyCount = TotalDailyCount
                     .builder()
                     .date(DateUtil.getTargetDateApart(today, -i))
+                    .id(UUID.randomUUID().toString())
                     .build();
             realmList.add(0, totalDailyCount);
         }

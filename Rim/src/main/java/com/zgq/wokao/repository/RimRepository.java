@@ -1,5 +1,8 @@
 package com.zgq.wokao.repository;
 
+import android.support.design.widget.TabLayout;
+import android.util.Log;
+
 import com.google.common.base.Optional;
 import com.zgq.wokao.dao.RimDaoSource;
 import com.zgq.wokao.entity.paper.NormalExamPaper;
@@ -62,6 +65,7 @@ public class RimRepository implements RimDataSource {
 
     @Override
     public void saveSummary(@Nonnull final StudySummary studySummary) {
+        Log.d("savesummary", studySummary.getId());
         getStudySummary().subscribe(studySummaryOptional -> {
             if (!studySummaryOptional.isPresent()){
                 paperRepository.saveSummary(studySummary);

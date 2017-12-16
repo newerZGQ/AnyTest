@@ -105,21 +105,21 @@ public class RimDaoSource implements RimDao {
 
     @Nonnull
     @Override
-    public RealmResults<SearchHistory> getLastestSearchHistory(int limit) {
+    public List<SearchHistory> getLastestSearchHistory(int limit) {
         RealmResults resluts = realm.where(SearchHistory.class)
                 .findAll()
                 .sort("date", Sort.DESCENDING);
-        return (RealmResults) resluts.subList(0, Math.min(resluts.size(), limit));
+        return resluts.subList(0, Math.min(resluts.size(), limit));
     }
 
     @Nonnull
     @Override
-    public RealmResults<SearchHistory> findRelativeSearchHistory(String query, Integer limit) {
+    public List<SearchHistory> findRelativeSearchHistory(String query, Integer limit) {
         RealmResults<SearchHistory> resluts = realm.where(SearchHistory.class).
                 contains("content", query).
                 findAll().
                 sort("count", Sort.DESCENDING);
-        return (RealmResults) resluts.subList(0, Math.min(resluts.size(), limit));
+        return resluts.subList(0, Math.min(resluts.size(), limit));
     }
 
     @Override

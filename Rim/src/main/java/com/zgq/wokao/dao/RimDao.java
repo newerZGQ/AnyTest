@@ -33,9 +33,9 @@ public interface RimDao {
     @Nullable
     SearchHistory querySearchHistory(String content);
     @Nonnull
-    RealmResults<SearchHistory> getLastestSearchHistory(int limit);
+    List<SearchHistory> getLastestSearchHistory(int limit);
     @Nonnull
-    RealmResults<SearchHistory> findRelativeSearchHistory(String query, Integer limit);
+    List<SearchHistory> findRelativeSearchHistory(String query, Integer limit);
 
     <T extends RealmModel> T copyFromRealm(T  t);
     <T extends RealmModel> List<T> copyFromRealm(Iterable<T> realmObjects);

@@ -70,6 +70,42 @@ public class SearchPresenter extends BasePresenter<SearchContract.SearchView>
                                 fillInQuestion.getInfo().getIndex(),
                                 fillInQuestion)))
                 .subscribe(searchQuestionItem ->  result.add(searchQuestionItem));
+        Flowable.fromIterable(paper.getTfQuestions())
+                .filter(tfQuestion -> tfQuestion.getBody().getContent().contains(query)
+                )
+                .flatMap(tfQuestion -> Flowable.just(
+                        new SearchQuestionItem(paper.getPaperInfo(),
+                                QuestionType.TF,
+                                tfQuestion.getInfo().getIndex(),
+                                tfQuestion)))
+                .subscribe(searchQuestionItem ->  result.add(searchQuestionItem));
+        Flowable.fromIterable(paper.getSglChoQuestions())
+                .filter(sglChoQuestion -> sglChoQuestion.getBody().getContent().contains(query)
+                )
+                .flatMap(sglChoQuestion -> Flowable.just(
+                        new SearchQuestionItem(paper.getPaperInfo(),
+                                QuestionType.SINGLECHOOSE,
+                                sglChoQuestion.getInfo().getIndex(),
+                                sglChoQuestion)))
+                .subscribe(searchQuestionItem ->  result.add(searchQuestionItem));
+        Flowable.fromIterable(paper.getMultChoQuestions())
+                .filter(multChoQuestion -> multChoQuestion.getBody().getContent().contains(query)
+                )
+                .flatMap(multChoQuestion -> Flowable.just(
+                        new SearchQuestionItem(paper.getPaperInfo(),
+                                QuestionType.MUTTICHOOSE,
+                                multChoQuestion.getInfo().getIndex(),
+                                multChoQuestion)))
+                .subscribe(searchQuestionItem ->  result.add(searchQuestionItem));
+        Flowable.fromIterable(paper.getDiscussQuestions())
+                .filter(discussQuestion -> discussQuestion.getBody().getContent().contains(query)
+                )
+                .flatMap(discussQuestion -> Flowable.just(
+                        new SearchQuestionItem(paper.getPaperInfo(),
+                                QuestionType.DISCUSS,
+                                discussQuestion.getInfo().getIndex(),
+                                discussQuestion)))
+                .subscribe(searchQuestionItem ->  result.add(searchQuestionItem));
         return result;
     }
 }
