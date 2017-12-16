@@ -1,7 +1,6 @@
 package com.zgq.wokao.adapter;
 
 import android.content.Context;
-import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,40 +10,26 @@ import android.widget.TextView;
 import com.zgq.wokao.R;
 import com.zgq.wokao.entity.paper.question.Answer;
 import com.zgq.wokao.entity.paper.question.TFQuestion;
+import com.zgq.wokao.module.study.entity.StudyInfo;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 
-/**
- * Created by zgq on 16-7-6.
- */
-public class TFQuestionAdapter extends BaseViewPagerAdapter {
-    private ArrayList<TFQuestion> datas = null;
-    private LinkedList<View> mViewCache = null;
-    private Context mContext;
-    private LayoutInflater mLayoutInflater = null;
-    private ArrayList<Boolean> hasShowAnswer = null;
-    private ArrayList<Answer> myAnswer = new ArrayList<>();
+public class TFQuestionAdapter extends BaseViewPagerAdapter<TFQuestion> {
+    private LinkedList<View> mViewCache = new LinkedList<>();
+    private Context context;
 
     private View currentView = null;
     private int currentPosition = 0;
 
-
     private TFQuestionViewHolder holder;
 
-    public TFQuestionAdapter(ArrayList<TFQuestion> datas, ArrayList<Boolean> hasShowAnswer, ArrayList<Answer> myAnswer, Context context) {
-        super();
-        this.datas = datas;
-        this.mContext = context;
-        this.mLayoutInflater = LayoutInflater.from(mContext);
-        this.mViewCache = new LinkedList<>();
-        this.hasShowAnswer = hasShowAnswer;
-        this.myAnswer = myAnswer;
+    public TFQuestionAdapter(StudyInfo studyInfo) {
+        super(studyInfo);
     }
 
     @Override
     public int getCount() {
-        return this.datas.size();
+        return studyInfo.getQuestions().size();
     }
 
     @Override
@@ -72,11 +57,13 @@ public class TFQuestionAdapter extends BaseViewPagerAdapter {
     public View getTFQuestionView(ViewGroup container, final int position) {
         TFQuestionViewHolder tfQuestionViewHolder = null;
         View convertView = null;
+        context = container.getContext();
         if (mViewCache.size() == 0) {
-            convertView = this.mLayoutInflater.inflate(R.layout.viewadapter_tfquestion_item, null, false);
-            TextView questionBody = (TextView) convertView.findViewById(R.id.tfquestion_body);
-            LinearLayout optionTrue = (LinearLayout) convertView.findViewById(R.id.tfqst_option_true);
-            LinearLayout optionFalse = (LinearLayout) convertView.findViewById(R.id.tfqst_option_false);
+            convertView = LayoutInflater.from(container.getContext())
+                    .inflate(R.layout.viewadapter_tfquestion_item, null, false);
+            TextView questionBody = convertView.findViewById(R.id.tfquestion_body);
+            LinearLayout optionTrue = convertView.findViewById(R.id.tfqst_option_true);
+            LinearLayout optionFalse = convertView.findViewById(R.id.tfqst_option_false);
             tfQuestionViewHolder = new TFQuestionViewHolder();
             tfQuestionViewHolder.questionBody = questionBody;
             tfQuestionViewHolder.optionTrue = optionTrue;
@@ -87,58 +74,59 @@ public class TFQuestionAdapter extends BaseViewPagerAdapter {
             tfQuestionViewHolder = (TFQuestionViewHolder) convertView.getTag();
         }
         holder = tfQuestionViewHolder;
-        tfQuestionViewHolder.questionBody.setText("" + (position + 1) + ". " + datas.get(position).getBody().getContent());
+        TFQuestion question = studyInfo.getQuestions().get(position);
+        tfQuestionViewHolder.questionBody.setText("" + (position + 1) + ". " + question.getBody().getContent());
         tfQuestionViewHolder.optionFalse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (hasShowAnswer.get(position)) return;
+                if (studyInfo.hasAnswered(question.getId())) return;
                 onSelectedFalseOption(v, position);
             }
         });
         tfQuestionViewHolder.optionTrue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (hasShowAnswer.get(position)) return;
+                if (studyInfo.hasAnswered(question.getId())) return;
                 onSelectedTrueOption(v, position);
             }
         });
-        if (hasShowAnswer.get(position)) {
-            String answer = myAnswer.get(position).getContent();
-            String answer1 = getRealAnswer(datas.get(position).getAnswer().getContent());
-            TextView trueLabel = (TextView) holder.optionTrue.findViewById(R.id.tfqst_option_true_label);
-            TextView falseLabel = (TextView) holder.optionFalse.findViewById(R.id.tfqst_option_false_label);
+        if (studyInfo.hasAnswered(question.getId())) {
+            String answer = studyInfo.getMyAnswer(question.getId()).getContent();
+            String answer1 = getRealAnswer(question.getAnswer().getContent());
+            TextView trueLabel = holder.optionTrue.findViewById(R.id.tfqst_option_true_label);
+            TextView falseLabel = holder.optionFalse.findViewById(R.id.tfqst_option_false_label);
             if (answer.equals(answer1)) {
                 switch (answer) {
                     case "true":
-                        trueLabel.setBackground(mContext.getResources().getDrawable(R.drawable.tfquestion_viewpager_selected_right_label));
+                        trueLabel.setBackground(context.getResources().getDrawable(R.drawable.tfquestion_viewpager_selected_right_label));
                         trueLabel.setText("");
                         break;
                     case "false":
-                        falseLabel.setBackground(mContext.getResources().getDrawable(R.drawable.tfquestion_viewpager_selected_right_label));
+                        falseLabel.setBackground(context.getResources().getDrawable(R.drawable.tfquestion_viewpager_selected_right_label));
                         falseLabel.setText("");
                 }
             } else {
                 switch (answer) {
                     case "true":
-                        trueLabel.setBackground(mContext.getResources().getDrawable(R.drawable.tfquestion_viewpager_selected_wrong_label));
+                        trueLabel.setBackground(context.getResources().getDrawable(R.drawable.tfquestion_viewpager_selected_wrong_label));
                         trueLabel.setText("");
-                        falseLabel.setBackground(mContext.getResources().getDrawable(R.drawable.tfquestion_viewpager_selected_right_label));
+                        falseLabel.setBackground(context.getResources().getDrawable(R.drawable.tfquestion_viewpager_selected_right_label));
                         falseLabel.setText("");
                         break;
                     case "false":
-                        falseLabel.setBackground(mContext.getResources().getDrawable(R.drawable.tfquestion_viewpager_selected_wrong_label));
+                        falseLabel.setBackground(context.getResources().getDrawable(R.drawable.tfquestion_viewpager_selected_wrong_label));
                         falseLabel.setText("");
-                        trueLabel.setBackground(mContext.getResources().getDrawable(R.drawable.tfquestion_viewpager_selected_right_label));
+                        trueLabel.setBackground(context.getResources().getDrawable(R.drawable.tfquestion_viewpager_selected_right_label));
                         trueLabel.setText("");
                 }
             }
         } else {
-            TextView trueLabel = (TextView) holder.optionTrue.findViewById(R.id.tfqst_option_true_label);
+            TextView trueLabel = holder.optionTrue.findViewById(R.id.tfqst_option_true_label);
             trueLabel.setText("A");
-            trueLabel.setBackground(mContext.getResources().getDrawable(R.drawable.activity_answer_study_option_circle_base));
-            TextView falseLabel = (TextView) holder.optionFalse.findViewById(R.id.tfqst_option_false_label);
+            trueLabel.setBackground(context.getResources().getDrawable(R.drawable.activity_answer_study_option_circle_base));
+            TextView falseLabel = holder.optionFalse.findViewById(R.id.tfqst_option_false_label);
             falseLabel.setText("B");
-            falseLabel.setBackground(mContext.getResources().getDrawable(R.drawable.activity_answer_study_option_circle_base));
+            falseLabel.setBackground(context.getResources().getDrawable(R.drawable.activity_answer_study_option_circle_base));
         }
         container.addView(convertView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         return convertView;
@@ -164,69 +152,69 @@ public class TFQuestionAdapter extends BaseViewPagerAdapter {
     public void onSelectedTrueOption(View view, int position) {
         Answer answer = new Answer();
         answer.setContent("true");
-        myAnswer.set(position, answer);
-        hasShowAnswer.set(position, true);
+        TFQuestion question = studyInfo.getQuestions().get(position);
+        studyInfo.saveMyAnswer(question.getId(),answer);
         View view1 = getCurrentView();
         TFQuestionViewHolder holder = (TFQuestionViewHolder) view1.getTag();
         final TextView trueLabel = (TextView) holder.optionTrue.findViewById(R.id.tfqst_option_true_label);
         final TextView falseLabel = (TextView) holder.optionFalse.findViewById(R.id.tfqst_option_false_label);
 
-        if (answer.getContent().equals(getRealAnswer(datas.get(position).getAnswer().getContent()))) {
+        if (answer.getContent().equals(getRealAnswer(question.getAnswer().getContent()))) {
             holder.optionFalse.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    trueLabel.setBackground(mContext.getResources().getDrawable(R.drawable.tfquestion_viewpager_selected_right_label));
+                    trueLabel.setBackground(context.getResources().getDrawable(R.drawable.tfquestion_viewpager_selected_right_label));
                     trueLabel.setText("");
                 }
             }, 200);
-            getCorrectAnswer(getPaperId(), datas.get(currentPosition));
+            //getCorrectAnswer(getPaperId(), datas.get(currentPosition));
         } else {
             holder.optionFalse.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    trueLabel.setBackground(mContext.getResources().getDrawable(R.drawable.tfquestion_viewpager_selected_wrong_label));
+                    trueLabel.setBackground(context.getResources().getDrawable(R.drawable.tfquestion_viewpager_selected_wrong_label));
                     trueLabel.setText("");
-                    falseLabel.setBackground(mContext.getResources().getDrawable(R.drawable.tfquestion_viewpager_selected_right_label));
+                    falseLabel.setBackground(context.getResources().getDrawable(R.drawable.tfquestion_viewpager_selected_right_label));
                     falseLabel.setText("");
                 }
             }, 200);
-            getFalseAnswer(getPaperId(), datas.get(currentPosition));
+            //getFalseAnswer(getPaperId(), datas.get(currentPosition));
         }
     }
 
     public void onSelectedFalseOption(View view, int position) {
         Answer answer = new Answer();
         answer.setContent("false");
-        myAnswer.set(position, answer);
-        hasShowAnswer.set(position, true);
+        TFQuestion question = studyInfo.getQuestions().get(position);
+        studyInfo.saveMyAnswer(question.getId(),answer);
         View view1 = getCurrentView();
         TFQuestionViewHolder holder = (TFQuestionViewHolder) view1.getTag();
         final TextView trueLabel = (TextView) holder.optionTrue.findViewById(R.id.tfqst_option_true_label);
         final TextView falseLabel = (TextView) holder.optionFalse.findViewById(R.id.tfqst_option_false_label);
 
-        if (answer.getContent().equals(getRealAnswer(datas.get(position).getAnswer().getContent()))) {
+        if (answer.getContent().equals(getRealAnswer(question.getAnswer().getContent()))) {
             holder.optionFalse.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    falseLabel.setBackground(mContext.getResources().
+                    falseLabel.setBackground(context.getResources().
                             getDrawable(R.drawable.tfquestion_viewpager_selected_right_label));
                     falseLabel.setText("");
                 }
             }, 200);
-            getCorrectAnswer(getPaperId(), datas.get(currentPosition));
+            //getCorrectAnswer(getPaperId(), datas.get(currentPosition));
         } else {
             holder.optionFalse.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    trueLabel.setBackground(mContext.getResources().
+                    trueLabel.setBackground(context.getResources().
                             getDrawable(R.drawable.tfquestion_viewpager_selected_right_label));
                     trueLabel.setText("");
-                    falseLabel.setBackground(mContext.getResources().
+                    falseLabel.setBackground(context.getResources().
                             getDrawable(R.drawable.tfquestion_viewpager_selected_wrong_label));
                     falseLabel.setText("");
                 }
             }, 200);
-            getFalseAnswer(getPaperId(), datas.get(currentPosition));
+            //getFalseAnswer(getPaperId(), datas.get(currentPosition));
         }
     }
 
@@ -249,7 +237,7 @@ public class TFQuestionAdapter extends BaseViewPagerAdapter {
 
     @Override
     public int getLastPosition() {
-        return datas.get(currentPosition).getInfo().getIndex() - 1;
+        return studyInfo.getQuestions().get(currentPosition).getInfo().getIndex() - 1;
     }
 
     public final class TFQuestionViewHolder {

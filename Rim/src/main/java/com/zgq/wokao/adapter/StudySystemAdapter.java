@@ -10,8 +10,4 @@ public interface StudySystemAdapter {
     boolean showCurrentAnswer();
 
     void hideCurrentAnswer();
-
-    void setPaperId(String paperId);
-
-    String getPaperId();
 }

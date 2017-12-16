@@ -1,26 +1,19 @@
 package com.zgq.wokao.adapter;
 
-import android.content.Context;
-import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.zgq.wokao.R;
+import com.zgq.wokao.entity.paper.question.Answer;
 import com.zgq.wokao.entity.paper.question.FillInQuestion;
-import com.zgq.wokao.entity.paper.question.IQuestion;
+import com.zgq.wokao.module.study.entity.StudyInfo;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class FillInQuestionAdapter extends com.zgq.wokao.adapter.BaseViewPagerAdapter {
-    //显示的数据
-    private ArrayList<FillInQuestion> datas = null;
-    private LinkedList<View> mViewCache = null;
-    private Context mContext;
-    private LayoutInflater mLayoutInflater = null;
-    private ArrayList<Boolean> hasShowAnswer = new ArrayList<>();
+public class FillInQuestionAdapter extends BaseViewPagerAdapter<FillInQuestion> {
+    private LinkedList<View> mViewCache = new LinkedList<>();
 
     private View currentView = null;
     private int currentPosition = 0;
@@ -28,18 +21,13 @@ public class FillInQuestionAdapter extends com.zgq.wokao.adapter.BaseViewPagerAd
 
     private FillInQuestionViewHolder holder;
 
-    public FillInQuestionAdapter(ArrayList<FillInQuestion> datas, ArrayList<Boolean> hasShowAnswer, Context context) {
-        super();
-        this.datas = datas;
-        this.mContext = context;
-        this.mLayoutInflater = LayoutInflater.from(mContext);
-        this.mViewCache = new LinkedList<>();
-        this.hasShowAnswer = hasShowAnswer;
+    public FillInQuestionAdapter(StudyInfo<FillInQuestion> studyInfo) {
+        super(studyInfo);
     }
 
     @Override
     public int getCount() {
-        return this.datas.size();
+        return studyInfo.getQuestions().size();
     }
 
     @Override
@@ -68,9 +56,10 @@ public class FillInQuestionAdapter extends com.zgq.wokao.adapter.BaseViewPagerAd
         FillInQuestionViewHolder fillInQuestionViewHolder = null;
         View convertView = null;
         if (mViewCache.size() == 0) {
-            convertView = this.mLayoutInflater.inflate(R.layout.viewadapter_fillinquestion_item, null, false);
-            TextView questionBody = (TextView) convertView.findViewById(R.id.fillinquestion_body);
-            TextView questionAnswer = (TextView) convertView.findViewById(R.id.fillinquestion_answer);
+            convertView = LayoutInflater.from(container.getContext())
+                    .inflate(R.layout.viewadapter_fillinquestion_item, null, false);
+            TextView questionBody = convertView.findViewById(R.id.fillinquestion_body);
+            TextView questionAnswer = convertView.findViewById(R.id.fillinquestion_answer);
             fillInQuestionViewHolder = new FillInQuestionViewHolder();
             fillInQuestionViewHolder.questionBody = questionBody;
             fillInQuestionViewHolder.questionAnswer = questionAnswer;
@@ -80,9 +69,10 @@ public class FillInQuestionAdapter extends com.zgq.wokao.adapter.BaseViewPagerAd
             fillInQuestionViewHolder = (FillInQuestionViewHolder) convertView.getTag();
         }
         holder = fillInQuestionViewHolder;
-        fillInQuestionViewHolder.questionBody.setText("" + (position + 1) + ". " + datas.get(position).getBody().getContent());
-        if (hasShowAnswer.get(position)) {
-            fillInQuestionViewHolder.questionAnswer.setText(datas.get(position).getAnswer().getContent());
+        FillInQuestion question = studyInfo.getQuestions().get(position);
+        fillInQuestionViewHolder.questionBody.setText("" + (position + 1) + ". " + question.getBody().getContent());
+        if (studyInfo.hasAnswered(question.getId())) {
+            fillInQuestionViewHolder.questionAnswer.setText(question.getAnswer().getContent());
         } else {
             fillInQuestionViewHolder.questionAnswer.setText("");
         }
@@ -109,10 +99,12 @@ public class FillInQuestionAdapter extends com.zgq.wokao.adapter.BaseViewPagerAd
 
     @Override
     public boolean showCurrentAnswer() {
-        if (hasShowAnswer.get(currentPosition)) return false;
-        ((FillInQuestionViewHolder) (currentView.getTag())).questionAnswer.setText(datas.get(currentPosition).getAnswer().getContent());
-        hasShowAnswer.set(currentPosition, true);
-        getCorrectAnswer(getPaperId(), datas.get(currentPosition));
+        FillInQuestion question = studyInfo.getQuestions().get(currentPosition);
+        if (studyInfo.hasAnswered(question.getId())) return false;
+        ((FillInQuestionViewHolder) (currentView.getTag())).questionAnswer.setText(question.getAnswer().getContent());
+        studyInfo.saveMyAnswer(question.getId(),new Answer());
+        //TODO 再次更新学习记录
+//        getCorrectAnswer(getPaperId(), question);
         return true;
     }
 
@@ -123,7 +115,7 @@ public class FillInQuestionAdapter extends com.zgq.wokao.adapter.BaseViewPagerAd
 
     @Override
     public int getLastPosition() {
-        return datas.get(currentPosition).getInfo().getIndex() - 1;
+        return studyInfo.getQuestions().get(currentPosition).getInfo().getIndex() - 1;
     }
 
     public final class FillInQuestionViewHolder {

@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.zgq.wokao.R;
 import com.zgq.wokao.entity.paper.question.DiscussQuestion;
+import com.zgq.wokao.module.study.entity.StudyInfo;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -27,7 +28,7 @@ public class DiscussQuestionAdapter extends BaseViewPagerAdapter {
     private DiscussQuestionViewHolder holder;
 
     public DiscussQuestionAdapter(ArrayList<DiscussQuestion> datas, ArrayList<Boolean> hasShowAnswer, Context context) {
-        super();
+        super(new StudyInfo());
         this.datas = datas;
         this.mContext = context;
         this.mLayoutInflater = LayoutInflater.from(mContext);
@@ -111,7 +112,7 @@ public class DiscussQuestionAdapter extends BaseViewPagerAdapter {
         ((DiscussQuestionViewHolder) (currentView.getTag())).questionAnswer.
                 setText(datas.get(currentPosition).getAnswer().getContent());
         hasShowAnswer.set(currentPosition, true);
-        getCorrectAnswer(getPaperId(), datas.get(currentPosition));
+        //getCorrectAnswer(getPaperId(), datas.get(currentPosition));
         return true;
     }
 

@@ -11,13 +11,18 @@ import com.zgq.wokao.entity.paper.question.IQuestion;
 import com.zgq.wokao.injector.components.DaggerStudyComponent;
 import com.zgq.wokao.injector.modules.StudyModule;
 import com.zgq.wokao.module.base.BaseFragment;
+import com.zgq.wokao.module.study.entity.StudyParams;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 
 public class LearningFragment extends BaseFragment<StudyContract.LearningPresenter>
         implements StudyContract.LearningView{
+
+    private static final String TAG = LearningFragment.class.getSimpleName();
 
     //返回
     @BindView(R.id.toolbar_back)
@@ -67,7 +72,8 @@ public class LearningFragment extends BaseFragment<StudyContract.LearningPresent
     @BindView(R.id.background)
     LinearLayout background;
 
-
+    @Inject
+    StudyParams studyParams;
 
     @Override
     protected void daggerInject() {

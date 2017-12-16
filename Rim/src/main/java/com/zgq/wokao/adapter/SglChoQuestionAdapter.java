@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.zgq.wokao.R;
 import com.zgq.wokao.entity.paper.question.Answer;
 import com.zgq.wokao.entity.paper.question.SglChoQuestion;
+import com.zgq.wokao.module.study.entity.StudyInfo;
 import com.zgq.wokao.util.DensityUtil;
 import com.zgq.wokao.widget.QuestionOptionView;
 
@@ -34,7 +35,7 @@ public class SglChoQuestionAdapter extends BaseViewPagerAdapter implements View.
     private SglChoQuestionViewHolder holder;
 
     public SglChoQuestionAdapter(ArrayList<SglChoQuestion> datas, ArrayList<Boolean> hasShowAnswer, ArrayList<Answer> myAnswer, Context context) {
-        super();
+        super(new StudyInfo());
         this.datas = datas;
         this.mContext = context;
         this.mLayoutInflater = LayoutInflater.from(mContext);
@@ -160,13 +161,13 @@ public class SglChoQuestionAdapter extends BaseViewPagerAdapter implements View.
             for (int i = 0; i < optionViews.size(); i++) {
                 if (i == selectedOption) optionViews.get(i).setToCorrect();
             }
-            getCorrectAnswer(getPaperId(), datas.get(currentPosition));
+            //getCorrectAnswer(getPaperId(), datas.get(currentPosition));
         } else {
             for (int i = 0; i < optionViews.size(); i++) {
                 if (i == selectedOption) optionViews.get(i).setToWrong();
                 if (i == rightOption) optionViews.get(i).setToCorrect();
             }
-            getFalseAnswer(getPaperId(), datas.get(currentPosition));
+            //getFalseAnswer(getPaperId(), datas.get(currentPosition));
         }
     }
 

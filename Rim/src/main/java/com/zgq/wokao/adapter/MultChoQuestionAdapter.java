@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.zgq.wokao.R;
 import com.zgq.wokao.entity.paper.question.Answer;
 import com.zgq.wokao.entity.paper.question.MultChoQuestion;
+import com.zgq.wokao.module.study.entity.StudyInfo;
 import com.zgq.wokao.util.DensityUtil;
 import com.zgq.wokao.widget.QuestionOptionView;
 
@@ -31,7 +32,7 @@ public class MultChoQuestionAdapter extends BaseViewPagerAdapter implements View
     private MultiChoQuestionViewHolder holder;
 
     public MultChoQuestionAdapter(ArrayList<MultChoQuestion> datas, ArrayList<Boolean> hasShowAnswer, ArrayList<Answer> myAnswer, Context context) {
-        super();
+        super(new StudyInfo());
         this.datas = datas;
         this.mContext = context;
         this.mLayoutInflater = LayoutInflater.from(mContext);
@@ -169,9 +170,9 @@ public class MultChoQuestionAdapter extends BaseViewPagerAdapter implements View
             }
         }
         if (isCorrect) {
-            getCorrectAnswer(getPaperId(), datas.get(currentPosition));
+            //getCorrectAnswer(getPaperId(), datas.get(currentPosition));
         } else {
-            getFalseAnswer(getPaperId(), datas.get(currentPosition));
+            //getFalseAnswer(getPaperId(), datas.get(currentPosition));
         }
         return isCorrect;
     }
