@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="175dp"
+    android:layout_height="wrap_content"
     app:cardUseCompatPadding="true">
 
     <RelativeLayout
         android:id="@+id/text_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp">
 
@@ -24,10 +24,9 @@
         <TextView
             android:id="@+id/item_content"
             android:layout_below="@+id/item_type"
-            android:layout_above="@+id/item_tip"
             android:layout_width="match_parent"
             android:maxLines="3"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:layout_height="wrap_content"
             android:textSize="18sp"
             tools:text="#000000" />
@@ -36,9 +35,9 @@
             android:id="@+id/item_tip"
             android:textSize="15sp"
             android:layout_marginTop="10dp"
+            android:layout_below="@+id/item_content"
             tools:text="#000000"
             android:textColor="@color/color_search_activity_tip"
-            android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </RelativeLayout>
