@@ -5,6 +5,8 @@ import android.support.v4.view.PagerAdapter;
 import com.zgq.wokao.entity.paper.question.IQuestion;
 import com.zgq.wokao.module.study.entity.StudyInfo;
 
+import java.util.List;
+
 public abstract class BaseViewPagerAdapter<T extends IQuestion> extends PagerAdapter implements StudySystemAdapter {
     private static final String TAG = BaseViewPagerAdapter.class.getSimpleName();
 
@@ -12,8 +14,14 @@ public abstract class BaseViewPagerAdapter<T extends IQuestion> extends PagerAda
 
     private OnStudiedListener studiedListener;
 
-    public BaseViewPagerAdapter(StudyInfo<T> studyInfo){
-        this.studyInfo = studyInfo;
+    public BaseViewPagerAdapter(List<T> questions){
+        this.studyInfo = new StudyInfo<>();
+        studyInfo.setQuestions(questions);
+    }
+
+    public void replaceData(List<T> questions){
+        this.studyInfo.setQuestions(questions);
+        notifyDataSetChanged();
     }
 
     protected void getFalseAnswer(String paperId, IQuestion question) {

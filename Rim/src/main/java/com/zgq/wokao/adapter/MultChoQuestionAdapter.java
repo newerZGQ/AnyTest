@@ -16,8 +16,9 @@ import com.zgq.wokao.widget.QuestionOptionView;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
-public class MultChoQuestionAdapter extends BaseViewPagerAdapter implements View.OnClickListener {
+public class MultChoQuestionAdapter extends BaseViewPagerAdapter<MultChoQuestion> implements View.OnClickListener {
     private ArrayList<MultChoQuestion> datas = null;
     private LinkedList<ViewGroup> mViewCache = null;
     private Context mContext;
@@ -31,14 +32,8 @@ public class MultChoQuestionAdapter extends BaseViewPagerAdapter implements View
 
     private MultiChoQuestionViewHolder holder;
 
-    public MultChoQuestionAdapter(ArrayList<MultChoQuestion> datas, ArrayList<Boolean> hasShowAnswer, ArrayList<Answer> myAnswer, Context context) {
-        super(new StudyInfo());
-        this.datas = datas;
-        this.mContext = context;
-        this.mLayoutInflater = LayoutInflater.from(mContext);
-        this.mViewCache = new LinkedList<>();
-        this.hasShowAnswer = hasShowAnswer;
-        this.myAnswer = myAnswer;
+    public MultChoQuestionAdapter(List<MultChoQuestion> questions) {
+        super(questions);
     }
 
     @Override

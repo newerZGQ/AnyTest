@@ -11,6 +11,7 @@ import com.zgq.wokao.entity.paper.question.FillInQuestion;
 import com.zgq.wokao.module.study.entity.StudyInfo;
 
 import java.util.LinkedList;
+import java.util.List;
 
 public class FillInQuestionAdapter extends BaseViewPagerAdapter<FillInQuestion> {
     private LinkedList<View> mViewCache = new LinkedList<>();
@@ -21,8 +22,8 @@ public class FillInQuestionAdapter extends BaseViewPagerAdapter<FillInQuestion> 
 
     private FillInQuestionViewHolder holder;
 
-    public FillInQuestionAdapter(StudyInfo<FillInQuestion> studyInfo) {
-        super(studyInfo);
+    public FillInQuestionAdapter(List<FillInQuestion> questions) {
+        super(questions);
     }
 
     @Override

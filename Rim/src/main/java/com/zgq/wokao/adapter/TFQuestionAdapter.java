@@ -9,10 +9,12 @@ import android.widget.TextView;
 
 import com.zgq.wokao.R;
 import com.zgq.wokao.entity.paper.question.Answer;
+import com.zgq.wokao.entity.paper.question.FillInQuestion;
 import com.zgq.wokao.entity.paper.question.TFQuestion;
 import com.zgq.wokao.module.study.entity.StudyInfo;
 
 import java.util.LinkedList;
+import java.util.List;
 
 public class TFQuestionAdapter extends BaseViewPagerAdapter<TFQuestion> {
     private LinkedList<View> mViewCache = new LinkedList<>();
@@ -23,8 +25,8 @@ public class TFQuestionAdapter extends BaseViewPagerAdapter<TFQuestion> {
 
     private TFQuestionViewHolder holder;
 
-    public TFQuestionAdapter(StudyInfo studyInfo) {
-        super(studyInfo);
+    public TFQuestionAdapter(List<TFQuestion> questions) {
+        super(questions);
     }
 
     @Override

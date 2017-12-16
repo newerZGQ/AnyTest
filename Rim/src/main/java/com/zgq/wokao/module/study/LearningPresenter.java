@@ -36,6 +36,13 @@ public class LearningPresenter extends BasePresenter<StudyContract.LearningView>
     public void initParams(String paperId, QuestionType type) {
         repository.queryPaper(paperId).subscribe(paperOptional -> this.normalExamPaper = paperOptional.get());
         questionType = type;
+
+    }
+
+    @Override
+    public void subscribe() {
+        super.subscribe();
+        loadAllQuestions();
     }
 
     @Override

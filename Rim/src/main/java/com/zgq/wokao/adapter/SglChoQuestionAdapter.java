@@ -16,10 +16,8 @@ import com.zgq.wokao.widget.QuestionOptionView;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
-/**
- * Created by zgq on 16-7-6.
- */
 public class SglChoQuestionAdapter extends BaseViewPagerAdapter implements View.OnClickListener {
     private ArrayList<SglChoQuestion> datas = null;
     private LinkedList<ViewGroup> mViewCache = null;
@@ -34,14 +32,8 @@ public class SglChoQuestionAdapter extends BaseViewPagerAdapter implements View.
 
     private SglChoQuestionViewHolder holder;
 
-    public SglChoQuestionAdapter(ArrayList<SglChoQuestion> datas, ArrayList<Boolean> hasShowAnswer, ArrayList<Answer> myAnswer, Context context) {
-        super(new StudyInfo());
-        this.datas = datas;
-        this.mContext = context;
-        this.mLayoutInflater = LayoutInflater.from(mContext);
-        this.mViewCache = new LinkedList<>();
-        this.hasShowAnswer = hasShowAnswer;
-        this.myAnswer = myAnswer;
+    public SglChoQuestionAdapter(List<SglChoQuestion> questions) {
+        super(questions);
     }
 
     @Override

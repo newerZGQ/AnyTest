@@ -12,6 +12,7 @@ import com.zgq.wokao.module.study.entity.StudyInfo;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 public class DiscussQuestionAdapter extends BaseViewPagerAdapter {
     //显示的数据
@@ -27,13 +28,8 @@ public class DiscussQuestionAdapter extends BaseViewPagerAdapter {
 
     private DiscussQuestionViewHolder holder;
 
-    public DiscussQuestionAdapter(ArrayList<DiscussQuestion> datas, ArrayList<Boolean> hasShowAnswer, Context context) {
-        super(new StudyInfo());
-        this.datas = datas;
-        this.mContext = context;
-        this.mLayoutInflater = LayoutInflater.from(mContext);
-        this.mViewCache = new LinkedList<>();
-        this.hasShowAnswer = hasShowAnswer;
+    public DiscussQuestionAdapter(List<DiscussQuestion> questions) {
+        super(questions);
     }
 
     @Override
