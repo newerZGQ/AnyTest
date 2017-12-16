@@ -1,22 +1,20 @@
 package com.zgq.wokao.adapter;
 
 import android.content.Context;
-import android.support.v4.view.PagerAdapter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.zgq.wokao.R;
-import com.zgq.wokao.entity.paper.question.IQuestion;
+import com.zgq.wokao.entity.paper.question.DiscussQuestion;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class DiscussQuestionAdapter extends BaseViewPagerAdapter {
     //显示的数据
-    private ArrayList<IQuestion> datas = null;
+    private ArrayList<DiscussQuestion> datas = null;
     private LinkedList<View> mViewCache = null;
     private Context mContext;
     private LayoutInflater mLayoutInflater = null;
@@ -28,7 +26,7 @@ public class DiscussQuestionAdapter extends BaseViewPagerAdapter {
 
     private DiscussQuestionViewHolder holder;
 
-    public DiscussQuestionAdapter(ArrayList<IQuestion> datas, ArrayList<Boolean> hasShowAnswer, Context context) {
+    public DiscussQuestionAdapter(ArrayList<DiscussQuestion> datas, ArrayList<Boolean> hasShowAnswer, Context context) {
         super();
         this.datas = datas;
         this.mContext = context;
@@ -124,7 +122,7 @@ public class DiscussQuestionAdapter extends BaseViewPagerAdapter {
 
     @Override
     public int getLastPosition() {
-        return datas.get(currentPosition).getInfo().getQstId() - 1;
+        return datas.get(currentPosition).getInfo().getIndex() - 1;
     }
 
     public final class DiscussQuestionViewHolder {

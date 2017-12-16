@@ -1,8 +1,6 @@
 package com.zgq.wokao.adapter;
 
 import android.content.Context;
-import android.support.v4.view.PagerAdapter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,12 +8,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zgq.wokao.R;
-import com.zgq.wokao.Util.DensityUtil;
-import com.zgq.wokao.model.paper.question.answer.IAnswer;
-import com.zgq.wokao.model.paper.question.answer.MyAnswer;
-import com.zgq.wokao.model.paper.question.impl.SglChoQuestion;
-import com.zgq.wokao.model.paper.question.IQuestion;
-import com.zgq.wokao.ui.widget.QuestionOptionView;
+import com.zgq.wokao.entity.paper.question.Answer;
+import com.zgq.wokao.entity.paper.question.SglChoQuestion;
+import com.zgq.wokao.util.DensityUtil;
+import com.zgq.wokao.widget.QuestionOptionView;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -24,12 +20,12 @@ import java.util.LinkedList;
  * Created by zgq on 16-7-6.
  */
 public class SglChoQuestionAdapter extends BaseViewPagerAdapter implements View.OnClickListener {
-    private ArrayList<IQuestion> datas = null;
+    private ArrayList<SglChoQuestion> datas = null;
     private LinkedList<ViewGroup> mViewCache = null;
     private Context mContext;
     private LayoutInflater mLayoutInflater = null;
     private ArrayList<Boolean> hasShowAnswer = null;
-    private ArrayList<IAnswer> myAnswer = new ArrayList<>();
+    private ArrayList<Answer> myAnswer = new ArrayList<>();
 
     private ViewGroup currentView = null;
     private int currentPosition = 0;
@@ -37,7 +33,7 @@ public class SglChoQuestionAdapter extends BaseViewPagerAdapter implements View.
 
     private SglChoQuestionViewHolder holder;
 
-    public SglChoQuestionAdapter(ArrayList<IQuestion> datas, ArrayList<Boolean> hasShowAnswer, ArrayList<IAnswer> myAnswer, Context context) {
+    public SglChoQuestionAdapter(ArrayList<SglChoQuestion> datas, ArrayList<Boolean> hasShowAnswer, ArrayList<Answer> myAnswer, Context context) {
         super();
         this.datas = datas;
         this.mContext = context;
@@ -100,7 +96,7 @@ public class SglChoQuestionAdapter extends BaseViewPagerAdapter implements View.
         layout.removeAllViewsInLayout();
         ArrayList<QuestionOptionView> optionViews = sglChoQuestionViewHolder.optionViews;
         optionViews.clear();
-        for (int i = 0; i < sglChoQuestion.getOptions().getOptionsCount(); i++) {
+        for (int i = 0; i < sglChoQuestion.getOptions().getOptionList().size(); i++) {
             QuestionOptionView optionView = new QuestionOptionView(mContext);
             optionView.setContent(getLabelFromPosition(i), sglChoQuestion.getOptions().getOptionList().get(i).toString());
             //setTag 标识位置
@@ -186,7 +182,7 @@ public class SglChoQuestionAdapter extends BaseViewPagerAdapter implements View.
         if (hasShowAnswer.get(currentPosition)) return;
 
         int selectedOption = (int) v.getTag();
-        MyAnswer answer = new MyAnswer();
+        Answer answer = new Answer();
         answer.setContent(getLabelFromPosition(selectedOption));
         myAnswer.set(getCurrentPosition(), answer);
 
@@ -206,7 +202,7 @@ public class SglChoQuestionAdapter extends BaseViewPagerAdapter implements View.
 
     @Override
     public int getLastPosition() {
-        return datas.get(currentPosition).getInfo().getQstId() - 1;
+        return datas.get(currentPosition).getInfo().getIndex() - 1;
     }
 
     public final class SglChoQuestionViewHolder {

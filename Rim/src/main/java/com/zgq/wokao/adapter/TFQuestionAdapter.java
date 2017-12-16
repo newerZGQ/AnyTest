@@ -9,9 +9,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zgq.wokao.R;
-import com.zgq.wokao.model.paper.question.answer.IAnswer;
-import com.zgq.wokao.model.paper.question.answer.MyAnswer;
-import com.zgq.wokao.model.paper.question.IQuestion;
+import com.zgq.wokao.entity.paper.question.Answer;
+import com.zgq.wokao.entity.paper.question.TFQuestion;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -20,12 +19,12 @@ import java.util.LinkedList;
  * Created by zgq on 16-7-6.
  */
 public class TFQuestionAdapter extends BaseViewPagerAdapter {
-    private ArrayList<IQuestion> datas = null;
+    private ArrayList<TFQuestion> datas = null;
     private LinkedList<View> mViewCache = null;
     private Context mContext;
     private LayoutInflater mLayoutInflater = null;
     private ArrayList<Boolean> hasShowAnswer = null;
-    private ArrayList<IAnswer> myAnswer = new ArrayList<>();
+    private ArrayList<Answer> myAnswer = new ArrayList<>();
 
     private View currentView = null;
     private int currentPosition = 0;
@@ -33,7 +32,7 @@ public class TFQuestionAdapter extends BaseViewPagerAdapter {
 
     private TFQuestionViewHolder holder;
 
-    public TFQuestionAdapter(ArrayList<IQuestion> datas, ArrayList<Boolean> hasShowAnswer, ArrayList<IAnswer> myAnswer, Context context) {
+    public TFQuestionAdapter(ArrayList<TFQuestion> datas, ArrayList<Boolean> hasShowAnswer, ArrayList<Answer> myAnswer, Context context) {
         super();
         this.datas = datas;
         this.mContext = context;
@@ -163,7 +162,7 @@ public class TFQuestionAdapter extends BaseViewPagerAdapter {
     }
 
     public void onSelectedTrueOption(View view, int position) {
-        MyAnswer answer = new MyAnswer();
+        Answer answer = new Answer();
         answer.setContent("true");
         myAnswer.set(position, answer);
         hasShowAnswer.set(position, true);
@@ -196,7 +195,7 @@ public class TFQuestionAdapter extends BaseViewPagerAdapter {
     }
 
     public void onSelectedFalseOption(View view, int position) {
-        MyAnswer answer = new MyAnswer();
+        Answer answer = new Answer();
         answer.setContent("false");
         myAnswer.set(position, answer);
         hasShowAnswer.set(position, true);
@@ -250,7 +249,7 @@ public class TFQuestionAdapter extends BaseViewPagerAdapter {
 
     @Override
     public int getLastPosition() {
-        return datas.get(currentPosition).getInfo().getQstId() - 1;
+        return datas.get(currentPosition).getInfo().getIndex() - 1;
     }
 
     public final class TFQuestionViewHolder {

@@ -8,14 +8,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.zgq.wokao.R;
+import com.zgq.wokao.entity.paper.question.FillInQuestion;
 import com.zgq.wokao.entity.paper.question.IQuestion;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class FillInQuestionAdapter extends BaseViewPagerAdapter {
+public class FillInQuestionAdapter extends com.zgq.wokao.adapter.BaseViewPagerAdapter {
     //显示的数据
-    private ArrayList<IQuestion> datas = null;
+    private ArrayList<FillInQuestion> datas = null;
     private LinkedList<View> mViewCache = null;
     private Context mContext;
     private LayoutInflater mLayoutInflater = null;
@@ -27,7 +28,7 @@ public class FillInQuestionAdapter extends BaseViewPagerAdapter {
 
     private FillInQuestionViewHolder holder;
 
-    public FillInQuestionAdapter(ArrayList<IQuestion> datas, ArrayList<Boolean> hasShowAnswer, Context context) {
+    public FillInQuestionAdapter(ArrayList<FillInQuestion> datas, ArrayList<Boolean> hasShowAnswer, Context context) {
         super();
         this.datas = datas;
         this.mContext = context;
@@ -122,7 +123,7 @@ public class FillInQuestionAdapter extends BaseViewPagerAdapter {
 
     @Override
     public int getLastPosition() {
-        return datas.get(currentPosition).getInfo().getQstId() - 1;
+        return datas.get(currentPosition).getInfo().getIndex() - 1;
     }
 
     public final class FillInQuestionViewHolder {
