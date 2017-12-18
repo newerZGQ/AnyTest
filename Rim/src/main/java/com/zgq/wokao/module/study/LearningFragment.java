@@ -13,15 +13,18 @@ import com.zgq.wokao.adapter.BaseViewPagerAdapter;
 import com.zgq.wokao.adapter.DiscussQuestionAdapter;
 import com.zgq.wokao.adapter.FillInQuestionAdapter;
 import com.zgq.wokao.adapter.MultChoQuestionAdapter;
+import com.zgq.wokao.adapter.QuestionIndexAdapter;
 import com.zgq.wokao.adapter.SglChoQuestionAdapter;
 import com.zgq.wokao.adapter.TFQuestionAdapter;
 import com.zgq.wokao.entity.paper.question.IQuestion;
+import com.zgq.wokao.entity.paper.question.QuestionType;
 import com.zgq.wokao.injector.components.DaggerStudyComponent;
 import com.zgq.wokao.injector.modules.StudyModule;
 import com.zgq.wokao.module.base.BaseFragment;
 import com.zgq.wokao.module.study.entity.StudyParams;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -63,7 +66,7 @@ public class LearningFragment extends BaseFragment<StudyContract.LearningPresent
 
     //列表按钮
     @BindView(R.id.question_list)
-    LinearLayout questionListTv;
+    LinearLayout indexSwitcher;
 
     //题号列表
     @BindView(R.id.question_num_list)
@@ -88,6 +91,8 @@ public class LearningFragment extends BaseFragment<StudyContract.LearningPresent
     private Mode mode = Mode.ALL;
     private IndexState indexState = IndexState.HIDE;
 
+    private QuestionIndexAdapter indexAdapter;
+
     @Override
     protected void daggerInject() {
         DaggerStudyComponent.builder()
@@ -107,6 +112,7 @@ public class LearningFragment extends BaseFragment<StudyContract.LearningPresent
     protected void initViews() {
         initToolbar();
         initQuestionPager();
+        initQuestionIndex();
         bottomMenu.post(() -> ObjectAnimator.ofFloat(bottomMenu, "translationY",
                 bottomMenu.getHeight() - setStared.getHeight())
                 .setDuration(0)
@@ -118,11 +124,16 @@ public class LearningFragment extends BaseFragment<StudyContract.LearningPresent
         questionAdapter.replaceData(questions);
     }
 
+    public void showQuestionIndex(List<IQuestion> questions, HashMap<IQuestion, Boolean> answered){
+        indexAdapter.replaceData(questions, answered);
+    }
+
     private void initToolbar() {
         switchToolbar();
         studyMode.setOnClickListener(this);
         remebMode.setOnClickListener(this);
         toolbarBack.setOnClickListener(this);
+        indexSwitcher.setOnClickListener(this);
     }
 
     private void switchToolbar() {
@@ -165,6 +176,12 @@ public class LearningFragment extends BaseFragment<StudyContract.LearningPresent
                 break;
         }
         viewPager.setAdapter(questionAdapter);
+    }
+
+    private void initQuestionIndex(){
+        indexAdapter = new QuestionIndexAdapter(new ArrayList<>(0),
+                new HashMap<>(0));
+        questionListGv.setAdapter(indexAdapter);
     }
 
     private void switchIndexView(){

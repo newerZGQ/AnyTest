@@ -27,6 +27,10 @@ public class LearningPresenter extends BasePresenter<StudyContract.LearningView>
 
     private RimRepository repository;
 
+    private ArrayList<IQuestion> questions = new ArrayList<>();
+
+    private HashMap<IQuestion, Boolean> answered;
+
     @Inject
     public LearningPresenter(RimRepository repository) {
         this.repository = repository;
@@ -36,6 +40,35 @@ public class LearningPresenter extends BasePresenter<StudyContract.LearningView>
     public void initParams(String paperId, QuestionType type) {
         repository.queryPaper(paperId).subscribe(paperOptional -> this.normalExamPaper = paperOptional.get());
         questionType = type;
+
+        switch (questionType) {
+            case FILLIN:
+                Flowable.fromIterable(normalExamPaper.getFillInQuestions())
+                        .subscribe(question -> questions.add(question));
+                break;
+            case TF:
+                Flowable.fromIterable(normalExamPaper.getTfQuestions())
+                        .subscribe(question -> questions.add(question));
+                break;
+            case SINGLECHOOSE:
+                Flowable.fromIterable(normalExamPaper.getSglChoQuestions())
+                        .subscribe(question -> questions.add(question));
+                break;
+            case MUTTICHOOSE:
+                Flowable.fromIterable(normalExamPaper.getMultChoQuestions())
+                        .subscribe(question -> questions.add(question));
+                break;
+            case DISCUSS:
+                Flowable.fromIterable(normalExamPaper.getDiscussQuestions())
+                        .subscribe(question -> questions.add(question));
+                break;
+            default:
+                break;
+        }
+
+        answered = new HashMap<>(questions.size());
+        Flowable.fromIterable(questions)
+                .subscribe(question -> answered.put(question,false));
     }
 
     @Override
@@ -55,36 +88,15 @@ public class LearningPresenter extends BasePresenter<StudyContract.LearningView>
     }
 
     private void loadQuestions(boolean onlyStared){
-        ArrayList<IQuestion> questions = new ArrayList<>();
-        switch (questionType) {
-            case FILLIN:
-                Flowable.fromIterable(normalExamPaper.getFillInQuestions())
-                        .filter(question -> !onlyStared || question.getInfo().isStared())
-                        .subscribe(question -> questions.add(question));
-                break;
-            case TF:
-                Flowable.fromIterable(normalExamPaper.getTfQuestions())
-                        .filter(question -> !onlyStared || question.getInfo().isStared())
-                        .subscribe(question -> questions.add(question));
-                break;
-            case SINGLECHOOSE:
-                Flowable.fromIterable(normalExamPaper.getSglChoQuestions())
-                        .filter(question -> !onlyStared || question.getInfo().isStared())
-                        .subscribe(question -> questions.add(question));
-                break;
-            case MUTTICHOOSE:
-                Flowable.fromIterable(normalExamPaper.getMultChoQuestions())
-                        .filter(question -> !onlyStared || question.getInfo().isStared())
-                        .subscribe(question -> questions.add(question));
-                break;
-            case DISCUSS:
-                Flowable.fromIterable(normalExamPaper.getDiscussQuestions())
-                        .filter(question -> !onlyStared || question.getInfo().isStared())
-                        .subscribe(question -> questions.add(question));
-                break;
-            default:
-                break;
-        }
-        view.showQuestions(questions);
+        ArrayList<IQuestion> targetQuestions = new ArrayList<>();
+        Flowable.fromIterable(questions)
+                .filter(question -> !onlyStared || question.getInfo().isStared())
+                .subscribe(question -> targetQuestions.add(question));
+        view.showQuestions(targetQuestions);
+        view.showQuestionIndex(targetQuestions, answered);
+    }
+
+    private void updateQuestionIndex(IQuestion question){
+        answered.put(question,true);
     }
 }

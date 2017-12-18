@@ -7,18 +7,25 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.zgq.wokao.R;
+import com.zgq.wokao.entity.paper.question.IQuestion;
+import com.zgq.wokao.entity.paper.question.QuestionType;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class QuestionIndexAdapter extends BaseAdapter{
-    private ArrayList<Boolean> answeredList = new ArrayList();
+    private HashMap<IQuestion, Boolean> answered;
+    private List<IQuestion> questions;
 
-    public QuestionIndexAdapter(ArrayList<Boolean> answeredList) {
-        this.answeredList = answeredList;
+    public QuestionIndexAdapter(List<IQuestion> questions, HashMap<IQuestion, Boolean> answered) {
+        this.answered = answered;
+        this.questions = questions;
     }
 
-    public void replaceData(ArrayList<Boolean> answeredList){
-        this.answeredList = answeredList;
+    public void replaceData(List<IQuestion> questions, HashMap<IQuestion, Boolean> answered){
+        this.answered = answered;
+        this.questions = questions;
         notifyDataSetChanged();
     }
 
@@ -32,8 +39,11 @@ public class QuestionIndexAdapter extends BaseAdapter{
         if (convertView == null) {
             convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.question_index_item, null);
         }
-        ((TextView) convertView.findViewById(R.id.question_position)).setText("" + (position + 1));
-        if (answeredList.get(position)) {
+
+        ((TextView) convertView
+                .findViewById(R.id.question_position))
+                .setText(String.valueOf(questions.get(position).getInfo().getIndex()));
+        if (answered.get(questions.get(position))) {
             convertView.findViewById(R.id.question_position).
                     setBackground(parent.getContext().getResources().getDrawable(R.drawable.circle_background_upside_lime));
         }
@@ -47,6 +57,6 @@ public class QuestionIndexAdapter extends BaseAdapter{
 
     @Override
     public int getCount() {
-        return answeredList.size();
+        return questions.size();
     }
 }
