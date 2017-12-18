@@ -193,16 +193,16 @@ public class LearningFragment extends BaseFragment<StudyContract.LearningPresent
             case R.id.all_question:
                 if (mode == Mode.STAR) {
                     presenter.loadAllQuestions();
+                    mode = Mode.ALL;
+                    switchToolbar();
                 }
-                mode = Mode.ALL;
-                switchToolbar();
                 break;
             case R.id.stared_question:
                 if (mode == Mode.ALL) {
                     presenter.loadStarQuestions();
+                    mode = Mode.STAR;
+                    switchToolbar();
                 }
-                mode = Mode.STAR;
-                switchToolbar();
                 break;
             case R.id.question_list:
                 switchIndexView();
