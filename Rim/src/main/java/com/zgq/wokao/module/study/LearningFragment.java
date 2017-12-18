@@ -134,6 +134,7 @@ public class LearningFragment extends BaseFragment<StudyContract.LearningPresent
         remebMode.setOnClickListener(this);
         toolbarBack.setOnClickListener(this);
         indexSwitcher.setOnClickListener(this);
+        showAnswerButton.setOnClickListener(this);
     }
 
     private void switchToolbar() {
@@ -223,6 +224,9 @@ public class LearningFragment extends BaseFragment<StudyContract.LearningPresent
                 break;
             case R.id.question_list:
                 switchIndexView();
+                break;
+            case R.id.show_answer:
+                questionAdapter.showCurrentAnswer();
                 break;
             default:
                 break;
