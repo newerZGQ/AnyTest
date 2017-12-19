@@ -13,24 +13,17 @@ public abstract class BaseViewPagerAdapter<T extends IQuestion> extends PagerAda
 
     protected StudyInfo<T> studyInfo;
 
-    private OnStudiedListener studiedListener;
+    protected OnStudiedListener studiedListener;
 
-    public BaseViewPagerAdapter(List<T> questions){
+    public BaseViewPagerAdapter(List<T> questions, OnStudiedListener listener){
         this.studyInfo = new StudyInfo<>();
         studyInfo.setQuestions(questions);
+        studiedListener = listener;
     }
 
     public void replaceData(List<T> questions){
         this.studyInfo.setQuestions(questions);
         notifyDataSetChanged();
-    }
-
-    protected void getFalseAnswer(String paperId, IQuestion question) {
-        studiedListener.onFalse();
-    }
-
-    protected void getCorrectAnswer(String paperId, IQuestion question) {
-        studiedListener.onCorrect();
     }
 
     public abstract int getLastPosition();
@@ -45,11 +38,13 @@ public abstract class BaseViewPagerAdapter<T extends IQuestion> extends PagerAda
 
     public abstract boolean showCurrentAnswer();
 
+    public abstract void starCurrentQuestion();
+
     public abstract void hideCurrentAnswer();
 
     public interface OnStudiedListener {
-        void onFalse();
-
-        void onCorrect();
+        void onStudied(IQuestion question, boolean correct);
+        void starQuestion(IQuestion question);
+        void onSelected(IQuestion question, int position);
     }
 }

@@ -32,8 +32,8 @@ public class SglChoQuestionAdapter extends BaseViewPagerAdapter implements View.
 
     private SglChoQuestionViewHolder holder;
 
-    public SglChoQuestionAdapter(List<SglChoQuestion> questions) {
-        super(questions);
+    public SglChoQuestionAdapter(List<SglChoQuestion> questions, OnStudiedListener listener) {
+        super(questions,listener);
     }
 
     @Override
@@ -141,6 +141,11 @@ public class SglChoQuestionAdapter extends BaseViewPagerAdapter implements View.
     @Override
     public boolean showCurrentAnswer() {
         return false;
+    }
+
+    @Override
+    public void starCurrentQuestion() {
+
     }
 
     /*

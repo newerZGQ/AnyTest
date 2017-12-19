@@ -22,8 +22,8 @@ public class FillInQuestionAdapter extends BaseViewPagerAdapter<FillInQuestion> 
 
     private FillInQuestionViewHolder holder;
 
-    public FillInQuestionAdapter(List<FillInQuestion> questions) {
-        super(questions);
+    public FillInQuestionAdapter(List<FillInQuestion> questions, OnStudiedListener listener) {
+        super(questions,listener);
     }
 
     @Override
@@ -83,9 +83,10 @@ public class FillInQuestionAdapter extends BaseViewPagerAdapter<FillInQuestion> 
 
     @Override
     public void setPrimaryItem(ViewGroup container, int position, Object object) {
+        super.setPrimaryItem(container, position, object);
         currentView = (View) object;
         currentPosition = position;
-        super.setPrimaryItem(container, position, object);
+        studiedListener.onSelected(studyInfo.getQuestions().get(currentPosition), position);
     }
 
     @Override
@@ -105,8 +106,13 @@ public class FillInQuestionAdapter extends BaseViewPagerAdapter<FillInQuestion> 
         ((FillInQuestionViewHolder) (currentView.getTag())).questionAnswer.setText(question.getAnswer().getContent());
         studyInfo.saveMyAnswer(question.getId(),new Answer());
         //TODO 再次更新学习记录
-//        getCorrectAnswer(getPaperId(), question);
+        studiedListener.onStudied(question, true);
         return true;
+    }
+
+    @Override
+    public void starCurrentQuestion() {
+        studiedListener.starQuestion(studyInfo.getQuestions().get(currentPosition));
     }
 
     @Override

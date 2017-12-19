@@ -7,6 +7,7 @@ import com.google.common.base.Optional;
 import com.zgq.wokao.dao.RimDaoSource;
 import com.zgq.wokao.entity.paper.NormalExamPaper;
 import com.zgq.wokao.entity.paper.info.ExamPaperInfo;
+import com.zgq.wokao.entity.paper.question.IQuestion;
 import com.zgq.wokao.entity.search.SearchHistory;
 import com.zgq.wokao.entity.summary.StudySummary;
 
@@ -76,6 +77,11 @@ public class RimRepository implements RimDataSource {
     @Override
     public Flowable<Optional<StudySummary>> getStudySummary() {
         return paperRepository.getStudySummary();
+    }
+
+    @Override
+    public void starQuestion(IQuestion question, boolean star) {
+        paperRepository.starQuestion(question,star);
     }
 
     @Override

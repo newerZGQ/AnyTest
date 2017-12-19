@@ -32,8 +32,8 @@ public class MultChoQuestionAdapter extends BaseViewPagerAdapter<MultChoQuestion
 
     private MultiChoQuestionViewHolder holder;
 
-    public MultChoQuestionAdapter(List<MultChoQuestion> questions) {
-        super(questions);
+    public MultChoQuestionAdapter(List<MultChoQuestion> questions, OnStudiedListener listener) {
+        super(questions,listener);
     }
 
     @Override
@@ -170,6 +170,11 @@ public class MultChoQuestionAdapter extends BaseViewPagerAdapter<MultChoQuestion
             //getFalseAnswer(getPaperId(), datas.get(currentPosition));
         }
         return isCorrect;
+    }
+
+    @Override
+    public void starCurrentQuestion() {
+
     }
 
     @Override

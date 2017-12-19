@@ -1,8 +1,6 @@
 package com.zgq.wokao.module.study;
 
 import com.zgq.wokao.entity.paper.NormalExamPaper;
-import com.zgq.wokao.entity.paper.question.Answer;
-import com.zgq.wokao.entity.paper.question.FillInQuestion;
 import com.zgq.wokao.entity.paper.question.IQuestion;
 import com.zgq.wokao.entity.paper.question.QuestionType;
 import com.zgq.wokao.module.base.BasePresenter;
@@ -10,10 +8,7 @@ import com.zgq.wokao.repository.RimRepository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.inject.Inject;
 
 import io.reactivex.Flowable;
@@ -96,7 +91,26 @@ public class LearningPresenter extends BasePresenter<StudyContract.LearningView>
         view.showQuestionIndex(targetQuestions, answered);
     }
 
+    @Override
+    public void updateStudiedRecord(IQuestion question, boolean correct){
+        updateQuestionIndex(question);
+        view.setAnswerState(true);
+    }
+
+    @Override
+    public void starQuestion(IQuestion question) {
+        repository.starQuestion(question, !question.getInfo().isStared());
+        view.setStarState(question.getInfo().isStared());
+    }
+
+    @Override
+    public void onLoadQuestion(IQuestion question) {
+        view.setStarState(question.getInfo().isStared());
+        view.setAnswerState(answered.get(question));
+    }
+
     private void updateQuestionIndex(IQuestion question){
         answered.put(question,true);
+        view.notifyQuestionIndexChanged();
     }
 }

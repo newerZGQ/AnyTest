@@ -2,6 +2,7 @@ package com.zgq.wokao.dao;
 
 import com.zgq.wokao.entity.paper.NormalExamPaper;
 import com.zgq.wokao.entity.paper.info.ExamPaperInfo;
+import com.zgq.wokao.entity.paper.question.IQuestion;
 import com.zgq.wokao.entity.search.SearchHistory;
 import com.zgq.wokao.entity.summary.StudySummary;
 import com.zgq.wokao.util.DateUtil;
@@ -63,6 +64,13 @@ public class RimDaoSource implements RimDao {
     public void setSked(@Nonnull NormalExamPaper paper, boolean skedState) {
         realm.beginTransaction();
         paper.getPaperInfo().getSchedule().setInSked(skedState);
+        realm.commitTransaction();
+    }
+
+    @Override
+    public void starQuestion(IQuestion question, boolean star) {
+        realm.beginTransaction();
+        question.getInfo().setStared(star);
         realm.commitTransaction();
     }
 

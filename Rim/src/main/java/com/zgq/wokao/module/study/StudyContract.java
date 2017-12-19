@@ -15,10 +15,16 @@ public interface StudyContract {
     interface LearningView extends IView<LearningPresenter>{
         void showQuestions(List<IQuestion> questions);
         void showQuestionIndex(List<IQuestion> questions, HashMap<IQuestion, Boolean> answered);
+        void notifyQuestionIndexChanged();
+        void setStarState(boolean isStared);
+        void setAnswerState(boolean answered);
     }
     interface LearningPresenter extends IPresenter<LearningView>{
         void initParams(String paperId, QuestionType type);
         void loadAllQuestions();
         void loadStarQuestions();
+        void updateStudiedRecord(IQuestion question, boolean correct);
+        void starQuestion(IQuestion question);
+        void onLoadQuestion(IQuestion question);
     }
 }

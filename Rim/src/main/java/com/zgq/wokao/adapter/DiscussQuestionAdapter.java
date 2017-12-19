@@ -28,8 +28,8 @@ public class DiscussQuestionAdapter extends BaseViewPagerAdapter {
 
     private DiscussQuestionViewHolder holder;
 
-    public DiscussQuestionAdapter(List<DiscussQuestion> questions) {
-        super(questions);
+    public DiscussQuestionAdapter(List<DiscussQuestion> questions, OnStudiedListener listener) {
+        super(questions,listener);
     }
 
     @Override
@@ -110,6 +110,11 @@ public class DiscussQuestionAdapter extends BaseViewPagerAdapter {
         hasShowAnswer.set(currentPosition, true);
         //getCorrectAnswer(getPaperId(), datas.get(currentPosition));
         return true;
+    }
+
+    @Override
+    public void starCurrentQuestion() {
+
     }
 
     @Override

@@ -25,8 +25,8 @@ public class TFQuestionAdapter extends BaseViewPagerAdapter<TFQuestion> {
 
     private TFQuestionViewHolder holder;
 
-    public TFQuestionAdapter(List<TFQuestion> questions) {
-        super(questions);
+    public TFQuestionAdapter(List<TFQuestion> questions, OnStudiedListener listener) {
+        super(questions,listener);
     }
 
     @Override
@@ -230,6 +230,11 @@ public class TFQuestionAdapter extends BaseViewPagerAdapter<TFQuestion> {
 
     public boolean showCurrentAnswer() {
         return false;
+    }
+
+    @Override
+    public void starCurrentQuestion() {
+
     }
 
     @Override

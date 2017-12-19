@@ -128,6 +128,29 @@ public class LearningFragment extends BaseFragment<StudyContract.LearningPresent
         indexAdapter.replaceData(questions, answered);
     }
 
+    @Override
+    public void notifyQuestionIndexChanged() {
+        indexAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void setStarState(boolean isStared) {
+        if (isStared){
+            starLabel.setBackground(getResources().getDrawable(R.drawable.active_star));
+        }else {
+            starLabel.setBackground(getResources().getDrawable(R.drawable.inactive_star));
+        }
+    }
+
+    @Override
+    public void setAnswerState(boolean answered) {
+        if (answered){
+            answerLabel.setBackground(getResources().getDrawable(R.drawable.active_light));
+        }else {
+            answerLabel.setBackground(getResources().getDrawable(R.drawable.inactive_light));
+        }
+    }
+
     private void initToolbar() {
         switchToolbar();
         studyMode.setOnClickListener(this);
@@ -135,6 +158,7 @@ public class LearningFragment extends BaseFragment<StudyContract.LearningPresent
         toolbarBack.setOnClickListener(this);
         indexSwitcher.setOnClickListener(this);
         showAnswerButton.setOnClickListener(this);
+        setStared.setOnClickListener(this);
     }
 
     private void switchToolbar() {
@@ -156,22 +180,39 @@ public class LearningFragment extends BaseFragment<StudyContract.LearningPresent
         }
     }
 
+    private BaseViewPagerAdapter.OnStudiedListener studiedListener = new BaseViewPagerAdapter.OnStudiedListener() {
+        @Override
+        public void onStudied(IQuestion question, boolean correct) {
+            presenter.updateStudiedRecord(question, correct);
+        }
+
+        @Override
+        public void starQuestion(IQuestion question) {
+            presenter.starQuestion(question);
+        }
+
+        @Override
+        public void onSelected(IQuestion question, int position) {
+            presenter.onLoadQuestion(question);
+        }
+    };
+
     private void initQuestionPager() {
         switch (studyParams.getQuestionType()) {
             case FILLIN:
-                questionAdapter = new FillInQuestionAdapter(new ArrayList<>());
+                questionAdapter = new FillInQuestionAdapter(new ArrayList<>(),studiedListener);
                 break;
             case TF:
-                questionAdapter = new TFQuestionAdapter(new ArrayList<>());
+                questionAdapter = new TFQuestionAdapter(new ArrayList<>(),studiedListener);
                 break;
             case SINGLECHOOSE:
-                questionAdapter = new SglChoQuestionAdapter(new ArrayList<>());
+                questionAdapter = new SglChoQuestionAdapter(new ArrayList<>(),studiedListener);
                 break;
             case MUTTICHOOSE:
-                questionAdapter = new MultChoQuestionAdapter(new ArrayList<>());
+                questionAdapter = new MultChoQuestionAdapter(new ArrayList<>(),studiedListener);
                 break;
             case DISCUSS:
-                questionAdapter = new DiscussQuestionAdapter(new ArrayList<>());
+                questionAdapter = new DiscussQuestionAdapter(new ArrayList<>(),studiedListener);
                 break;
             default:
                 break;
@@ -227,6 +268,9 @@ public class LearningFragment extends BaseFragment<StudyContract.LearningPresent
                 break;
             case R.id.show_answer:
                 questionAdapter.showCurrentAnswer();
+                break;
+            case R.id.set_star:
+                questionAdapter.starCurrentQuestion();
                 break;
             default:
                 break;

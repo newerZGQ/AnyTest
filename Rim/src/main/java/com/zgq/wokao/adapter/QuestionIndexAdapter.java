@@ -8,9 +8,7 @@ import android.widget.TextView;
 
 import com.zgq.wokao.R;
 import com.zgq.wokao.entity.paper.question.IQuestion;
-import com.zgq.wokao.entity.paper.question.QuestionType;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
