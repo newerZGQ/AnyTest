@@ -158,8 +158,8 @@ public class TFQuestionAdapter extends BaseViewPagerAdapter<TFQuestion> {
         studyInfo.saveMyAnswer(question.getId(),answer);
         View view1 = getCurrentView();
         TFQuestionViewHolder holder = (TFQuestionViewHolder) view1.getTag();
-        final TextView trueLabel = (TextView) holder.optionTrue.findViewById(R.id.tfqst_option_true_label);
-        final TextView falseLabel = (TextView) holder.optionFalse.findViewById(R.id.tfqst_option_false_label);
+        final TextView trueLabel = holder.optionTrue.findViewById(R.id.tfqst_option_true_label);
+        final TextView falseLabel = holder.optionFalse.findViewById(R.id.tfqst_option_false_label);
 
         if (answer.getContent().equals(getRealAnswer(question.getAnswer().getContent()))) {
             holder.optionFalse.postDelayed(new Runnable() {
@@ -169,7 +169,7 @@ public class TFQuestionAdapter extends BaseViewPagerAdapter<TFQuestion> {
                     trueLabel.setText("");
                 }
             }, 200);
-            //getCorrectAnswer(getPaperId(), datas.get(currentPosition));
+            studiedListener.onStudied(studyInfo.getQuestions().get(currentPosition),true);
         } else {
             holder.optionFalse.postDelayed(new Runnable() {
                 @Override
@@ -180,7 +180,7 @@ public class TFQuestionAdapter extends BaseViewPagerAdapter<TFQuestion> {
                     falseLabel.setText("");
                 }
             }, 200);
-            //getFalseAnswer(getPaperId(), datas.get(currentPosition));
+            studiedListener.onStudied(studyInfo.getQuestions().get(currentPosition),false);
         }
     }
 
@@ -191,8 +191,8 @@ public class TFQuestionAdapter extends BaseViewPagerAdapter<TFQuestion> {
         studyInfo.saveMyAnswer(question.getId(),answer);
         View view1 = getCurrentView();
         TFQuestionViewHolder holder = (TFQuestionViewHolder) view1.getTag();
-        final TextView trueLabel = (TextView) holder.optionTrue.findViewById(R.id.tfqst_option_true_label);
-        final TextView falseLabel = (TextView) holder.optionFalse.findViewById(R.id.tfqst_option_false_label);
+        final TextView trueLabel = holder.optionTrue.findViewById(R.id.tfqst_option_true_label);
+        final TextView falseLabel = holder.optionFalse.findViewById(R.id.tfqst_option_false_label);
 
         if (answer.getContent().equals(getRealAnswer(question.getAnswer().getContent()))) {
             holder.optionFalse.postDelayed(new Runnable() {
@@ -203,7 +203,7 @@ public class TFQuestionAdapter extends BaseViewPagerAdapter<TFQuestion> {
                     falseLabel.setText("");
                 }
             }, 200);
-            //getCorrectAnswer(getPaperId(), datas.get(currentPosition));
+            studiedListener.onStudied(studyInfo.getQuestions().get(currentPosition),true);
         } else {
             holder.optionFalse.postDelayed(new Runnable() {
                 @Override
@@ -216,7 +216,7 @@ public class TFQuestionAdapter extends BaseViewPagerAdapter<TFQuestion> {
                     falseLabel.setText("");
                 }
             }, 200);
-            //getFalseAnswer(getPaperId(), datas.get(currentPosition));
+            studiedListener.onStudied(studyInfo.getQuestions().get(currentPosition),false);
         }
     }
 
