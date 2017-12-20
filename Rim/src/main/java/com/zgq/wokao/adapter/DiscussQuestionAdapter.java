@@ -31,7 +31,7 @@ public class DiscussQuestionAdapter extends BaseViewPagerAdapter<DiscussQuestion
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         super.instantiateItem(container,position);
-        return getDiscussQuestionView(container, position);
+        return getQuestionView(container, position);
     }
 
     @Override
@@ -46,7 +46,8 @@ public class DiscussQuestionAdapter extends BaseViewPagerAdapter<DiscussQuestion
         return view == o;
     }
 
-    public View getDiscussQuestionView(ViewGroup container, int position) {
+    @Override
+    public View getQuestionView(ViewGroup container, int position) {
         DiscussQuestionViewHolder discussQuestionViewHolder = null;
         View convertView = null;
         if (mViewCache.size() == 0) {
@@ -63,7 +64,7 @@ public class DiscussQuestionAdapter extends BaseViewPagerAdapter<DiscussQuestion
         }
         holder = discussQuestionViewHolder;
         DiscussQuestion question = studyInfo.getQuestions().get(position);
-        discussQuestionViewHolder.questionBody.setText(question.getBody().getContent());
+        discussQuestionViewHolder.questionBody.setText(question.getInfo().getIndex() + question.getBody().getContent());
         if (studyInfo.hasAnswered(question.getId())) {
             discussQuestionViewHolder.questionAnswer.setText(question.getAnswer().getContent());
         } else {
@@ -81,11 +82,6 @@ public class DiscussQuestionAdapter extends BaseViewPagerAdapter<DiscussQuestion
                 setText(question.getAnswer().getContent());
         studyInfo.saveMyAnswer(question.getId(),new Answer());
         studiedListener.onStudied(question,true);
-    }
-
-    @Override
-    public void starCurrentQuestion() {
-        studiedListener.starQuestion(studyInfo.getQuestions().get(currentPosition));
     }
 
     public final class DiscussQuestionViewHolder {

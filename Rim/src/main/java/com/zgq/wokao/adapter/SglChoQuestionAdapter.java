@@ -26,7 +26,7 @@ public class SglChoQuestionAdapter extends BaseViewPagerAdapter<SglChoQuestion> 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         super.instantiateItem(container,position);
-        return getSglChoQuestionView(container, position);
+        return getQuestionView(container, position);
     }
 
     @Override
@@ -41,7 +41,8 @@ public class SglChoQuestionAdapter extends BaseViewPagerAdapter<SglChoQuestion> 
         return view == o;
     }
 
-    public View getSglChoQuestionView(ViewGroup container, final int position) {
+    @Override
+    public View getQuestionView(ViewGroup container, final int position) {
         SglChoQuestionViewHolder sglChoQuestionViewHolder = null;
         SglChoQuestion sglChoQuestion = studyInfo.getQuestions().get(position);
         View convertView = null;
@@ -63,7 +64,7 @@ public class SglChoQuestionAdapter extends BaseViewPagerAdapter<SglChoQuestion> 
         holder = sglChoQuestionViewHolder;
         SglChoQuestion question = studyInfo.getQuestions().get(position);
         //显示题干
-        sglChoQuestionViewHolder.questionBody.setText("" + (position + 1) + ". " + question.getBody().getContent());
+        sglChoQuestionViewHolder.questionBody.setText(question.getInfo().getIndex() + ". " + question.getBody().getContent());
         //初始化选项View
         LinearLayout layout = sglChoQuestionViewHolder.optionLayout;
         layout.removeAllViewsInLayout();
@@ -104,11 +105,6 @@ public class SglChoQuestionAdapter extends BaseViewPagerAdapter<SglChoQuestion> 
     @Override
     public void showCurrentAnswer() {
 
-    }
-
-    @Override
-    public void starCurrentQuestion() {
-        studiedListener.starQuestion(studyInfo.getQuestions().get(currentPosition));
     }
 
     /*

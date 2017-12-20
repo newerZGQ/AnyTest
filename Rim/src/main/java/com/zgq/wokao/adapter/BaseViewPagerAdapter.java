@@ -1,6 +1,7 @@
 package com.zgq.wokao.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,10 +55,20 @@ public abstract class BaseViewPagerAdapter<T extends IQuestion> extends PagerAda
             studiedListener.onSelected(studyInfo.getQuestions().get(currentPosition), position);
         }
     }
+    @Override
+    public int getItemPosition(@NonNull Object object) {
+        return POSITION_NONE;
+    }
+
+    public void starCurrentQuestion() {
+        if (studyInfo.getQuestions().size() > 0) {
+            studiedListener.starQuestion(studyInfo.getQuestions().get(currentPosition));
+        }
+    }
+
+    public abstract View getQuestionView(ViewGroup container, int position);
 
     public abstract void showCurrentAnswer();
-
-    public abstract void starCurrentQuestion();
 
     public interface OnStudiedListener {
         void onStudied(IQuestion question, boolean correct);

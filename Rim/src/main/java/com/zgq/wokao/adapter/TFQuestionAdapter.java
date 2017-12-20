@@ -23,7 +23,7 @@ public class TFQuestionAdapter extends BaseViewPagerAdapter<TFQuestion> {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        return getTFQuestionView(container, position);
+        return getQuestionView(container, position);
     }
 
     @Override
@@ -38,7 +38,8 @@ public class TFQuestionAdapter extends BaseViewPagerAdapter<TFQuestion> {
         return view == o;
     }
 
-    public View getTFQuestionView(ViewGroup container, final int position) {
+    @Override
+    public View getQuestionView(ViewGroup container, final int position) {
         TFQuestionViewHolder tfQuestionViewHolder = null;
         View convertView = null;
         context = container.getContext();
@@ -59,7 +60,7 @@ public class TFQuestionAdapter extends BaseViewPagerAdapter<TFQuestion> {
         }
         holder = tfQuestionViewHolder;
         TFQuestion question = studyInfo.getQuestions().get(position);
-        tfQuestionViewHolder.questionBody.setText("" + (position + 1) + ". " + question.getBody().getContent());
+        tfQuestionViewHolder.questionBody.setText(question.getInfo().getIndex() + ". " + question.getBody().getContent());
         tfQuestionViewHolder.optionFalse.setOnClickListener(v -> {
             if (studyInfo.hasAnswered(question.getId())) return;
             onSelectedFalseOption(v, position);
@@ -189,11 +190,6 @@ public class TFQuestionAdapter extends BaseViewPagerAdapter<TFQuestion> {
     @Override
     public void showCurrentAnswer() {
 
-    }
-
-    @Override
-    public void starCurrentQuestion() {
-        studiedListener.starQuestion(studyInfo.getQuestions().get(currentPosition));
     }
 
     public final class TFQuestionViewHolder {

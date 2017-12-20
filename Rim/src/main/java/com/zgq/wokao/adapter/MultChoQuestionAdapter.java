@@ -26,7 +26,7 @@ public class MultChoQuestionAdapter extends BaseViewPagerAdapter<MultChoQuestion
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         super.instantiateItem(container,position);
-        return getMultiChoQuestionView(container, position);
+        return getQuestionView(container, position);
     }
 
     @Override
@@ -41,7 +41,8 @@ public class MultChoQuestionAdapter extends BaseViewPagerAdapter<MultChoQuestion
         return view == o;
     }
 
-    public View getMultiChoQuestionView(ViewGroup container, final int position) {
+    @Override
+    public View getQuestionView(ViewGroup container, final int position) {
         MultiChoQuestionViewHolder multiChoQuestionViewHolder = null;
         MultChoQuestion multChoQuestion = studyInfo.getQuestions().get(position);
         View convertView = null;
@@ -65,7 +66,7 @@ public class MultChoQuestionAdapter extends BaseViewPagerAdapter<MultChoQuestion
         holder = multiChoQuestionViewHolder;
         MultChoQuestion question = studyInfo.getQuestions().get(position);
         //显示题干
-        multiChoQuestionViewHolder.questionBody.setText("" + (position + 1) + ". " + question.getBody().getContent());
+        multiChoQuestionViewHolder.questionBody.setText(question.getInfo().getIndex() + ". " + question.getBody().getContent());
         //初始化选项View
         LinearLayout layout = multiChoQuestionViewHolder.optionLayout;
         layout.removeAllViewsInLayout();
@@ -127,11 +128,6 @@ public class MultChoQuestionAdapter extends BaseViewPagerAdapter<MultChoQuestion
             }
         }
         studiedListener.onStudied(studyInfo.getQuestions().get(currentPosition),isCorrect);
-    }
-
-    @Override
-    public void starCurrentQuestion() {
-        studiedListener.starQuestion(studyInfo.getQuestions().get(currentPosition));
     }
 
     @Override

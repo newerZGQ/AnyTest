@@ -1,5 +1,6 @@
 package com.zgq.wokao.adapter;
 
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +24,7 @@ public class FillInQuestionAdapter extends BaseViewPagerAdapter<FillInQuestion> 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         super.instantiateItem(container,position);
-        return getFillInQuestionView(container, position);
+        return getQuestionView(container, position);
     }
 
     @Override
@@ -38,7 +39,8 @@ public class FillInQuestionAdapter extends BaseViewPagerAdapter<FillInQuestion> 
         return view == o;
     }
 
-    public View getFillInQuestionView(ViewGroup container, int position) {
+    @Override
+    public View getQuestionView(ViewGroup container, int position) {
         FillInQuestionViewHolder fillInQuestionViewHolder = null;
         View convertView = null;
         if (mViewCache.size() == 0) {
@@ -56,7 +58,7 @@ public class FillInQuestionAdapter extends BaseViewPagerAdapter<FillInQuestion> 
         }
         holder = fillInQuestionViewHolder;
         FillInQuestion question = studyInfo.getQuestions().get(position);
-        fillInQuestionViewHolder.questionBody.setText("" + (position + 1) + ". " + question.getBody().getContent());
+        fillInQuestionViewHolder.questionBody.setText(question.getInfo().getIndex() + ". " + question.getBody().getContent());
         if (studyInfo.hasAnswered(question.getId())) {
             fillInQuestionViewHolder.questionAnswer.setText(question.getAnswer().getContent());
         } else {
@@ -73,11 +75,6 @@ public class FillInQuestionAdapter extends BaseViewPagerAdapter<FillInQuestion> 
         ((FillInQuestionViewHolder) (currentView.getTag())).questionAnswer.setText(question.getAnswer().getContent());
         studyInfo.saveMyAnswer(question.getId(),new Answer());
         studiedListener.onStudied(question, true);
-    }
-
-    @Override
-    public void starCurrentQuestion() {
-        studiedListener.starQuestion(studyInfo.getQuestions().get(currentPosition));
     }
 
     public final class FillInQuestionViewHolder {
