@@ -1,6 +1,5 @@
 package com.zgq.wokao.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,20 +9,13 @@ import android.widget.TextView;
 import com.zgq.wokao.R;
 import com.zgq.wokao.entity.paper.question.Answer;
 import com.zgq.wokao.entity.paper.question.MultChoQuestion;
-import com.zgq.wokao.module.study.entity.StudyInfo;
 import com.zgq.wokao.util.DensityUtil;
 import com.zgq.wokao.widget.QuestionOptionView;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class MultChoQuestionAdapter extends BaseViewPagerAdapter<MultChoQuestion> implements View.OnClickListener {
-    private ArrayList<MultChoQuestion> datas = null;
-    private Context mContext;
-    private LayoutInflater mLayoutInflater = null;
-    private ArrayList<Boolean> hasShowAnswer = null;
-    private ArrayList<Answer> myAnswer = new ArrayList<>();
 
     private MultiChoQuestionViewHolder holder;
 
@@ -32,17 +24,8 @@ public class MultChoQuestionAdapter extends BaseViewPagerAdapter<MultChoQuestion
     }
 
     @Override
-    public int getCount() {
-        return this.datas.size();
-    }
-
-    @Override
-    public int getItemPosition(Object object) {
-        return super.getItemPosition(object);
-    }
-
-    @Override
     public Object instantiateItem(ViewGroup container, int position) {
+        super.instantiateItem(container,position);
         return getMultiChoQuestionView(container, position);
     }
 
@@ -60,10 +43,10 @@ public class MultChoQuestionAdapter extends BaseViewPagerAdapter<MultChoQuestion
 
     public View getMultiChoQuestionView(ViewGroup container, final int position) {
         MultiChoQuestionViewHolder multiChoQuestionViewHolder = null;
-        MultChoQuestion multChoQuestion = datas.get(position);
+        MultChoQuestion multChoQuestion = studyInfo.getQuestions().get(position);
         View convertView = null;
         if (mViewCache.size() == 0) {
-            convertView = (ViewGroup) this.mLayoutInflater.inflate(
+            convertView = LayoutInflater.from(context).inflate(
                     R.layout.viewadapter_multichoquestion_item, null, false);
             TextView questionBody = convertView.findViewById(R.id.multichoqst_body);
             LinearLayout questionLayout = convertView.findViewById(R.id.options_layout);
@@ -80,31 +63,32 @@ public class MultChoQuestionAdapter extends BaseViewPagerAdapter<MultChoQuestion
             multiChoQuestionViewHolder = (MultiChoQuestionViewHolder) convertView.getTag();
         }
         holder = multiChoQuestionViewHolder;
+        MultChoQuestion question = studyInfo.getQuestions().get(position);
         //显示题干
-        multiChoQuestionViewHolder.questionBody.setText("" + (position + 1) + ". " + datas.get(position).getBody().getContent());
+        multiChoQuestionViewHolder.questionBody.setText("" + (position + 1) + ". " + question.getBody().getContent());
         //初始化选项View
         LinearLayout layout = multiChoQuestionViewHolder.optionLayout;
         layout.removeAllViewsInLayout();
         ArrayList<QuestionOptionView> optionViews = multiChoQuestionViewHolder.optionViews;
         optionViews.clear();
         for (int i = 0; i < multChoQuestion.getOptions().getOptionList().size(); i++) {
-            QuestionOptionView optionView = new QuestionOptionView(mContext);
+            QuestionOptionView optionView = new QuestionOptionView(context);
             optionView.setContent(getLabelFromPosition(i), multChoQuestion.getOptions().getOptionList().get(i).toString());
             //setTag 标识位置
             optionView.setTag(i);
             optionViews.add(optionView);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.setMargins(0, DensityUtil.dip2px(mContext, 16f), 0, 0);
+            params.setMargins(0, DensityUtil.dip2px(context, 16f), 0, 0);
             layout.addView(optionView, params);
         }
         for (QuestionOptionView view : optionViews) {
             view.setOnClickListener(this);
         }
-        if (hasShowAnswer.get(position)) {
-            String s = myAnswer.get(position).getContent();
+        if (studyInfo.hasAnswered(question.getId())) {
+            String s = studyInfo.getMyAnswer(question.getId()).getContent();
             multiChoQuestionViewHolder.myAnswerTv.setText(s);
-            int[] correctAnswer = getRealAnswerPosition(getRealAnswer(datas.get(position).getAnswer().getContent()));
+            int[] correctAnswer = getRealAnswerPosition(getRealAnswer(question.getAnswer().getContent()));
             for (int j = 0; j < correctAnswer.length; j++) {
                 optionViews.get(correctAnswer[j]).setToCorrect();
             }
@@ -121,17 +105,17 @@ public class MultChoQuestionAdapter extends BaseViewPagerAdapter<MultChoQuestion
     @Override
     public void showCurrentAnswer() {
         boolean isCorrect = false;
-        int[] correctAnswer = getRealAnswerPosition(getRealAnswer(datas.get(currentPosition).getAnswer().getContent()));
+        MultChoQuestion question = studyInfo.getQuestions().get(currentPosition);
+        int[] correctAnswer = getRealAnswerPosition(getRealAnswer(question.getAnswer().getContent()));
         View view = currentView;
         MultiChoQuestionViewHolder holder = (MultiChoQuestionViewHolder) view.getTag();
         ArrayList<QuestionOptionView> optionViews = holder.optionViews;
         for (int j = 0; j < correctAnswer.length; j++) {
             optionViews.get(correctAnswer[j]).setToCorrect();
         }
-        holder.myAnswerTv.setText(myAnswer.get(currentPosition).getContent());
-        hasShowAnswer.set(currentPosition, true);
+        holder.myAnswerTv.setText(studyInfo.getMyAnswer(question.getId()).getContent());
 
-        int[] thisAnswer = getRealAnswerPosition(getRealAnswer(myAnswer.get(currentPosition).getContent()));
+        int[] thisAnswer = getRealAnswerPosition(getRealAnswer(studyInfo.getMyAnswer(question.getId()).getContent()));
         if (thisAnswer.length == correctAnswer.length) {
             for (int i = 0; i < thisAnswer.length; i++) {
                 if (thisAnswer[i] != correctAnswer[i]) {
@@ -151,8 +135,9 @@ public class MultChoQuestionAdapter extends BaseViewPagerAdapter<MultChoQuestion
 
     @Override
     public void onClick(View v) {
-        if (hasShowAnswer.get(currentPosition)) return;
-        Answer answer = myAnswer.get(currentPosition);
+        MultChoQuestion question = studyInfo.getQuestions().get(currentPosition);
+        if (studyInfo.hasAnswered(question.getId())) return;
+        Answer answer = studyInfo.getMyAnswer(question.getId());
 
         String answerContent = answer.getContent();
 
@@ -170,7 +155,7 @@ public class MultChoQuestionAdapter extends BaseViewPagerAdapter<MultChoQuestion
             answerContent = answerContent + optionLabel;
         }
         answer.setContent(getRealAnswer(answerContent));
-        myAnswer.set(currentPosition, answer);
+        studyInfo.saveMyAnswer(question.getId(),answer);
     }
 
     private String getLabelFromPosition(int optionPosition) {

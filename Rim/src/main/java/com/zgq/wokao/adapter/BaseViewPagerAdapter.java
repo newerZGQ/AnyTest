@@ -35,6 +35,11 @@ public abstract class BaseViewPagerAdapter<T extends IQuestion> extends PagerAda
     }
 
     @Override
+    public int getCount() {
+        return this.studyInfo.getQuestions().size();
+    }
+
+    @Override
     public Object instantiateItem(ViewGroup container, int position) {
         context = container.getContext();
         return container;

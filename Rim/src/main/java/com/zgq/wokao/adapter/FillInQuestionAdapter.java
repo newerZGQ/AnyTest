@@ -23,16 +23,6 @@ public class FillInQuestionAdapter extends BaseViewPagerAdapter<FillInQuestion> 
     }
 
     @Override
-    public int getCount() {
-        return studyInfo.getQuestions().size();
-    }
-
-    @Override
-    public int getItemPosition(Object object) {
-        return super.getItemPosition(object);
-    }
-
-    @Override
     public Object instantiateItem(ViewGroup container, int position) {
         super.instantiateItem(container,position);
         return getFillInQuestionView(container, position);

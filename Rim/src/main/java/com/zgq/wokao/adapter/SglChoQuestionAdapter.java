@@ -1,6 +1,5 @@
 package com.zgq.wokao.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,36 +9,18 @@ import android.widget.TextView;
 import com.zgq.wokao.R;
 import com.zgq.wokao.entity.paper.question.Answer;
 import com.zgq.wokao.entity.paper.question.SglChoQuestion;
-import com.zgq.wokao.module.study.entity.StudyInfo;
 import com.zgq.wokao.util.DensityUtil;
 import com.zgq.wokao.widget.QuestionOptionView;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class SglChoQuestionAdapter extends BaseViewPagerAdapter<SglChoQuestion> implements View.OnClickListener {
-    private ArrayList<SglChoQuestion> datas = null;
-    private Context mContext;
-    private LayoutInflater mLayoutInflater = null;
-    private ArrayList<Boolean> hasShowAnswer = null;
-    private ArrayList<Answer> myAnswer = new ArrayList<>();
-
 
     private SglChoQuestionViewHolder holder;
 
     public SglChoQuestionAdapter(List<SglChoQuestion> questions, OnStudiedListener listener) {
         super(questions,listener);
-    }
-
-    @Override
-    public int getCount() {
-        return this.datas.size();
-    }
-
-    @Override
-    public int getItemPosition(Object object) {
-        return super.getItemPosition(object);
     }
 
     @Override
@@ -61,10 +42,11 @@ public class SglChoQuestionAdapter extends BaseViewPagerAdapter<SglChoQuestion> 
 
     public View getSglChoQuestionView(ViewGroup container, final int position) {
         SglChoQuestionViewHolder sglChoQuestionViewHolder = null;
-        SglChoQuestion sglChoQuestion = datas.get(position);
+        SglChoQuestion sglChoQuestion = studyInfo.getQuestions().get(position);
         View convertView = null;
         if (mViewCache.size() == 0) {
-            convertView = (ViewGroup) this.mLayoutInflater.inflate(R.layout.viewadapter_sglchoquestion_item, null, false);
+            convertView = (ViewGroup) LayoutInflater.from(context)
+                    .inflate(R.layout.viewadapter_sglchoquestion_item, null, false);
             TextView questionBody = convertView.findViewById(R.id.sglchoqst_body);
             LinearLayout questionLayout = convertView.findViewById(R.id.options_layout);
             ArrayList<QuestionOptionView> optionViews = new ArrayList<>();
@@ -78,29 +60,30 @@ public class SglChoQuestionAdapter extends BaseViewPagerAdapter<SglChoQuestion> 
             sglChoQuestionViewHolder = (SglChoQuestionViewHolder) convertView.getTag();
         }
         holder = sglChoQuestionViewHolder;
+        SglChoQuestion question = studyInfo.getQuestions().get(position);
         //显示题干
-        sglChoQuestionViewHolder.questionBody.setText("" + (position + 1) + ". " + datas.get(position).getBody().getContent());
+        sglChoQuestionViewHolder.questionBody.setText("" + (position + 1) + ". " + question.getBody().getContent());
         //初始化选项View
         LinearLayout layout = sglChoQuestionViewHolder.optionLayout;
         layout.removeAllViewsInLayout();
         ArrayList<QuestionOptionView> optionViews = sglChoQuestionViewHolder.optionViews;
         optionViews.clear();
         for (int i = 0; i < sglChoQuestion.getOptions().getOptionList().size(); i++) {
-            QuestionOptionView optionView = new QuestionOptionView(mContext);
+            QuestionOptionView optionView = new QuestionOptionView(context);
             optionView.setContent(getLabelFromPosition(i), sglChoQuestion.getOptions().getOptionList().get(i).toString());
             //setTag 标识位置
             optionView.setTag(i);
             optionViews.add(optionView);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.setMargins(0, DensityUtil.dip2px(mContext, 16f), 0, 0);
+            params.setMargins(0, DensityUtil.dip2px(context, 16f), 0, 0);
             layout.addView(optionView, params);
         }
         for (QuestionOptionView view : optionViews) {
             view.setOnClickListener(this);
         }
-        if (hasShowAnswer.get(position)) {
-            int selected = getOptionPositionFromLabel(myAnswer.get(position).getContent());
+        if (studyInfo.hasAnswered(question.getId())) {
+            int selected = getOptionPositionFromLabel(studyInfo.getMyAnswer(question.getId()).getContent());
             int right = getOptionPositionFromLabel(sglChoQuestion.getAnswer().getContent());
             if (selected == right) {
                 for (int i = 0; i < optionViews.size(); i++) {
@@ -149,17 +132,13 @@ public class SglChoQuestionAdapter extends BaseViewPagerAdapter<SglChoQuestion> 
 
     @Override
     public void onClick(View v) {
-        SglChoQuestion question = datas.get(currentPosition);
-        if (hasShowAnswer.get(currentPosition)) return;
-
+        SglChoQuestion question = studyInfo.getQuestions().get(currentPosition);
+        if (studyInfo.hasAnswered(question.getId())) return;
         int selectedOption = (int) v.getTag();
         Answer answer = new Answer();
         answer.setContent(getLabelFromPosition(selectedOption));
-        myAnswer.set(currentPosition, answer);
-
         showCurrentAnswer(selectedOption, getOptionPositionFromLabel(question.getAnswer().getContent()));
-
-        hasShowAnswer.set(currentPosition, true);
+        studyInfo.saveMyAnswer(question.getId(),answer);
     }
 
     private String getLabelFromPosition(int optionPosition) {
@@ -172,8 +151,8 @@ public class SglChoQuestionAdapter extends BaseViewPagerAdapter<SglChoQuestion> 
     }
 
     public final class SglChoQuestionViewHolder {
-        public LinearLayout optionLayout;
-        public TextView questionBody;
-        public ArrayList<QuestionOptionView> optionViews;
+        LinearLayout optionLayout;
+        TextView questionBody;
+        ArrayList<QuestionOptionView> optionViews;
     }
 }
