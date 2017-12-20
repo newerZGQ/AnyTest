@@ -3,6 +3,7 @@ package com.zgq.wokao.module.study;
 import android.animation.ObjectAnimator;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -17,7 +18,6 @@ import com.zgq.wokao.adapter.QuestionIndexAdapter;
 import com.zgq.wokao.adapter.SglChoQuestionAdapter;
 import com.zgq.wokao.adapter.TFQuestionAdapter;
 import com.zgq.wokao.entity.paper.question.IQuestion;
-import com.zgq.wokao.entity.paper.question.QuestionType;
 import com.zgq.wokao.injector.components.DaggerStudyComponent;
 import com.zgq.wokao.injector.modules.StudyModule;
 import com.zgq.wokao.module.base.BaseFragment;
@@ -225,10 +225,19 @@ public class LearningFragment extends BaseFragment<StudyContract.LearningPresent
         viewPager.setAdapter(questionAdapter);
     }
 
+    private AdapterView.OnItemClickListener onClickIndexListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            viewPager.setCurrentItem(i);
+            switchIndexView();
+        }
+    };
+
     private void initQuestionIndex(){
         indexAdapter = new QuestionIndexAdapter(new ArrayList<>(0),
                 new HashMap<>(0));
         questionListGv.setAdapter(indexAdapter);
+        questionListGv.setOnItemClickListener(onClickIndexListener);
     }
 
     private void switchIndexView(){
@@ -252,7 +261,7 @@ public class LearningFragment extends BaseFragment<StudyContract.LearningPresent
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.toolbar_back:
-
+                getActivity().finish();
                 break;
             case R.id.all_question:
                 if (mode == Mode.STAR) {

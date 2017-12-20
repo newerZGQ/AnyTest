@@ -58,7 +58,8 @@ public class FillInQuestionAdapter extends BaseViewPagerAdapter<FillInQuestion> 
         }
         holder = fillInQuestionViewHolder;
         FillInQuestion question = studyInfo.getQuestions().get(position);
-        fillInQuestionViewHolder.questionBody.setText(question.getInfo().getIndex() + ". " + question.getBody().getContent());
+        fillInQuestionViewHolder.questionBody.setText(question.getInfo().getIndex() +
+                ". " + question.getBody().getContent());
         if (studyInfo.hasAnswered(question.getId())) {
             fillInQuestionViewHolder.questionAnswer.setText(question.getAnswer().getContent());
         } else {

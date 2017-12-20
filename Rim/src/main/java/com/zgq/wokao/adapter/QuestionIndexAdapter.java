@@ -44,6 +44,9 @@ public class QuestionIndexAdapter extends BaseAdapter{
         if (answered.get(questions.get(position))) {
             convertView.findViewById(R.id.question_position).
                     setBackground(parent.getContext().getResources().getDrawable(R.drawable.circle_background_upside_lime));
+        }else{
+            convertView.findViewById(R.id.question_position).
+                    setBackground(parent.getContext().getResources().getDrawable(R.drawable.circle_background_with_stroke));
         }
         return convertView;
     }

@@ -133,7 +133,6 @@ public class MultChoQuestionAdapter extends BaseViewPagerAdapter<MultChoQuestion
     @Override
     public void onClick(View v) {
         MultChoQuestion question = studyInfo.getQuestions().get(currentPosition);
-        if (studyInfo.hasAnswered(question.getId())) return;
         Answer answer = studyInfo.getMyAnswer(question.getId());
         if (answer == null){
             answer = new Answer();
