@@ -4,6 +4,7 @@ import com.google.common.base.Optional;
 import com.zgq.wokao.dao.RimDaoSource;
 import com.zgq.wokao.entity.paper.NormalExamPaper;
 import com.zgq.wokao.entity.paper.info.ExamPaperInfo;
+import com.zgq.wokao.entity.paper.question.IQuestion;
 import com.zgq.wokao.entity.summary.StudySummary;
 
 import javax.annotation.Nonnull;
@@ -59,5 +60,10 @@ public class PaperRepository implements PaperDataSource {
     @Override
     public Flowable<Optional<StudySummary>> getStudySummary() {
         return Flowable.just(Optional.fromNullable(daoSource.getStudySummary()));
+    }
+
+    @Override
+    public void starQuestion(IQuestion question, boolean star) {
+        daoSource.starQuestion(question,star);
     }
 }

@@ -1,9 +1,13 @@
 package com.zgq.wokao.module.study;
 
+import android.content.Intent;
+
 import com.zgq.wokao.R;
+import com.zgq.wokao.entity.paper.question.QuestionType;
 import com.zgq.wokao.injector.components.DaggerStudyComponent;
 import com.zgq.wokao.injector.modules.StudyModule;
 import com.zgq.wokao.module.base.BaseActivity;
+import com.zgq.wokao.module.study.entity.StudyParams;
 
 import javax.inject.Inject;
 
@@ -14,9 +18,13 @@ public class StudyActivity extends BaseActivity<StudyContract.MainPresenter> imp
 
     @Override
     protected void daggerInject() {
+        Intent intent = getIntent();
+        String paperId = intent.getStringExtra("paperId");
+        QuestionType type = intent.getParcelableExtra("questionType");
+        int questionNumber = intent.getIntExtra("questionNumber",0);
         DaggerStudyComponent.builder()
                 .applicationComponent(getAppComponent())
-                .studyModule(new StudyModule())
+                .studyModule(new StudyModule(new StudyParams(paperId, type, questionNumber)))
                 .build()
                 .inject(this);
     }

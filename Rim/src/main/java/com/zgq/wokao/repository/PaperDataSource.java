@@ -3,6 +3,7 @@ package com.zgq.wokao.repository;
 import com.google.common.base.Optional;
 import com.zgq.wokao.entity.paper.NormalExamPaper;
 import com.zgq.wokao.entity.paper.info.ExamPaperInfo;
+import com.zgq.wokao.entity.paper.question.IQuestion;
 import com.zgq.wokao.entity.summary.StudySummary;
 
 import javax.annotation.Nonnull;
@@ -21,4 +22,6 @@ public interface PaperDataSource {
 
     void saveSummary(@Nonnull StudySummary studySummary);
     Flowable<Optional<StudySummary>> getStudySummary();
+
+    void starQuestion(IQuestion question, boolean star);
 }

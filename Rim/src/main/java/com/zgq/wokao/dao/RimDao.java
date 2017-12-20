@@ -2,6 +2,7 @@ package com.zgq.wokao.dao;
 
 import com.zgq.wokao.entity.paper.NormalExamPaper;
 import com.zgq.wokao.entity.paper.info.ExamPaperInfo;
+import com.zgq.wokao.entity.paper.question.IQuestion;
 import com.zgq.wokao.entity.search.SearchHistory;
 import com.zgq.wokao.entity.summary.StudySummary;
 
@@ -23,6 +24,8 @@ public interface RimDao {
     @Nonnull
     RealmResults<ExamPaperInfo> getAllExamPaperInfo();
     void setSked(@Nonnull NormalExamPaper paper, boolean skedState);
+
+    void starQuestion(IQuestion question, boolean star);
 
     void saveSummary(StudySummary studySummary);
     @Nullable
