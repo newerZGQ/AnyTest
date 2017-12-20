@@ -4,8 +4,8 @@ import com.zgq.wokao.injector.PerActivity;
 import com.zgq.wokao.module.study.LearningFragment;
 import com.zgq.wokao.module.study.LearningPresenter;
 import com.zgq.wokao.module.study.StudyContract;
-import com.zgq.wokao.module.study.entity.StudyParams;
 import com.zgq.wokao.module.study.StudyPresenter;
+import com.zgq.wokao.module.study.entity.StudyParams;
 
 import dagger.Module;
 import dagger.Provides;

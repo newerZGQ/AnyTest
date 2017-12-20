@@ -1,6 +1,5 @@
 package com.zgq.wokao.adapter;
 
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,9 +8,7 @@ import android.widget.TextView;
 import com.zgq.wokao.R;
 import com.zgq.wokao.entity.paper.question.Answer;
 import com.zgq.wokao.entity.paper.question.FillInQuestion;
-import com.zgq.wokao.module.study.entity.StudyInfo;
 
-import java.util.LinkedList;
 import java.util.List;
 
 public class FillInQuestionAdapter extends BaseViewPagerAdapter<FillInQuestion> {
