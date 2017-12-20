@@ -104,7 +104,6 @@ public class MultChoQuestionAdapter extends BaseViewPagerAdapter<MultChoQuestion
 
     @Override
     public void showCurrentAnswer() {
-        boolean isCorrect = false;
         MultChoQuestion question = studyInfo.getQuestions().get(currentPosition);
         int[] correctAnswer = getRealAnswerPosition(getRealAnswer(question.getAnswer().getContent()));
         View view = currentView;
@@ -113,15 +112,17 @@ public class MultChoQuestionAdapter extends BaseViewPagerAdapter<MultChoQuestion
         for (int j = 0; j < correctAnswer.length; j++) {
             optionViews.get(correctAnswer[j]).setToCorrect();
         }
-        holder.myAnswerTv.setText(studyInfo.getMyAnswer(question.getId()).getContent());
 
-        int[] thisAnswer = getRealAnswerPosition(getRealAnswer(studyInfo.getMyAnswer(question.getId()).getContent()));
-        if (thisAnswer.length == correctAnswer.length) {
-            for (int i = 0; i < thisAnswer.length; i++) {
-                if (thisAnswer[i] != correctAnswer[i]) {
-                    isCorrect = false;
-                } else {
-                    isCorrect = true;
+        boolean isCorrect = false;
+        if (studyInfo.hasAnswered(question.getId())) {
+            holder.myAnswerTv.setText(studyInfo.getMyAnswer(question.getId()).getContent());
+            int[] thisAnswer = getRealAnswerPosition(getRealAnswer(studyInfo.getMyAnswer(question.getId()).getContent()));
+            isCorrect = true;
+            if (thisAnswer.length == correctAnswer.length) {
+                for (int i = 0; i < thisAnswer.length; i++) {
+                    if (thisAnswer[i] != correctAnswer[i]) {
+                        isCorrect = false;
+                    }
                 }
             }
         }
@@ -138,7 +139,9 @@ public class MultChoQuestionAdapter extends BaseViewPagerAdapter<MultChoQuestion
         MultChoQuestion question = studyInfo.getQuestions().get(currentPosition);
         if (studyInfo.hasAnswered(question.getId())) return;
         Answer answer = studyInfo.getMyAnswer(question.getId());
-
+        if (answer == null){
+            answer = new Answer();
+        }
         String answerContent = answer.getContent();
 
         QuestionOptionView view = (QuestionOptionView) v;
