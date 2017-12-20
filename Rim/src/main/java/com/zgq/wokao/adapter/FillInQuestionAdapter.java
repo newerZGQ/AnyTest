@@ -14,10 +14,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class FillInQuestionAdapter extends BaseViewPagerAdapter<FillInQuestion> {
-    private LinkedList<View> mViewCache = new LinkedList<>();
-
-    private View currentView = null;
-    private int currentPosition = 0;
 
 
     private FillInQuestionViewHolder holder;
@@ -38,6 +34,7 @@ public class FillInQuestionAdapter extends BaseViewPagerAdapter<FillInQuestion> 
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
+        super.instantiateItem(container,position);
         return getFillInQuestionView(container, position);
     }
 
@@ -82,47 +79,17 @@ public class FillInQuestionAdapter extends BaseViewPagerAdapter<FillInQuestion> 
     }
 
     @Override
-    public void setPrimaryItem(ViewGroup container, int position, Object object) {
-        super.setPrimaryItem(container, position, object);
-        currentView = (View) object;
-        currentPosition = position;
-        studiedListener.onSelected(studyInfo.getQuestions().get(currentPosition), position);
-    }
-
-    @Override
-    public View getCurrentView() {
-        return currentView;
-    }
-
-    @Override
-    public int getCurrentPosition() {
-        return currentPosition;
-    }
-
-    @Override
-    public boolean showCurrentAnswer() {
+    public void showCurrentAnswer() {
         FillInQuestion question = studyInfo.getQuestions().get(currentPosition);
-        if (studyInfo.hasAnswered(question.getId())) return false;
+        if (studyInfo.hasAnswered(question.getId())) return;
         ((FillInQuestionViewHolder) (currentView.getTag())).questionAnswer.setText(question.getAnswer().getContent());
         studyInfo.saveMyAnswer(question.getId(),new Answer());
-        //TODO 再次更新学习记录
         studiedListener.onStudied(question, true);
-        return true;
     }
 
     @Override
     public void starCurrentQuestion() {
         studiedListener.starQuestion(studyInfo.getQuestions().get(currentPosition));
-    }
-
-    @Override
-    public void hideCurrentAnswer() {
-
-    }
-
-    @Override
-    public int getLastPosition() {
-        return studyInfo.getQuestions().get(currentPosition).getInfo().getIndex() - 1;
     }
 
     public final class FillInQuestionViewHolder {

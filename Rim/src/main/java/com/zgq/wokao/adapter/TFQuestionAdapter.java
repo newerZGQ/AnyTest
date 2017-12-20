@@ -9,20 +9,12 @@ import android.widget.TextView;
 
 import com.zgq.wokao.R;
 import com.zgq.wokao.entity.paper.question.Answer;
-import com.zgq.wokao.entity.paper.question.FillInQuestion;
 import com.zgq.wokao.entity.paper.question.TFQuestion;
-import com.zgq.wokao.module.study.entity.StudyInfo;
 
-import java.util.LinkedList;
 import java.util.List;
 
 public class TFQuestionAdapter extends BaseViewPagerAdapter<TFQuestion> {
-    private LinkedList<View> mViewCache = new LinkedList<>();
     private Context context;
-
-    private View currentView = null;
-    private int currentPosition = 0;
-
     private TFQuestionViewHolder holder;
 
     public TFQuestionAdapter(List<TFQuestion> questions, OnStudiedListener listener) {
@@ -78,19 +70,13 @@ public class TFQuestionAdapter extends BaseViewPagerAdapter<TFQuestion> {
         holder = tfQuestionViewHolder;
         TFQuestion question = studyInfo.getQuestions().get(position);
         tfQuestionViewHolder.questionBody.setText("" + (position + 1) + ". " + question.getBody().getContent());
-        tfQuestionViewHolder.optionFalse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (studyInfo.hasAnswered(question.getId())) return;
-                onSelectedFalseOption(v, position);
-            }
+        tfQuestionViewHolder.optionFalse.setOnClickListener(v -> {
+            if (studyInfo.hasAnswered(question.getId())) return;
+            onSelectedFalseOption(v, position);
         });
-        tfQuestionViewHolder.optionTrue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (studyInfo.hasAnswered(question.getId())) return;
-                onSelectedTrueOption(v, position);
-            }
+        tfQuestionViewHolder.optionTrue.setOnClickListener(v -> {
+            if (studyInfo.hasAnswered(question.getId())) return;
+            onSelectedTrueOption(v, position);
         });
         if (studyInfo.hasAnswered(question.getId())) {
             String answer = studyInfo.getMyAnswer(question.getId()).getContent();
@@ -134,29 +120,12 @@ public class TFQuestionAdapter extends BaseViewPagerAdapter<TFQuestion> {
         return convertView;
     }
 
-    @Override
-    public void setPrimaryItem(ViewGroup container, int position, Object object) {
-        currentView = (View) object;
-        currentPosition = position;
-        super.setPrimaryItem(container, position, object);
-    }
-
-    @Override
-    public View getCurrentView() {
-        return currentView;
-    }
-
-    @Override
-    public int getCurrentPosition() {
-        return currentPosition;
-    }
-
     public void onSelectedTrueOption(View view, int position) {
         Answer answer = new Answer();
         answer.setContent("true");
         TFQuestion question = studyInfo.getQuestions().get(position);
         studyInfo.saveMyAnswer(question.getId(),answer);
-        View view1 = getCurrentView();
+        View view1 = currentView;
         TFQuestionViewHolder holder = (TFQuestionViewHolder) view1.getTag();
         final TextView trueLabel = holder.optionTrue.findViewById(R.id.tfqst_option_true_label);
         final TextView falseLabel = holder.optionFalse.findViewById(R.id.tfqst_option_false_label);
@@ -189,7 +158,7 @@ public class TFQuestionAdapter extends BaseViewPagerAdapter<TFQuestion> {
         answer.setContent("false");
         TFQuestion question = studyInfo.getQuestions().get(position);
         studyInfo.saveMyAnswer(question.getId(),answer);
-        View view1 = getCurrentView();
+        View view1 = currentView;
         TFQuestionViewHolder holder = (TFQuestionViewHolder) view1.getTag();
         final TextView trueLabel = holder.optionTrue.findViewById(R.id.tfqst_option_true_label);
         final TextView falseLabel = holder.optionFalse.findViewById(R.id.tfqst_option_false_label);
@@ -227,24 +196,14 @@ public class TFQuestionAdapter extends BaseViewPagerAdapter<TFQuestion> {
             return "true";
         }
     }
+    @Override
+    public void showCurrentAnswer() {
 
-    public boolean showCurrentAnswer() {
-        return false;
     }
 
     @Override
     public void starCurrentQuestion() {
-
-    }
-
-    @Override
-    public void hideCurrentAnswer() {
-
-    }
-
-    @Override
-    public int getLastPosition() {
-        return studyInfo.getQuestions().get(currentPosition).getInfo().getIndex() - 1;
+        studiedListener.starQuestion(studyInfo.getQuestions().get(currentPosition));
     }
 
     public final class TFQuestionViewHolder {

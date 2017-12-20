@@ -20,15 +20,10 @@ import java.util.List;
 
 public class MultChoQuestionAdapter extends BaseViewPagerAdapter<MultChoQuestion> implements View.OnClickListener {
     private ArrayList<MultChoQuestion> datas = null;
-    private LinkedList<ViewGroup> mViewCache = null;
     private Context mContext;
     private LayoutInflater mLayoutInflater = null;
     private ArrayList<Boolean> hasShowAnswer = null;
     private ArrayList<Answer> myAnswer = new ArrayList<>();
-
-    private ViewGroup currentView = null;
-    private int currentPosition = 0;
-
 
     private MultiChoQuestionViewHolder holder;
 
@@ -65,8 +60,8 @@ public class MultChoQuestionAdapter extends BaseViewPagerAdapter<MultChoQuestion
 
     public View getMultiChoQuestionView(ViewGroup container, final int position) {
         MultiChoQuestionViewHolder multiChoQuestionViewHolder = null;
-        MultChoQuestion multChoQuestion = (MultChoQuestion) datas.get(position);
-        ViewGroup convertView = null;
+        MultChoQuestion multChoQuestion = datas.get(position);
+        View convertView = null;
         if (mViewCache.size() == 0) {
             convertView = (ViewGroup) this.mLayoutInflater.inflate(
                     R.layout.viewadapter_multichoquestion_item, null, false);
@@ -124,28 +119,10 @@ public class MultChoQuestionAdapter extends BaseViewPagerAdapter<MultChoQuestion
     }
 
     @Override
-    public void setPrimaryItem(ViewGroup container, int position, Object object) {
-        currentView = (ViewGroup) object;
-        currentPosition = position;
-        super.setPrimaryItem(container, position, object);
-    }
-
-    @Override
-    public View getCurrentView() {
-        return currentView;
-    }
-
-    @Override
-    public int getCurrentPosition() {
-        return currentPosition;
-    }
-
-    @Override
-    public boolean showCurrentAnswer() {
+    public void showCurrentAnswer() {
         boolean isCorrect = false;
-        int currentPosition = getCurrentPosition();
         int[] correctAnswer = getRealAnswerPosition(getRealAnswer(datas.get(currentPosition).getAnswer().getContent()));
-        View view = getCurrentView();
+        View view = currentView;
         MultiChoQuestionViewHolder holder = (MultiChoQuestionViewHolder) view.getTag();
         ArrayList<QuestionOptionView> optionViews = holder.optionViews;
         for (int j = 0; j < correctAnswer.length; j++) {
@@ -164,27 +141,16 @@ public class MultChoQuestionAdapter extends BaseViewPagerAdapter<MultChoQuestion
                 }
             }
         }
-        if (isCorrect) {
-            //getCorrectAnswer(getPaperId(), datas.get(currentPosition));
-        } else {
-            //getFalseAnswer(getPaperId(), datas.get(currentPosition));
-        }
-        return isCorrect;
+        studiedListener.onStudied(studyInfo.getQuestions().get(currentPosition),isCorrect);
     }
 
     @Override
     public void starCurrentQuestion() {
-
-    }
-
-    @Override
-    public void hideCurrentAnswer() {
-
+        studiedListener.starQuestion(studyInfo.getQuestions().get(currentPosition));
     }
 
     @Override
     public void onClick(View v) {
-        int currentPosition = getCurrentPosition();
         if (hasShowAnswer.get(currentPosition)) return;
         Answer answer = myAnswer.get(currentPosition);
 
@@ -247,11 +213,6 @@ public class MultChoQuestionAdapter extends BaseViewPagerAdapter<MultChoQuestion
                 }
             }
         return chars;
-    }
-
-    @Override
-    public int getLastPosition() {
-        return datas.get(currentPosition).getInfo().getIndex() - 1;
     }
 
     public final class MultiChoQuestionViewHolder {

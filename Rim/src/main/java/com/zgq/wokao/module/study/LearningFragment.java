@@ -151,6 +151,11 @@ public class LearningFragment extends BaseFragment<StudyContract.LearningPresent
         }
     }
 
+    @Override
+    public void hideAnswerBtn() {
+        showAnswerButton.setVisibility(View.GONE);
+    }
+
     private void initToolbar() {
         switchToolbar();
         studyMode.setOnClickListener(this);

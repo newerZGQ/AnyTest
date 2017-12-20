@@ -18,16 +18,12 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class SglChoQuestionAdapter extends BaseViewPagerAdapter implements View.OnClickListener {
+public class SglChoQuestionAdapter extends BaseViewPagerAdapter<SglChoQuestion> implements View.OnClickListener {
     private ArrayList<SglChoQuestion> datas = null;
-    private LinkedList<ViewGroup> mViewCache = null;
     private Context mContext;
     private LayoutInflater mLayoutInflater = null;
     private ArrayList<Boolean> hasShowAnswer = null;
     private ArrayList<Answer> myAnswer = new ArrayList<>();
-
-    private ViewGroup currentView = null;
-    private int currentPosition = 0;
 
 
     private SglChoQuestionViewHolder holder;
@@ -65,12 +61,12 @@ public class SglChoQuestionAdapter extends BaseViewPagerAdapter implements View.
 
     public View getSglChoQuestionView(ViewGroup container, final int position) {
         SglChoQuestionViewHolder sglChoQuestionViewHolder = null;
-        SglChoQuestion sglChoQuestion = (SglChoQuestion) datas.get(position);
-        ViewGroup convertView = null;
+        SglChoQuestion sglChoQuestion = datas.get(position);
+        View convertView = null;
         if (mViewCache.size() == 0) {
             convertView = (ViewGroup) this.mLayoutInflater.inflate(R.layout.viewadapter_sglchoquestion_item, null, false);
-            TextView questionBody = (TextView) convertView.findViewById(R.id.sglchoqst_body);
-            LinearLayout questionLayout = (LinearLayout) convertView.findViewById(R.id.options_layout);
+            TextView questionBody = convertView.findViewById(R.id.sglchoqst_body);
+            LinearLayout questionLayout = convertView.findViewById(R.id.options_layout);
             ArrayList<QuestionOptionView> optionViews = new ArrayList<>();
             sglChoQuestionViewHolder = new SglChoQuestionViewHolder();
             sglChoQuestionViewHolder.optionLayout = questionLayout;
@@ -122,67 +118,44 @@ public class SglChoQuestionAdapter extends BaseViewPagerAdapter implements View.
     }
 
     @Override
-    public void setPrimaryItem(ViewGroup container, int position, Object object) {
-        currentView = (ViewGroup) object;
-        currentPosition = position;
-        super.setPrimaryItem(container, position, object);
-    }
+    public void showCurrentAnswer() {
 
-    @Override
-    public View getCurrentView() {
-        return currentView;
-    }
-
-    @Override
-    public int getCurrentPosition() {
-        return currentPosition;
-    }
-
-    @Override
-    public boolean showCurrentAnswer() {
-        return false;
     }
 
     @Override
     public void starCurrentQuestion() {
-
+        studiedListener.starQuestion(studyInfo.getQuestions().get(currentPosition));
     }
 
     /*
     @params selectedOption  用户选择的选项位置，A为0
     @params rightOption     正确答案位置
      */
-    public void showCurrentAnswer(int selectedOption, int rightOption) {
-        ArrayList<QuestionOptionView> optionViews = ((SglChoQuestionViewHolder) getCurrentView().getTag()).optionViews;
+    private void showCurrentAnswer(int selectedOption, int rightOption) {
+        ArrayList<QuestionOptionView> optionViews = ((SglChoQuestionViewHolder) currentView.getTag()).optionViews;
         if (selectedOption == rightOption) {
             for (int i = 0; i < optionViews.size(); i++) {
                 if (i == selectedOption) optionViews.get(i).setToCorrect();
             }
-            //getCorrectAnswer(getPaperId(), datas.get(currentPosition));
+            studiedListener.onStudied(studyInfo.getQuestions().get(currentPosition),true);
         } else {
             for (int i = 0; i < optionViews.size(); i++) {
                 if (i == selectedOption) optionViews.get(i).setToWrong();
                 if (i == rightOption) optionViews.get(i).setToCorrect();
             }
-            //getFalseAnswer(getPaperId(), datas.get(currentPosition));
+            studiedListener.onStudied(studyInfo.getQuestions().get(currentPosition),false);
         }
     }
 
     @Override
-    public void hideCurrentAnswer() {
-
-    }
-
-    @Override
     public void onClick(View v) {
-        int currentPosition = getCurrentPosition();
-        SglChoQuestion question = (SglChoQuestion) datas.get(currentPosition);
+        SglChoQuestion question = datas.get(currentPosition);
         if (hasShowAnswer.get(currentPosition)) return;
 
         int selectedOption = (int) v.getTag();
         Answer answer = new Answer();
         answer.setContent(getLabelFromPosition(selectedOption));
-        myAnswer.set(getCurrentPosition(), answer);
+        myAnswer.set(currentPosition, answer);
 
         showCurrentAnswer(selectedOption, getOptionPositionFromLabel(question.getAnswer().getContent()));
 
@@ -196,11 +169,6 @@ public class SglChoQuestionAdapter extends BaseViewPagerAdapter implements View.
     private int getOptionPositionFromLabel(String label) {
         char a = label.charAt(0);
         return ((int) a - 65);
-    }
-
-    @Override
-    public int getLastPosition() {
-        return datas.get(currentPosition).getInfo().getIndex() - 1;
     }
 
     public final class SglChoQuestionViewHolder {

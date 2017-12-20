@@ -1,31 +1,17 @@
 package com.zgq.wokao.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.zgq.wokao.R;
+import com.zgq.wokao.entity.paper.question.Answer;
 import com.zgq.wokao.entity.paper.question.DiscussQuestion;
-import com.zgq.wokao.module.study.entity.StudyInfo;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
-public class DiscussQuestionAdapter extends BaseViewPagerAdapter {
-    //显示的数据
-    private ArrayList<DiscussQuestion> datas = null;
-    private LinkedList<View> mViewCache = null;
-    private Context mContext;
-    private LayoutInflater mLayoutInflater = null;
-    private ArrayList<Boolean> hasShowAnswer = new ArrayList<>();
-
-    private View currentView = null;
-    private int currentPosition = 0;
-
-
+public class DiscussQuestionAdapter extends BaseViewPagerAdapter<DiscussQuestion> {
     private DiscussQuestionViewHolder holder;
 
     public DiscussQuestionAdapter(List<DiscussQuestion> questions, OnStudiedListener listener) {
@@ -34,7 +20,7 @@ public class DiscussQuestionAdapter extends BaseViewPagerAdapter {
 
     @Override
     public int getCount() {
-        return this.datas.size();
+        return studyInfo.getQuestions().size();
     }
 
     @Override
@@ -44,6 +30,7 @@ public class DiscussQuestionAdapter extends BaseViewPagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
+        super.instantiateItem(container,position);
         return getDiscussQuestionView(container, position);
     }
 
@@ -63,9 +50,9 @@ public class DiscussQuestionAdapter extends BaseViewPagerAdapter {
         DiscussQuestionViewHolder discussQuestionViewHolder = null;
         View convertView = null;
         if (mViewCache.size() == 0) {
-            convertView = this.mLayoutInflater.inflate(R.layout.viewadapter_discussquestion_item, null, false);
-            TextView questionBody = (TextView) convertView.findViewById(R.id.discussquestion_body);
-            TextView questionAnswer = (TextView) convertView.findViewById(R.id.discussquestion_answer);
+            convertView = LayoutInflater.from(context).inflate(R.layout.viewadapter_discussquestion_item, null, false);
+            TextView questionBody = convertView.findViewById(R.id.discussquestion_body);
+            TextView questionAnswer = convertView.findViewById(R.id.discussquestion_answer);
             discussQuestionViewHolder = new DiscussQuestionViewHolder();
             discussQuestionViewHolder.questionBody = questionBody;
             discussQuestionViewHolder.questionAnswer = questionAnswer;
@@ -75,9 +62,10 @@ public class DiscussQuestionAdapter extends BaseViewPagerAdapter {
             discussQuestionViewHolder = (DiscussQuestionViewHolder) convertView.getTag();
         }
         holder = discussQuestionViewHolder;
-        discussQuestionViewHolder.questionBody.setText(datas.get(position).getBody().getContent());
-        if (hasShowAnswer.get(position)) {
-            discussQuestionViewHolder.questionAnswer.setText(datas.get(position).getAnswer().getContent());
+        DiscussQuestion question = studyInfo.getQuestions().get(position);
+        discussQuestionViewHolder.questionBody.setText(question.getBody().getContent());
+        if (studyInfo.hasAnswered(question.getId())) {
+            discussQuestionViewHolder.questionAnswer.setText(question.getAnswer().getContent());
         } else {
             discussQuestionViewHolder.questionAnswer.setText("");
         }
@@ -86,45 +74,17 @@ public class DiscussQuestionAdapter extends BaseViewPagerAdapter {
     }
 
     @Override
-    public void setPrimaryItem(ViewGroup container, int position, Object object) {
-        currentView = (View) object;
-        currentPosition = position;
-        super.setPrimaryItem(container, position, object);
-    }
-
-    @Override
-    public View getCurrentView() {
-        return currentView;
-    }
-
-    @Override
-    public int getCurrentPosition() {
-        return currentPosition;
-    }
-
-    @Override
-    public boolean showCurrentAnswer() {
-        if (hasShowAnswer.get(currentPosition)) return false;
+    public void showCurrentAnswer() {
+        DiscussQuestion question = studyInfo.getQuestions().get(currentPosition);
+        if (studyInfo.hasAnswered(question.getId())) return;
         ((DiscussQuestionViewHolder) (currentView.getTag())).questionAnswer.
-                setText(datas.get(currentPosition).getAnswer().getContent());
-        hasShowAnswer.set(currentPosition, true);
-        //getCorrectAnswer(getPaperId(), datas.get(currentPosition));
-        return true;
+                setText(question.getAnswer().getContent());
+        studyInfo.saveMyAnswer(question.getId(),new Answer());
     }
 
     @Override
     public void starCurrentQuestion() {
-
-    }
-
-    @Override
-    public void hideCurrentAnswer() {
-
-    }
-
-    @Override
-    public int getLastPosition() {
-        return datas.get(currentPosition).getInfo().getIndex() - 1;
+        studiedListener.starQuestion(studyInfo.getQuestions().get(currentPosition));
     }
 
     public final class DiscussQuestionViewHolder {

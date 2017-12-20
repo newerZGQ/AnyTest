@@ -69,6 +69,9 @@ public class LearningPresenter extends BasePresenter<StudyContract.LearningView>
     @Override
     public void subscribe() {
         super.subscribe();
+        if (questionType == QuestionType.TF || questionType == QuestionType.SINGLECHOOSE) {
+            view.hideAnswerBtn();
+        }
         loadAllQuestions();
     }
 

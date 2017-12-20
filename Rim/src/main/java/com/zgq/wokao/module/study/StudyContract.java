@@ -18,6 +18,7 @@ public interface StudyContract {
         void notifyQuestionIndexChanged();
         void setStarState(boolean isStared);
         void setAnswerState(boolean answered);
+        void hideAnswerBtn();
     }
     interface LearningPresenter extends IPresenter<LearningView>{
         void initParams(String paperId, QuestionType type);
