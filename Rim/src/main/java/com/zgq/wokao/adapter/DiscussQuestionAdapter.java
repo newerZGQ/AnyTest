@@ -80,6 +80,7 @@ public class DiscussQuestionAdapter extends BaseViewPagerAdapter<DiscussQuestion
         ((DiscussQuestionViewHolder) (currentView.getTag())).questionAnswer.
                 setText(question.getAnswer().getContent());
         studyInfo.saveMyAnswer(question.getId(),new Answer());
+        studiedListener.onStudied(question,true);
     }
 
     @Override

@@ -14,8 +14,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class FillInQuestionAdapter extends BaseViewPagerAdapter<FillInQuestion> {
-
-
     private FillInQuestionViewHolder holder;
 
     public FillInQuestionAdapter(List<FillInQuestion> questions, OnStudiedListener listener) {
