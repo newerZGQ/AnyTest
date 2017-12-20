@@ -65,12 +65,16 @@ public class RimRepository implements RimDataSource {
 
     @Override
     public void saveSummary(@Nonnull final StudySummary studySummary) {
-        Log.d("savesummary", studySummary.getId());
         getStudySummary().subscribe(studySummaryOptional -> {
             if (!studySummaryOptional.isPresent()){
                 paperRepository.saveSummary(studySummary);
             }
         });
+    }
+
+    @Override
+    public void updateSummary(@Nonnull StudySummary studySummary) {
+        paperRepository.saveSummary(studySummary);
     }
 
     @Override

@@ -58,6 +58,11 @@ public class PaperRepository implements PaperDataSource {
     }
 
     @Override
+    public void updateSummary(@Nonnull StudySummary studySummary) {
+        daoSource.saveSummary(studySummary);
+    }
+
+    @Override
     public Flowable<Optional<StudySummary>> getStudySummary() {
         return Flowable.just(Optional.fromNullable(daoSource.getStudySummary()));
     }

@@ -77,7 +77,7 @@ public class RimDaoSource implements RimDao {
     @Override
     public void saveSummary(StudySummary studySummary) {
         realm.beginTransaction();
-        realm.copyToRealm(studySummary);
+        realm.copyToRealmOrUpdate(studySummary);
         realm.commitTransaction();
     }
 

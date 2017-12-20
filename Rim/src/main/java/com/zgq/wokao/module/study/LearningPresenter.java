@@ -3,15 +3,20 @@ package com.zgq.wokao.module.study;
 import com.zgq.wokao.entity.paper.NormalExamPaper;
 import com.zgq.wokao.entity.paper.question.IQuestion;
 import com.zgq.wokao.entity.paper.question.QuestionType;
+import com.zgq.wokao.entity.summary.StudySummary;
+import com.zgq.wokao.entity.summary.TotalDailyCount;
 import com.zgq.wokao.module.base.BasePresenter;
 import com.zgq.wokao.repository.RimRepository;
+import com.zgq.wokao.util.DateUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.UUID;
 
 import javax.inject.Inject;
 
 import io.reactivex.Flowable;
+import io.realm.RealmList;
 
 public class LearningPresenter extends BasePresenter<StudyContract.LearningView>
         implements StudyContract.LearningPresenter {
@@ -63,7 +68,7 @@ public class LearningPresenter extends BasePresenter<StudyContract.LearningView>
 
         answered = new HashMap<>(questions.size());
         Flowable.fromIterable(questions)
-                .subscribe(question -> answered.put(question,false));
+                .subscribe(question -> answered.put(question, false));
     }
 
     @Override
@@ -85,7 +90,7 @@ public class LearningPresenter extends BasePresenter<StudyContract.LearningView>
         loadQuestions(true);
     }
 
-    private void loadQuestions(boolean onlyStared){
+    private void loadQuestions(boolean onlyStared) {
         ArrayList<IQuestion> targetQuestions = new ArrayList<>();
         Flowable.fromIterable(questions)
                 .filter(question -> !onlyStared || question.getInfo().isStared())
@@ -95,9 +100,10 @@ public class LearningPresenter extends BasePresenter<StudyContract.LearningView>
     }
 
     @Override
-    public void updateStudiedRecord(IQuestion question, boolean correct){
+    public void updateStudiedRecord(IQuestion question, boolean correct) {
         updateQuestionIndex(question);
         view.setAnswerState(true);
+        updateSummary(correct);
     }
 
     @Override
@@ -112,8 +118,79 @@ public class LearningPresenter extends BasePresenter<StudyContract.LearningView>
         view.setAnswerState(answered.get(question));
     }
 
-    private void updateQuestionIndex(IQuestion question){
-        answered.put(question,true);
+    private void updateQuestionIndex(IQuestion question) {
+        answered.put(question, true);
         view.notifyQuestionIndexChanged();
+    }
+
+    private void updateSummary(boolean correct) {
+        final StudySummary[] tmp = new StudySummary[1];
+        repository.getStudySummary().subscribe(studySummaryOptional -> {
+            tmp[0] = studySummaryOptional.get();
+        });
+
+        repository.copyFromRealm(tmp[0])
+                .subscribe(studySummary -> {
+                    studySummary.setStudyCount(studySummary.getStudyCount() + 1);
+                    if (correct) {
+                        studySummary.setCorrectCount(studySummary.getCorrectCount() + 1);
+                    }
+                    RealmList<TotalDailyCount> lastWeekRecords = studySummary.getLastWeekRecords();
+                    if (!lastRecordIsCurrent()) {
+                        lastWeekRecords.remove(0);
+                        TotalDailyCount totalDailyCount = TotalDailyCount.builder()
+                                .dailyCount(0)
+                                .date(DateUtil.getCurrentDate())
+                                .id(UUID.randomUUID().toString())
+                                .build();
+                        lastWeekRecords.add(totalDailyCount);
+                    }
+                    checkDateAvailiable();
+                    int todayCount = lastWeekRecords.last().getDailyCount();
+                    lastWeekRecords.last().setDailyCount(todayCount + 1);
+
+                    repository.copyToRealmOrUpdate(studySummary);
+                });
+    }
+
+    private boolean lastRecordIsCurrent() {
+        final boolean[] result = {false};
+        repository.getStudySummary()
+                .subscribe(studySummaryOptional -> {
+                    StudySummary summary = studySummaryOptional.get();
+                    RealmList<TotalDailyCount> lastWeekRecords = summary.getLastWeekRecords();
+                    TotalDailyCount last = lastWeekRecords.get(lastWeekRecords.size() - 1);
+                    String currentData = DateUtil.getCurrentDate();
+                    if (last.getDate().equals(currentData)) {
+                        result[0] = true;
+                    }else {
+                        result[0] = false;
+                    }
+                });
+        return result[0];
+    }
+
+    private void checkDateAvailiable() {
+        repository.getStudySummary()
+                .subscribe(studySummaryOptional -> {
+                    StudySummary summary = studySummaryOptional.get();
+                    RealmList<TotalDailyCount> lastWeekRecords = summary.getLastWeekRecords();
+                    String today = lastWeekRecords.last().getDate();
+                    String dateToCheck = DateUtil.getTargetDateApart(today,-1);
+                    for (int i = lastWeekRecords.size() - 2; i >= 0; i--) {
+                        if (!lastWeekRecords.get(i).getDate().equals(dateToCheck)) {
+                            for (int j = 1; j <= i; j++) {
+                                TotalDailyCount totalDailyCount = lastWeekRecords.get(j);
+                                lastWeekRecords.set(j - 1, totalDailyCount);
+                            }
+                            TotalDailyCount totalDailyCount = new TotalDailyCount();
+                            totalDailyCount.setDate(dateToCheck);
+                            totalDailyCount.setDailyCount(0);
+                            lastWeekRecords.set(i, totalDailyCount);
+                        }
+                        dateToCheck = DateUtil.getTargetDateApart(dateToCheck,-1);
+                    }
+                });
+
     }
 }

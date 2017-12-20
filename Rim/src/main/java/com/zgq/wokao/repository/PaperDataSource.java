@@ -21,6 +21,7 @@ public interface PaperDataSource {
     void setSked(NormalExamPaper paper, boolean skedState);
 
     void saveSummary(@Nonnull StudySummary studySummary);
+    void updateSummary(@Nonnull StudySummary studySummary);
     Flowable<Optional<StudySummary>> getStudySummary();
 
     void starQuestion(IQuestion question, boolean star);
