@@ -73,7 +73,7 @@ public class MultChoQuestionAdapter extends BaseViewPagerAdapter<MultChoQuestion
         optionViews.clear();
         for (int i = 0; i < multChoQuestion.getOptions().getOptionList().size(); i++) {
             QuestionOptionView optionView = new QuestionOptionView(context);
-            optionView.setContent(getLabelFromPosition(i), multChoQuestion.getOptions().getOptionList().get(i).toString());
+            optionView.setContent(getLabelFromPosition(i), multChoQuestion.getOptions().getOptionList().get(i).getOption());
             //setTag 标识位置
             optionView.setTag(i);
             optionViews.add(optionView);

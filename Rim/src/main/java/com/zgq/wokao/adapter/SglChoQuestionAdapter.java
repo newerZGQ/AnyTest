@@ -25,6 +25,7 @@ public class SglChoQuestionAdapter extends BaseViewPagerAdapter<SglChoQuestion> 
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
+        super.instantiateItem(container,position);
         return getSglChoQuestionView(container, position);
     }
 
@@ -45,7 +46,7 @@ public class SglChoQuestionAdapter extends BaseViewPagerAdapter<SglChoQuestion> 
         SglChoQuestion sglChoQuestion = studyInfo.getQuestions().get(position);
         View convertView = null;
         if (mViewCache.size() == 0) {
-            convertView = (ViewGroup) LayoutInflater.from(context)
+            convertView = LayoutInflater.from(context)
                     .inflate(R.layout.viewadapter_sglchoquestion_item, null, false);
             TextView questionBody = convertView.findViewById(R.id.sglchoqst_body);
             LinearLayout questionLayout = convertView.findViewById(R.id.options_layout);
@@ -70,7 +71,7 @@ public class SglChoQuestionAdapter extends BaseViewPagerAdapter<SglChoQuestion> 
         optionViews.clear();
         for (int i = 0; i < sglChoQuestion.getOptions().getOptionList().size(); i++) {
             QuestionOptionView optionView = new QuestionOptionView(context);
-            optionView.setContent(getLabelFromPosition(i), sglChoQuestion.getOptions().getOptionList().get(i).toString());
+            optionView.setContent(getLabelFromPosition(i), sglChoQuestion.getOptions().getOptionList().get(i).getOption());
             //setTag 标识位置
             optionView.setTag(i);
             optionViews.add(optionView);

@@ -31,6 +31,7 @@ public class QuestionPresenter extends BasePresenter<QuestionContract.View> impl
 
     @Override
     public void loadQuestions(String paperId) {
+        questionsInfos.clear();
         repository.queryPaper(paperId)
                 .subscribe(paper -> {
                     if (paper.isPresent()) {
