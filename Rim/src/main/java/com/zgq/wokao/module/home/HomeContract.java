@@ -18,7 +18,7 @@ public interface HomeContract {
 
     interface ScheduleView extends IView<SchedulePresenter> {
         void setDetail(Schedule schedule);
-        void setSchedulePapers(RealmResults<ExamPaperInfo> examPaperInfos);
+        void setSchedulePapers(List<ExamPaperInfo> examPaperInfos);
         void notifyDataChanged();
         void showEmptyView();
         void hideEmptyView();

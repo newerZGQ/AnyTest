@@ -1,6 +1,9 @@
 package com.zgq.wokao.module.study;
 
+import com.google.common.base.Strings;
 import com.zgq.wokao.entity.paper.NormalExamPaper;
+import com.zgq.wokao.entity.paper.info.DailyRecord;
+import com.zgq.wokao.entity.paper.info.Schedule;
 import com.zgq.wokao.entity.paper.question.IQuestion;
 import com.zgq.wokao.entity.paper.question.QuestionType;
 import com.zgq.wokao.entity.summary.StudySummary;
@@ -25,6 +28,8 @@ public class LearningPresenter extends BasePresenter<StudyContract.LearningView>
 
     private QuestionType questionType;
 
+    private String initQuestionId;
+
     private RimRepository repository;
 
     private ArrayList<IQuestion> questions = new ArrayList<>();
@@ -37,9 +42,10 @@ public class LearningPresenter extends BasePresenter<StudyContract.LearningView>
     }
 
     @Override
-    public void initParams(String paperId, QuestionType type) {
+    public void initParams(String paperId, QuestionType type, String questionId) {
         repository.queryPaper(paperId).subscribe(paperOptional -> this.normalExamPaper = paperOptional.get());
         questionType = type;
+        this.initQuestionId = questionId;
 
         switch (questionType) {
             case FILLIN:
@@ -78,6 +84,17 @@ public class LearningPresenter extends BasePresenter<StudyContract.LearningView>
             view.hideAnswerBtn();
         }
         loadAllQuestions();
+        if (!Strings.isNullOrEmpty(initQuestionId)) {
+            toTarget(initQuestionId);
+        }
+    }
+
+    private void toTarget(String questionId){
+        for (int i = 0; i < questions.size(); i++){
+            if (questionId.equals(questions.get(i).getInfo().getId())){
+                view.showTargetQuestion(i);
+            }
+        }
     }
 
     @Override
@@ -104,6 +121,7 @@ public class LearningPresenter extends BasePresenter<StudyContract.LearningView>
         updateQuestionIndex(question);
         view.setAnswerState(true);
         updateSummary(correct);
+        updatePaperSchedule(question,correct);
     }
 
     @Override
@@ -121,6 +139,28 @@ public class LearningPresenter extends BasePresenter<StudyContract.LearningView>
     private void updateQuestionIndex(IQuestion question) {
         answered.put(question, true);
         view.notifyQuestionIndexChanged();
+    }
+
+    private void updatePaperSchedule(IQuestion question, boolean correct){
+        repository.copyFromRealm(normalExamPaper.getPaperInfo().getSchedule())
+                .subscribe(schedule -> {
+                   schedule.setTotalCount(schedule.getTotalCount() + 1);
+                   schedule.setCorrectCount(correct? schedule.getCorrectCount() + 1 : schedule.getCorrectCount());
+                   DailyRecord lastRecord = schedule.getDailyRecords().last();
+                   if (lastRecord == null || lastRecord.getDate().equals(DateUtil.getCurrentDate())){
+                       DailyRecord todayRecord = DailyRecord.builder()
+                               .id(UUID.randomUUID().toString())
+                               .date(DateUtil.getCurrentDate())
+                               .studyCount(0)
+                               .build();
+                       schedule.getDailyRecords().add(todayRecord);
+                   }else {
+                       lastRecord.setStudyCount(lastRecord.getStudyCount() + 1);
+                   }
+
+                   schedule.setLastStudyNum(question.getInfo().getIndex());
+                   repository.copyToRealmOrUpdate(schedule);
+                });
     }
 
     private void updateSummary(boolean correct) {
@@ -145,7 +185,22 @@ public class LearningPresenter extends BasePresenter<StudyContract.LearningView>
                                 .build();
                         lastWeekRecords.add(totalDailyCount);
                     }
-                    checkDateAvailiable();
+                    String today = lastWeekRecords.last().getDate();
+                    String dateToCheck = DateUtil.getTargetDateApart(today,-1);
+                    for (int i = lastWeekRecords.size() - 2; i >= 0; i--) {
+                        if (!lastWeekRecords.get(i).getDate().equals(dateToCheck)) {
+                            for (int j = 1; j <= i; j++) {
+                                TotalDailyCount totalDailyCount = lastWeekRecords.get(j);
+                                lastWeekRecords.set(j - 1, totalDailyCount);
+                            }
+                            TotalDailyCount totalDailyCount = new TotalDailyCount();
+                            totalDailyCount.setDate(dateToCheck);
+                            totalDailyCount.setDailyCount(0);
+                            lastWeekRecords.set(i, totalDailyCount);
+                        }
+                        dateToCheck = DateUtil.getTargetDateApart(dateToCheck,-1);
+                    }
+
                     int todayCount = lastWeekRecords.last().getDailyCount();
                     lastWeekRecords.last().setDailyCount(todayCount + 1);
 
@@ -168,29 +223,5 @@ public class LearningPresenter extends BasePresenter<StudyContract.LearningView>
                     }
                 });
         return result[0];
-    }
-
-    private void checkDateAvailiable() {
-        repository.getStudySummary()
-                .subscribe(studySummaryOptional -> {
-                    StudySummary summary = studySummaryOptional.get();
-                    RealmList<TotalDailyCount> lastWeekRecords = summary.getLastWeekRecords();
-                    String today = lastWeekRecords.last().getDate();
-                    String dateToCheck = DateUtil.getTargetDateApart(today,-1);
-                    for (int i = lastWeekRecords.size() - 2; i >= 0; i--) {
-                        if (!lastWeekRecords.get(i).getDate().equals(dateToCheck)) {
-                            for (int j = 1; j <= i; j++) {
-                                TotalDailyCount totalDailyCount = lastWeekRecords.get(j);
-                                lastWeekRecords.set(j - 1, totalDailyCount);
-                            }
-                            TotalDailyCount totalDailyCount = new TotalDailyCount();
-                            totalDailyCount.setDate(dateToCheck);
-                            totalDailyCount.setDailyCount(0);
-                            lastWeekRecords.set(i, totalDailyCount);
-                        }
-                        dateToCheck = DateUtil.getTargetDateApart(dateToCheck,-1);
-                    }
-                });
-
     }
 }

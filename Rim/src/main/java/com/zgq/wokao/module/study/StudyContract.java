@@ -19,9 +19,10 @@ public interface StudyContract {
         void setStarState(boolean isStared);
         void setAnswerState(boolean answered);
         void hideAnswerBtn();
+        void showTargetQuestion(int position);
     }
     interface LearningPresenter extends IPresenter<LearningView>{
-        void initParams(String paperId, QuestionType type);
+        void initParams(String paperId, QuestionType type, String questionId);
         void loadAllQuestions();
         void loadStarQuestions();
         void updateStudiedRecord(IQuestion question, boolean correct);

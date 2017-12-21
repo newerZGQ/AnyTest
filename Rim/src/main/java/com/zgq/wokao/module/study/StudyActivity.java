@@ -21,10 +21,10 @@ public class StudyActivity extends BaseActivity<StudyContract.MainPresenter> imp
         Intent intent = getIntent();
         String paperId = intent.getStringExtra("paperId");
         QuestionType type = intent.getParcelableExtra("questionType");
-        int questionNumber = intent.getIntExtra("questionNumber",0);
+        String questionId = intent.getStringExtra("questionId");
         DaggerStudyComponent.builder()
                 .applicationComponent(getAppComponent())
-                .studyModule(new StudyModule(new StudyParams(paperId, type, questionNumber)))
+                .studyModule(new StudyModule(new StudyParams(paperId, type, questionId)))
                 .build()
                 .inject(this);
     }

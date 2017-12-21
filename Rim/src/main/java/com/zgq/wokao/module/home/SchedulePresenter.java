@@ -5,6 +5,8 @@ import com.zgq.wokao.entity.paper.info.ExamPaperInfo;
 import com.zgq.wokao.module.base.BasePresenter;
 import com.zgq.wokao.repository.RimRepository;
 
+import java.util.ArrayList;
+
 import javax.inject.Inject;
 
 import io.reactivex.Flowable;
@@ -15,7 +17,7 @@ public class SchedulePresenter extends BasePresenter<HomeContract.ScheduleView>
         implements HomeContract.SchedulePresenter {
 
     private RimRepository repository;
-    private RealmResults<ExamPaperInfo> paperInfos;
+    private ArrayList<ExamPaperInfo> paperInfos = new ArrayList<>();
 
     @Override
     public void subscribe() {
@@ -30,17 +32,20 @@ public class SchedulePresenter extends BasePresenter<HomeContract.ScheduleView>
 
     @Override
     public void loadSchedules(boolean forceUpdate) {
-        compositeDisposable.clear();
+        paperInfos.clear();
         if (forceUpdate) {
-            Disposable disposable = repository.getAllExamPaperInfo()
+            repository.getAllExamPaperInfo()
                     .subscribe(examPaperInfos -> {
-                        paperInfos = examPaperInfos;
+                        for (ExamPaperInfo paperInfo: examPaperInfos) {
+                            if (paperInfo.getSchedule().isInSked()){
+                                paperInfos.add(paperInfo);
+                            }
+                        }
                         view.setSchedulePapers(paperInfos);
-                        if (paperInfos.size() != 0) {
+                        if (paperInfos.size() > 0){
                             updateDetail(0);
                         }
                     });
-            compositeDisposable.add(disposable);
         }else{
             view.notifyDataChanged();
         }
@@ -51,15 +56,7 @@ public class SchedulePresenter extends BasePresenter<HomeContract.ScheduleView>
 
     @Override
     public void updateDetail(int index) {
-        Disposable disposable = repository.getAllExamPaperInfo()
-                .flatMap(s -> Flowable.just(Optional.fromNullable(s.get(index).getSchedule()))
-                )
-                .subscribe(schedule -> {
-                    if (schedule.isPresent()){
-                        view.setDetail(schedule.get());
-                    }
-                });
-        compositeDisposable.add(disposable);
+        view.setDetail(paperInfos.get(index).getSchedule());
     }
 
     @Override

@@ -14,5 +14,5 @@ import lombok.NoArgsConstructor;
 public class StudyParams {
     private String paperId;
     private QuestionType questionType;
-    private int questionNumber;
+    private String questionId;
 }

@@ -55,6 +55,20 @@ public class SearchPresenter extends BasePresenter<SearchContract.SearchView>
         view.showSearchResult(searchResult);
     }
 
+    @Override
+    public void loadSearchable(Searchable item){
+        if (item instanceof SearchInfoItem) {
+            SearchInfoItem infoItem = (SearchInfoItem) item;
+            String paperId = infoItem.getInfo().getId();
+            view.toPaperInfo(paperId);
+        }
+        if (item instanceof SearchQuestionItem) {
+            SearchQuestionItem questionItem = (SearchQuestionItem) item;
+            view.toStudy(questionItem.getInfo().getId(), questionItem.getQuestionType(),
+                    questionItem.getQuestion().getInfo().getId());
+        }
+    }
+
     @Nonnull
     private List<Searchable> parseSearchable(NormalExamPaper paper, String query){
         ArrayList<Searchable> result = new ArrayList<>();

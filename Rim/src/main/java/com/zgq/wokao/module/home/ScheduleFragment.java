@@ -22,6 +22,7 @@ import com.zgq.wokao.widget.ScheduleInfoView;
 import com.zgq.wokao.widget.TaskSettingLayout;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Nonnull;
 
@@ -89,7 +90,7 @@ public class ScheduleFragment extends BaseFragment<HomeContract.SchedulePresente
     }
 
     @Override
-    public void setSchedulePapers(RealmResults<ExamPaperInfo> examPaperInfos) {
+    public void setSchedulePapers(List<ExamPaperInfo> examPaperInfos) {
         schedulePagerAdapter.replaceData(examPaperInfos);
     }
 
@@ -129,7 +130,7 @@ public class ScheduleFragment extends BaseFragment<HomeContract.SchedulePresente
     }
 
     public void updateView(){
-        presenter.loadSchedules(false);
+        presenter.loadSchedules(true);
     }
 
 
