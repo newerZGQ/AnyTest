@@ -1,7 +1,9 @@
 package com.zgq.wokao.module.home;
 
 import com.google.common.base.Optional;
+import com.zgq.wokao.entity.paper.NormalExamPaper;
 import com.zgq.wokao.entity.paper.info.ExamPaperInfo;
+import com.zgq.wokao.entity.paper.question.QuestionType;
 import com.zgq.wokao.module.base.BasePresenter;
 import com.zgq.wokao.repository.RimRepository;
 
@@ -71,6 +73,26 @@ public class SchedulePresenter extends BasePresenter<HomeContract.ScheduleView>
 
     @Override
     public void loadQuestions(int position) {
-        view.startQuestionsActivity(paperInfos.get(position).getId());
+        repository.queryPaperByInfoId(paperInfos.get(position).getId())
+                .subscribe(paperOptional -> {
+                    if (paperOptional.isPresent()){
+                        view.startQuestionsActivity(paperOptional.get().getId());
+                    }
+                });
+
+    }
+
+    @Override
+    public void loadStudyInfo(String paperInfoId) {
+        repository.queryPaperByInfoId(paperInfoId)
+                .subscribe(paperOptional -> {
+                    if (paperOptional.isPresent()){
+                        NormalExamPaper paper = paperOptional.get();
+                        QuestionType type = QuestionType
+                                .parseFromValue(paper.getPaperInfo().getSchedule().getLastStudyType());
+                        String questionId = paper.getPaperInfo().getSchedule().getLastStudyQuestionId();
+                        view.startStudy(paper.getId(),type,questionId);
+                    }
+                });
     }
 }

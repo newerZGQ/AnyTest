@@ -73,7 +73,7 @@ public class SearchResultsListAdapter extends RecyclerView.Adapter<SearchResults
         }
         if (tmp instanceof SearchQuestionItem) {
             SearchQuestionItem qstItem = (SearchQuestionItem) tmp;
-            holder.itemType.setText(qstItem.getQuestionType().getName());
+            holder.itemType.setText(qstItem.getQuestionType().name());
             switch (qstItem.getQuestionType()){
                 case FILLIN:
                     holder.itemContent.setText(((FillInQuestion)qstItem.getQuestion())

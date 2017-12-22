@@ -48,6 +48,11 @@ public class RimRepository implements RimDataSource {
     }
 
     @Override
+    public Flowable<Optional<NormalExamPaper>> queryPaperByInfoId(String paperInfoId) {
+        return paperRepository.queryPaperByInfoId(paperInfoId);
+    }
+
+    @Override
     public Flowable<RealmResults<NormalExamPaper>> getAllExamPaper() {
         return paperRepository.getAllExamPaper();
     }

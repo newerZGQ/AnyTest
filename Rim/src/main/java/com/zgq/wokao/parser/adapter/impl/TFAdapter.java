@@ -93,6 +93,7 @@ public class TFAdapter extends BaseAdapter implements ITFAdapter {
                 .build();
         question.getInfo().setIndex(number);
         question.getInfo().setId(UUID.randomUUID().toString());
+        question.getInfo().setType(QuestionType.TF.getValue());
         inContext(QuestionItemType.number);
         String[] resArray = questionRes.split("\n");
         StringBuilder builder = new StringBuilder();

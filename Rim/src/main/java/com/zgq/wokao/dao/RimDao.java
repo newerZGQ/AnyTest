@@ -19,6 +19,10 @@ public interface RimDao {
     void deleteExamPaper(@Nonnull NormalExamPaper paper);
     @Nullable
     NormalExamPaper queryExamPaper(@Nonnull String paperId);
+
+    @Nullable
+    NormalExamPaper queryExamPaperByInfoId(@Nonnull String paperInfoId);
+
     @Nonnull
     RealmResults<NormalExamPaper> getAllExamPaper();
     @Nonnull

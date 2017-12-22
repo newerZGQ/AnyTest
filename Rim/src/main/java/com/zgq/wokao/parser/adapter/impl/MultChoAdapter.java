@@ -100,6 +100,7 @@ public class MultChoAdapter extends BaseAdapter implements IMultChoAdapter {
                 .build();
         question.getInfo().setIndex(number);
         question.getInfo().setId(UUID.randomUUID().toString());
+        question.getInfo().setType(QuestionType.MUTTICHOOSE.getValue());
         inContext(QuestionItemType.number);
         String[] resArray = trimNum(questionRes).split("\n");
         StringBuilder builder = new StringBuilder();

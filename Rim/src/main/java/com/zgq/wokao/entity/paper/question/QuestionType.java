@@ -4,17 +4,15 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public enum QuestionType implements Parcelable {
-    NOTQUESTION("非问题", 0),
-    FILLIN("填空", 1),
-    TF("判断", 2),
-    SINGLECHOOSE("单选", 3),
-    MUTTICHOOSE("多选", 4),
-    DISCUSS("简答", 5);
-    private String name;
+    NOTQUESTION(0),
+    FILLIN(1),
+    TF(2),
+    SINGLECHOOSE(3),
+    MUTTICHOOSE(4),
+    DISCUSS(5);
     private int value;
 
-    private QuestionType(String name, int value) {
-        this.name = name;
+    private QuestionType(int value) {
         this.value = value;
     }
 
@@ -33,7 +31,7 @@ public enum QuestionType implements Parcelable {
         public QuestionType createFromParcel(Parcel in) {
             int value = in.readInt();
             QuestionType type = NOTQUESTION;
-            switch (value){
+            switch (value) {
                 case 1:
                     type = FILLIN;
                     break;
@@ -65,7 +63,22 @@ public enum QuestionType implements Parcelable {
         return value;
     }
 
-    public String getName() {
-        return name;
+    public static QuestionType parseFromValue(int value) {
+        switch (value) {
+            case 0:
+                return NOTQUESTION;
+            case 1:
+                return FILLIN;
+            case 2:
+                return TF;
+            case 3:
+                return SINGLECHOOSE;
+            case 4:
+                return MUTTICHOOSE;
+            case 5:
+                return DISCUSS;
+            default:
+                return NOTQUESTION;
+        }
     }
 }

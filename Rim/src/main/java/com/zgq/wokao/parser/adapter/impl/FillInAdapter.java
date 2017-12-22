@@ -94,6 +94,7 @@ public class FillInAdapter extends BaseAdapter implements IFillInAdapter {
                 .build();
         question.getInfo().setIndex(number);
         question.getInfo().setId(UUID.randomUUID().toString());
+        question.getInfo().setType(QuestionType.FILLIN.getValue());
         inContext(QuestionItemType.number);
         String[] resArray = trimNum(questionRes).split("\n");
         StringBuilder builder = new StringBuilder();

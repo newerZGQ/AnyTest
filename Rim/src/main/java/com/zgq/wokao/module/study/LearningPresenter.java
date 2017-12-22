@@ -91,7 +91,7 @@ public class LearningPresenter extends BasePresenter<StudyContract.LearningView>
 
     private void toTarget(String questionId){
         for (int i = 0; i < questions.size(); i++){
-            if (questionId.equals(questions.get(i).getInfo().getId())){
+            if (questionId.equals(questions.get(i).getId())){
                 view.showTargetQuestion(i);
             }
         }
@@ -157,8 +157,8 @@ public class LearningPresenter extends BasePresenter<StudyContract.LearningView>
                    }else {
                        lastRecord.setStudyCount(lastRecord.getStudyCount() + 1);
                    }
-
-                   schedule.setLastStudyNum(question.getInfo().getIndex());
+                   schedule.setLastStudyType(question.getInfo().getType());
+                   schedule.setLastStudyQuestionId(question.getId());
                    repository.copyToRealmOrUpdate(schedule);
                 });
     }

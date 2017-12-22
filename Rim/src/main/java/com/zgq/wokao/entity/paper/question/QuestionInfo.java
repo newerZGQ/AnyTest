@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 public class QuestionInfo extends RealmObject implements CascadeDeleteable {
     @PrimaryKey
     private String id;
-    private String type;
+    private int type;
     private int index;
     private boolean isStared;
 

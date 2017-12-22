@@ -14,5 +14,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class SearchInfoItem implements Searchable {
+    private String paperId;
     private ExamPaperInfo info;
 }

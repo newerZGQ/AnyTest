@@ -128,7 +128,7 @@ public class SchedulePagerAdapter extends PagerAdapter {
     public interface OnClickListener {
         void onClickTopLayout(int position);
 
-        void onClickStartBtn(int position, String paperId);
+        void onClickStartBtn(int position, String paperInfoId);
     }
 
 }

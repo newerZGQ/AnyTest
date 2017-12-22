@@ -59,13 +59,13 @@ public class SearchPresenter extends BasePresenter<SearchContract.SearchView>
     public void loadSearchable(Searchable item){
         if (item instanceof SearchInfoItem) {
             SearchInfoItem infoItem = (SearchInfoItem) item;
-            String paperId = infoItem.getInfo().getId();
+            String paperId = infoItem.getPaperId();
             view.toPaperInfo(paperId);
         }
         if (item instanceof SearchQuestionItem) {
             SearchQuestionItem questionItem = (SearchQuestionItem) item;
-            view.toStudy(questionItem.getInfo().getId(), questionItem.getQuestionType(),
-                    questionItem.getQuestion().getInfo().getId());
+            view.toStudy(questionItem.getPaperId(), questionItem.getQuestionType(),
+                    questionItem.getQuestion().getId());
         }
     }
 
@@ -73,13 +73,13 @@ public class SearchPresenter extends BasePresenter<SearchContract.SearchView>
     private List<Searchable> parseSearchable(NormalExamPaper paper, String query){
         ArrayList<Searchable> result = new ArrayList<>();
         if (paper.getPaperInfo().getTitle().contains(query)){
-            result.add(new SearchInfoItem(paper.getPaperInfo()));
+            result.add(new SearchInfoItem(paper.getId(),paper.getPaperInfo()));
         }
         Flowable.fromIterable(paper.getFillInQuestions())
                 .filter(fillInQuestion -> fillInQuestion.getBody().getContent().contains(query)
                 )
                 .flatMap(fillInQuestion -> Flowable.just(
-                        new SearchQuestionItem(paper.getPaperInfo(),
+                        new SearchQuestionItem(paper.getId(),paper.getPaperInfo(),
                                 QuestionType.FILLIN,
                                 fillInQuestion.getInfo().getIndex(),
                                 fillInQuestion)))
@@ -88,7 +88,7 @@ public class SearchPresenter extends BasePresenter<SearchContract.SearchView>
                 .filter(tfQuestion -> tfQuestion.getBody().getContent().contains(query)
                 )
                 .flatMap(tfQuestion -> Flowable.just(
-                        new SearchQuestionItem(paper.getPaperInfo(),
+                        new SearchQuestionItem(paper.getId(),paper.getPaperInfo(),
                                 QuestionType.TF,
                                 tfQuestion.getInfo().getIndex(),
                                 tfQuestion)))
@@ -97,7 +97,7 @@ public class SearchPresenter extends BasePresenter<SearchContract.SearchView>
                 .filter(sglChoQuestion -> sglChoQuestion.getBody().getContent().contains(query)
                 )
                 .flatMap(sglChoQuestion -> Flowable.just(
-                        new SearchQuestionItem(paper.getPaperInfo(),
+                        new SearchQuestionItem(paper.getId(),paper.getPaperInfo(),
                                 QuestionType.SINGLECHOOSE,
                                 sglChoQuestion.getInfo().getIndex(),
                                 sglChoQuestion)))
@@ -106,7 +106,7 @@ public class SearchPresenter extends BasePresenter<SearchContract.SearchView>
                 .filter(multChoQuestion -> multChoQuestion.getBody().getContent().contains(query)
                 )
                 .flatMap(multChoQuestion -> Flowable.just(
-                        new SearchQuestionItem(paper.getPaperInfo(),
+                        new SearchQuestionItem(paper.getId(),paper.getPaperInfo(),
                                 QuestionType.MUTTICHOOSE,
                                 multChoQuestion.getInfo().getIndex(),
                                 multChoQuestion)))
@@ -115,7 +115,7 @@ public class SearchPresenter extends BasePresenter<SearchContract.SearchView>
                 .filter(discussQuestion -> discussQuestion.getBody().getContent().contains(query)
                 )
                 .flatMap(discussQuestion -> Flowable.just(
-                        new SearchQuestionItem(paper.getPaperInfo(),
+                        new SearchQuestionItem(paper.getId(),paper.getPaperInfo(),
                                 QuestionType.DISCUSS,
                                 discussQuestion.getInfo().getIndex(),
                                 discussQuestion)))

@@ -25,8 +25,8 @@ public class Schedule extends RealmObject implements CascadeDeleteable {
     private int totalCount;
     private int correctCount;
 
-    private String lastStudyType;
-    private int lastStudyNum;
+    private int lastStudyType;
+    private String lastStudyQuestionId;
 
     private RealmList<DailyRecord> dailyRecords;
 

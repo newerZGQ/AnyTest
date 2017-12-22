@@ -146,15 +146,6 @@ public class SearchFragment extends BaseFragment<SearchContract.SearchPresenter>
         mSearchResultsList.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
-    protected void startStudy(String paperId, QuestionType type, int qstNum) {
-        Intent intent = new Intent();
-        intent.setClass(getContext(), StudyActivity.class);
-        intent.putExtra("paperId", paperId);
-        intent.putExtra("questionType", (Parcelable) type);
-        intent.putExtra("qstNum", qstNum);
-        startActivity(intent);
-    }
-
     public boolean onActivityBackPress() {
         if (!mSearchView.setSearchFocused(false)) {
             return false;
