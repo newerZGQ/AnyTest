@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings">设置</string>
+
+    <string name="fillin_question">填空题</string>
+    <string name="tf_question">判断题</string>
+    <string name="sglcho_question">单选题</string>
+    <string name="multicho_question">多选题</string>
+    <string name="discus_question">简答题</string>
+
+    <string name="parse_success">解析成功</string>
+    <string name="parse_failed">解析失败</string>
+
+    <string name="facebook_app_id">125563154784183</string>
+</resources>

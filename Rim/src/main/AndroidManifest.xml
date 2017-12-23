@@ -1,20 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.zgq.rim">
+    package="com.zgq.wokao">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:name="com.zgq.rim.RimApplication"
+        android:name=".RimApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppBaseTheme">
+        <activity android:name=".module.welcome.WelcomeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".module.home.HomeActivity" />
+        <activity android:name=".module.parser.ParserActivity" />
+        <activity android:name=".module.question.QuestionsActivity" />
+        <activity android:name=".module.study.StudyActivity" />
+        <activity android:name=".module.settings.SettingsActivity" />
+        <activity android:name=".module.search.SearchActivity" />
+
+        //facebook浏览器分享卡片,未安装客户端时弹出
+        <activity
+            android:name="com.facebook.CustomTabActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="fb1964233977152758" />//fb后的数字替换成自己的facebook_app_id
+            </intent-filter>
+        </activity>
+
+        <provider android:authorities="com.facebook.app.FacebookContentProvider125563154784183"
+            android:name="com.facebook.FacebookContentProvider"
+            android:exported="true"/>
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
     </application>
 
 </manifest>
