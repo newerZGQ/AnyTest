@@ -42,7 +42,15 @@ public class RimDaoSource implements RimDao {
     @Override
     public @Nullable NormalExamPaper queryExamPaper(@Nonnull String paperId) {
         return realm.where(NormalExamPaper.class)
-                .equalTo("paperInfo.id", paperId)
+                .equalTo("id", paperId)
+                .findFirst();
+    }
+
+    @Nullable
+    @Override
+    public NormalExamPaper queryExamPaperByInfoId(@Nonnull String paperInfoId) {
+        return realm.where(NormalExamPaper.class)
+                .equalTo("paperInfo.id", paperInfoId)
                 .findFirst();
     }
 
@@ -77,7 +85,7 @@ public class RimDaoSource implements RimDao {
     @Override
     public void saveSummary(StudySummary studySummary) {
         realm.beginTransaction();
-        realm.copyToRealm(studySummary);
+        realm.copyToRealmOrUpdate(studySummary);
         realm.commitTransaction();
     }
 

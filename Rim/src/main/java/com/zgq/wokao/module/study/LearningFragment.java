@@ -100,7 +100,7 @@ public class LearningFragment extends BaseFragment<StudyContract.LearningPresent
                 .studyModule(new StudyModule())
                 .build()
                 .inject(this);
-        presenter.initParams(studyParams.getPaperId(),studyParams.getQuestionType());
+        presenter.initParams(studyParams.getPaperId(),studyParams.getQuestionType(), studyParams.getQuestionId());
     }
 
     @Override
@@ -154,6 +154,11 @@ public class LearningFragment extends BaseFragment<StudyContract.LearningPresent
     @Override
     public void hideAnswerBtn() {
         showAnswerButton.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showTargetQuestion(int position) {
+        viewPager.setCurrentItem(position);
     }
 
     private void initToolbar() {

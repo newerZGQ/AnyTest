@@ -37,6 +37,11 @@ public class PaperRepository implements PaperDataSource {
     }
 
     @Override
+    public Flowable<Optional<NormalExamPaper>> queryPaperByInfoId(String paperInfoId) {
+        return Flowable.just(Optional.fromNullable(daoSource.queryExamPaperByInfoId(paperInfoId)));
+    }
+
+    @Override
     public Flowable<RealmResults<NormalExamPaper>> getAllExamPaper() {
         return Flowable.just(daoSource.getAllExamPaper());
     }
@@ -54,6 +59,11 @@ public class PaperRepository implements PaperDataSource {
 
     @Override
     public void saveSummary(@Nonnull StudySummary studySummary) {
+        daoSource.saveSummary(studySummary);
+    }
+
+    @Override
+    public void updateSummary(@Nonnull StudySummary studySummary) {
         daoSource.saveSummary(studySummary);
     }
 

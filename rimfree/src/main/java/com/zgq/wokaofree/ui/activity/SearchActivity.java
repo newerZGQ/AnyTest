@@ -13,9 +13,6 @@ import com.zgq.wokaofree.ui.fragment.impl.SearchFragment;
 import com.zgq.wokaofree.ui.presenter.ISearchPresenter;
 import com.zgq.wokaofree.ui.presenter.impl.SearchPresenter;
 
-/**
- * Created by zgq on 2017/2/11.
- */
 
 public class SearchActivity extends BaseActivity implements SearchFragment.SearchFragmentCallbacks {
     private final String TAG = "SearchActivity";

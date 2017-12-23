@@ -2,6 +2,7 @@ package com.zgq.wokao.adapter;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -40,9 +41,14 @@ public class SchedulePagerAdapter extends PagerAdapter {
         this.listener = listener;
     }
 
-    public void replaceData(@Nonnull RealmResults<ExamPaperInfo> examPaperInfos) {
+    public void replaceData(@Nonnull List<ExamPaperInfo> examPaperInfos) {
         this.examPaperInfos = examPaperInfos;
         notifyDataSetChanged();
+    }
+
+    @Override
+    public int getItemPosition(@NonNull Object object) {
+        return POSITION_NONE;
     }
 
     @Override
@@ -122,7 +128,7 @@ public class SchedulePagerAdapter extends PagerAdapter {
     public interface OnClickListener {
         void onClickTopLayout(int position);
 
-        void onClickStartBtn(int position, String paperId);
+        void onClickStartBtn(int position, String paperInfoId);
     }
 
 }

@@ -48,6 +48,11 @@ public class RimRepository implements RimDataSource {
     }
 
     @Override
+    public Flowable<Optional<NormalExamPaper>> queryPaperByInfoId(String paperInfoId) {
+        return paperRepository.queryPaperByInfoId(paperInfoId);
+    }
+
+    @Override
     public Flowable<RealmResults<NormalExamPaper>> getAllExamPaper() {
         return paperRepository.getAllExamPaper();
     }
@@ -65,12 +70,16 @@ public class RimRepository implements RimDataSource {
 
     @Override
     public void saveSummary(@Nonnull final StudySummary studySummary) {
-        Log.d("savesummary", studySummary.getId());
         getStudySummary().subscribe(studySummaryOptional -> {
             if (!studySummaryOptional.isPresent()){
                 paperRepository.saveSummary(studySummary);
             }
         });
+    }
+
+    @Override
+    public void updateSummary(@Nonnull StudySummary studySummary) {
+        paperRepository.saveSummary(studySummary);
     }
 
     @Override

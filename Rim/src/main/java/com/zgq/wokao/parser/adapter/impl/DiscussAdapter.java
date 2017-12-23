@@ -95,6 +95,7 @@ public class DiscussAdapter extends BaseAdapter implements IDiscussAdapter {
                 .build();
         question.getInfo().setIndex(number);
         question.getInfo().setId(UUID.randomUUID().toString());
+        question.getInfo().setType(QuestionType.DISCUSS.getValue());
         inContext(QuestionItemType.number);
         String[] resArray = trimNum(questionRes).split("\n");
         StringBuilder builder = new StringBuilder();

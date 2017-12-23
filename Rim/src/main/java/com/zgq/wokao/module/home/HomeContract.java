@@ -3,6 +3,7 @@ package com.zgq.wokao.module.home;
 import com.zgq.wokao.entity.paper.NormalExamPaper;
 import com.zgq.wokao.entity.paper.info.ExamPaperInfo;
 import com.zgq.wokao.entity.paper.info.Schedule;
+import com.zgq.wokao.entity.paper.question.QuestionType;
 import com.zgq.wokao.entity.summary.StudySummary;
 import com.zgq.wokao.module.IPresenter;
 import com.zgq.wokao.module.IView;
@@ -18,11 +19,12 @@ public interface HomeContract {
 
     interface ScheduleView extends IView<SchedulePresenter> {
         void setDetail(Schedule schedule);
-        void setSchedulePapers(RealmResults<ExamPaperInfo> examPaperInfos);
+        void setSchedulePapers(List<ExamPaperInfo> examPaperInfos);
         void notifyDataChanged();
         void showEmptyView();
         void hideEmptyView();
         void startQuestionsActivity(String paperId);
+        void startStudy(String paperId, QuestionType type, String questionId);
     }
 
     interface PaperView extends IView<PaperPresenter> {
@@ -42,6 +44,7 @@ public interface HomeContract {
         void updateDetail(int index);
         void updateTask(int index, int task);
         void loadQuestions(int position);
+        void loadStudyInfo(String paperInfoId);
     }
 
 

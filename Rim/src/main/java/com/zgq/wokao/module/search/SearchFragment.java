@@ -1,5 +1,7 @@
 package com.zgq.wokao.module.search;
 
+import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -8,11 +10,15 @@ import com.arlib.floatingsearchview.suggestions.model.SearchSuggestion;
 import com.google.common.base.Strings;
 import com.zgq.wokao.R;
 import com.zgq.wokao.adapter.SearchResultsListAdapter;
+import com.zgq.wokao.entity.paper.question.QuestionType;
 import com.zgq.wokao.injector.components.DaggerSearchComponent;
 import com.zgq.wokao.injector.modules.SearchModule;
 import com.zgq.wokao.module.base.BaseFragment;
+import com.zgq.wokao.module.question.QuestionsActivity;
 import com.zgq.wokao.module.search.entity.HistorySuggestion;
+import com.zgq.wokao.module.search.entity.SearchInfoItem;
 import com.zgq.wokao.module.search.entity.Searchable;
+import com.zgq.wokao.module.study.StudyActivity;
 
 import java.util.List;
 
@@ -67,6 +73,24 @@ public class SearchFragment extends BaseFragment<SearchContract.SearchPresenter>
         mSearchResultsAdapter.replaceData(searchables);
     }
 
+    @Override
+    public void toPaperInfo(String paperId) {
+        Intent intent = new Intent();
+        intent.putExtra("paperId", paperId);
+        intent.setClass(getAppComponent().getContext(), QuestionsActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void toStudy(String paperId, QuestionType type, String questionId) {
+        Intent intent = new Intent();
+        intent.putExtra("paperId", paperId);
+        intent.putExtra("questionType", (Parcelable) type);
+        intent.putExtra("questionId", questionId);
+        intent.setClass(getAppComponent().getContext(), StudyActivity.class);
+        startActivity(intent);
+    }
+
     private void setupFloatingSearch() {
         mSearchView.setOnQueryChangeListener((oldQuery, newQuery) -> {
             if (!Strings.isNullOrEmpty(oldQuery) && Strings.isNullOrEmpty(newQuery)){
@@ -115,7 +139,9 @@ public class SearchFragment extends BaseFragment<SearchContract.SearchPresenter>
 
     private void setupResultsList() {
         mSearchResultsAdapter = new SearchResultsListAdapter();
-        mSearchResultsAdapter.setItemsOnClickListener(item -> {});
+        mSearchResultsAdapter.setItemsOnClickListener(item -> {
+            presenter.loadSearchable(item);
+        });
         mSearchResultsList.setAdapter(mSearchResultsAdapter);
         mSearchResultsList.setLayoutManager(new LinearLayoutManager(getActivity()));
     }

@@ -103,6 +103,7 @@ public class SglChoAdapter extends BaseAdapter implements ISglChoAdapter {
                 .build();
         question.getInfo().setIndex(number);
         question.getInfo().setId(UUID.randomUUID().toString());
+        question.getInfo().setType(QuestionType.SINGLECHOOSE.getValue());
         inContext(QuestionItemType.number);
         String[] resArray = trimNum(questionRes).split("\n");
         StringBuilder builder = new StringBuilder();

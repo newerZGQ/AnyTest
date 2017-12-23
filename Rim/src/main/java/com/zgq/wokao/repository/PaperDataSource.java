@@ -15,12 +15,15 @@ public interface PaperDataSource {
     void saveExamPaper(NormalExamPaper examPaper);
     void deleteExamPaper(NormalExamPaper examPaper);
     Flowable<Optional<NormalExamPaper>> queryPaper(String paperId);
+    Flowable<Optional<NormalExamPaper>> queryPaperByInfoId(String paperInfoId);
+
     Flowable<RealmResults<NormalExamPaper>> getAllExamPaper();
     @Nonnull
     Flowable<RealmResults<ExamPaperInfo>> getAllExamPaperInfo();
     void setSked(NormalExamPaper paper, boolean skedState);
 
     void saveSummary(@Nonnull StudySummary studySummary);
+    void updateSummary(@Nonnull StudySummary studySummary);
     Flowable<Optional<StudySummary>> getStudySummary();
 
     void starQuestion(IQuestion question, boolean star);

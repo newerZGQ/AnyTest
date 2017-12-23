@@ -22,7 +22,6 @@ public class QuestionPresenter extends BasePresenter<QuestionContract.View> impl
 
     private RimRepository repository;
     private ArrayList<QuestionsInfoAdapter.QuestionsInfo> questionsInfos = new ArrayList<>();
-    private ExamPaperInfo info;
 
     @Inject
     public QuestionPresenter(RimRepository repository){
@@ -35,13 +34,12 @@ public class QuestionPresenter extends BasePresenter<QuestionContract.View> impl
         repository.queryPaper(paperId)
                 .subscribe(paper -> {
                     if (paper.isPresent()) {
-                        info = paper.get().getPaperInfo();
-                        questionsInfos.add(parseQuestionsInfo(info.getId(),paper.get().getFillInQuestions()));
-                        questionsInfos.add(parseQuestionsInfo(info.getId(),paper.get().getTfQuestions()));
-                        questionsInfos.add(parseQuestionsInfo(info.getId(),paper.get().getSglChoQuestions()));
-                        questionsInfos.add(parseQuestionsInfo(info.getId(),paper.get().getMultChoQuestions()));
-                        questionsInfos.add(parseQuestionsInfo(info.getId(),paper.get().getDiscussQuestions()));
-                        view.showQuestions(questionsInfos,info);
+                        questionsInfos.add(parseQuestionsInfo(paper.get().getId(),paper.get().getFillInQuestions()));
+                        questionsInfos.add(parseQuestionsInfo(paper.get().getId(),paper.get().getTfQuestions()));
+                        questionsInfos.add(parseQuestionsInfo(paper.get().getId(),paper.get().getSglChoQuestions()));
+                        questionsInfos.add(parseQuestionsInfo(paper.get().getId(),paper.get().getMultChoQuestions()));
+                        questionsInfos.add(parseQuestionsInfo(paper.get().getId(),paper.get().getDiscussQuestions()));
+                        view.showQuestions(questionsInfos,paper.get().getPaperInfo());
                     }
                 });
     }
