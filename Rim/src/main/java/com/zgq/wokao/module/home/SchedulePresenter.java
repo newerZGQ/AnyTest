@@ -53,6 +53,8 @@ public class SchedulePresenter extends BasePresenter<HomeContract.ScheduleView>
         }
         if (paperInfos.size() == 0) {
             view.showEmptyView();
+        }else{
+            view.hideEmptyView();
         }
     }
 
