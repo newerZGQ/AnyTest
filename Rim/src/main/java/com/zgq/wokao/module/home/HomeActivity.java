@@ -263,7 +263,11 @@ public class HomeActivity extends BaseActivity<HomeContract.MainPresenter>
                 openActivity(SearchActivity.class);
                 break;
             case R.id.toolbar_add:
-                openActivity(ParserActivity.class);
+                if (presenter.checkPaperCount()) {
+                    openActivity(ParserActivity.class);
+                }else{
+                    showToast(getString(R.string.free_version_waring));
+                }
                 break;
             case R.id.settings:
                 openActivity(SettingsActivity.class);

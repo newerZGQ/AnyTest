@@ -33,6 +33,7 @@ public class PaperPresenter extends BasePresenter<HomeContract.PaperView>
                         if (papers.size() == 0) {
                             view.showEmptyView();
                         } else {
+                            view.hideEmptyView();
                             view.setPaperListData(papers);
                         }
                     });
