@@ -1,6 +1,10 @@
 package com.zgq.wokao.module.home;
 
+import android.support.design.widget.TabLayout;
+import android.util.Log;
+
 import com.google.common.base.Optional;
+import com.zgq.wokao.BuildConfig;
 import com.zgq.wokao.entity.summary.StudySummary;
 import com.zgq.wokao.module.base.BasePresenter;
 import com.zgq.wokao.repository.RimRepository;
@@ -31,6 +35,18 @@ public class HomePresenter extends BasePresenter<HomeContract.MainView>
                 }
             }
         });
+    }
+
+    @Override
+    public boolean checkPaperCount() {
+        final boolean[] result = {true};
+        repository.getAllExamPaper()
+                .subscribe(normalExamPapers -> {
+                    if (BuildConfig.FLAVOR.equals("free") && normalExamPapers.size() > 2){
+                        result[0] = false;
+                    }
+                });
+        return result[0];
     }
 
     @Override
