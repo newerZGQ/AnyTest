@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:alpha="0.8"
+    android:clickable="false"
+    android:orientation="vertical">
+
+    <com.zgq.rim.common.view.widget.LoadingView
+        android:id="@+id/loadView"
+        android:visibility="invisible"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

@@ -1,1 +1,2 @@
-include ':linechart', ':shapeloading', ':RecyclerViewHelper', ':Rim'
+include ':rim_common'
+include ':rim'

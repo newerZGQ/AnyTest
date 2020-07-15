@@ -36,8 +36,8 @@ ext {
     compileSdk = 27
     minSdk = 21
     targetSdk = 27
-    support = "27.0.1"
-    buildTools = "27.0.1"
+    support = '27.0.1'
+    buildTools = '27.0.1'
 
     constraintLayout = '1.0.2'
 

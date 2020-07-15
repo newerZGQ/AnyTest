@@ -1,0 +1,150 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/home_activity_background">
+
+    <RelativeLayout
+        android:id="@+id/menu_layout"
+        android:layout_width="match_parent"
+        android:layout_height="540dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/app_name"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="65dp"
+            android:text="@string/app_name"
+            android:textColor="@color/colorWhite"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/jilu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/app_name"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/menulayout_subtitle"
+            android:textColor="@color/colorWhite"
+            android:textSize="17sp" />
+
+        <Button
+            android:id="@+id/settings"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="32dp"
+            android:layout_marginTop="75dp"
+            android:background="@drawable/ic_settings_white_36dp" />
+
+        <com.zgq.rim.common.view.chart.ChartView
+            android:id="@+id/line_chart"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_below="@+id/jilu"
+            app:bgcolor="#00ffffff"
+            app:linecolor="#d4ffffff">
+        </com.zgq.rim.common.view.chart.ChartView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingLeft="32dp"
+            android:paddingRight="32dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="@string/menulayout_study_count"
+                    android:textColor="@color/color_home_summary_text"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/total_count"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/color_accuracy_circle_2_hard"
+                    android:textSize="30sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="@string/menulayout_correct_count"
+                    android:textColor="@color/color_home_summary_text"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/total_accuracy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/color_accuracy_circle_1_hard"
+                    android:textSize="30sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/main_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <include
+            android:layout_width="wrap_content"
+            android:layout_height="56dp"
+            layout="@layout/home_toolbar"/>
+
+        <com.zgq.wokao.widget.CustomViewPager
+            android:id="@+id/viewpaper"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar_layout">
+        </com.zgq.wokao.widget.CustomViewPager>
+
+        <FrameLayout
+            android:id="@+id/questions_frag_1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar_layout">
+        </FrameLayout>
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/questions_frag_2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="24dp">
+    </FrameLayout>
+
+</FrameLayout>
+
