@@ -12,6 +12,7 @@ import com.zgq.wokao.injector.components.DaggerWelcomeComponent;
 import com.zgq.wokao.injector.modules.WelcomeModule;
 import com.zgq.wokao.module.base.BaseActivity;
 import com.zgq.wokao.module.home.HomeActivity;
+import com.zgq.wokao.module.maintab.MainTabActivity;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -97,7 +98,7 @@ public class WelcomeActivity extends BaseActivity<WelcomeContract.MainPresenter>
 
     @Override
     public void goHomeActivity() {
-        openActivity(HomeActivity.class);
+        openActivity(MainTabActivity.class);
         finish();
     }
 }

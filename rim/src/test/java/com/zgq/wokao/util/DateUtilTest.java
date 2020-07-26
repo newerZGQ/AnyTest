@@ -1,6 +1,6 @@
 package com.zgq.wokao.util;
 
-import com.zgq.rim.common.utils.DateUtil;
+import com.zgq.wokao.common.utils.DateUtil;
 
 import org.junit.After;
 import org.junit.Assert;

@@ -1,6 +1,6 @@
 package com.zgq.wokao.parser;
 
-import com.zgq.rim.common.utils.DateUtil;
+import com.zgq.wokao.common.utils.DateUtil;
 import com.zgq.wokao.entity.paper.NormalExamPaper;
 import com.zgq.wokao.entity.paper.info.DailyRecord;
 import com.zgq.wokao.entity.paper.info.ExamPaperInfo;

@@ -9,7 +9,7 @@ import com.zgq.wokao.module.home.summary.StudySummary;
 import com.zgq.wokao.module.home.summary.TotalDailyCount;
 import com.zgq.wokao.module.base.BasePresenter;
 import com.zgq.wokao.repository.RimRepository;
-import com.zgq.rim.common.utils.DateUtil;
+import com.zgq.wokao.common.utils.DateUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;

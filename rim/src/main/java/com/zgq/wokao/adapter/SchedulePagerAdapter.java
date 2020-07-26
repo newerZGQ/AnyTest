@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.zgq.wokao.R;
 import com.zgq.wokao.entity.paper.info.ExamPaperInfo;
-import com.zgq.rim.common.utils.DateUtil;
+import com.zgq.wokao.common.utils.DateUtil;
 
 import java.util.LinkedList;
 import java.util.List;

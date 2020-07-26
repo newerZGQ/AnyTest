@@ -5,7 +5,7 @@ import com.zgq.wokao.entity.paper.info.ExamPaperInfo;
 import com.zgq.wokao.entity.paper.question.IQuestion;
 import com.zgq.wokao.module.search.entity.SearchHistory;
 import com.zgq.wokao.module.home.summary.StudySummary;
-import com.zgq.rim.common.utils.DateUtil;
+import com.zgq.wokao.common.utils.DateUtil;
 
 import java.util.List;
 

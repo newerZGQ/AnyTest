@@ -42,14 +42,14 @@
             android:layout_marginTop="75dp"
             android:background="@drawable/ic_settings_white_36dp" />
 
-        <com.zgq.rim.common.view.chart.ChartView
+        <com.zgq.wokao.common.view.chart.ChartView
             android:id="@+id/line_chart"
             android:layout_width="match_parent"
             android:layout_height="400dp"
             android:layout_below="@+id/jilu"
             app:bgcolor="#00ffffff"
             app:linecolor="#d4ffffff">
-        </com.zgq.rim.common.view.chart.ChartView>
+        </com.zgq.wokao.common.view.chart.ChartView>
 
         <LinearLayout
             android:layout_width="match_parent"

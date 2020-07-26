@@ -14,7 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gigamole.navigationtabstrip.NavigationTabStrip;
-import com.zgq.rim.common.view.chart.ChartView;
+import com.zgq.wokao.common.view.chart.ChartView;
 import com.zgq.wokao.R;
 import com.zgq.wokao.module.home.summary.StudySummary;
 import com.zgq.wokao.module.home.summary.TotalDailyCount;

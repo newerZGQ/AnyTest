@@ -1,7 +1,7 @@
 package com.zgq.wokao.parser.adapter.impl;
 
 import com.orhanobut.logger.Logger;
-import com.zgq.rim.common.utils.ListUtil;
+import com.zgq.wokao.common.utils.ListUtil;
 import com.zgq.wokao.entity.paper.question.Answer;
 import com.zgq.wokao.entity.paper.question.Option;
 import com.zgq.wokao.entity.paper.question.Options;

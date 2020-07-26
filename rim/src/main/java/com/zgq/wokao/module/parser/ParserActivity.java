@@ -5,7 +5,7 @@ import android.view.View;
 
 import com.nbsp.materialfilepicker.MaterialFilePicker;
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
-import com.zgq.rim.common.view.widget.LoadingView;
+import com.zgq.wokao.common.view.widget.LoadingView;
 import com.zgq.wokao.R;
 import com.zgq.wokao.injector.components.DaggerParserComponent;
 import com.zgq.wokao.injector.modules.ParserModule;

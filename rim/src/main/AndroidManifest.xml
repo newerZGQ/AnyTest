@@ -15,14 +15,18 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppBaseTheme">
-        <activity android:name=".module.welcome.WelcomeActivity">
+        <activity android:name=".module.maintab.MainTabActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".module.home.HomeActivity" />
+        <activity android:name=".module.welcome.WelcomeActivity">
+
+        </activity>
+        <activity android:name=".module.home.HomeActivity">
+        </activity>
         <activity android:name=".module.parser.ParserActivity" />
         <activity android:name=".module.question.QuestionsActivity" />
         <activity android:name=".module.study.StudyActivity" />
