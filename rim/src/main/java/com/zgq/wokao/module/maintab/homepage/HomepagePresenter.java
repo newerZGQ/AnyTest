@@ -1,30 +1,31 @@
 package com.zgq.wokao.module.maintab.homepage;
 
+import com.zgq.wokao.module.base.BasePresenter;
 import com.zgq.wokao.module.maintab.MainTabContract;
+import com.zgq.wokao.repository.RimRepository;
 
 import javax.inject.Inject;
 
-public class HomepagePresenter implements MainTabContract.HomepagePresenter {
+public class HomepagePresenter extends BasePresenter<MainTabContract.HomepageView> implements MainTabContract.HomepagePresenter {
+
+    private RimRepository repository;
+
     @Inject
-    public HomepagePresenter(){}
-
-    @Override
-    public void takeView(MainTabContract.HomepageView view) {
-
+    public HomepagePresenter(RimRepository repository){
+        this.repository = repository;
     }
-
-    @Override
-    public void dropView() {
-
-    }
-
     @Override
     public void subscribe() {
+        super.subscribe();
+        view.updatePaperInfo("tetet", "tere");
+    }
+
+    private void update(String id) {
 
     }
 
     @Override
-    public void unsubscribe() {
+    public void switchPaper() {
 
     }
 }

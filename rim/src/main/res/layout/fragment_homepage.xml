@@ -20,11 +20,12 @@
         android:layout_height="wrap_content">
         <TextView
             android:id="@+id/toolbar_title"
-            android:hint="测试试卷测试试卷测试试卷测试试卷"
+            android:hint="暂时还没有试卷"
             android:maxLines="1"
             android:textSize="18sp"
             android:maxWidth="170dp"
             android:ellipsize="end"
+            android:gravity="center_horizontal"
             android:textColorHint="@color/colorWhite"
             android:textColor="@color/colorWhite"
             android:layout_width="wrap_content"
@@ -38,6 +39,7 @@
             android:paddingTop="2dp"
             android:paddingBottom="2dp"
             android:textSize="14sp"
+            android:gravity="left"
             android:textColorHint="@color/colorWhite"
             android:textColor="@color/colorWhite"
             android:background="#126EDE"
@@ -140,6 +142,8 @@
             android:background="#5491EE"
             android:paddingRight="100dp"
             android:paddingLeft="100dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
             android:textColor="@color/colorWhite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>

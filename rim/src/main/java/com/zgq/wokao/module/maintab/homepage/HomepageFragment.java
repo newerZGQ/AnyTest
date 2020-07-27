@@ -5,8 +5,6 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewOutlineProvider;
-import android.view.ViewStub;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zgq.wokao.R;
@@ -15,8 +13,6 @@ import com.zgq.wokao.injector.modules.MainTabModule;
 import com.zgq.wokao.module.base.BaseFragment;
 import com.zgq.wokao.module.maintab.MainTabContract;
 import com.zgq.wokao.module.maintab.MainTabContract.HomepageView;
-import com.zgq.wokao.widget.ScheduleInfoView;
-import com.zgq.wokao.widget.TaskSettingLayout;
 
 import butterknife.BindView;
 
@@ -30,6 +26,9 @@ public class HomepageFragment extends BaseFragment<MainTabContract.HomepagePrese
 
     @BindView(R.id.study_detail)
     ViewGroup studyDetail;
+
+    @BindView(R.id.chapter)
+    TextView chapterTitle;
 
     @BindView(R.id.recent_tag)
     TextView recentTag;
@@ -92,5 +91,21 @@ public class HomepageFragment extends BaseFragment<MainTabContract.HomepagePrese
             }
         });
         studyRecord.setClipToOutline(true);
+    }
+
+    @Override
+    public void updatePaperInfo(String title, String chapter) {
+        toolbarTitle.setText(title);
+        chapterTitle.setText(chapter);
+    }
+
+    @Override
+    public void udpateAcc(String progress, String acc) {
+
+    }
+
+    @Override
+    public void updateProgress(String todayNum, String totalNum, String totalDays) {
+
     }
 }

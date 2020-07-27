@@ -11,11 +11,13 @@ public interface MainTabContract {
     }
 
     interface HomepageView extends IView<MainTabContract.HomepagePresenter> {
-
+        void updatePaperInfo(String title, String chapter);
+        void udpateAcc(String progress, String acc);
+        void updateProgress(String todayNum, String totalNum, String totalDays);
     }
 
     interface HomepagePresenter extends IPresenter<MainTabContract.HomepageView> {
-
+        void switchPaper();
     }
 
     interface ManagerView extends IView<MainTabContract.ManagerPresenter> {
